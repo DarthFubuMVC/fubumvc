@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
@@ -7,47 +9,19 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         private readonly double _start;
         
         private double _end;
-        private readonly IList<RequestStep> _steps = new List<RequestStep>();
-        private readonly object _subject;
+        private readonly ISubject _subject;
 
-        public Activity(object subject, double start)
+        public Activity(ISubject subject, double start)
         {
             _start = start;
             _subject = subject;
         }
 
+
         public IList<Activity> Nested = new List<Activity>(); 
 
-        public void AppendLog(double time, object log)
-        {
-            var step = new RequestStep(time, log) {Activity = this};
-            _steps.Add(step);
-        }
 
-
-
-        public IEnumerable<RequestStep> AllSteps()
-        {
-            foreach (var step in _steps)
-            {
-                yield return step;
-            }
-
-            foreach (var activity in Nested)
-            {
-                foreach (var step in activity.AllSteps())
-                {
-                    yield return step;
-                }
-            }
-        } 
-
-        public IEnumerable<RequestStep> Steps
-        {
-            get { return _steps; }
-        }
-
-        public object Subject
+        public ISubject Subject
         {
             get { return _subject; }
         }
@@ -71,5 +45,38 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         {
             get { return _end - _start; }
         }
+
+        public double InnerTime
+        {
+            get { return Duration - Nested.Sum(x => x.Duration); }
+        }
+
+        public IEnumerable<Activity> AllActivities()
+        {
+            yield return this;
+
+            foreach (var activity in Nested)
+            {
+                yield return activity;
+
+                foreach (var child in children())
+                {
+                    yield return child;
+                }
+            }
+        }
+
+        private IEnumerable<Activity> children()
+        {
+            foreach (var child in Nested)
+            {
+                yield return child;
+
+                foreach ( var descendent in child.children())
+                {
+                    yield return descendent;
+                }
+            }
+        } 
     }
 }

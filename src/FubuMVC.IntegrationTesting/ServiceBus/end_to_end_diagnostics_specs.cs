@@ -37,7 +37,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
 
                 var log = history.RecentReports().Single(x => x.RootChain != null && x.RootChain.InputType() == typeof(TracedInput));
 
-                log.Activity.AllSteps().Any(x => x.Log is StringMessage).ShouldBeFalse();
+                log.Steps.Any(x => x.Log is StringMessage).ShouldBeFalse();
 
                 var headers = log.Request["Headers"].ShouldBeOfType<NameValueCollection>();
                 headers.AllKeys.Each(x => Debug.WriteLine("{0} = {1}", x, headers[x]));
@@ -63,7 +63,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
 
                 var log = history.RecentReports().Single(x => x.RootChain != null && x.RootChain.InputType() == typeof(TracedInput));
 
-                log.Activity.AllSteps().Any(x => x.Log is ExceptionReport).ShouldBeTrue();
+                log.Steps.Any(x => x.Log is ExceptionReport).ShouldBeTrue();
                 log.HadException.ShouldBeTrue();
             }
         }
@@ -88,10 +88,10 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
 
                 log.Request["Headers"].ShouldBeOfType<NameValueCollection>();
                 
-                log.Activity.AllSteps().Any().ShouldBeTrue();
-                log.Activity.AllSteps().Any(x => x.Log is StringMessage).ShouldBeTrue();
+                log.Steps.Any().ShouldBeTrue();
+                log.Steps.Any(x => x.Log is StringMessage).ShouldBeTrue();
 
-                log.Activity.AllSteps().Each(x => Debug.WriteLine(x));
+                log.Steps.Each(x => Debug.WriteLine(x));
             }
         }
     }

@@ -11,7 +11,6 @@ using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Assets;
-using FubuMVC.Core.Diagnostics.Visualization;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
@@ -129,9 +128,6 @@ namespace FubuMVC.Core.Registration
 
             SetServiceIfNone<ISettingsProvider, SettingsProvider>();
             AddService<ISettingsSource>(new AppSettingsSettingSource(SettingCategory.environment));
-
-
-            SetServiceIfNone<IVisualizer, Visualizer>();
 
             SetServiceIfNone<IAssetFinder, AssetFinderCache>().Singleton();
 

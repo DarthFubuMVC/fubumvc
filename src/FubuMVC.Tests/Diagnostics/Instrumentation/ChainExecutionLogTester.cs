@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
 
             log.Trace("The trace description", () => log.RequestTime = 175);
 
-            var trace = log.Activity.AllSteps().Single().Log.ShouldBeOfType<Trace>();
+            var trace = log.Steps.Single().Log.ShouldBeOfType<Trace>();
 
             trace.Description.ShouldBe("The trace description");
             trace.Duration.ShouldBe(75);
@@ -39,8 +39,8 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
 
             log.Log(new object());
 
-            log.Activity.Steps.Single().RequestTime.ShouldBe(111);
-            log.Activity.Steps.Single().Activity.ShouldBe(log.Activity);
+            log.Steps.Single().RequestTime.ShouldBe(111);
+            log.Steps.Single().Activity.ShouldBe(log.Activity);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             log.FinishSubject();
             log.Log(x4);
 
-            var steps = log.Activity.AllSteps().OrderBy(x => x.RequestTime).ToArray();
+            var steps = log.Steps.OrderBy(x => x.RequestTime).ToArray();
 
 
             steps[0].Activity.Subject.ShouldBe(log);
@@ -132,7 +132,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
 
 
 
-            log.Activity.AllSteps().Select(x => x.Log).OfType<ExceptionReport>()
+            log.Steps.Select(x => x.Log).OfType<ExceptionReport>()
                 .Single().ExceptionText.ShouldBe(ex.ToString());
         }
 

@@ -508,12 +508,6 @@
     <Compile Include="Diagnostics\Instrumentation\ProductionModeTraceListener.cs" />
     <Compile Include="Diagnostics\TypeFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\TypeExtensions.cs" />
-    <Compile Include="Diagnostics\Visualization\BehaviorNodeViewModel.cs" />
-    <Compile Include="Diagnostics\Visualization\DescriptionVisualizationPolicy.cs" />
-    <Compile Include="Diagnostics\Visualization\IVisualizer.cs" />
-    <Compile Include="Diagnostics\Visualization\Visualizer.cs" />
-    <Compile Include="Diagnostics\Visualization\Visualizers\CommentTag.cs" />
-    <Compile Include="Diagnostics\Visualization\Visualizers\StringMessageEndpoint.cs" />
     <Compile Include="Attributes\DoNotAutoImportAttribute.cs" />
     <Compile Include="Diagnostics\FubuApplicationDescriber.cs" />
     <Compile Include="Environment\CanWriteToFolder.cs" />
@@ -1079,9 +1073,6 @@
     <Compile Include="Security\WebAuthenticationContext.cs" />
     <Compile Include="Security\WebSecurityContext.cs" />
     <Compile Include="Attributes\WrapWithAttribute.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Diagnostics\Visualization\BehaviorNode.spark" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="fubu-diagnostics\bootstrap.min.css" />

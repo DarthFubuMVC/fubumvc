@@ -20,11 +20,19 @@ namespace FubuMVC.Core.Diagnostics
             return new HttpRequestSummaryItems(logs);
         }
 
-        public ChainExecutionLog get_request_Id(ChainExecutionLog query)
+        public Dictionary<string, object> get_request_Id(ChainExecutionLog query)
         {
             var log = _history.Find(query.Id);
 
-            return log ?? query;
+            var dict = new Dictionary<string, object>();
+
+            if (log != null)
+            {
+                dict.Add("log", log.ToDictionary());
+                if (log.RootChain != null) dict.Add("type", log.RootChain.GetType().Name);
+            }
+
+            return dict;
         }
 
     }

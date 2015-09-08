@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
@@ -17,6 +18,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         private readonly Activity _activity;
         private readonly Stack<Activity> _activityStack = new Stack<Activity>();
         private readonly IList<Exception> _exceptions = new List<Exception>();
+        private readonly IList<RequestStep> _steps = new List<RequestStep>(); 
 
         public ChainExecutionLog()
         {
@@ -26,6 +28,59 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
             _activity = new Activity(this, 0);
             _activityStack.Push(_activity);
+        }
+
+        public IEnumerable<RequestStep> Steps
+        {
+            get { return _steps; }
+        }
+
+        public IDictionary<string, object> ToDictionary()
+        {
+            var dict = new Dictionary<string, object>
+            {
+                {"request", _request},
+                {"time", Time.ToShortTimeString()},
+                {"execution_time", ExecutionTime},
+                {"title", Title()}
+            };
+
+            if (RootChain != null) dict.Add("chain", RootChain.Title().GetHashCode());
+
+            var steps = Steps.Select(x =>
+            {
+                return new Dictionary<string, object>
+                {
+                    {"activity", x.Activity.Subject.Id},
+                    {"log", Description.For(x.Log).ToDictionary()},
+                    {"time", x.RequestTime}
+                };
+            }).ToArray();
+            dict.Add("steps", steps);
+
+
+            var activities = AllActivities().Select(x =>
+            {
+                return new Dictionary<string, object>
+                {
+                    {"title", x.Subject.Title()},
+                    {"start", x.Start},
+                    {"end", x.End},
+                    {"duration", x.Duration},
+                    {"inner_time", x.InnerTime},
+                    {"id", x.Subject.Id.ToString()}
+                };
+            }).ToArray();
+
+            dict.Add("activities", activities);
+
+
+            return dict;
+        }
+
+        public IEnumerable<Activity> AllActivities()
+        {
+            return Activity.AllActivities().Distinct();
         }
 
         public readonly DateTime Time = DateTime.UtcNow;
@@ -89,6 +144,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         {
             _exceptions.Clear();
             _stopwatch.Stop();
+            _activity.MarkEnd(requestTime());
             ExecutionTime = requestTime();
         }
 
@@ -101,7 +157,9 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public void Log(object log)
         {
-            current.AppendLog(requestTime(), log);
+            var step = new RequestStep(requestTime(), log) {Activity = _activityStack.Peek()};
+
+            _steps.Add(step);
         }
 
         // acts like the timer in diagnostics
