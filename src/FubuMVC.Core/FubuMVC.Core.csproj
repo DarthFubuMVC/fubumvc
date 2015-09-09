@@ -165,7 +165,6 @@
     <Compile Include="ServiceBus\Diagnostics\Visualization\DescriptionBodyTag.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\DescriptionPropertyTag.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\FubuDiagnosticsConfiguration.cs" />
-    <Compile Include="ServiceBus\Diagnostics\Visualization\HandlersTableTag.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\HtmlTagExtensions.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\MessagesFubuDiagnostics.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\ScheduledJobsFubuDiagnostics.cs" />

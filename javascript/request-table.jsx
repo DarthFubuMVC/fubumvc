@@ -6,20 +6,6 @@ var RequestRow = React.createClass({
 	render: function(){
 		var details = '#fubumvc/request-details/' + this.props.request.id;
 
-
-/*
-
-        public string id { get; set; }
-        public string time { get; set; }
-        public string url { get; set; }
-        public string method { get; set; }
-        public int status { get; set; }
-        public string description { get; set; }
-        public string contentType { get; set; }
-        public double duration { get; set; }
-
-*/
-	
 		return (
 			<tr>
 				<td><a href={details}>Details</a></td>
@@ -62,7 +48,7 @@ var RequestTable = React.createClass({
 		});
 		
 		return (
-			<table className="table table-striped">
+			<table className="table table-striped" style={{width: 'auto'}}>
 				<thead>
 					<tr>
 						<th>Details</th>

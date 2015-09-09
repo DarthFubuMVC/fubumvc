@@ -22,9 +22,46 @@ var Subscriptions = React.createClass({
 });
 
 var Messages = React.createClass({
-	render: function(){
+	getInitialState: function(){
+		return {
+			loading: true
+		}
+	},
+
+	componentDidMount: function(){
+		FubuDiagnostics.get('Messages:messages', {}, data => {
+			this.setState({messages: data, loading: false});
+		});
+	},
+
+	render(){
+		if (this.state.loading){
+			return (<p>Loading...</p>);
+		}
+
+		var rows = this.state.messages.map(msg => {
+			var url = "#/fubumvc/chain-details/" + msg.hash;
+
+			return (
+				<tr>
+					<td><a href={url} title={msg.full_name}>{msg.message_type}</a></td>
+					<td>{msg.handlers}</td>
+				</tr>
+			);
+		});
+
 		return (
-			<HtmlScreen route="Messages:messages" />
+			<table className="table table-striped" style={{width: 'auto'}}>
+				<thead>
+					<tr>
+						<th>Message Type</th>
+						<th>Handlers</th>
+					</tr>
+				</thead>
+				<tbody>
+					{rows}
+				</tbody>
+			</table>
 		);
 	}
 });

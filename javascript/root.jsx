@@ -94,11 +94,12 @@ require('./appdomain');
 require('./assets');
 require('./structuremap');
 require('./service-bus');
+require('./message-table');
 
 
 FubuDiagnostics.addSection({    
-    title: 'FubuMVC',
-    description: 'Core Diagnostics for FubuMVC Applications',
+    title: 'HTTP',
+    description: 'Core Diagnostics for HTTP Requests and Handlers',
     key: 'fubumvc'
 }).add({
 	title: 'Model Binding',

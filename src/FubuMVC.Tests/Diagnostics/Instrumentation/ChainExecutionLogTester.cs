@@ -187,7 +187,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             var log = new ChainExecutionLog();
             log.RecordHeaders(envelope);
 
-            log.Request["Headers"].As<NameValueCollection>()["foo"]
+            log.Request["headers"].As<IDictionary<string, object>>()["foo"]
                 .ShouldBe("bar");
         }
     }

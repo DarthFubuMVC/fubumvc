@@ -59,6 +59,16 @@ namespace DiagnosticsHarness
         public FubuContinuation get_requests()
         {
             
+            _serviceBus.Send(new NumberMessage{Value = 1});
+            _serviceBus.Send(new NumberMessage{Value = 2});
+            _serviceBus.Send(new NumberMessage{Value = 3});
+            _serviceBus.Send(new NumberMessage{Value = 4});
+            _serviceBus.Send(new NumberMessage{Value = 5});
+            _serviceBus.Send(new NumberMessage{Value = 6});
+            _serviceBus.Send(new NumberMessage{Value = 7});
+            _serviceBus.Send(new NumberMessage{Value = 8});
+            _serviceBus.Send(new NumberMessage{Value = 9});
+
             _runtime.Scenario(_ => _.Get.Url("hello"));
             _runtime.Scenario(_ =>
             {

@@ -3,6 +3,7 @@
 var React = require('react');
 var Router = require('react-router');
 var HttpRequestHeader = require('./http-request-header');
+var MessageExecutionHeader = require('./message-execution-header');
 var _ = require('lodash');
 var Description = require('./description');
 
@@ -97,9 +98,18 @@ var RequestDetails = React.createClass({
 			);
 		}
 
+		var header = null;
+		if (this.state.data.type == 'RoutedChain'){
+			header = (<HttpRequestHeader {...this.state.data.log} />);
+		}
+
+		if (this.state.data.type == 'HandlerChain'){
+			header = (<MessageExecutionHeader {...this.state.data.log} />);
+		}
+
 		return (
 			<div>
-				<HttpRequestHeader {...this.state.data.log} />
+				{header}
 				<h3>Performance Timings per Behavior and/or Partial</h3>
 				<ActivityTable {...this.state.data.log} />
 

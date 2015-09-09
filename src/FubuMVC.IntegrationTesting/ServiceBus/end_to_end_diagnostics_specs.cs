@@ -39,8 +39,6 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
 
                 log.Steps.Any(x => x.Log is StringMessage).ShouldBeFalse();
 
-                var headers = log.Request["Headers"].ShouldBeOfType<NameValueCollection>();
-                headers.AllKeys.Each(x => Debug.WriteLine("{0} = {1}", x, headers[x]));
             }
         }
 
@@ -86,7 +84,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
 
                 var log = history.RecentReports().Single(x => x.RootChain != null && x.RootChain.InputType() == typeof(TracedInput));
 
-                log.Request["Headers"].ShouldBeOfType<NameValueCollection>();
+                log.Request["headers"].ShouldBeOfType<Dictionary<string, object>>();
                 
                 log.Steps.Any().ShouldBeTrue();
                 log.Steps.Any(x => x.Log is StringMessage).ShouldBeTrue();

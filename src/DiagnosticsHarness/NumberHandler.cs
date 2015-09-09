@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration;
 
 namespace DiagnosticsHarness
 {
@@ -15,6 +12,7 @@ namespace DiagnosticsHarness
             _cache = cache;
         }
 
+        [WrapWith(typeof (DelayWrapper))]
         public void Consume(NumberMessage message)
         {
             if (message.Value > 100)
@@ -25,5 +23,4 @@ namespace DiagnosticsHarness
             _cache.Register(message.Value);
         }
     }
-
 }

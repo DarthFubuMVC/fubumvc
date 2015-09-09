@@ -33,7 +33,7 @@ function Cell(title, att, toCell){
 	}
 	
 	this.shouldDisplay = function(data){
-		return data[att] != null;
+		return data.hasOwnProperty(att);
 	}
 }
 
@@ -49,6 +49,8 @@ function ArrayCell(title, att){
 	var cell = new Cell(title, att, toCell);
 	
 	cell.shouldDisplay = function(data){
+		if (!data.hasOwnProperty(att)) return false;
+
 		var actual = data[att];
 		
 		return actual != null && actual.length > 0;
@@ -66,7 +68,13 @@ function TypeCell(title, att){
 		);
 	}
 	
+	cell.shouldDisplay = function(data){
+		if (!data.hasOwnProperty(att)) return false;
 
+		var actual = data[att];
+		
+		return actual != null && actual.length > 0;
+	}
 	
 	return cell;
 }
@@ -87,30 +95,7 @@ function toDetailRows(cells, data){
 }
 
 
-var DetailsTable = React.createClass({
-	render: function(){
-		var data = this.props.data;
-		var activeCells = _.filter(this.props.cells, function(c, i){
-			return c.shouldDisplay(data);
-		});
-	
-		var rows = activeCells.map(function(cell, i){
-			var td = cell.toCell(data);
-			
-			return (
-				<tr><th>{cell.title}</th>{td}</tr>
-			);
-		});
-	
-		return (
-			<table className="details table table-striped" style={{width: 'auto'}}>
-				<tbody>
-				{rows}
-				</tbody>
-			</table>
-		);
-	}
-});
+
 
 function toBehaviorRow(node){
 	return (
@@ -126,7 +111,7 @@ function toBehaviorRow(node){
 
 
 
-var EndpointDetails = React.createClass({
+var ChainDetails = React.createClass({
 	mixins: [Router.State],
 
 	getInitialState: function(){
@@ -143,7 +128,7 @@ var EndpointDetails = React.createClass({
 			this.setState({loading: false, data: data});
 		});
 	},
-	
+
 	render: function(){
 		if (this.state.loading){
 			return (<p>Loading...</p>);
@@ -157,8 +142,6 @@ var EndpointDetails = React.createClass({
 		var detailCells = [
 			new Cell('Title', 'title'),
 			new Cell('Route', 'route'),
-			new Cell('Url Category', 'category'),
-			new Cell('Origin', 'origin'),
 			new TypeCell('Input Type', 'input'),
 			new TypeCell('Resource Type', 'resource'),
 			new ArrayCell('Accepts', 'accepts'),
@@ -221,7 +204,7 @@ FubuDiagnostics.section('fubumvc').add({
 	description: 'BehaviorChain Visualization',
 	key: 'chain-details',
 	route: 'Chain:chain_details_Hash',
-	component: EndpointDetails
+	component: ChainDetails
 });
 
 

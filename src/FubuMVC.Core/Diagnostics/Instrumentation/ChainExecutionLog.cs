@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
     public class ChainExecutionLog : IRequestLog, ISubject, IChainExecutionLog
     {
-        private readonly IDictionary<string, object> _request;
+        private readonly Dictionary<string, object> _request;
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private readonly Activity _activity;
@@ -37,15 +37,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public IDictionary<string, object> ToDictionary()
         {
-            var dict = new Dictionary<string, object>
-            {
-                {"request", _request},
-                {"time", Time.ToShortTimeString()},
-                {"execution_time", ExecutionTime},
-                {"title", Title()}
-            };
-
-            if (RootChain != null) dict.Add("chain", RootChain.Title().GetHashCode());
+            var dict = ToHeaderDictionary();
 
             var steps = Steps.Select(x =>
             {
@@ -75,6 +67,21 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             dict.Add("activities", activities);
 
 
+            return dict;
+        }
+
+        public Dictionary<string, object> ToHeaderDictionary()
+        {
+            var dict = new Dictionary<string, object>
+            {
+                {"request", _request},
+                {"time", Time.ToShortTimeString()},
+                {"execution_time", ExecutionTime},
+                {"title", Title()},
+                {"id", Id.ToString()}
+            };
+
+            if (RootChain != null) dict.Add("chain", RootChain.Title().GetHashCode());
             return dict;
         }
 
@@ -148,7 +155,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             ExecutionTime = requestTime();
         }
 
-        public IDictionary<string, object> Request
+        public Dictionary<string, object> Request
         {
             get { return _request; }
         }
@@ -190,7 +197,14 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public void RecordHeaders(Envelope envelope)
         {
-            _request.Add("Headers", envelope.Headers.ToNameValues());
+            var headers = envelope.Headers.ToNameValues();
+            var dict = new Dictionary<string, object>();
+            headers.AllKeys.Each(key =>
+            {
+                dict.Add(key, headers[key]);
+            });
+
+            _request.Add("headers", dict);
         }
 
         public void RecordBody(Envelope envelope)

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Configuration;
-using HtmlTags;
+using FubuMVC.Core.ServiceBus.Registration.Nodes;
 
 namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
 {
@@ -9,18 +11,28 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
     {
         private readonly BehaviorGraph _graph;
 
-        public MessagesFubuDiagnostics(BehaviorGraph graph)
+        public MessagesFubuDiagnostics(BehaviorGraph graph, ChannelGraph channels)
         {
             _graph = graph;
         }
 
         [Description("Message Handlers:A representation of all the message types and handlers for this FubuTransportation node")]
-        public HtmlTag get_messages()
+        public Dictionary<string, object>[] get_messages()
         {
-            return new HtmlTag("div", div => {
-                div.Add("h1").Text("Message Handler Chains");
-                div.Append(new HandlersTableTag(_graph));
-            });
+            return _graph.Handlers.Where(x => !x.IsPollingJob()).OrderBy(x => x.InputType().Name).Select(chain =>
+            {
+                var calls = chain.OfType<HandlerCall>().Select(x => x.Description).Join(", ");
+
+                return new Dictionary<string, object>
+                {
+                    {"message_type", chain.InputType().Name},
+                    {"full_name", chain.InputType().FullName},
+                    {"hash", chain.Title().GetHashCode()},
+                    {"handlers", calls}
+                };
+            }).ToArray();
+
+
         }
     }
 }

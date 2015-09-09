@@ -11,7 +11,7 @@ var HtmlScreen = React.createClass({
 
 	componentDidMount: function(){
 		// TODO -- add parameters into this someday
-		FubuDiagnostics.get(this.props.route, {}, data => {
+		FubuDiagnostics.getText(this.props.route, {}, data => {
 			this.setState({html: data});
 		});
 	},
