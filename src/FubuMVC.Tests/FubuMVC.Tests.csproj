@@ -617,7 +617,6 @@
     <Compile Include="View\Attachment\FakeViewToken.cs" />
     <Compile Include="View\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="View\AuthorizedLinkExpressionsTester.cs" />
-    <Compile Include="View\Bootstrap\Tags\DetailTableBuilderTester.cs" />
     <Compile Include="View\FubuPageExtensionsTester.cs" />
     <Compile Include="View\HtmlTagExtensionsTester.cs" />
     <Compile Include="View\PartialInvokerTester.cs" />

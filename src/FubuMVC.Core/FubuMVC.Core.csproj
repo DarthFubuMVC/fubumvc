@@ -903,14 +903,6 @@
     <Compile Include="StructureMap\StructureMapServiceLocator.cs" />
     <Compile Include="Attributes\TagAttribute.cs" />
     <Compile Include="View\AuthorizationOnPageExtensions.cs" />
-    <Compile Include="View\Bootstrap\Collapsibles\CollapsiblePartialExpression.cs" />
-    <Compile Include="View\Bootstrap\Collapsibles\CollapsibleTag.cs" />
-    <Compile Include="View\Bootstrap\Modals\ModalExpression.cs" />
-    <Compile Include="View\Bootstrap\Modals\ModalTag.cs" />
-    <Compile Include="View\Bootstrap\Tags\DetailsTableTag.cs" />
-    <Compile Include="View\Bootstrap\Tags\DetailTableBuilder.cs" />
-    <Compile Include="View\Bootstrap\Tags\HtmlTagExtensions.cs" />
-    <Compile Include="View\Bootstrap\Tags\OutlineTag.cs" />
     <Compile Include="View\DisplayConversionRegistryActivator.cs" />
     <Compile Include="Http\AspNet\AspNetHttpResponse.cs" />
     <Compile Include="Http\AspNet\AspNetHttpRequest.cs" />

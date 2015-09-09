@@ -38,16 +38,6 @@ namespace FubuMVC.Tests.Diagnostics
         }
 
         [Test]
-        public void builds_partials_for_Visualize_methods()
-        {
-            var chain = runtime.Behaviors.ChainFor<ModelBindingFubuDiagnostics>(x => x.VisualizePartial(null));
-
-            chain.GetType().ShouldBe(typeof (BehaviorChain));
-
-            chain.IsPartialOnly.ShouldBeTrue();
-        }
-
-        [Test]
         public void got_all_the_routes_in_the_diagnostic_javascript_router()
         {
             var routes = runtime.Get<DiagnosticJavascriptRoutes>();

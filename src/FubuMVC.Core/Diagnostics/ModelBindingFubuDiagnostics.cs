@@ -4,8 +4,6 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Binding.Logging;
 using FubuCore.Descriptions;
-using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.View.Bootstrap.Collapsibles;
 using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics
@@ -24,35 +22,6 @@ namespace FubuMVC.Core.Diagnostics
             var description = Description.For(_bindingRegistry);
 
             return description.ToDictionary();
-        }
-
-        public HtmlTag VisualizePartial(ModelBindingLog log)
-        {
-            var title = "Model Binding for " + log.Report.ModelType.FullName;
-
-
-
-            var collapsible = new CollapsibleTag(log.Id.ToString(), title);
-
-            var description = Description.For(log.Report.Binder);
-
-            collapsible.AppendContent(new HtmlTag("div").AddClass("model-binder-title").Text("Used " + description.Title));
-
-
-            if (log.Report.OrderedProperties().Any())
-            {
-                var report = new ModelBindingHtmlReport();
-                log.Report.AcceptVisitor(report);
-                collapsible.AppendContent(report.Table);
-            }
-            else
-            {
-                var tag = new DescriptionBodyTag(description);
-                collapsible.AppendContent(tag);
-            }
-
-
-            return collapsible;
         }
     }
 
