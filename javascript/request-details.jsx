@@ -7,6 +7,7 @@ var MessageExecutionHeader = require('./message-execution-header');
 var _ = require('lodash');
 var Description = require('./description');
 
+
 var ActivityTable = React.createClass({
 	render(){
 		var rows = this.props.activities.map(a => {
@@ -115,6 +116,7 @@ var RequestDetails = React.createClass({
 
 				<h3>Log Activity</h3>
 				<LogTable {...this.state.data.log} />
+
 
 
 			</div>

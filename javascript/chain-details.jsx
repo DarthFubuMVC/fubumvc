@@ -5,6 +5,7 @@ var _ = require('lodash');
 var Router = require('react-router');
 var {Grid, Col, Row} = require('react-bootstrap');
 var DescriptionBody = require('./description-body');
+var ChainPerformanceHistory = require('./chain-performance-history');
 
 var TypeDisplay = React.createClass({
 	render: function(){
@@ -129,16 +130,7 @@ var ChainDetails = React.createClass({
 		});
 	},
 
-	render: function(){
-		if (this.state.loading){
-			return (<p>Loading...</p>);
-		}
-
-		if (this.state.data['not-found']){
-			return (<h1>Chain not found!</h1>);
-		}
-
-
+	buildDetails(){
 		var detailCells = [
 			new Cell('Title', 'title'),
 			new Cell('Route', 'route'),
@@ -149,20 +141,58 @@ var ChainDetails = React.createClass({
 			new ArrayCell('Tags', 'tags'),
 		];
 
+		return toDetailRows(detailCells, this.state.data.details);
+	},
 
-		
-		var rows = toDetailRows(detailCells, this.state.data.details);
-		if (this.state.data.route != null){
-			var routeRow = (
-				<tr className="route-data">
-					<th>
-						<p>{this.state.data.route.title}</p>
-					</th>
-					<td><DescriptionBody {...this.state.data.route} /></td>	
-				</tr>
-			);
-			rows.push(routeRow);
+	buildRoute(){
+		return (
+			<tr className="route-data">
+				<th>
+					<p>{this.state.data.route.title}</p>
+				</th>
+				<td><DescriptionBody {...this.state.data.route} /></td>	
+			</tr>
+		);
+	},
+
+	buildPerformanceSummary(rows){
+		var performanceHeader = (
+			<tr><td colSpan="2"><h4>Performance Summary</h4></td></tr>
+		);
+		rows.push(performanceHeader);
+
+		var cells = [
+			new Cell('Hits', 'hits'),
+			new Cell('Total Execution Time', 'total'),
+			new Cell('Average Execution Time', 'average'),
+			new Cell('Exception %', 'exceptions'),
+			new Cell('Min Time', 'min'),
+			new Cell('Max Time', 'max')
+		];
+
+		var perfRows = toDetailRows(cells, this.state.data.performance);
+		return rows.concat(perfRows);
+	},
+
+	render: function(){
+		if (this.state.loading){
+			return (<p>Loading...</p>);
 		}
+
+		if (this.state.data['not-found']){
+			return (<h1>Chain not found!</h1>);
+		}
+
+		var rows = this.buildDetails();
+
+		if (this.state.data.route != null){
+
+			rows.push(this.buildRoute());
+		}
+
+		rows = this.buildPerformanceSummary(rows);
+
+
 
 		var behaviorHeader = (
 			<tr><td colSpan="2"><h4>Behaviors</h4></td></tr>
@@ -188,6 +218,8 @@ var ChainDetails = React.createClass({
 				{rows}
 				</tbody>
 			</table>
+
+			<ChainPerformanceHistory executions={this.state.data.executions} />
 
 			</Col>
 

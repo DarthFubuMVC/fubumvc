@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
@@ -46,6 +47,11 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
                 ChainExecutionLog _;
                 _reports.TryDequeue(out _);
             }
+        }
+
+        public IEnumerable<ChainExecutionLog> GetRecentRequests(BehaviorChain chain)
+        {
+            return _reports.ToArray().Where(x => x.RootChain == chain).ToArray();
         }
     }
 }

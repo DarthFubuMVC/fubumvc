@@ -3,6 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Diagnostics.Endpoints;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -11,10 +12,12 @@ namespace FubuMVC.Core.Diagnostics
     public class ChainFubuDiagnostics
     {
         private readonly BehaviorGraph _graph;
+        private readonly IChainExecutionHistory _history;
 
-        public ChainFubuDiagnostics(BehaviorGraph graph)
+        public ChainFubuDiagnostics(BehaviorGraph graph, IChainExecutionHistory history)
         {
             _graph = graph;
+            _history = history;
         }
 
         public Dictionary<string, object> get_chain_details_Hash(ChainDetailsRequest request)
@@ -48,10 +51,28 @@ namespace FubuMVC.Core.Diagnostics
                 return details;
             });
 
+            addPerformanceData(dict, chain);
+
             dict.Add("nodes", nodes);
 
 
             return dict;
+        }
+
+        private void addPerformanceData(Dictionary<string, object> dict, BehaviorChain chain)
+        {
+            dict.Add("performance", chain.Performance.ToDictionary());
+
+            var recent = _history.GetRecentRequests(chain).OrderByDescending(x => x.Time);
+            var executions = recent.Select(log =>
+            {
+                var logDict = log.ToHeaderDictionary();
+                logDict.Add("warn", chain.Performance.IsWarning(log));
+
+                return logDict;
+            }).ToArray();
+
+            dict.Add("executions", executions);
         }
     }
 

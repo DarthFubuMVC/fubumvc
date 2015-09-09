@@ -78,7 +78,8 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
                 {"time", Time.ToShortTimeString()},
                 {"execution_time", ExecutionTime},
                 {"title", Title()},
-                {"id", Id.ToString()}
+                {"id", Id.ToString()},
+                {"exceptions", HadException}
             };
 
             if (RootChain != null) dict.Add("chain", RootChain.Title().GetHashCode());

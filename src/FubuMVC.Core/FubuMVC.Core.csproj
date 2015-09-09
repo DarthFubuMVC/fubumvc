@@ -86,6 +86,7 @@
     <Compile Include="Diagnostics\Instrumentation\ChainExecutionListener.cs" />
     <Compile Include="Diagnostics\Instrumentation\Trace.cs" />
     <Compile Include="Diagnostics\Instrumentation\VerboseExecutionLogger.cs" />
+    <Compile Include="Diagnostics\PerformanceFubuDiagnostics.cs" />
     <Compile Include="FubuModeExtensions.cs" />
     <Compile Include="Http\Compression\ApplyCompression.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />

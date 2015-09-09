@@ -50,6 +50,33 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         }
 
         [Test]
+        public void calculate_average()
+        {
+            var history = new PerformanceHistory();
+
+            history.Read(new StubRequestLog { ExecutionTime = 100 });
+            history.Read(new StubRequestLog { ExecutionTime = 200 });
+            history.Read(new StubRequestLog { ExecutionTime = 50 });
+            history.Read(new StubRequestLog { ExecutionTime = 70 });
+
+            history.Average.ShouldBe((100 + 200 + 50 + 70) / 4);
+        }
+
+        [Test]
+        public void calculate_exception_percentage()
+        {
+            var history = new PerformanceHistory();
+
+            history.Read(new StubRequestLog { ExecutionTime = 100 });
+            history.Read(new StubRequestLog { ExecutionTime = 200, HadException = true});
+            history.Read(new StubRequestLog { ExecutionTime = 50 });
+            history.Read(new StubRequestLog { ExecutionTime = 70, HadException = true});
+            history.Read(new StubRequestLog { ExecutionTime = 70 });
+
+            history.ExceptionPercentage.ShouldBe(40);
+        }
+
+        [Test]
         public void track_min_time()
         {
             var history = new PerformanceHistory();

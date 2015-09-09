@@ -115,7 +115,7 @@ require('./request-table.jsx');
 require('./request-details.jsx');
 require('./packaging');
 require('./client-messages');
-
+require('./performance');
 
 
 var Shell = require('./shell');
