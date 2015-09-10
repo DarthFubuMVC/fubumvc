@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Registration.Nodes;
 using HtmlTags;
 using StoryTeller.Results;
 
@@ -51,13 +54,12 @@ namespace Serenity
                 {
                     row.Cell().Add("a").Text("Details").Attr("href", url).Attr("target", "_blank");
                     row.Cell(log.ExecutionTime.ToString()).Attr("align", "right");
-                    
-                    /*
-                    row.Cell(log.HttpMethod);
-                    row.Cell(log.Endpoint);
-                    row.Cell(log.StatusCode.ToString());
-                    row.Cell(log.ContentType);
-                     */
+
+                    var summary = new HttpRequestSummary(log);
+                    row.Cell(summary.method);
+                    row.Cell(log.Title());
+                    row.Cell(summary.status.ToString());
+                    row.Cell(summary.contentType);
                 });
             });
 
@@ -67,12 +69,12 @@ namespace Serenity
 
         public string Title
         {
-            get { return "FubuMVC Requests During the Specification Execution"; }
+            get { return "HTTP Requests During the Specification Execution"; }
         }
 
         public void Append(ChainExecutionLog[] requests)
         {
-            _logs.AddRange(requests);
+            _logs.AddRange(requests.Where(x => x.RootChain is RoutedChain));
         }
     }
 }
