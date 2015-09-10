@@ -20,7 +20,7 @@ namespace FubuMVC.Core.ServiceBus
     {
         public FubuTransportServiceRegistry(string mode)
         {
-            var eventAggregatorDef = FubuTransport.UseSynchronousLogging 
+            var eventAggregatorDef = (FubuTransport.UseSynchronousLogging || mode.InTesting())
                 ? new SmartInstance<SynchronousEventAggregator>()
                 : (Instance)new SmartInstance<EventAggregator>();
             

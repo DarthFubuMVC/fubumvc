@@ -58,6 +58,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
+        
 
 
         [Test]
@@ -104,6 +105,24 @@ namespace FubuMVC.Tests.ServiceBus
                 c.ShouldNotHaveRegistration<IListener, MessageWatcher>();
                 c.Model.HasImplementationsFor<IMessagingSession>().ShouldBeFalse();
                 c.ShouldNotHaveRegistration<ILogListener, MessageRecordListener>();
+            }
+        }
+
+        [Test]
+        public void synchronous_event_aggregator_is_used_in_testing_mode()
+        {
+            using (var runtime = FubuRuntime.Basic(_ =>
+            {
+
+                _.Mode = "testing";
+                _.ServiceBus.Configure(x =>
+                {
+                    x.Enabled = true;
+                    x.EnableInMemoryTransport = true;
+                });
+            }))
+            {
+                runtime.Get<IContainer>().DefaultSingletonIs<IEventAggregator, SynchronousEventAggregator>();
             }
         }
 
