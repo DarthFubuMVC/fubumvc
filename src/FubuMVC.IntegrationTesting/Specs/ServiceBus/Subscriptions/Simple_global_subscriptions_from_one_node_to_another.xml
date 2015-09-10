@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Test name="Simple global subscriptions from one node to another" lifecycle="Regression">
+  <Subscriptions>
+    <LoadNode isStep="True" Key="Publisher" Registry="PublishingRegistry" ReplyUri="memory://publisher1" />
+    <LoadNode isStep="True" Key="Subscriber" Registry="HasGlobalSubscriptionsRegistry" ReplyUri="memory://subscriber1" />
+    <ForNode isStep="True" Key="Publisher" />
+    <TheActiveSubscriptionsAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </TheActiveSubscriptionsAre>
+    <ThePersistedSubscriptionsAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </ThePersistedSubscriptionsAre>
+    <ThePersistedTransportNodesAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="Publishing" Address="memory://publisher1/" />
+      </rows>
+    </ThePersistedTransportNodesAre>
+    <ForNode isStep="True" Key="Subscriber" />
+    <ThePersistedTransportNodesAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="GlobalSubscriber" Address="memory://subscriber1/" />
+      </rows>
+    </ThePersistedTransportNodesAre>
+  </Subscriptions>
+</Test>

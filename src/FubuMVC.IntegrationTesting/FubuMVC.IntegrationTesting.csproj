@@ -94,7 +94,28 @@
     <Compile Include="Fixtures\LoginAuditingFixture.cs" />
     <Compile Include="Fixtures\ModelFixture.cs" />
     <Compile Include="Fixtures\OtherScreenFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\BatchMessageFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Monitoring\FakePersistentTask.cs" />
+    <Compile Include="Fixtures\ServiceBus\Monitoring\FakePersistentTaskSource.cs" />
+    <Compile Include="Fixtures\ServiceBus\Monitoring\MonitoredNode.cs" />
+    <Compile Include="Fixtures\ServiceBus\Monitoring\MonitoredNodeGroup.cs" />
+    <Compile Include="Fixtures\ServiceBus\Monitoring\MonitoringFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Monitoring\MonitoringSettings.cs" />
+    <Compile Include="Fixtures\ServiceBus\Monitoring\MonitoringSetupFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Monitoring\PersistentTaskMessageListener.cs" />
+    <Compile Include="Fixtures\ServiceBus\RunningNode.cs" />
+    <Compile Include="Fixtures\ServiceBus\SendAndAwaitFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Subscriptions\HasGlobalSubscriptionsRegistry.cs" />
+    <Compile Include="Fixtures\ServiceBus\Subscriptions\HasLocalSubscriptionsRegistry.cs" />
+    <Compile Include="Fixtures\ServiceBus\Subscriptions\PublishingRegistry.cs" />
+    <Compile Include="Fixtures\ServiceBus\Subscriptions\SubscriptionsFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Support\FourMessage.cs" />
+    <Compile Include="Fixtures\ServiceBus\Support\Message.cs" />
+    <Compile Include="Fixtures\ServiceBus\Support\OneMessage.cs" />
+    <Compile Include="Fixtures\ServiceBus\Support\ThreeMessage.cs" />
+    <Compile Include="Fixtures\ServiceBus\Support\TwoMessage.cs" />
     <Compile Include="FubuRegistry_using_parallel_folder_spec.cs" />
+    <Compile Include="HarnessSettings.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="DifferentEndpoint.cs" />
     <Compile Include="Http\partial_invocations.cs" />
@@ -198,6 +219,10 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.LightningQueues\FubuMVC.LightningQueues.csproj">
+      <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
+      <Name>FubuMVC.LightningQueues</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
       <Project>{02441e35-668b-4713-9279-bd51948b95eb}</Project>
       <Name>FubuMVC.RavenDb</Name>
@@ -226,13 +251,14 @@
       <Project>{900a0419-3579-4dae-85be-71a3e4b34239}</Project>
       <Name>Serenity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServiceNode\ServiceNode.csproj">
+      <Project>{c71136ae-8197-4a9a-aa5f-9102f657c502}</Project>
+      <Name>ServiceNode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
       <Name>TestPackage1</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="phantomjs.exe">
@@ -251,6 +277,31 @@
     <Content Include="Specs\Authentication\Logins\The_user_is_no_longer_frozen_after_the_lockout_period_is_over.xml" />
     <Content Include="Specs\Authentication\PersistedMembership\Audit_user_login_successes_and_failures.xml" />
     <Content Include="Specs\Content Negotiation\Default_Conneg_Rules.xml" />
+    <Content Include="Specs\Diagnostics\Open_Core_Diagnostic_Pages.xml" />
+    <Content Include="Specs\Diagnostics\Open_Service_Bus_Diagnostic_Pages.xml" />
+    <Content Include="Specs\Diagnostics\Open_StructureMap_Diagnostics_Screens.xml" />
+    <Content Include="Specs\Serenity\Collect_Javascript_Errors.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\An_inactive_task_should_get_reassigned.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Assign_on_order_of_preference_when_some_nodes_are_down.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Assign_on_order_of_preference_when_some_nodes_fail.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Assign_on_order_or_preference_when_some_nodes_timeout_on_activation.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\A_running_task_goes_down_and_gets_reassigned.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\A_running_task_times_out_on_health_checks_and_gets_reassigned.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Do_not_reassign_a_task_that_is_running.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Mixed_assigned_and_unassigned_tasks.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Node_goes_down_and_its_jobs_get_reassigned.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Reassign_a_job_running_on_multiple_nodes.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Reassign_a_single_dormant_task.xml" />
+    <Content Include="Specs\ServiceBus\HealthMonitoring\Simple_assignment_of_dormant_tasks.xml" />
+    <Content Include="Specs\ServiceBus\LightningQueues\Batch Messages\All_messages_in_a_batch_are_processed.xml" />
+    <Content Include="Specs\ServiceBus\LightningQueues\SendAndAwait\SendAndAwait_Happy_Path.xml" />
+    <Content Include="Specs\ServiceBus\LightningQueues\SendAndAwait\SendAndAwait_Sad_Path_Exception_reporting.xml" />
+    <Content Include="Specs\ServiceBus\Subscriptions\2nd_publisher_with_global_subscriptions_is_brought_online.xml" />
+    <Content Include="Specs\ServiceBus\Subscriptions\Multiple_nodes_of_global_subscriptions_does_not_duplicate_entries.xml" />
+    <Content Include="Specs\ServiceBus\Subscriptions\Multiple_publishers_all_get_new_subscriptions.xml" />
+    <Content Include="Specs\ServiceBus\Subscriptions\Remove_local_subscriptions.xml" />
+    <Content Include="Specs\ServiceBus\Subscriptions\Simple_global_subscriptions_from_one_node_to_another.xml" />
+    <Content Include="Specs\ServiceBus\Subscriptions\Simple_local_subscription.xml" />
     <Content Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\bindings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

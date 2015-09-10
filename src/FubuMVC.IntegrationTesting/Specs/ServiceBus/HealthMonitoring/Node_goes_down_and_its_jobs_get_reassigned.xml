@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<Test name="Node goes down and its jobs get reassigned" lifecycle="Acceptance" retryAttemptNumber="0">
+  <Monitoring>
+    <Context isStep="True">
+      <MonitoringSetup>
+        <TheNodesAre isStep="True">
+          <table>
+            <row isStep="True" id="Node1" incoming="memory://1" />
+            <row isStep="True" id="Node2" incoming="memory://2" />
+            <row isStep="True" id="Node3" incoming="memory://3" />
+            <row isStep="True" id="Node4" incoming="memory://4" />
+          </table>
+        </TheNodesAre>
+        <HealthMonitoringIsDisabled isStep="True" />
+        <TheTasksAre isStep="True">
+          <table>
+            <row isStep="True" task="foo://1" node="Node4" nodes="Node1, Node2, Node3, Node4" />
+            <row isStep="True" task="foo://2" node="Node4" nodes="Node2, Node1, Node3, Node4" />
+            <row isStep="True" task="foo://3" node="NONE" nodes="Node3, Node1, Node2, Node4" />
+            <row isStep="True" task="foo://4" node="NONE" nodes="Node4, Node1, Node2, Node3" />
+          </table>
+        </TheTasksAre>
+      </MonitoringSetup>
+    </Context>
+    <Comment><![CDATA[The initial state should look like this]]></Comment>
+    <TheTaskAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node4" />
+        <row isStep="True" Task="foo://2" Node="Node4" />
+      </rows>
+    </TheTaskAssignmentsShouldBe>
+	<Comment>Now, Node4 drops offline and its owned tasks should be reassigned</Comment>
+    <NodeDropsOffline isStep="True" Node="Node4" />
+    <AfterTheHealthChecksRunOnNode node="Node1" isStep="True" />
+    <ThePersistedAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node1" />
+        <row isStep="True" Task="foo://2" Node="Node2" />
+        <row isStep="True" Task="foo://3" Node="Node3" />
+        <row isStep="True" Task="foo://4" Node="Node1" />
+      </rows>
+    </ThePersistedAssignmentsShouldBe>
+    <TheTaskAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node1" />
+        <row isStep="True" Task="foo://2" Node="Node2" />
+        <row isStep="True" Task="foo://3" Node="Node3" />
+        <row isStep="True" Task="foo://4" Node="Node1" />
+      </rows>
+    </TheTaskAssignmentsShouldBe>
+  </Monitoring>
+</Test>

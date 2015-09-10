@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Test name="Reassign a single dormant task" lifecycle="Acceptance" retryAttemptNumber="0">
+  <Monitoring>
+    <Context isStep="True">
+      <MonitoringSetup>
+        <TheNodesAre isStep="True">
+          <table>
+            <row isStep="True" id="Node1" incoming="memory://1" />
+          </table>
+        </TheNodesAre>
+        <HealthMonitoringIsDisabled isStep="True" />
+        <TheTasksAre isStep="True">
+          <table>
+            <row isStep="True" task="foo://1" node="NONE" nodes="Node1" />
+          </table>
+        </TheTasksAre>
+      </MonitoringSetup>
+    </Context>
+    <AfterTheHealthChecksRunOnAllNodes isStep="True" />
+    <TheTaskAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node1" />
+      </rows>
+    </TheTaskAssignmentsShouldBe>
+    <ThePersistedAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node1" />
+      </rows>
+    </ThePersistedAssignmentsShouldBe>
+  </Monitoring>
+</Test>

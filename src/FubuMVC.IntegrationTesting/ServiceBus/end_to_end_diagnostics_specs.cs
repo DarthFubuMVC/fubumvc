@@ -10,6 +10,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.LightningQueues;
 using NUnit.Framework;
 using Shouldly;
 using TraceLevel = FubuMVC.Core.TraceLevel;
@@ -26,6 +27,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
             registry.ServiceBus.Enable(true);
             registry.Features.Diagnostics.Enable(TraceLevel.Production);
             registry.ServiceBus.EnableInMemoryTransport();
+            registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
 
             using (var runtime = registry.ToRuntime())
             {
@@ -49,6 +51,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
             registry.ServiceBus.Enable(true);
             registry.Features.Diagnostics.Enable(TraceLevel.Production);
             registry.ServiceBus.EnableInMemoryTransport();
+            registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
 
             using (var runtime = registry.ToRuntime())
             {
@@ -73,6 +76,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
             registry.ServiceBus.Enable(true);
             registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
             registry.ServiceBus.EnableInMemoryTransport();
+            registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
 
             using (var runtime = registry.ToRuntime())
             {

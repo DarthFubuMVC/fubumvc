@@ -1,0 +1,7 @@
+<Spec id="58c5db69-890b-4f98-a4f7-ac079c19f001" maxRetries="0" tags="" lifecycle="Regression" name="SendAndAwait Happy Path">
+  <SendAndAwait id="a99a506f-2679-4e11-a6cf-9390ba89dcc2">
+    <SendMessageSuccessfully />
+    <AckIsReceived seconds="10" />
+    <AckWasSuccessful />
+  </SendAndAwait>
+</Spec>

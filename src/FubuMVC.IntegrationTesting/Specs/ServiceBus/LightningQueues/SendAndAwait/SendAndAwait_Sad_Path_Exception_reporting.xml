@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Test name="SendAndAwait Sad Path Exception reporting" lifecycle="Regression">
+  <SendAndAwait>
+    <SendMessageUnsuccessfully isStep="True" />
+    <AckIsReceived isStep="True" seconds="10" />
+    <TheAckFailedWithMessage isStep="True" message="AmbiguousMatchException" />
+  </SendAndAwait>
+</Test>

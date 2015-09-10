@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Dates;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics.Instrumentation;
-using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Runtime;
@@ -25,19 +23,16 @@ namespace Serenity
     /* TODO
      * 
      * 1.) Subsystems for remote work, add to FubuRegistry
-     * DONE: 3.) Register NavigationDriver, IBrowserLifecycle
-     * DONE: 4.) Do the child container "scope" trick
-     * DONE: 5.) Actually build the FubuRuntime
-     * DONE: 7.) Allow users to specify the default browser
 
-     * DONE: 10. Kill IApplicationUnderTest
      * 11.) Figure out how to attach message tracking. Use 
-     * DONE: 12.) Allow users to supply an AfterNavigation
+
      * 13.) Apply MessageContextualInfoProvider from FT testing
      * 14.) Look closely at FubuTransportSystem and TestNodes
      */
 
-    public class SerenitySystem : SerenitySystem<FubuRegistry> { }
+    public class SerenitySystem : SerenitySystem<FubuRegistry>
+    {
+    }
 
     public class SerenitySystem<T> : ISystem where T : FubuRegistry, new()
     {
@@ -65,8 +60,15 @@ namespace Serenity
 
         private void injectJavascriptErrorDetection()
         {
-            var js = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(SerenitySystem),"errorCollector.js").ReadAllText();
-            var text = new HtmlTag("script").Attr("type", "text/javascript").Text("\n\n" + js + "\n\n").Encoded(false).ToString();
+            var js =
+                Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream(typeof (SerenitySystem), "errorCollector.js")
+                    .ReadAllText();
+            var text =
+                new HtmlTag("script").Attr("type", "text/javascript")
+                    .Text("\n\n" + js + "\n\n")
+                    .Encoded(false)
+                    .ToString();
             Registry.AlterSettings<OwinSettings>(owin =>
             {
                 owin.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
@@ -98,9 +100,10 @@ namespace Serenity
 
                 if (_runtime == null)
                 {
-                    throw new InvalidOperationException("This property is not available until Storyteller either \"warms up\" the system or until the first specification is executed");
+                    throw new InvalidOperationException(
+                        "This property is not available until Storyteller either \"warms up\" the system or until the first specification is executed");
                 }
-                
+
                 return _runtime;
             }
         }
@@ -207,8 +210,11 @@ namespace Serenity
             {
                 var reporter = new RequestReporter(_parent._runtime);
                 var requestLogs =
-                    GetService<IChainExecutionHistory>().RecentReports().Where(x => x.SessionTag == _sessionTag).ToArray();
-                
+                    GetService<IChainExecutionHistory>()
+                        .RecentReports()
+                        .Where(x => x.SessionTag == _sessionTag)
+                        .ToArray();
+
                 reporter.Append(requestLogs);
 
                 context.Reporting.Log(reporter);

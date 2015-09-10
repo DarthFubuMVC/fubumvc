@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Test name="Do not reassign a task that is running" lifecycle="Acceptance" retryAttemptNumber="0">
+  <Monitoring>
+    <Context isStep="True">
+      <MonitoringSetup>
+        <TheNodesAre isStep="True">
+          <table>
+            <row isStep="True" id="Node1" incoming="memory://1" />
+          </table>
+        </TheNodesAre>
+        <HealthMonitoringIsDisabled isStep="True" />
+        <TheTasksAre isStep="True">
+          <table>
+            <row isStep="True" task="foo://1" node="NONE" nodes="Node1" />
+          </table>
+        </TheTasksAre>
+      </MonitoringSetup>
+    </Context>
+    <TaskStateIs isStep="True">
+      <table>
+        <row isStep="True" Task="foo://1" Node="Node1" State="Healthy and Functional" />
+      </table>
+    </TaskStateIs>
+    <AfterTheHealthChecksRunOnAllNodes isStep="True" />
+    <TaskWasNotReassigned task="foo://1" />
+    <TheTaskAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node1" />
+      </rows>
+    </TheTaskAssignmentsShouldBe>
+    <ThePersistedAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node1" />
+      </rows>
+    </ThePersistedAssignmentsShouldBe>
+  </Monitoring>
+</Test>
