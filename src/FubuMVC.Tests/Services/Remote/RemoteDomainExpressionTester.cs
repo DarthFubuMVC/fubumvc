@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System;
+using FubuCore;
 using FubuMVC.Core.Services.Remote;
 using Shouldly;
 using NUnit.Framework;
@@ -8,22 +9,38 @@ namespace FubuMVC.Tests.Services.Remote
     [TestFixture]
     public class RemoteDomainExpressionTester
     {
+        private string serviceDirectory;
+
+        [SetUp]
+        public void SetUp()
+        {
+            serviceDirectory = Guid.NewGuid().ToString();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            new FileSystem().DeleteDirectory(serviceDirectory);
+        }
+
         [Test]
         public void will_use_bin_for_private_bin_path_if_it_exists()
         {
             var fileSystem = new FileSystem();
 
-            fileSystem.DeleteDirectory("Service");
+            fileSystem.DeleteDirectory(serviceDirectory);
 
-            fileSystem.CreateDirectory("Service");
-            fileSystem.CreateDirectory("Service", "bin");
+            fileSystem.CreateDirectory(serviceDirectory);
+            fileSystem.CreateDirectory(serviceDirectory, "bin");
 
             var expression = new RemoteDomainExpression();
             expression.Setup.PrivateBinPath.ShouldBeNull();
 
-            expression.ServiceDirectory = "Service";
+            expression.ServiceDirectory = serviceDirectory;
 
             expression.Setup.PrivateBinPath.ShouldBe("bin");
+
+            fileSystem.DeleteDirectory(serviceDirectory);
         }
 
         [Test]
@@ -31,19 +48,21 @@ namespace FubuMVC.Tests.Services.Remote
         {
             var fileSystem = new FileSystem();
 
-            fileSystem.DeleteDirectory("Service");
+            fileSystem.DeleteDirectory(serviceDirectory);
 
-            fileSystem.CreateDirectory("Service");
-            fileSystem.CreateDirectory("Service", "bin");
-            fileSystem.CreateDirectory("Service", "bin", "Release");
-            fileSystem.CreateDirectory("Service", "bin", "Debug");
+            fileSystem.CreateDirectory(serviceDirectory);
+            fileSystem.CreateDirectory(serviceDirectory, "bin");
+            fileSystem.CreateDirectory(serviceDirectory, "bin", "Release");
+            fileSystem.CreateDirectory(serviceDirectory, "bin", "Debug");
 
             var expression = new RemoteDomainExpression();
             expression.Setup.PrivateBinPath.ShouldBeNull();
 
-            expression.ServiceDirectory = "Service";
+            expression.ServiceDirectory = serviceDirectory;
 
             expression.Setup.PrivateBinPath.ShouldBe("bin".AppendPath("Release"));
+
+            fileSystem.DeleteDirectory(serviceDirectory);
         }
 
 
@@ -52,16 +71,16 @@ namespace FubuMVC.Tests.Services.Remote
         {
             var fileSystem = new FileSystem();
 
-            fileSystem.DeleteDirectory("Service");
+            fileSystem.DeleteDirectory(serviceDirectory);
 
-            fileSystem.CreateDirectory("Service");
-            fileSystem.CreateDirectory("Service", "bin");
-            fileSystem.CreateDirectory("Service", "bin", "Debug");
+            fileSystem.CreateDirectory(serviceDirectory);
+            fileSystem.CreateDirectory(serviceDirectory, "bin");
+            fileSystem.CreateDirectory(serviceDirectory, "bin", "Debug");
 
             var expression = new RemoteDomainExpression();
             expression.Setup.PrivateBinPath.ShouldBeNull();
 
-            expression.ServiceDirectory = "Service";
+            expression.ServiceDirectory = serviceDirectory;
 
             expression.Setup.PrivateBinPath.ShouldBe("bin".AppendPath("Debug"));
         }
