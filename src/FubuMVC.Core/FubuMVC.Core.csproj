@@ -783,7 +783,6 @@
     <Compile Include="Security\Authentication\LoginSuccessHandler.cs" />
     <Compile Include="Security\Authentication\LogoutRequest.cs" />
     <Compile Include="Security\Authentication\LogoutSuccessHandler.cs" />
-    <Compile Include="Security\Authentication\Membership\FlatFile\FlatFileMembershipRepository.cs" />
     <Compile Include="Security\Authentication\Membership\FubuPrincipal.cs" />
     <Compile Include="Security\Authentication\Membership\IMembershipRepository.cs" />
     <Compile Include="Security\Authentication\Membership\InMemoryMembershipRepository.cs" />

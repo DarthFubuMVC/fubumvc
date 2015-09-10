@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
@@ -45,6 +46,13 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             }
 
             // TODO - add rules for what to do when we have no handler
+            context.DebugMessage(() => new EnvelopeContinuationChosen
+            {
+                ContinuationType = typeof(MoveToErrorQueue),
+                HandlerType = typeof(HandlerPipeline),
+                Envelope = envelope.ToToken()
+            });
+
             return new MoveToErrorQueue(new NoHandlerException(envelope.Message.GetType()));
         }
 

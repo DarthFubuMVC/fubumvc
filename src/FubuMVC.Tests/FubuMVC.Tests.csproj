@@ -259,7 +259,6 @@
     <Compile Include="Security\Authentication\LoginRequestTester.cs" />
     <Compile Include="Security\Authentication\LoginSuccessHandlerTester.cs" />
     <Compile Include="Security\Authentication\LogoutSuccessHandlerTester.cs" />
-    <Compile Include="Security\Authentication\Membership\FlatFile\FlatFileMembershipRepositoryTester.cs" />
     <Compile Include="Security\Authentication\Membership\MembershipAuthenticationTester.cs" />
     <Compile Include="Security\Authentication\Membership\MembershipNodeTester.cs" />
     <Compile Include="Security\Authentication\Membership\UserInfoTester.cs" />

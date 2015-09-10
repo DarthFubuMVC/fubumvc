@@ -2,8 +2,6 @@
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.Core.Security.Authentication.Cookies;
-using FubuMVC.Core.Security.Authentication.Membership;
-using FubuMVC.Core.Security.Authentication.Membership.FlatFile;
 using FubuMVC.Core.Security.Authentication.Tickets;
 using NUnit.Framework;
 using StructureMap;
@@ -33,7 +31,6 @@ namespace FubuMVC.Tests.Security.Authentication
                 container.DefaultRegistrationIs<IEncryptor, Encryptor>();
                 container.DefaultRegistrationIs<ILoginCookies, BasicFubuLoginCookies>();
                 container.DefaultRegistrationIs<IAuthenticationRedirector, AuthenticationRedirector>();
-                container.DefaultRegistrationIs<IMembershipRepository, FlatFileMembershipRepository>();
                 container.DefaultRegistrationIs<ILoginAuditor, NulloLoginAuditor>();
             }
         }
