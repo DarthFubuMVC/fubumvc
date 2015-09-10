@@ -1,5 +1,4 @@
 using FubuCore.Descriptions;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
 using NUnit.Framework;
 using Shouldly;
@@ -12,9 +11,7 @@ namespace FubuMVC.Tests.Resources.Conneg
         [Test]
         public void get_the_description_if_the_reader_is_null()
         {
-            var mimeType = new CurrentMimeType("text/json", null);
-
-            var choice = new ReaderChoice(mimeType, null);
+            var choice = new ReaderChoice("text/json", null);
 
             var description = Description.For(choice);
 
@@ -24,9 +21,7 @@ namespace FubuMVC.Tests.Resources.Conneg
         [Test]
         public void get_the_description_if_the_reader_is_not_null()
         {
-            var mimeType = new CurrentMimeType("text/json", null);
-
-            var choice = new ReaderChoice(mimeType, new ClassWithTitle());
+            var choice = new ReaderChoice("text/json", new ClassWithTitle());
 
             var description = Description.For(choice);
 
@@ -37,6 +32,5 @@ namespace FubuMVC.Tests.Resources.Conneg
     [Title("Some title")]
     public class ClassWithTitle
     {
-        
     }
 }

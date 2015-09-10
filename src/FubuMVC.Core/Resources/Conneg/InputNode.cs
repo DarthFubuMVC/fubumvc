@@ -145,12 +145,7 @@ namespace FubuMVC.Core.Resources.Conneg
         protected override IConfiguredInstance buildInstance()
         {
             var instance = new ConfiguredInstance(typeof (InputBehavior<>), _inputType);
-
-            var collection = new ConfiguredInstance(typeof (ReaderCollection<>), _inputType);
-            collection.Dependencies.Add<IInputNode>(this);
-
-            var collectionType = typeof (IReaderCollection<>).MakeGenericType(_inputType);
-            instance.Dependencies.Add(collectionType, collection);
+            instance.Dependencies.Add(typeof(IInputNode), this);
 
             return instance;
         }
