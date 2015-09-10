@@ -56,6 +56,8 @@ namespace Serenity
             });
 
             injectJavascriptErrorDetection();
+
+            Registry.Mode = "testing";
         }
 
         private void injectJavascriptErrorDetection()

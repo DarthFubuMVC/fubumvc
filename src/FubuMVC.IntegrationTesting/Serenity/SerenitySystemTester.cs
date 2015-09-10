@@ -26,6 +26,17 @@ namespace FubuMVC.IntegrationTesting.Serenity
         }
 
         [Test]
+        public void the_build_runtime_will_be_in_testing_mode()
+        {
+            using (var system = new SerenitySystem())
+            {
+                system.As<ISystem>().Warmup().Wait();
+
+                system.Runtime.Mode.InTesting().ShouldBeTrue();
+            }
+        }
+
+        [Test]
         public void create_a_context_from_warmup_without_failure()
         {
             using (var system = new SerenitySystem())
