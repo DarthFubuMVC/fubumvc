@@ -55,6 +55,8 @@ namespace FubuMVC.Core.Resources.Conneg
 
         private OutputChoice<T> chooseOutput<T>(string accepts)
         {
+            if (!_allMedia.Value.Any()) return null;
+
             var mimeTypes = new MimeTypeList(accepts);
 
             foreach (var acceptType in mimeTypes)
@@ -75,7 +77,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 var media = _allMedia.Value.FirstOrDefault();
                 return new OutputChoice<T>()
                 {
-                    MimeType = "*/*",
+                    MimeType = media.Mimetypes.First(),
                     Writer = (IMediaWriter<T>) media
                 };
             }
@@ -217,13 +219,7 @@ namespace FubuMVC.Core.Resources.Conneg
         protected override IConfiguredInstance buildInstance()
         {
             var instance = new ConfiguredInstance(typeof (OutputBehavior<>), _resourceType);
-
-            var collection = new ConfiguredInstance(typeof(MediaCollection<>), _resourceType);
-            collection.Dependencies.Add<IOutputNode>(this);
-            var collectionType = typeof(IMediaCollection<>).MakeGenericType(_resourceType);
-            instance.Dependencies.Add(collectionType, collection);
-
-            
+            instance.Dependencies.Add(typeof(IOutputNode), this);
 
             if (ResourceNotFound != null)
             {

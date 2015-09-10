@@ -9,21 +9,14 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class OutputPartialBehavior
-    {
-        public static readonly OutputPartialBehavior Write = new OutputPartialBehavior();
-        public static readonly OutputPartialBehavior None = new OutputPartialBehavior();
-
-        private OutputPartialBehavior() { }
-    }
-
+    // This is mostly tested through integration tests
     public class OutputBehavior<T> : IActionBehavior where T : class
     {
         private readonly IFubuRequestContext _context;
-        private readonly IMediaCollection<T> _media;
+        private readonly IOutputNode _media;
         private readonly IResourceNotFoundHandler _notFoundHandler;
 
-        public OutputBehavior(IFubuRequestContext context, IMediaCollection<T> media, IResourceNotFoundHandler notFoundHandler) 
+        public OutputBehavior(IFubuRequestContext context, IOutputNode media, IResourceNotFoundHandler notFoundHandler) 
         {
             _context = context;
             _media = media;
@@ -88,7 +81,7 @@ namespace FubuMVC.Core.Resources.Conneg
             // Select the appropriate media writer
             // based on the mimetype and other runtime
             // conditions
-            var media = _media.SelectWriter(mimeTypes, _context);
+            var media = _media.ChooseOutput<T>(mimeTypes.AcceptTypes.Raw);
 
             if (media == null)
             {
@@ -98,9 +91,10 @@ namespace FubuMVC.Core.Resources.Conneg
             }
             else
             {
+                _context.Logger.DebugMessage(() => new WriterChoice(media.MimeType, media.Writer));
+
                 // Write the media based on a matching media type
-                var outputMimetype = mimeTypes.SelectFirstMatching(media.Mimetypes);
-                media.Write(outputMimetype, _context, resource);
+                media.Writer.Write(media.MimeType, _context, resource);
             }
         }
 
@@ -108,7 +102,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public IEnumerable<IMediaWriter<T>> Media
         {
-            get { return _media.Writers; }
+            get { return _media.Media<T>(); }
         }
 
         public void WriteHeaders()

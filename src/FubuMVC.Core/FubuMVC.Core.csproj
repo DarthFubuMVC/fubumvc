@@ -96,6 +96,7 @@
     <Compile Include="Http\Hosting\ReflectionExtensions.cs" />
     <Compile Include="Registration\ActionlessViewChainSource.cs" />
     <Compile Include="Registration\SingletonAttribute.cs" />
+    <Compile Include="Resources\Conneg\OutputPartialBehavior.cs" />
     <Compile Include="Resources\Conneg\ViewAttachment.cs" />
     <Compile Include="Runtime\DiagnosticPartialFactory.cs" />
     <Compile Include="Runtime\Files\ChangeSet.cs" />
@@ -653,12 +654,10 @@
     <Compile Include="Resources\Conneg\CustomReadersAndWriters.cs" />
     <Compile Include="Resources\Conneg\DefaultReadersAndWriters.cs" />
     <Compile Include="Resources\Conneg\HtmlTagsRule.cs" />
-    <Compile Include="Resources\Conneg\IMediaCollection.cs" />
     <Compile Include="Resources\Conneg\IOutputNode.cs" />
     <Compile Include="Resources\Conneg\IReaderCollection.cs" />
     <Compile Include="Resources\Conneg\IResourceNotFoundHandler.cs" />
     <Compile Include="Resources\Conneg\DefaultResourceNotFoundHandler.cs" />
-    <Compile Include="Resources\Conneg\MediaCollection.cs" />
     <Compile Include="Resources\Conneg\NoMatchingWriter.cs" />
     <Compile Include="Resources\Conneg\NoWritersMatch.cs" />
     <Compile Include="Resources\Conneg\OutputNodeExtensions.cs" />
