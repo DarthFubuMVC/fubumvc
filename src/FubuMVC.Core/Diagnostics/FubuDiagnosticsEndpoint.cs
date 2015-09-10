@@ -57,10 +57,11 @@ namespace FubuMVC.Core.Diagnostics
             return document;
         }
 
+
         private void writeScripts(HtmlTag foot)
         {
             // Do this regardless
-            foot.Append(_assets.For("FubuDiagnostics.js").ToScriptTag(_request));
+            foot.Append(_assets.For("FubuDiagnostics.js").ToEmbeddedScriptTag());
 
             var routeData = _routeWriter.WriteJavascriptRoutes("FubuDiagnostics.routes", _routes);
             foot.Append(routeData);
@@ -78,10 +79,10 @@ namespace FubuMVC.Core.Diagnostics
                 _scripts.Each(name =>
                 {
                     var file = _assets.For(name);
-                    foot.Append(file.ToScriptTag(_request));
+                    foot.Append(file.ToEmbeddedScriptTag());
                 });
 
-                extensionFiles.Each(file => foot.Append(file.ToScriptTag(_request)));
+                extensionFiles.Each(file => foot.Append(file.ToEmbeddedScriptTag()));
             }
         }
 
@@ -90,7 +91,7 @@ namespace FubuMVC.Core.Diagnostics
             _styles.Each(name =>
             {
                 var file = _assets.For(name);
-                document.Head.Append(file.ToStyleTag(_request));
+                document.Head.Append(file.ToEmbeddedStyleTag());
             });
         }
 

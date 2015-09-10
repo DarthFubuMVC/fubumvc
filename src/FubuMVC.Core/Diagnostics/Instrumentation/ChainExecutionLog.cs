@@ -82,7 +82,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
                 {"exceptions", HadException}
             };
 
-            if (RootChain != null) dict.Add("chain", RootChain.Title().GetHashCode());
+            if (RootChain != null) dict.Add("chain", RootChain.Key);
             return dict;
         }
 

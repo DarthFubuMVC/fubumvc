@@ -285,6 +285,10 @@ namespace FubuMVC.Core.Registration
             return BuildFrom(new FubuRegistry());
         }
 
+        public BehaviorChain FindChain(int key)
+        {
+            return Chains.FirstOrDefault(x => x.Key == key);
+        }
     }
 
     public class RouteCollection : IEnumerable<RoutedChain>

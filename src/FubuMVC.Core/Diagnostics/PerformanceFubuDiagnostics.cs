@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Diagnostics
             {
                 var dict = chain.Performance.ToDictionary();
                 dict.Add("title", chain.Title());
-                dict.Add("hash", chain.Title().GetHashCode());
+                dict.Add("hash", chain.Key);
 
                 return dict;
             }).ToArray();

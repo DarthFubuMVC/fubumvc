@@ -88,6 +88,7 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         public string RouteName { get; set; }
+        
 
         /// <summary>
         /// Adds the specified route as an additional route for this BehaviorChain to respond to.

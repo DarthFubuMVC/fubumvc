@@ -13,7 +13,8 @@ namespace FubuMVC.Core.Diagnostics.Assets
     {
         private readonly Lazy<byte[]> _contents;
         private readonly string _cacheHeader = "private, max-age={0}".ToFormat(AssetSettings.MaxAgeInSeconds);
-        
+        private Lazy<string> _text;
+
 
         public EmbeddedFile(Assembly assembly, string resource)
         {
@@ -26,6 +27,12 @@ namespace FubuMVC.Core.Diagnostics.Assets
             {
                 var stream = assembly.GetManifestResourceStream(resource);
                 return stream.ReadAllBytes();
+            });
+
+            _text = new Lazy<string>(() =>
+            {
+                var stream = assembly.GetManifestResourceStream(resource);
+                return stream.ReadAllText();
             });
 
             Version = assembly.GetName().Version.ToString();
@@ -73,14 +80,30 @@ namespace FubuMVC.Core.Diagnostics.Assets
             return new StylesheetLinkTag(request.ToFullUrl(Url));
         }
 
+        public HtmlTag ToEmbeddedStyleTag()
+        {
+            // <style media="screen" type="text/css">
+            return new HtmlTag("style").Attr("media", "screen").Attr("type", "text/css").Text(FullText()).Encoded(false);
+        }
+
         public HtmlTag ToScriptTag(IHttpRequest request)
         {
             return new HtmlTag("script").Attr("language", "javascript").Attr("src", request.ToFullUrl(Url));
         }
 
+        public HtmlTag ToEmbeddedScriptTag()
+        {
+            return new HtmlTag("script").Attr("language", "javascript").Text(FullText()).Encoded(false);
+        }
+
         public override string ToString()
         {
             return string.Format("EmbeddedFile: {0}", Url);
+        }
+
+        public string FullText()
+        {
+            return _text.Value;
         }
     }
 }

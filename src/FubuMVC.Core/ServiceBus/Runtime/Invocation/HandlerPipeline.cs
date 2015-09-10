@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
-using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;

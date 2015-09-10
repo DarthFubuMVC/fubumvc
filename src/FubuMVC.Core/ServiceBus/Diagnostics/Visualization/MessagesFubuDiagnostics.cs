@@ -27,7 +27,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
                 {
                     {"message_type", chain.InputType().Name},
                     {"full_name", chain.InputType().FullName},
-                    {"hash", chain.Title().GetHashCode()},
+                    {"hash", chain.Key},
                     {"handlers", calls}
                 };
             }).ToArray();

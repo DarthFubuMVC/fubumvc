@@ -40,6 +40,7 @@ nuget Microsoft.Bcl.Build
 nuget Microsoft.CompilerServices.AsyncTargetingPack
 nuget Microsoft.Data.OData
 nuget Microsoft.Data.Services.Client
+nuget Microsoft.Web.Infrastructure
 nuget Microsoft.WindowsAzure.ConfigurationManager
 nuget PowerThreading
 nuget Selenium.RC

@@ -61,6 +61,11 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public readonly PerformanceHistory Performance = new PerformanceHistory();
 
+        public int Key
+        {
+            get { return Title().GetHashCode(); }
+        }
+
         public bool IsAsynchronous()
         {
             return Calls.Any(x => x.IsAsync);
@@ -358,7 +363,7 @@ namespace FubuMVC.Core.Registration.Nodes
                     Output.Media()
                         .OfType<IViewWriter>()
                         .Select(x => Description.For(x.View).Title);
-                return "View(s): " + views.Join("");
+                return "View for: " + ResourceType().FullName;
             }
 
             if (HasOutput() && Output.Media().Any())

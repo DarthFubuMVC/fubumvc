@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
 using FubuCore.Binding;
@@ -30,7 +31,11 @@ namespace FubuMVC.Tests.Http.AspNet
             theHttpResponse = MockRepository.GenerateMock<HttpResponseBase>();
             theHttpContext.Stub(x => x.Response).Return(theHttpResponse);
 
+            theHttpContext.Stub(x => x.Items).Return(new Dictionary<string, object>());
+
             theArguments = new AspNetServiceArguments(theRequestContext);
+
+            
         }
 
         [Test]

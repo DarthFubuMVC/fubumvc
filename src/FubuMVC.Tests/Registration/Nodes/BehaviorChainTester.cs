@@ -114,6 +114,13 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         [Test]
+        public void key()
+        {
+            var chain = new RoutedChain("something/else");
+            chain.Key.ShouldBe(chain.Title().GetHashCode());
+        }
+
+        [Test]
         public void append_with_no_behaviors()
         {
             var chain = new BehaviorChain();

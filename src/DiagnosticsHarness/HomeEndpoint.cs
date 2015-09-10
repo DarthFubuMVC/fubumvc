@@ -69,6 +69,19 @@ namespace DiagnosticsHarness
             _serviceBus.Send(new NumberMessage{Value = 8});
             _serviceBus.Send(new NumberMessage{Value = 9});
 
+            runRequests();
+            runRequests();
+            runRequests();
+            runRequests();
+            runRequests();
+            runRequests();
+
+
+            return FubuContinuation.RedirectTo("_fubu");
+        }
+
+        private void runRequests()
+        {
             _runtime.Scenario(_ => _.Get.Url("hello"));
             _runtime.Scenario(_ =>
             {
@@ -81,27 +94,14 @@ namespace DiagnosticsHarness
                 _.Get.Url("redirects");
                 _.StatusCodeShouldBe(302);
             });
-             
-            
-            _runtime.Scenario(_ =>
-            {
-                _.Post.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*");
-            });
-            
-            
-            _runtime.Scenario(_ =>
-            {
-                _.Delete.Json(new Team { City = "Denver", Mascot = "Broncos" }).Accepts("*/*");
-            });
-
-            _runtime.Scenario(_ =>
-            {
-                _.Put.Json(new Team { City = "Denver", Mascot = "Broncos" }).Accepts("*/*");
-            });
-            
 
 
-            return FubuContinuation.RedirectTo("_fubu");
+            _runtime.Scenario(_ => { _.Post.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
+
+
+            _runtime.Scenario(_ => { _.Delete.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
+
+            _runtime.Scenario(_ => { _.Put.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
         }
     }
 }
