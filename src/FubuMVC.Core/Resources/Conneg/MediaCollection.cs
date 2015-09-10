@@ -8,10 +8,12 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class MediaCollection<T> : IMediaCollection<T> where T : class
     {
-        private readonly Lazy<IEnumerable<IMediaWriter<T>>> _media; 
+        private readonly Lazy<IEnumerable<IMediaWriter<T>>> _media;
+        private readonly IOutputNode _node;
 
         public MediaCollection(IOutputNode node)
         {
+            _node = node;
             _media = new Lazy<IEnumerable<IMediaWriter<T>>>(() => node.Media<T>().ToArray());
         }
 
@@ -22,30 +24,17 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public IMediaWriter<T> SelectWriter(CurrentMimeType mimeTypes, IFubuRequestContext context)
         {
-            foreach (var acceptType in mimeTypes.AcceptTypes)
+            var choice = _node.ChooseOutput<T>(mimeTypes.AcceptTypes.Raw);
+            if (choice != null)
             {
-                var candidate = Writers.FirstOrDefault(x => x.Mimetypes.Contains(acceptType));
-                if (candidate != null)
-                {
-                    if (candidate != null)
-                    {
-                        context.Logger.DebugMessage(() => new WriterChoice(acceptType, candidate));
-                        return candidate;
-                    }
-                }
+                context.Logger.DebugMessage(() => new WriterChoice(choice.MimeType, choice.Writer));
 
-                
-            }
-
-            if (mimeTypes.AcceptsAny())
-            {
-                var media = Writers.FirstOrDefault();
-                context.Logger.DebugMessage(() => new WriterChoice(MimeType.Any.Value, media));
-
-                return media;
+                return choice.Writer;
             }
 
             return null;
         }
     }
+
+
 }

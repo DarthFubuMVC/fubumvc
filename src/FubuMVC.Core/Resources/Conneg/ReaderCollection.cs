@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public IReader<T> ChooseReader(CurrentMimeType mimeTypes, IFubuRequestContext context)
         {
-            return _node.Readers().OfType<IReader<T>>().FirstOrDefault(x => x.Mimetypes.Contains(mimeTypes.ContentType));
+            return _node.SelectReader(mimeTypes.ContentType).As<IReader<T>>();
         }
     }
 }

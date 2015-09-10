@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.View;
 using StructureMap.Pipeline;
@@ -36,9 +35,9 @@ namespace FubuMVC.Core.Resources.Conneg
         IEnumerable<IMediaWriter> Media();
 
         IEnumerable<IMediaWriter<T>> Media<T>();
-            
-            
-            
+
+        OutputChoice<T> ChooseOutput<T>(string accepts);
+
         /// <summary>
         /// All the possible mimetypes for the explicitly added writers
         /// </summary>

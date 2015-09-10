@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +14,8 @@ namespace FubuMVC.Core.Http
         // look for ',' separated values
         public MimeTypeList(string mimeType)
         {
+            Raw = mimeType;
+
             if (mimeType != null)
             {
                 mimeType.ToDelimitedArray(',').Each(x =>
@@ -28,8 +29,11 @@ namespace FubuMVC.Core.Http
             }
         }
 
+        public string Raw { get; private set; }
+
         public MimeTypeList(params MimeType[] mimeTypes)
         {
+            Raw = mimeTypes.Select(x => x.Value).Join(";");
             _mimeTypes.AddRange(mimeTypes.Select(x => x.Value));
         }
 

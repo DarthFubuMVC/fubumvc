@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Caching;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuCore.Util;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
@@ -13,6 +15,12 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+    public class OutputChoice<T>
+    {
+        public IMediaWriter<T> Writer;
+        public string MimeType;
+    }
+
     public class OutputNode : BehaviorNode, IMayHaveResourceType, DescribesItself, IOutputNode
     {
         private readonly Type _resourceType;
@@ -20,6 +28,7 @@ namespace FubuMVC.Core.Resources.Conneg
         private ConnegSettings _settings;
 
         private readonly Lazy<IEnumerable<IMediaWriter>> _allMedia; 
+        private readonly Cache<string, object> _choices = new Cache<string, object>();
 
         public OutputNode(Type resourceType)
         {
@@ -43,6 +52,42 @@ namespace FubuMVC.Core.Resources.Conneg
                 return _media;
             });
         }
+
+        private OutputChoice<T> chooseOutput<T>(string accepts)
+        {
+            var mimeTypes = new MimeTypeList(accepts);
+
+            foreach (var acceptType in mimeTypes)
+            {
+                var candidate = _allMedia.Value.FirstOrDefault(x => x.Mimetypes.Contains(acceptType));
+                if (candidate != null)
+                {
+                    return new OutputChoice<T>
+                    {
+                        MimeType = acceptType,
+                        Writer = (IMediaWriter<T>) candidate
+                    };
+                }
+            }
+
+            if (mimeTypes.DefaultIfEmpty("*/*").Contains("*/*"))
+            {
+                var media = _allMedia.Value.FirstOrDefault();
+                return new OutputChoice<T>()
+                {
+                    MimeType = "*/*",
+                    Writer = (IMediaWriter<T>) media
+                };
+            }
+
+            return null;
+        } 
+
+        public OutputChoice<T> ChooseOutput<T>(string accepts)
+        {
+            _choices.Fill(accepts, chooseOutput<T>);
+            return (OutputChoice<T>) _choices[accepts];
+        } 
 
         public void Add(IFormatter formatter)
         {

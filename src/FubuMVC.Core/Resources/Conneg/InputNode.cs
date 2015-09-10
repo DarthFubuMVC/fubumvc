@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Caching;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuCore.Util;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
@@ -62,6 +64,13 @@ namespace FubuMVC.Core.Resources.Conneg
         /// <param name="mimeType"></param>
         /// <returns></returns>
         bool CanRead(string mimeType);
+
+        /// <summary>
+        /// Selects the first reader that matches the contentType
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
+        IReader SelectReader(string contentType);
     }
 
     public class InputNode : BehaviorNode, IInputNode, DescribesItself
@@ -69,7 +78,8 @@ namespace FubuMVC.Core.Resources.Conneg
         private readonly Type _inputType;
         private readonly IList<IReader> _readers = new List<IReader>();
         private ConnegSettings _settings;
-        private readonly Lazy<IEnumerable<IReader>> _allReaders; 
+        private readonly Lazy<IEnumerable<IReader>> _allReaders;
+        private readonly Cache<string, IReader> _readersSelection;
 
         public InputNode(Type inputType)
         {
@@ -82,6 +92,16 @@ namespace FubuMVC.Core.Resources.Conneg
 
                 return _readers;
             });
+
+            _readersSelection = new Cache<string, IReader>(contentType =>
+            {
+                return Readers().FirstOrDefault(x => x.Mimetypes.Contains(contentType));
+            });
+        }
+
+        public IReader SelectReader(string contentType)
+        {
+            return _readersSelection[contentType];
         }
 
         public IEnumerable<IReader> Readers()

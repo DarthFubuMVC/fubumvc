@@ -31,41 +31,9 @@ namespace FubuMVC.Core.Security.Authentication
 
             SetServiceIfNone<ILoginAuditor, NulloLoginAuditor>();
 
-            SetServiceIfNone<IMembershipRepository, Membership.InMemoryMembershipRepository>().Singleton();
+            SetServiceIfNone<IMembershipRepository, InMemoryMembershipRepository>().Singleton();
         }
     }
 
-    public class InMemoryMembershipRepository : IMembershipRepository
-    {
-        private readonly IPasswordHash _hash;
-        private readonly Cache<string, string> _credentials = new Cache<string, string>();
 
-
-
-
-        public InMemoryMembershipRepository(IPasswordHash hash)
-        {
-            _hash = hash;
-        }
-
-        public void StoreCredentials(string user, string password)
-        {
-            _credentials[user] = _hash.CreateHash(password);
-        }
-
-        public bool MatchesCredentials(LoginRequest request)
-        {
-            if (!_credentials.Has(request.UserName)) return false;
-
-            var hash = _hash.CreateHash(request.Password);
-            return _credentials[request.UserName] == hash;
-        }
-
-        public IUserInfo FindByName(string username)
-        {
-            if (!_credentials.Has(username)) return null;
-
-            return new UserInfo{UserName = username};
-        }
-    }
 }
