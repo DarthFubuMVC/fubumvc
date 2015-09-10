@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
@@ -34,7 +35,22 @@ namespace FubuMVC.Core.Runtime
             {
                 return;
             }
-            var behavior = _factory.BuildBehavior(arguments, _chain.UniqueId);
+
+            IActionBehavior behavior = null;
+
+            if (arguments.Has(typeof (IChainExecutionLog)))
+            {
+                arguments.Get<IChainExecutionLog>().Trace("Building the Behaviors", () =>
+                {
+                    behavior = _factory.BuildBehavior(arguments, _chain.UniqueId);
+                });
+            }
+            else
+            {
+                behavior = _factory.BuildBehavior(arguments, _chain.UniqueId);
+            }
+
+            
             requestCompletion.WhenCompleteDo(x =>
             {
                 var disposable = behavior as IDisposable;
