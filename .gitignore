@@ -85,3 +85,5 @@ src/FubuMVC.IntegrationTesting/phantomjs.exe
 src/FubuMVC.IntegrationTesting/chromedriver.exe.version
 src/FubuMVC.IntegrationTesting/local.config
 packages
+src/ServiceNode/fubutransportation.esent.2215/fubutransportation.esent.2215
+*.chk

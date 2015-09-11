@@ -22,8 +22,10 @@ namespace FubuMVC.Core.Services.Remote
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            var domainSetup = AppDomain.CurrentDomain.SetupInformation;
-            System.Environment.CurrentDirectory = domainSetup.ApplicationBase;
+            //var domainSetup = AppDomain.CurrentDomain.SetupInformation;
+            
+            // TODO -- what the hell here? This is bad bad bad.
+            //System.Environment.CurrentDirectory = domainSetup.ApplicationBase;
              
             // TODO -- need to handle exceptions gracefully here
             EventAggregator.Start((IRemoteListener) remoteListener);

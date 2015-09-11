@@ -33,10 +33,7 @@ namespace Serenity
      * 
      * 1.) Subsystems for remote work, add to FubuRegistry
 
-     * 11.) Figure out how to attach message tracking. Use 
-
-     * 13.) Apply MessageContextualInfoProvider from FT testing
-     * 14.) Look closely at FubuTransportSystem and TestNodes
+     * 14.) Look closely at TestNodes
      */
 
     public class SerenitySystem : SerenitySystem<FubuRegistry>
