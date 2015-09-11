@@ -15,17 +15,6 @@ namespace FubuMVC.IntegrationTesting
 {
     public class TestSystem : SerenitySystem<WebsiteRegistry>
     {
-        public static void tryit()
-        {
-            using (var system = new TestSystem())
-            {
-                using (var context = system.As<ISystem>().CreateContext())
-                {
-                    Debug.WriteLine("All good");
-                }
-            }
-        }
-
         public TestSystem()
         {
             Registry.Import<PersistedMembership<User>>();

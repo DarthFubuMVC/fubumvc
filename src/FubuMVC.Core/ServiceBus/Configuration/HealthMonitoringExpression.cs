@@ -14,8 +14,10 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 
         public HealthMonitoringExpression ScheduledExecution(ScheduledExecution scheduledExecution)
         {
-            _parent.AlterSettings<PollingJobSettings>(x => {
-                x.JobFor<HealthMonitorPollingJob>().ScheduledExecution = scheduledExecution;
+            _parent.AlterSettings<PollingJobSettings>(x =>
+            {
+                x.AddJob<HealthMonitorPollingJob, HealthMonitoringSettings>(settings => settings.Interval)
+                    .ScheduledExecution = scheduledExecution;
             });
             return this;
         }

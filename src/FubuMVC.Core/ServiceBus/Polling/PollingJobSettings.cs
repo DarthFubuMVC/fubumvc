@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Events;
@@ -13,7 +14,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
     public class PollingJobSettings : IFeatureSettings
     {
         private readonly Cache<Type, PollingJobDefinition> _jobs =
-            new Cache<Type, PollingJobDefinition>(type => new PollingJobDefinition {JobType = type});
+            new Cache<Type, PollingJobDefinition>();
 
         public IEnumerable<PollingJobDefinition> Jobs
         {
@@ -44,6 +45,19 @@ namespace FubuMVC.Core.ServiceBus.Polling
         {
             Jobs.Select(x => x.ToInstance())
                 .Each(x => registry.Services.AddService(typeof (IPollingJob), x));
+        }
+
+        public PollingJobDefinition AddJob<TJob, TSettings>(Expression<Func<TSettings, double>> intervalSource) where TJob : IJob
+        {
+            var definition = PollingJobDefinition.For<TJob, TSettings>(intervalSource);
+            _jobs[typeof (TJob)] = definition;
+
+            return definition;
+        }
+
+        public void AddJob(PollingJobDefinition jobDefinition)
+        {
+            _jobs[jobDefinition.JobType] = jobDefinition;
         }
     }
 }

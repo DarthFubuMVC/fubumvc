@@ -15,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
         public IntervalExpression<TJob> RunJob<TJob>() where TJob : IJob
         {
             return new IntervalExpression<TJob>(this);
-        } 
+        }
 
         public class IntervalExpression<TJob> where TJob : IJob
         {
@@ -29,11 +29,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
             public ScheduledExecutionExpression ScheduledAtInterval<TSettings>(
                 Expression<Func<TSettings, double>> intervalInMillisecondsProperty)
             {
-                _parent._parent.AlterSettings<PollingJobSettings>(x => {
-                    var job = x.JobFor<TJob>();
-                    job.SettingType = typeof (TSettings);
-                    job.IntervalSource = intervalInMillisecondsProperty;
-                });
+                _parent._parent.AlterSettings<PollingJobSettings>(x => x.AddJob<TJob, TSettings>(intervalInMillisecondsProperty));
 
                 return new ScheduledExecutionExpression(_parent._parent);
             }

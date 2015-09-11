@@ -6,14 +6,21 @@ namespace FubuMVC.Core.ServiceBus.Polling
 {
     public class PollingJobDefinition
     {
-        public Type JobType { get; set; }
-        public Type SettingType { get; set; }
-        public Expression IntervalSource { get; set; }
+        public Type JobType { get; private set; }
+        public Type SettingType { get; private set; }
+        public Expression IntervalSource { get; private set; }
         public ScheduledExecution ScheduledExecution { get; set; }
 
-        public PollingJobDefinition()
+        public PollingJobDefinition(Type jobType, Type settingType, Expression intervalSource)
         {
+            if (jobType == null) throw new ArgumentNullException("jobType");
+            if (settingType == null) throw new ArgumentNullException("settingType");
+            if (intervalSource == null) throw new ArgumentNullException("intervalSource");
+
             ScheduledExecution = ScheduledExecution.WaitUntilInterval;
+            JobType = jobType;
+            SettingType = settingType;
+            IntervalSource = intervalSource;
         }
 
         public Instance ToInstance()
@@ -26,12 +33,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
         public static PollingJobDefinition For<TJob, TSettings>(Expression<Func<TSettings, double>> intervalSource) where TJob : IJob
         {
-            return new PollingJobDefinition
-            {
-                JobType = typeof(TJob),
-                IntervalSource = intervalSource,
-                SettingType = typeof(TSettings)
-            };
+            return new PollingJobDefinition(typeof (TJob), typeof (TSettings), intervalSource);
         }
     }
 
