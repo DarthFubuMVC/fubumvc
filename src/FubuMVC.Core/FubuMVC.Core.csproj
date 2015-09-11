@@ -586,6 +586,7 @@
     <Compile Include="Http\Owin\Readers\IOwinRequestReader.cs" />
     <Compile Include="Http\Owin\Readers\MediaTypeReader.cs" />
     <Compile Include="Http\Owin\Readers\OwinRequestReader.cs" />
+    <Compile Include="Services\FubuRegistryLoader.cs" />
     <Compile Include="Services\JasperServiceConfiguration.cs" />
     <Compile Include="Services\JasperServiceRuntime.cs" />
     <Compile Include="View\ImageTag.cs" />

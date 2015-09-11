@@ -88,7 +88,23 @@ namespace FubuMVC.Tests.Services
                 .Message.ShouldContain(
                     "Found multiple candidates, you may need to specify an explicit selection in the bottle-service.config file.");
         }
+
+        [Test]
+        public void determine_loader_for_fuburegistry()
+        {
+            ApplicationLoaderFinder.DetermineLoaderType(typeof(StandinFubuRegistry))
+                .ShouldBe(typeof(FubuRegistryLoader<StandinFubuRegistry>));
+        }
+
+        [Test]
+        public void build_loader_for_fuburegistry()
+        {
+            ApplicationLoaderFinder.BuildApplicationLoader(typeof (StandinFubuRegistry))
+                .ShouldBeOfType<FubuRegistryLoader<StandinFubuRegistry>>();
+        }
     }
+
+    public class StandinFubuRegistry : FubuRegistry { }
 
     public class TemplatedApplicationLoader : IApplicationLoader
     {

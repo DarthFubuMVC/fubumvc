@@ -75,6 +75,8 @@ namespace FubuMVC.Core.Services
         {
             if (type.CanBeCastTo<IApplicationLoader>()) return type;
 
+            if (type.CanBeCastTo<FubuRegistry>()) return typeof (FubuRegistryLoader<>).MakeGenericType(type);
+
             throw new ArgumentOutOfRangeException("type", "Only IApplicationLoader types can be used here");
              
         }

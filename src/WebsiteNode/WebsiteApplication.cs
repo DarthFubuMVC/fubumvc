@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using ServiceNode;

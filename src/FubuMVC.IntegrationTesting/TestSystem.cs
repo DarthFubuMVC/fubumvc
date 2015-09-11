@@ -1,7 +1,6 @@
 ﻿using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
-using FubuMVC.LightningQueues;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.RavenDb.Reset;
 using Serenity;
@@ -11,13 +10,10 @@ using WebsiteNode;
 
 namespace FubuMVC.IntegrationTesting
 {
-    public class TestSystem : SerenitySystem
+    public class TestSystem : SerenitySystem<WebsiteRegistry>
     {
         public TestSystem()
         {
-            Registry.ServiceBus.Enable(true);
-            Registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
-
             Registry.Import<PersistedMembership<User>>();
             Registry.Features.Authentication.Configure(_ =>
             {
