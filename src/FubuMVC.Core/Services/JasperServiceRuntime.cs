@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core.Services
 {
@@ -30,7 +31,7 @@ namespace FubuMVC.Core.Services
         public void Start()
         {
             Console.WriteLine("Starting application from " + Runner);
-            _shutdown = Runner.Load();
+            _shutdown = Runner.Load(new Dictionary<string, string>());
         }
 
         public void Stop()

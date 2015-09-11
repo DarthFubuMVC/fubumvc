@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Services.Remote
             EventAggregator.Start((IRemoteListener) remoteListener);
 
             var loader = ApplicationLoaderFinder.FindLoader(bootstrapperName);
-            _shutdown = loader.Load();
+            _shutdown = loader.Load(properties);
 
             EventAggregator.SendMessage(new LoaderStarted
             {

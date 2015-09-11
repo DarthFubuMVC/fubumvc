@@ -1,10 +1,13 @@
-﻿using FubuMVC.Core.Http.Hosting;
+﻿using System.Diagnostics;
+using FubuCore;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.RavenDb.Reset;
 using Serenity;
 using ServiceNode;
+using StoryTeller.Engine;
 using StructureMap;
 using WebsiteNode;
 
@@ -12,6 +15,17 @@ namespace FubuMVC.IntegrationTesting
 {
     public class TestSystem : SerenitySystem<WebsiteRegistry>
     {
+        public static void tryit()
+        {
+            using (var system = new TestSystem())
+            {
+                using (var context = system.As<ISystem>().CreateContext())
+                {
+                    Debug.WriteLine("All good");
+                }
+            }
+        }
+
         public TestSystem()
         {
             Registry.Import<PersistedMembership<User>>();

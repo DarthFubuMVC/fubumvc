@@ -27,7 +27,7 @@ namespace Fubu.Running
             _messaging = messaging;
         }
 
-        public IDisposable Load()
+        public IDisposable Load(Dictionary<string, string> properties)
         {
             EventAggregator.Messaging.AddListener(this);
             return this;

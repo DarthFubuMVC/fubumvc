@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Services.Remote
         // SAMPLE: custom-application-loader
         public class CustomApplicationLoader : IApplicationLoader, IDisposable
         {
-            public IDisposable Load()
+            public IDisposable Load(Dictionary<string, string> properties)
             {
                 // Bootstrap the application or service
                 return this;

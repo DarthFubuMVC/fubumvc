@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Services.Remote
         {
             var path = FubuRuntime.DefaultApplicationPath();
 
-            ServiceDirectory = path.AppendPath(directory);
+            ServiceDirectory = path.ParentDirectory().AppendPath(directory);
         }
 
         public string ServiceDirectory

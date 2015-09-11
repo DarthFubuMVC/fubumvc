@@ -46,7 +46,7 @@ namespace SampleService
 
     public class SampleBootstrapper : IApplicationLoader, IDisposable
     {
-        public IDisposable Load()
+        public IDisposable Load(Dictionary<string, string> properties)
         {
             //ObjectFactory.Initialize(x => x.AddRegistry<SampleRegistry>());
             EventAggregator.SendMessage(new ServiceStarted{ActivatorTypeName = typeof(SampleService).AssemblyQualifiedName});

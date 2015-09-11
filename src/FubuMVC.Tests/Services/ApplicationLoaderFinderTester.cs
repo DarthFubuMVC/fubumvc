@@ -112,7 +112,7 @@ namespace FubuMVC.Tests.Services
         {
         }
 
-        public IDisposable Load()
+        public IDisposable Load(Dictionary<string, string> properties)
         {
             throw new NotImplementedException();
         }
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.Services
 
     public abstract class AbstractApplicationLoader : IApplicationLoader
     {
-        public IDisposable Load()
+        public IDisposable Load(Dictionary<string, string> properties)
         {
             throw new NotImplementedException();
         }
@@ -128,7 +128,7 @@ namespace FubuMVC.Tests.Services
 
     public class FakeApplicationLoader : IApplicationLoader
     {
-        public IDisposable Load()
+        public IDisposable Load(Dictionary<string, string> properties)
         {
             throw new NotImplementedException();
         }

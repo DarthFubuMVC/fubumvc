@@ -98,6 +98,7 @@ namespace Serenity
             
             var system = new RemoteSubSystem(() => new RemoteServiceRunner(x =>
             {
+                x.Properties["Mode"] = "testing";
                 configuration(x);
             }));
 
