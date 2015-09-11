@@ -36,7 +36,10 @@ namespace FubuMVC.Core.ServiceBus
 
         public bool Enabled { get; set; }
 
+        [Obsolete("If this is used in testing, move to LQ instead")]
         public bool EnableInMemoryTransport { get; set; }
+
+        [Obsolete("If this is used in testing, move to LQ instead")]
         public Uri InMemoryReplyUri { get; set; }
 
         public bool DebugEnabled { get; set; }

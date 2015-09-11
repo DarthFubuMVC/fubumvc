@@ -1,12 +1,12 @@
-﻿using FubuCore;
-using FubuCore.Dates;
-using FubuMVC.Core.Http.Hosting;
+﻿using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.RavenDb.Reset;
 using Serenity;
+using ServiceNode;
 using StructureMap;
+using WebsiteNode;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -28,10 +28,20 @@ namespace FubuMVC.IntegrationTesting
                 {
                     graph.ChainFor<LoginController>(x => x.get_login(null)).Output.Add(new DefaultLoginRequestWriter());
                 });
+
+            AddRemoteSubSystem("ServiceNode", x =>
+            {
+                x.UseParallelServiceDirectory("ServiceNode");
+                x.Setup.ShadowCopyFiles = false.ToString();
+            });
         }
 
         protected override void beforeEach(IContainer scope)
         {
+            TextFileWriter.Clear();
+
+            Runtime.Get<MessageRecorder>().Messages.Clear();
+
             var browser = scope.GetInstance<IBrowserLifecycle>();
             if (browser.HasBeenStarted())
             {
@@ -40,22 +50,5 @@ namespace FubuMVC.IntegrationTesting
 
             Runtime.Get<ICompleteReset>().ResetState();
         }
-
-        /*
-         * 
-         * 
-            AddRemoteSubSystem("ServiceNode", x => {
-                x.UseParallelServiceDirectory("ServiceNode");
-                x.Setup.ShadowCopyFiles = false.ToString();
-            });
-
-            
-
-            OnContextCreation(TextFileWriter.Clear);
-
-            OnContextCreation<WebsiteNode.MessageRecorder>(x => x.Messages.Clear());
-         * 
-         * 
-         */
     }
 }

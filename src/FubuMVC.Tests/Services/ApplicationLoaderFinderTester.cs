@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Services;
 using Shouldly;

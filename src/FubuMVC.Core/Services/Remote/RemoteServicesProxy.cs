@@ -28,9 +28,6 @@ namespace FubuMVC.Core.Services.Remote
             // TODO -- need to handle exceptions gracefully here
             EventAggregator.Start((IRemoteListener) remoteListener);
 
-            // All getting redone anyway
-            //properties.Each(x => FubuRuntime.Properties[x.Key] = x.Value);
-
             var loader = ApplicationLoaderFinder.FindLoader(bootstrapperName);
             _shutdown = loader.Load();
 

@@ -1,22 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuCore.CommandLine;
 using FubuCore.Dates;
+using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
+using FubuMVC.Core.ServiceBus.Diagnostics;
+using FubuMVC.Core.ServiceBus.TestSupport;
+using FubuMVC.Core.Services.Messaging;
+using FubuMVC.Core.Services.Remote;
 using FubuMVC.Core.StructureMap;
 using HtmlTags;
+using Serenity.ServiceBus;
 using StoryTeller;
 using StoryTeller.Conversion;
 using StoryTeller.Engine;
 using StoryTeller.Equivalence;
 using StructureMap;
+using MessageHistory = FubuMVC.Core.Services.Messaging.Tracking.MessageHistory;
 
 namespace Serenity
 {
@@ -34,8 +43,9 @@ namespace Serenity
     {
     }
 
-    public class SerenitySystem<T> : ISystem where T : FubuRegistry, new()
+    public class SerenitySystem<T> : ISystem, ISubSystem, IRemoteSubsystems where T : FubuRegistry, new()
     {
+        private readonly IList<ISubSystem> _subSystems = new List<ISubSystem>();
         public readonly CellHandling CellHandling = new CellHandling(new EquivalenceChecker(), new Conversions());
         public readonly T Registry = new T();
         private FubuRuntime _runtime;
@@ -44,6 +54,8 @@ namespace Serenity
 
         public SerenitySystem()
         {
+            _subSystems.Add(this);
+
             Registry.Services.ReplaceService<ISystemTime, SystemTime>().Singleton();
             Registry.Services.ReplaceService<IClock, Clock>().Singleton();
             Registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
@@ -58,6 +70,50 @@ namespace Serenity
             injectJavascriptErrorDetection();
 
             Registry.Mode = "testing";
+        }
+
+        private readonly Cache<string, RemoteSubSystem> _remoteSubSystems = new Cache<string, RemoteSubSystem>();
+        private bool _isDisposed;
+
+
+        ~SerenitySystem()
+        {
+            if (_isDisposed) return;
+
+            this.SafeDispose();
+        }
+
+        public RemoteSubSystem RemoteSubSystemFor(string name)
+        {
+            return _remoteSubSystems[name];
+        }
+
+        public IEnumerable<RemoteSubSystem> RemoteSubSystems
+        {
+            get { return _remoteSubSystems; }
+        }
+
+        public void AddRemoteSubSystem(string name, Action<RemoteDomainExpression> configuration)
+        {
+            
+            var system = new RemoteSubSystem(() => new RemoteServiceRunner(x =>
+            {
+                configuration(x);
+            }));
+
+            _remoteSubSystems[name] = system;
+
+            _subSystems.Add(system);
+        }
+
+        public void AddSubSystem<T>() where T : ISubSystem, new()
+        {
+            AddSubSystem(new T());
+        }
+
+        public void AddSubSystem(ISubSystem subSystem)
+        {
+            _subSystems.Add(subSystem);
         }
 
         private void injectJavascriptErrorDetection()
@@ -136,14 +192,43 @@ namespace Serenity
             if (_runtime != null)
             {
                 afterAll();
-                _runtime.Dispose();
+                EventAggregator.Stop();
+                stopAll();
+                _isDisposed = true;
             }
         }
+
+        protected virtual void stopAll()
+        {
+            var succeeded = Task.WaitAll(_subSystems.Select(x => x.Stop()).ToArray(), TimeSpan.FromMinutes(1));
+
+            if (!succeeded)
+            {
+                // TODO: Replace with a logger
+                ConsoleWriter.Write(ConsoleColor.Yellow,
+                    "WARNING: Failed to stop SerenitySystem and/or registered subsystems");
+            }
+        }
+
 
         CellHandling ISystem.Start()
         {
             return CellHandling;
         }
+
+        Task ISubSystem.Stop()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                if (_runtime != null)
+                {
+                    _runtime.SafeDispose();
+                    _runtime = null;
+                }
+
+            });
+        }
+
 
         IExecutionContext ISystem.CreateContext()
         {
@@ -156,9 +241,20 @@ namespace Serenity
                 startAll();
             }
 
+            _factory.Get<TransportCleanup>().ClearAll();
+            RemoteSubSystems.Each(x => x.Runner.SendRemotely(new ClearAllTransports()));
+
             Runtime.Get<IClock>().As<Clock>().Live();
             _factory.Get<SecuritySettings>().Reset();
             _factory.StartNewScope();
+
+            var messaging = _factory.Get<IMessagingSession>();
+            messaging.ClearAll();
+            RemoteSubSystems.Each(sys => sys.Runner.Messaging.AddListener(messaging));
+
+
+            TestNodes.Reset();
+
             beforeEach(_factory.Container);
 
             return new SerenityContext(this);
@@ -166,11 +262,15 @@ namespace Serenity
 
         private void startAll()
         {
-            _runtime = new FubuRuntime(Registry);
-            _factory = _runtime.Get<IServiceFactory>().As<StructureMapServiceFactory>();
-            _factory.Get<SecuritySettings>().Reset(); // force it to be created from the parent
+            Task.WaitAll(_subSystems.Select(x => x.Start()).ToArray());
+
+            
+            MessageHistory.StartListening(_remoteSubSystems.Select(x => x.Runner).ToArray());
+
             beforeAll();
         }
+
+
 
         Task ISystem.Warmup()
         {
@@ -178,12 +278,21 @@ namespace Serenity
             return _warmup;
         }
 
-        /* TODO -- figure out what to do here
-        public void StartListeningForMessages()
+
+        Task ISubSystem.Start()
         {
-            MessageHistory.StartListening(_remoteSubSystems.Select(x => x.Runner).ToArray());
+            return Task.Factory.StartNew(() =>
+            {
+                _runtime = new FubuRuntime(Registry);
+                _factory = _runtime.Get<IServiceFactory>().As<StructureMapServiceFactory>();
+                _factory.Get<SecuritySettings>().Reset(); // force it to be created from the parent
+
+                var messaging = _runtime.Get<IMessagingSession>();
+
+                EventAggregator.Messaging.AddListener(messaging);
+            });
         }
-         */
+
 
 
         public class SerenityContext : IExecutionContext
@@ -203,9 +312,6 @@ namespace Serenity
             public void BeforeExecution(ISpecContext context)
             {
                 GetService<IChainExecutionHistory>().CurrentSessionTag = _sessionTag;
-
-                // TODO -- figure out how to do this
-                //_system.Application.Navigation.Logger = new ContextualNavigationLogger(context);
             }
 
             public void AfterExecution(ISpecContext context)
@@ -221,6 +327,9 @@ namespace Serenity
 
                 context.Reporting.Log(reporter);
 
+                var session = GetService<IMessagingSession>();
+                context.Reporting.Log(new MessageContextualInfoProvider(session));
+
                 _parent.afterEach(_parent._factory.Container, context);
 
                 _parent._factory.TeardownScope();
@@ -231,5 +340,6 @@ namespace Serenity
                 return _parent._runtime.Get<TService>();
             }
         }
+
     }
 }

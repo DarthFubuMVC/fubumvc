@@ -31,6 +31,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
 
         public MessageHistory Parent { get; set; }
 
+
         protected bool Equals(MessageHistory other)
         {
             return Id.Equals(other.Id);
