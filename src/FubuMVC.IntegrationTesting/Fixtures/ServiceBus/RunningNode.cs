@@ -41,7 +41,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus
                     .FirstOrDefault(x => x.Name.EqualsIgnoreCase(typeName));
 
             var file =
-                new FileSystem().FindFiles(Environment.CurrentDirectory.ParentDirectory().ParentDirectory(),
+                new FileSystem().FindFiles(AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory(),
                     FileSet.Deep(_registryType.Name + ".cs")).FirstOrDefault();
 
             if (file != null)

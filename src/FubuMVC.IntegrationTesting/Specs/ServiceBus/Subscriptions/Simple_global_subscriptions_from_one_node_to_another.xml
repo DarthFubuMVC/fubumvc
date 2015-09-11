@@ -6,12 +6,12 @@
     <ForNode isStep="True" Key="Publisher" />
     <TheActiveSubscriptionsAre isStep="True">
       <rows>
-        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+        <row isStep="True" NodeName="Publishing" MessageType="FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
       </rows>
     </TheActiveSubscriptionsAre>
     <ThePersistedSubscriptionsAre isStep="True">
       <rows>
-        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+        <row isStep="True" NodeName="Publishing" MessageType="FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
       </rows>
     </ThePersistedSubscriptionsAre>
     <ThePersistedTransportNodesAre isStep="True">

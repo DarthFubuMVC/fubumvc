@@ -8,22 +8,22 @@
     <ForNode isStep="True" Key="Publisher" />
     <TheActiveSubscriptionsAre isStep="True">
       <rows>
-        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
-        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="Publishing" MessageType="FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="Publishing" MessageType="FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
       </rows>
     </TheActiveSubscriptionsAre>
     <ThePersistedSubscriptionsAre isStep="True">
       <rows>
-        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
-        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="Publishing" MessageType="FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="Publishing" MessageType="FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
       </rows>
     </ThePersistedSubscriptionsAre>
     <ForNode isStep="True" Key="Subscriber" />
     <Comment><![CDATA[The other "LocalSubscriber" node will still have its subscriptions.]]></Comment>
     <TheLocalSubscriptionsAre isStep="True">
       <rows>
-        <row isStep="True" NodeName="LocalSubscriber" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
-        <row isStep="True" NodeName="LocalSubscriber" MessageType="FubuTransportation.Storyteller.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="LocalSubscriber" MessageType="FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="LocalSubscriber" MessageType="FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
       </rows>
     </TheLocalSubscriptionsAre>
   </Subscriptions>

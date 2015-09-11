@@ -259,10 +259,6 @@
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
       <Name>TestPackage1</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebsiteNode\WebsiteNode.csproj">
-      <Project>{988142c2-5518-404d-a6ef-36c551086912}</Project>
-      <Name>WebsiteNode</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="phantomjs.exe">
