@@ -105,6 +105,7 @@
     <Compile Include="Runtime\Files\IChangeSetHandler.cs" />
     <Compile Include="Runtime\Files\TrackedSet.cs" />
     <Compile Include="Security\Authentication\DefaultLoginRequestWriter.cs" />
+    <Compile Include="Security\Authorization\MustBeAuthenticated.cs" />
     <Compile Include="Security\Authorization\RequireRole.cs" />
     <Compile Include="ServerSentEvents\AspNetShutDownDetector.cs" />
     <Compile Include="ServerSentEvents\Channel.cs" />
