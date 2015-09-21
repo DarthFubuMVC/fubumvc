@@ -140,5 +140,7 @@ namespace FubuMVC.Core.Security.Authorization
         {
             return _policies.Any();
         }
+
+
     }
 }

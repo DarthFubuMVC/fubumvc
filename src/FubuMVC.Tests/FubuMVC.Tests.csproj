@@ -151,6 +151,7 @@
     <Compile Include="Runtime\Files\ChangeSetTester.cs" />
     <Compile Include="Runtime\Files\StubFubuFile.cs" />
     <Compile Include="Runtime\Files\TrackedSetTester.cs" />
+    <Compile Include="Security\Authorization\RequireRoleTester.cs" />
     <Compile Include="ServerSentEvents\ChannelTester.cs" />
     <Compile Include="ServerSentEvents\ChannelWriterTester.cs" />
     <Compile Include="ServerSentEvents\DataFormatterTester.cs" />

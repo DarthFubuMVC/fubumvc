@@ -28,6 +28,9 @@ namespace FubuMVC.Core.Security.Authorization
         }
     }
 
+    /// <summary>
+    /// Users with the designated role are allowed to access this resource
+    /// </summary>
     public class AllowRole : IAuthorizationPolicy
     {
         private readonly string _role;
@@ -49,7 +52,7 @@ namespace FubuMVC.Core.Security.Authorization
 
         public override string ToString()
         {
-            return string.Format("Role: {0}", _role);
+            return string.Format("Allow for role: {0}", _role);
         }
     }
 }

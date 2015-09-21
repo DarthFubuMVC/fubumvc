@@ -8,6 +8,7 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
@@ -259,10 +260,7 @@ namespace FubuMVC.Core.Registration.Nodes
         public static BehaviorChain For<T>(Expression<Action<T>> expression)
         {
             var call = ActionCall.For(expression);
-            var chain = new BehaviorChain();
-            chain.AddToEnd(call);
-
-            return chain;
+            return call.BuildChain(new UrlPolicies());
         }
 
         /// <summary>
