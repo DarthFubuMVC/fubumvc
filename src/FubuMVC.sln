@@ -64,8 +64,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serenity", "Serenity\Sereni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.AspNet", "FubuMVC.AspNet\FubuMVC.AspNet.csproj", "{F3711812-E9CD-42EA-B439-3271370E6CDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetDiagnosticsHarness", "AspNetDiagnosticsHarness\AspNetDiagnosticsHarness.csproj", "{B580CCBB-CB2E-411E-B89F-C472B422B04C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -424,21 +422,6 @@ Global
 		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Retail|x86.ActiveCfg = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Release|x86.ActiveCfg = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Retail|Any CPU.ActiveCfg = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Retail|Any CPU.Build.0 = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -460,6 +443,5 @@ Global
 		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D} = {DE130877-DDCB-425C-9C20-BF1B73D4191D}
 		{289E231C-190E-4595-BD10-4007CA10CEE2} = {79F0A938-58F7-47CB-B800-0BB3990E1A3A}
 		{E80DC8C6-3BC3-4F00-9939-12BA2B34A4EB} = {9E95E0D5-0FED-41B6-A24E-C7D499933A19}
-		{B580CCBB-CB2E-411E-B89F-C472B422B04C} = {DE130877-DDCB-425C-9C20-BF1B73D4191D}
 	EndGlobalSection
 EndGlobal
