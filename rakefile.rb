@@ -2,12 +2,14 @@ COMPILE_TARGET = ENV['config'].nil? ? "debug" : ENV['config']
 RESULTS_DIR = "results"
 BUILD_VERSION = '3.0.0'
 
+NUGET_KEY = ENV['api_key']
+
 tc_build_number = ENV["BUILD_NUMBER"]
 build_revision = tc_build_number || Time.new.strftime('5%H%M')
 build_number = "#{BUILD_VERSION}.#{build_revision}"
 BUILD_NUMBER = build_number 
 
-task :ci => [:default, :integration_test, :archive_gem, :pack]
+task :ci => [:default, :integration_test, :archive_gem, :publish]
 
 task :default => [:test]
 
@@ -76,8 +78,30 @@ task :integration_test => [:compile] do
 end
 
 desc 'Build Nuspec packages'
-task :pack => [:compile, :compile_signed] do
-	sh ".paket/paket.exe pack output artifacts version #{build_number}-alpha"
+task :pack => [:compile] do
+	Dir.mkdir "artifacts"
+
+	sh "nuget.exe pack packaging/nuget/fubumvc.aspnet.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.core.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.lightningqueues.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.ravendb.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.razor.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.spark.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/serenity.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
+	
+
+
+	
+end
+
+task :publish => [:pack] do
+	sh "nuget.exe push artifacts/FubuMVC.Core.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
+	sh "nuget.exe push artifacts/FubuMVC.AspNet.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
+	sh "nuget.exe push artifacts/FubuMVC.LightningQueues.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
+	sh "nuget.exe push artifacts/FubuMVC.RavenDb.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
+	sh "nuget.exe push artifacts/FubuMVC.Razor.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
+	sh "nuget.exe push artifacts/FubuMVC.Spark.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
+	sh "nuget.exe push artifacts/Serenity.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
 end
 
 desc "Launches the diagnostics harness for client side development"
@@ -88,6 +112,7 @@ end
 
 desc "Unit and Integration Tests"
 task :full => [:default, :integration_test]
+
 
 desc "Delegates to npm install and builds the javascript for diagnostics"
 task :npm do
