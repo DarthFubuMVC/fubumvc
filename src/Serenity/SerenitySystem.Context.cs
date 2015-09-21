@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FubuMVC.Core.Diagnostics.Instrumentation;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using Serenity.ServiceBus;
 using StoryTeller;
@@ -42,8 +43,13 @@ namespace Serenity
 
                 context.Reporting.Log(reporter);
 
-                var session = GetService<IMessagingSession>();
-                context.Reporting.Log(new MessageContextualInfoProvider(session));
+                if (_parent._runtime.Get<TransportSettings>().Enabled)
+                {
+                    var session = GetService<IMessagingSession>();
+                    context.Reporting.Log(new MessageContextualInfoProvider(session));
+
+                }
+
 
                 _parent.afterEach(_parent._factory.Container, context);
 

@@ -44,6 +44,8 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 var matching = _chains.Values.Where(x => call.CouldHandleOtherMessageType(x.InputType()));
                 matching.Each(call.AddClone);
             });
+
+
         }
 
         public HandlerChain ChainFor(Type inputType)

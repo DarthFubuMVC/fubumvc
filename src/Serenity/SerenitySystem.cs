@@ -11,9 +11,9 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.TestSupport;
-using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Core.StructureMap;
 using HtmlTags;
 using Serenity.ServiceBus;
@@ -22,6 +22,7 @@ using StoryTeller.Conversion;
 using StoryTeller.Engine;
 using StoryTeller.Equivalence;
 using StructureMap;
+using EventAggregator = FubuMVC.Core.Services.Messaging.EventAggregator;
 using MessageHistory = FubuMVC.Core.Services.Messaging.Tracking.MessageHistory;
 
 namespace Serenity
@@ -201,16 +202,21 @@ namespace Serenity
                 startAll();
             }
 
-            _factory.Get<TransportCleanup>().ClearAll();
-            RemoteSubSystems.Each(x => x.Runner.SendRemotely(new ClearAllTransports()));
+            if (_runtime.Get<TransportSettings>().Enabled)
+            {
+                _factory.Get<TransportCleanup>().ClearAll();
+                RemoteSubSystems.Each(x => x.Runner.SendRemotely(new ClearAllTransports()));
+                var messaging = _factory.Get<IMessagingSession>();
+                messaging.ClearAll();
+                RemoteSubSystems.Each(sys => sys.Runner.Messaging.AddListener(messaging));
+            }
+
 
             Runtime.Get<IClock>().As<Clock>().Live();
             _factory.Get<SecuritySettings>().Reset();
             _factory.StartNewScope();
 
-            var messaging = _factory.Get<IMessagingSession>();
-            messaging.ClearAll();
-            RemoteSubSystems.Each(sys => sys.Runner.Messaging.AddListener(messaging));
+
 
 
             TestNodes.Reset();
@@ -246,9 +252,11 @@ namespace Serenity
                 _factory = _runtime.Get<IServiceFactory>().As<StructureMapServiceFactory>();
                 _factory.Get<SecuritySettings>().Reset(); // force it to be created from the parent
 
-                var messaging = _runtime.Get<IMessagingSession>();
-
-                EventAggregator.Messaging.AddListener(messaging);
+                if (_runtime.Get<TransportSettings>().Enabled)
+                {
+                    var messaging = _runtime.Get<IMessagingSession>();
+                    EventAggregator.Messaging.AddListener(messaging);
+                }
             });
         }
     }
