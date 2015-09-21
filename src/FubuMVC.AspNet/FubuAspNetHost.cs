@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Web;
-using System.Web.Caching;
-using System.Web.SessionState;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
@@ -14,7 +11,6 @@ namespace FubuMVC.AspNet
 {
     public class FubuAspNetHost : IHttpModule
     {
-        
         public static FubuRuntime Runtime;
         private static Action _startRequest = () => { };
         private static Action _endRequest = () => { };

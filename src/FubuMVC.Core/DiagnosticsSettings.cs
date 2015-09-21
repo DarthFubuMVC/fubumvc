@@ -113,6 +113,11 @@ namespace FubuMVC.Core
 
                 return inner(env).ContinueWith(t =>
                 {
+                    if (t.IsFaulted)
+                    {
+                        t.Exception.Flatten().InnerExceptions.Each(log.LogException);
+                    }
+
                     log.MarkFinished();
 
                     if (log.RootChain != null && ApplyTracing.ShouldApply(log.RootChain))

@@ -70,13 +70,23 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             {
                 new DeserializationFailureContinuation(ex).Execute(envelope, context);
             }
+            catch (AggregateException e)
+            {
+                e.Flatten().InnerExceptions.Each(ex =>
+                {
+                    envelope.Callback.MarkFailed(e);
+                    var message = "Failed while invoking message {0} with continuation {1}".ToFormat(envelope.Message ?? envelope,
+                        (object)continuation ?? "could not find continuation");
+
+                    context.Error(envelope.CorrelationId, message, e);
+                });
+            }
             catch (Exception e)
             {
                 envelope.Callback.MarkFailed(e); // TODO -- watch this one.
-                context.Error(envelope.CorrelationId,
-                    "Failed while invoking message {0} with continuation {1}".ToFormat(envelope.Message ?? envelope,
-                        (object)continuation ?? "could not find continuation"),
-                    e);
+                var message = "Failed while invoking message {0} with continuation {1}".ToFormat(envelope.Message ?? envelope,
+                    (object)continuation ?? "could not find continuation");
+                context.Error(envelope.CorrelationId, message, e);
             }
         }
 
