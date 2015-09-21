@@ -23,8 +23,8 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         public void read_stores_the_last_execution()
         {
             var history = new PerformanceHistory();
-            var log1 = new StubRequestLog();
-            var log2 = new StubRequestLog();
+            var log1 = new ChainExecutionLog();
+            var log2 = new ChainExecutionLog();
 
             history.Read(log1);
             history.LastExecution.ShouldBeTheSameAs(log1);
