@@ -20,6 +20,20 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         }
 
         [Test]
+        public void read_stores_the_last_execution()
+        {
+            var history = new PerformanceHistory();
+            var log1 = new StubRequestLog();
+            var log2 = new StubRequestLog();
+
+            history.Read(log1);
+            history.LastExecution.ShouldBeTheSameAs(log1);
+
+            history.Read(log2);
+            history.LastExecution.ShouldBeTheSameAs(log2);
+        }
+
+        [Test]
         public void read_increments_exception_count_correctly()
         {
             var history = new PerformanceHistory();

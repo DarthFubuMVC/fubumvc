@@ -6,6 +6,8 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
     {
         public void Read(IRequestLog log)
         {
+            LastExecution = log;
+
             HitCount++;
             if (log.HadException) ExceptionCount++;
             TotalExecutionTime += log.ExecutionTime;
@@ -31,6 +33,8 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         {
             get { return (((double)ExceptionCount)/((double)HitCount))*100; }
         }
+
+        public IRequestLog LastExecution { get; private set; }
 
         public bool IsWarning(ChainExecutionLog report)
         {

@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuMVC.Tests.ServiceBus.ScheduledJobs;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using Shouldly;
@@ -56,12 +53,11 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             // The polling job for delayed messages & one for the expired listeners are registered by default.
             // Plus 1 for health monitoring
             // And another for subscription refresh
-            
+
             var pollingJobs = container.GetInstance<IPollingJobs>();
 
             pollingJobs.Count()
-                     .ShouldBe(8);
-
+                .ShouldBe(8);
         }
 
         [Test]
@@ -73,7 +69,8 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         }
 
         [Test]
-        public void should_have_executed_one_more_than_two_and_two_more_than_three_because_of_the_polling_interval_differences()
+        public void
+            should_have_executed_one_more_than_two_and_two_more_than_three_because_of_the_polling_interval_differences()
         {
             OneJob.Executed.ShouldBeGreaterThan(TwoJob.Executed);
             TwoJob.Executed.ShouldBeGreaterThan(ThreeJob.Executed);
@@ -108,7 +105,6 @@ namespace FubuMVC.Tests.ServiceBus.Polling
     {
         public void Execute(CancellationToken cancellation)
         {
-            
         }
     }
 
@@ -188,9 +184,9 @@ namespace FubuMVC.Tests.ServiceBus.Polling
 
     public class RecordingPollingJobLogger : IPollingJobLogger
     {
-        public readonly IList<Type> Stopped = new List<Type>(); 
-        public readonly IList<IJob> Started = new List<IJob>(); 
-        public readonly IList<IJob> Succeeded = new List<IJob>(); 
+        public readonly IList<Type> Stopped = new List<Type>();
+        public readonly IList<IJob> Started = new List<IJob>();
+        public readonly IList<IJob> Succeeded = new List<IJob>();
 
         public void Stopping(Type jobType)
         {
@@ -217,5 +213,4 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             Assert.Fail("Failed to schedule {0}\n{1}", jobType, exception);
         }
     }
-
 }
