@@ -75,7 +75,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             var dict = new Dictionary<string, object>
             {
                 {"request", _request},
-                {"time", Time.ToShortTimeString()},
+                {"time", Time.ToLocalTime().ToShortTimeString()},
                 {"execution_time", ExecutionTime},
                 {"title", Title()},
                 {"id", Id.ToString()},

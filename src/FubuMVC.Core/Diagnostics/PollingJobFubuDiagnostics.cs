@@ -23,6 +23,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             var dict = new Dictionary<string, object>
             {
+                {"chain", job.Chain.Key},
                 {"title", Description.For(job).Title},
                 {"type", job.JobType.FullName},
                 {"interval", job.Interval},
@@ -34,7 +35,7 @@ namespace FubuMVC.Core.Diagnostics
 
             if (job.Chain.Performance.LastExecution != null)
             {
-                dict.Add("last", job.Chain.Performance.LastExecution.ToDictionary());
+                dict.Add("last", job.Chain.Performance.LastExecution.ToHeaderDictionary());
             }
 
 
