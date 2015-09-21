@@ -77,6 +77,7 @@
     <Compile Include="Fixtures\WebDriverExtensions.cs" />
     <Compile Include="IAfterNavigation.cs" />
     <Compile Include="INavigationLogger.cs" />
+    <Compile Include="IRemoteSubsystems.cs" />
     <Compile Include="LoginScreenFixture.cs" />
     <Compile Include="NulloAfterNavigation.cs" />
     <Compile Include="NulloNavigationLogger.cs" />
@@ -86,7 +87,6 @@
     <Compile Include="ServiceBus\ExternalNode.cs" />
     <Compile Include="ServiceBus\ExternalNodeFixture.cs" />
     <Compile Include="ServiceBus\FubuTransportFixture.cs" />
-    <Compile Include="ServiceBus\FubuTransportSystem.cs" />
     <Compile Include="ServiceBus\MessageContextualInfoProvider.cs" />
     <Compile Include="ServiceBus\MessageRecorder.cs" />
     <Compile Include="ServiceBus\TestNodes.cs" />
@@ -109,8 +109,6 @@
     <Compile Include="WebDriver\JQuery.cs" />
     <Compile Include="WebDriver\JavaScriptBuilders\NullObjectJavaScriptBuilder.cs" />
     <Compile Include="WebDriver\SearchContextToJavaScriptExecutor.cs" />
-    <Compile Include="FubuMvcContext.cs" />
-    <Compile Include="FubuMvcSystem.cs" />
     <Compile Include="IBrowserLifecycle.cs" />
     <Compile Include="IBrowserSessionInitializer.cs" />
     <Compile Include="InternetExplorerBrowser.cs" />
