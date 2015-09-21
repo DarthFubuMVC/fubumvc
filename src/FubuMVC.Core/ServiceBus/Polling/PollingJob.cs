@@ -23,14 +23,14 @@ namespace FubuMVC.Core.ServiceBus.Polling
         private readonly object _waiterLock = new object();
 
         public PollingJob(IServiceBus bus, IPollingJobLogger logger, TSettings settings,
-            PollingJobDefinition definition, PollingJobLatch latch)
+            PollingJobChain chain, PollingJobLatch latch)
         {
             _bus = bus;
             _logger = logger;
             _settings = settings;
             _timer = new DefaultTimer();
-            _intervalSource = (Expression<Func<TSettings, double>>)definition.IntervalSource;
-            _scheduledExecution = definition.ScheduledExecution;
+            _intervalSource = (Expression<Func<TSettings, double>>)chain.IntervalSource;
+            _scheduledExecution = chain.ScheduledExecution;
             _latch = latch;
 
             _intervalFunc = _intervalSource.Compile();

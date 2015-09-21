@@ -270,7 +270,7 @@
     <Compile Include="ServiceBus\Polling\PollingJob.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobActivator.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobDeactivator.cs" />
-    <Compile Include="ServiceBus\Polling\PollingJobDefinition.cs" />
+    <Compile Include="ServiceBus\Polling\PollingJobChain.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobExpression.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobFailed.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobLogger.cs" />

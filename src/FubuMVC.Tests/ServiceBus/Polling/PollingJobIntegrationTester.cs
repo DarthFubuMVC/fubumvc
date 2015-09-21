@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Tests.ServiceBus.ScheduledJobs;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using Shouldly;
@@ -26,8 +27,8 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         {
             OneJob.Executed = TwoJob.Executed = ThreeJob.Executed = 0;
 
-            theRuntime = FubuRuntime.For<PollingRegistry>()
-                                      ;
+            theRuntime = FubuRuntime.For<PollingRegistry>();
+            theRuntime.Behaviors.PollingJobs.Any().ShouldBeTrue();
 
             container = theRuntime.Get<IContainer>();
 
@@ -44,7 +45,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         public void the_polling_job_chains_are_tagged_for_no_tracing()
         {
             var graph = theRuntime.Get<BehaviorGraph>();
-            var chains = graph.Chains.Where(x => x.InputType() != null && x.InputType().Closes(typeof(JobRequest<>)));
+            var chains = graph.PollingJobs;
 
             chains.Each(x => x.IsTagged(BehaviorChain.NoTracing).ShouldBeTrue());
         }

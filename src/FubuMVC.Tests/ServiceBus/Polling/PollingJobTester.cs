@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
     {
         protected override void beforeEach()
         {
-            var definition = PollingJobDefinition.For<APollingJob, PollingJobSettings>(x => x.Polling);
+            var definition = PollingJobChain.For<APollingJob, PollingJobSettings>(x => x.Polling);
             Services.Inject(definition);
         }
 

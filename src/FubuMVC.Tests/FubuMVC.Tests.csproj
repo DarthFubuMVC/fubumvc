@@ -163,6 +163,7 @@
     <Compile Include="ServerSentEvents\SimpleEventQueueTester.cs" />
     <Compile Include="ServerSentEvents\TopicChannelCacheTester.cs" />
     <Compile Include="ServerSentEvents\TopicFamilyTester.cs" />
+    <Compile Include="ServiceBus\Polling\PollingJobChainTester.cs" />
     <Compile Include="TestSupport\GenericVoidMethod.cs" />
     <Compile Include="TestSupport\InteractionContext.cs" />
     <Compile Include="Json\ComplexType.cs" />

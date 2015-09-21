@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Polling;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Core.Registration
@@ -86,6 +87,11 @@ namespace FubuMVC.Core.Registration
         public IEnumerable<HandlerChain> Handlers
         {
             get { return _chains.OfType<HandlerChain>(); }
+        }
+
+        public IEnumerable<PollingJobChain> PollingJobs
+        {
+            get { return _chains.OfType<PollingJobChain>(); }
         } 
 
         /// <summary>

@@ -26,9 +26,9 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             calls.Each(AddToEnd);
         }
 
-        public bool IsPollingJob()
+        public virtual bool IsPollingJob()
         {
-            return InputType().Closes(typeof (JobRequest<>));
+            return false;
         }
 
         internal protected override void InsertNodes(ConnegSettings settings)

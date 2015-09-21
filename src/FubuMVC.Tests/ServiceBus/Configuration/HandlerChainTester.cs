@@ -12,6 +12,12 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
     {
 
         [Test]
+        public void normal_handler_chains_are_not_polling_jobs()
+        {
+            new HandlerChain().IsPollingJob().ShouldBeFalse();
+        }
+
+        [Test]
         public void the_default_number_of_maximum_attempts_is_1()
         {
             new HandlerChain().MaximumAttempts.ShouldBe(1);

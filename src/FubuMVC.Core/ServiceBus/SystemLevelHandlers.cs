@@ -35,19 +35,10 @@ namespace FubuMVC.Core.ServiceBus
                 HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskDeactivation()))
             };
 
-            var jobs = graph.Settings.Get<PollingJobSettings>();
-            jobs.Jobs.Each(x =>
-            {
-                var handlerType = typeof (JobRunner<>).MakeGenericType(x.JobType);
-                var method = handlerType.GetMethod("Run");
-
-                handlers.Add(new HandlerCall(handlerType, method));
-                ;
-            });
-
 
             handlers.ApplyGeneralizedHandlers();
 
+            // TODO -- need to apply [ModifyChainAttribute]'s here. See GH-958
 
             return handlers;
         }
