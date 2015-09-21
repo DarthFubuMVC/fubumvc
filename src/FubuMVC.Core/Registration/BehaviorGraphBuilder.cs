@@ -6,6 +6,12 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Events;
+using FubuMVC.Core.ServiceBus.Monitoring;
+using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Core.ServiceBus.Runtime.Delayed;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.Registration
@@ -41,7 +47,7 @@ namespace FubuMVC.Core.Registration
 
             perfTimer.Record("Applying Settings", () => applySettings(config, graph, diagnostics, files));
 
-
+            perfTimer.Record("Enable built in polling jobs", () => enableBuiltInJobs(graph));
             perfTimer.Record("Applying Feature Settings", () => featureLoader.ApplyAll(graph.Settings, registry).Wait());
 
             perfTimer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph, perfTimer));
@@ -65,6 +71,21 @@ namespace FubuMVC.Core.Registration
             new AutoImportModelNamespacesConvention().Configure(graph);
 
             return graph;
+        }
+
+        private static void enableBuiltInJobs(BehaviorGraph graph)
+        {
+            if (graph.Settings.Get<TransportSettings>().Enabled)
+            {
+                var jobs = graph.Settings.Get<PollingJobSettings>();
+
+                jobs.AddJob(PollingJobChain.For<DelayedEnvelopeProcessor, TransportSettings>(x => x.DelayMessagePolling));
+                jobs.AddJob(PollingJobChain.For<ExpiringListenerCleanup, TransportSettings>(x => x.ListenerCleanupPolling));
+                jobs.AddJob(PollingJobChain.For<HealthMonitorPollingJob, HealthMonitoringSettings>(x => x.Interval));
+                jobs.AddJob(PollingJobChain.For<SubscriptionRefreshJob, TransportSettings>(x => x.SubscriptionRefreshPolling));
+
+
+            }
         }
 
 

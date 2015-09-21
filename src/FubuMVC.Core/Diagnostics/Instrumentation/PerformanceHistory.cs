@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
@@ -6,7 +7,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
     {
         public void Read(IRequestLog log)
         {
-            LastExecution = log;
+            LastExecution = log as ChainExecutionLog;
 
             HitCount++;
             if (log.HadException) ExceptionCount++;
@@ -26,15 +27,24 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public double Average
         {
-            get { return TotalExecutionTime/HitCount; }
+            get
+            {
+                if (HitCount == 0) return 0;
+                return TotalExecutionTime/HitCount;
+            }
         }
 
         public double ExceptionPercentage
         {
-            get { return (((double)ExceptionCount)/((double)HitCount))*100; }
+            get
+            {
+                if (HitCount == 0) return 0;
+                
+                return (((double)ExceptionCount)/((double)HitCount))*100;
+            }
         }
 
-        public IRequestLog LastExecution { get; private set; }
+        public ChainExecutionLog LastExecution { get; private set; }
 
         public bool IsWarning(ChainExecutionLog report)
         {
@@ -50,14 +60,18 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             return new Dictionary<string, object>
             {
                 {"hits", HitCount},
-                {"total", TotalExecutionTime},
-                {"average", Average},
-                {"exceptions", ExceptionPercentage},
-                {"min", MinTime},
-                {"max", MaxTime}
+                {"total", TotalExecutionTime.ToString("N")},
+                {"average", Average.ToString("N")},
+                {"exceptions", ExceptionPercentage.ToString("N")},
+                {"min", MinTime.ToString("N")},
+                {"max", MaxTime.ToString("N")}
 
             };
-        } 
+        }
 
+        public override string ToString()
+        {
+            return string.Format("HitCount: {0}, ExceptionCount: {1}, TotalExecutionTime: {2}, MaxTime: {3}, MinTime: {4}, Average: {5}, ExceptionPercentage: {6}", HitCount, ExceptionCount, TotalExecutionTime, MaxTime, MinTime, Average, ExceptionPercentage);
+        }
     }
 }

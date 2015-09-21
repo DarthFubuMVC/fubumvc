@@ -12,6 +12,8 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
         Type JobType { get; }
         ScheduledExecution ScheduledExecution { get; }
+        PollingJobChain Chain { get; }
+        double Interval { get; }
         Task WaitForJobToExecute();
     }
 }

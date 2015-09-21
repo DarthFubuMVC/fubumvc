@@ -21,6 +21,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
         private readonly Func<TSettings, double> _intervalFunc; 
         private readonly IList<TaskCompletionSource<object>> _waiters = new List<TaskCompletionSource<object>>(); 
         private readonly object _waiterLock = new object();
+        private readonly PollingJobChain _chain;
 
         public PollingJob(IServiceBus bus, IPollingJobLogger logger, TSettings settings,
             PollingJobChain chain, PollingJobLatch latch)
@@ -34,6 +35,12 @@ namespace FubuMVC.Core.ServiceBus.Polling
             _latch = latch;
 
             _intervalFunc = _intervalSource.Compile();
+            _chain = chain;
+        }
+
+        public PollingJobChain Chain
+        {
+            get { return _chain; }
         }
 
         public ScheduledExecution ScheduledExecution
@@ -55,9 +62,14 @@ namespace FubuMVC.Core.ServiceBus.Polling
         {
             description.Title = "Polling Job for " + typeof(TJob).Name;
             typeof(TJob).ForAttribute<DescriptionAttribute>(att => description.ShortDescription = att.Description);
-            description.Properties["Interval"] = _intervalFunc(_settings) + " ms";
+            description.Properties["Interval"] = Interval + " ms";
             description.Properties["Config"] = _intervalSource.ToString();
             description.Properties["Scheduled Execution"] = _scheduledExecution.ToString();
+        }
+
+        public double Interval
+        {
+            get { return _intervalFunc(_settings); }
         }
 
         public bool IsRunning()
@@ -72,7 +84,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
                 RunNow();
             }
 
-            _timer.Start(RunNow, _intervalFunc(_settings));
+            _timer.Start(RunNow, Interval);
         }
 
         public void RunNow()
@@ -107,7 +119,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
             }
             finally
             {
-                _timer.Interval = _intervalFunc(_settings);
+                _timer.Interval = Interval;
             }
         }
 

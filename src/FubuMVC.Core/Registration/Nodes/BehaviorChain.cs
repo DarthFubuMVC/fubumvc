@@ -276,12 +276,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public override string ToString()
         {
-            if (Calls.Any())
-            {
-                return Calls.Select(x => x.Description).Join(", ");
-            }
-
-            return this.Select(x => x.Description).Join(" --> ");
+            return Title();
         }
 
         public bool HasReaders()

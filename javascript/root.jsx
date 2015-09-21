@@ -95,6 +95,7 @@ require('./assets');
 require('./structuremap');
 require('./service-bus');
 require('./message-table');
+require('./polling-jobs');
 
 
 FubuDiagnostics.addSection({    

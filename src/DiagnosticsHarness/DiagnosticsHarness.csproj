@@ -54,6 +54,7 @@
     <Compile Include="NumberMessage.cs" />
     <Compile Include="NumberPost.cs" />
     <Compile Include="PartialEndpoints.cs" />
+    <Compile Include="SampleJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

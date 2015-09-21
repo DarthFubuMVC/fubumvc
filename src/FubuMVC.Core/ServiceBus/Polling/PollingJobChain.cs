@@ -31,6 +31,11 @@ namespace FubuMVC.Core.ServiceBus.Polling
             AddToEnd(new HandlerCall(handlerType, method));
         }
 
+        public override string Title()
+        {
+            return "Polling Job: " + JobType.Name;
+        }
+
         public override bool IsPollingJob()
         {
             return true;
@@ -38,13 +43,14 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
         public Instance ToInstance()
         {
-            var instance = new ConfiguredInstance(typeof(PollingJob<,>), JobType, SettingType);
-            instance.Dependencies.Add(typeof(PollingJobChain), this);
+            var instance = new ConfiguredInstance(typeof (PollingJob<,>), JobType, SettingType);
+            instance.Dependencies.Add(typeof (PollingJobChain), this);
 
             return instance;
         }
 
-        public static PollingJobChain For<TJob, TSettings>(Expression<Func<TSettings, double>> intervalSource) where TJob : IJob
+        public static PollingJobChain For<TJob, TSettings>(Expression<Func<TSettings, double>> intervalSource)
+            where TJob : IJob
         {
             return new PollingJobChain(typeof (TJob), typeof (TSettings), intervalSource);
         }

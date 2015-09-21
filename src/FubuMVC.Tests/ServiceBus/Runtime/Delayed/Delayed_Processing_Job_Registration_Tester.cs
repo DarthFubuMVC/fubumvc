@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using FubuCore.Dates;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
@@ -21,8 +23,10 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
         {
             FubuTransport.SetupForInMemoryTesting();
 
-            runtime = FubuRuntime.For<DelayedRegistry>()
-                           ;
+            runtime = FubuRuntime.For<DelayedRegistry>();
+
+            runtime.Behaviors.Chains.Where(x => x.InputType() == typeof (JobRequest<DelayedEnvelopeProcessor>))
+                .Each(x => Debug.WriteLine(x.Title()));
 
             runtime.Get<IPollingJobs>().Any(x => x is PollingJob<DelayedEnvelopeProcessor, TransportSettings>)
                 .ShouldBeTrue();

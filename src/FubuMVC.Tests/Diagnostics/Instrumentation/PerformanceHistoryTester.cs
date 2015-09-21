@@ -77,9 +77,18 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         }
 
         [Test]
+        public void no_hits_means_zero_exception_percentage_and_zero_average()
+        {
+            var history = new PerformanceHistory();
+            history.Average.ShouldBe(0);
+            history.ExceptionPercentage.ShouldBe(0);
+        }
+
+        [Test]
         public void calculate_exception_percentage()
         {
             var history = new PerformanceHistory();
+            
 
             history.Read(new StubRequestLog { ExecutionTime = 100 });
             history.Read(new StubRequestLog { ExecutionTime = 200, HadException = true});

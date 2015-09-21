@@ -53,6 +53,18 @@ namespace DiagnosticsHarness
 
             _document.Add("a").Attr("href", "requests").Text("Run some fake Http Requests");
 
+            _document.Add("br");
+            _document.Add("a")
+                .Attr("href", _document.Urls.UrlFor<SampleJobEndpoint>(x => x.get_samplejob_controller()))
+                .Text("Sample Polling Job Controller");
+
+
+            _document.Add("hr");
+            _runtime.Behaviors.Chains.Each(chain =>
+            {
+                _document.Add("p").Text(chain.Title());
+            });
+
             return _document;
         }
 

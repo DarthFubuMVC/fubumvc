@@ -4,7 +4,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 
-
 namespace DiagnosticsHarness
 {
     public class HarnessRegistry : FubuTransportRegistry<HarnessSettings>
@@ -25,6 +24,8 @@ namespace DiagnosticsHarness
 
             SubscribeLocally().ToSource(x => x.Publisher)
                 .ToMessage<NumberMessage>();
+
+            Polling.RunJob<SampleJob>().ScheduledAtInterval<HarnessSettings>(x => x.SampleJobTime).RunImmediately();
         }
     }
 

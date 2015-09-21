@@ -28,7 +28,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
             catch (Exception e)
             {
                 _logger.Failed(id, _job, e);
-                // TODO -- apply retry rules!
+                throw;
             }
         }
     }

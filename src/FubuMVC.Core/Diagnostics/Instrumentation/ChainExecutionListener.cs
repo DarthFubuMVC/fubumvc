@@ -40,14 +40,12 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public void Error(string message, Exception ex)
         {
-            _trace.Log(new ExceptionReport(message, ex));
+            _trace.LogException(ex);
         }
 
         public void Error(object correlationId, string message, Exception ex)
         {
-            _trace.Log(new ExceptionReport(message, ex){
-                CorrelationId = correlationId
-            });
+            _trace.LogException(ex);
         }
 
         public bool IsDebugEnabled

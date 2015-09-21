@@ -31,7 +31,10 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             {
                 try
                 {
-                    if (log.RootChain != null) log.RootChain.Performance.Read(log);
+                    if (log.RootChain != null)
+                    {
+                        log.RootChain.Performance.Read(log);
+                    }
                 }
                 catch (Exception e)
                 {

@@ -21,27 +21,12 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
         public IEnumerable<PollingJobChain> Jobs
         {
-            get { return _jobs.Concat(BuiltInJobs()); }
+            get { return _jobs; }
         }
 
         public PollingJobChain JobFor<T>() where T : IJob
         {
             return _jobs[typeof (T)];
-        }
-
-        public static IEnumerable<PollingJobChain> BuiltInJobs()
-        {
-            yield return
-                PollingJobChain.For<DelayedEnvelopeProcessor, TransportSettings>(x => x.DelayMessagePolling);
-
-            yield return
-                PollingJobChain.For<ExpiringListenerCleanup, TransportSettings>(x => x.ListenerCleanupPolling);
-
-            yield return
-                PollingJobChain.For<HealthMonitorPollingJob, HealthMonitoringSettings>(x => x.Interval);
-
-            yield return
-                PollingJobChain.For<SubscriptionRefreshJob, TransportSettings>(x => x.SubscriptionRefreshPolling);
         }
 
         void IFeatureSettings.Apply(FubuRegistry registry)
