@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuCore.Dates;
-using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Runtime;
@@ -16,7 +14,6 @@ using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.TestSupport;
 using FubuMVC.Core.Services.Messaging;
-using FubuMVC.Core.Services.Remote;
 using FubuMVC.Core.StructureMap;
 using HtmlTags;
 using Serenity.ServiceBus;
@@ -40,9 +37,8 @@ namespace Serenity
     {
     }
 
-    public class SerenitySystem<T> : ISystem, ISubSystem, IRemoteSubsystems where T : FubuRegistry, new()
+    public partial class SerenitySystem<T> : ISystem, ISubSystem, IRemoteSubsystems where T : FubuRegistry, new()
     {
-        private readonly IList<ISubSystem> _subSystems = new List<ISubSystem>();
         public readonly CellHandling CellHandling = new CellHandling(new EquivalenceChecker(), new Conversions());
         public readonly T Registry = new T();
         private FubuRuntime _runtime;
@@ -69,7 +65,7 @@ namespace Serenity
             Registry.Mode = "testing";
         }
 
-        private readonly Cache<string, RemoteSubSystem> _remoteSubSystems = new Cache<string, RemoteSubSystem>();
+
         private bool _isDisposed;
 
 
@@ -80,39 +76,6 @@ namespace Serenity
             this.SafeDispose();
         }
 
-        public RemoteSubSystem RemoteSubSystemFor(string name)
-        {
-            return _remoteSubSystems[name];
-        }
-
-        public IEnumerable<RemoteSubSystem> RemoteSubSystems
-        {
-            get { return _remoteSubSystems; }
-        }
-
-        public void AddRemoteSubSystem(string name, Action<RemoteDomainExpression> configuration)
-        {
-            
-            var system = new RemoteSubSystem(() => new RemoteServiceRunner(x =>
-            {
-                x.Properties["Mode"] = "testing";
-                configuration(x);
-            }));
-
-            _remoteSubSystems[name] = system;
-
-            _subSystems.Add(system);
-        }
-
-        public void AddSubSystem<T>() where T : ISubSystem, new()
-        {
-            AddSubSystem(new T());
-        }
-
-        public void AddSubSystem(ISubSystem subSystem)
-        {
-            _subSystems.Add(subSystem);
-        }
 
         private void injectJavascriptErrorDetection()
         {
@@ -223,7 +186,6 @@ namespace Serenity
                     _runtime.SafeDispose();
                     _runtime = null;
                 }
-
             });
         }
 
@@ -262,12 +224,11 @@ namespace Serenity
         {
             Task.WaitAll(_subSystems.Select(x => x.Start()).ToArray());
 
-            
+
             MessageHistory.StartListening(_remoteSubSystems.Select(x => x.Runner).ToArray());
 
             beforeAll();
         }
-
 
 
         Task ISystem.Warmup()
@@ -290,54 +251,5 @@ namespace Serenity
                 EventAggregator.Messaging.AddListener(messaging);
             });
         }
-
-
-
-        public class SerenityContext : IExecutionContext
-        {
-            private readonly string _sessionTag = Guid.NewGuid().ToString();
-            private readonly SerenitySystem<T> _parent;
-
-            public SerenityContext(SerenitySystem<T> parent)
-            {
-                _parent = parent;
-            }
-
-            void IDisposable.Dispose()
-            {
-            }
-
-            public void BeforeExecution(ISpecContext context)
-            {
-                GetService<IChainExecutionHistory>().CurrentSessionTag = _sessionTag;
-            }
-
-            public void AfterExecution(ISpecContext context)
-            {
-                var reporter = new RequestReporter(_parent._runtime);
-                var requestLogs =
-                    GetService<IChainExecutionHistory>()
-                        .RecentReports()
-                        .Where(x => x.SessionTag == _sessionTag)
-                        .ToArray();
-
-                reporter.Append(requestLogs);
-
-                context.Reporting.Log(reporter);
-
-                var session = GetService<IMessagingSession>();
-                context.Reporting.Log(new MessageContextualInfoProvider(session));
-
-                _parent.afterEach(_parent._factory.Container, context);
-
-                _parent._factory.TeardownScope();
-            }
-
-            public TService GetService<TService>()
-            {
-                return _parent._runtime.Get<TService>();
-            }
-        }
-
     }
 }

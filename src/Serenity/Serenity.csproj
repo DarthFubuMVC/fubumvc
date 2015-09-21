@@ -84,6 +84,7 @@
     <Compile Include="RequestReporter.cs" />
     <Compile Include="ScreenDriver.cs" />
     <Compile Include="SerenitySystem.cs" />
+    <Compile Include="SerenitySystem.Context.cs" />
     <Compile Include="ServiceBus\ExternalNode.cs" />
     <Compile Include="ServiceBus\ExternalNodeFixture.cs" />
     <Compile Include="ServiceBus\FubuTransportFixture.cs" />
@@ -208,6 +209,9 @@
       <Private>True</Private>
       <Paket>True</Paket>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SerenitySystem.Remotes.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
