@@ -35,10 +35,10 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         [Test]
         public void default_reply_uri()
         {
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 runtime.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
-                    .ShouldBe("memory://localhost/fubu/replies".ToUri());
+                    .ShouldBe("memory://localhost/node/replies".ToUri());
             }
         }
 

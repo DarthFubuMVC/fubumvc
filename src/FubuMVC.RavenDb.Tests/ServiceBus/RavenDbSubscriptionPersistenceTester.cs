@@ -21,7 +21,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
         [SetUp]
         public void SetUp()
         {
-            runtime = FubuTransport.DefaultPolicies();
+            runtime = FubuRuntime.BasicBus();
             runtime.Get<IContainer>().UseInMemoryDatastore();
 
             persistence = runtime.Get<RavenDbSubscriptionPersistence>();

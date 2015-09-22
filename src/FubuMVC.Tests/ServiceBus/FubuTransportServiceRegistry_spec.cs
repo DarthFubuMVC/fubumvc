@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuTransport.Reset();
 
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 var c = runtime.Get<IContainer>();
 
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuTransport.UseSynchronousLogging = true;
 
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 var c = runtime.Get<IContainer>();
 
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuTransport.ApplyMessageHistoryWatching = true;
 
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 var c = runtime.Get<IContainer>();
 
@@ -98,7 +98,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuTransport.ApplyMessageHistoryWatching = false;
 
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 var c = runtime.Get<IContainer>();
 

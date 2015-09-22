@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Polling;
 using NUnit.Framework;
@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         [Test]
         public void the_job_is_registered()
         {
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 runtime.Get<IPollingJobs>().Any(x => x is PollingJob<HealthMonitorPollingJob, HealthMonitoringSettings>)
                     .ShouldBeTrue();

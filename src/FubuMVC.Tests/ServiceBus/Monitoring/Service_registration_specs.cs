@@ -1,5 +1,5 @@
 ﻿using FubuCore.Logging;
-using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using NUnit.Framework;
 using StructureMap;
@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         [Test]
         public void registrations()
         {
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 var container = runtime.Get<IContainer>();
 

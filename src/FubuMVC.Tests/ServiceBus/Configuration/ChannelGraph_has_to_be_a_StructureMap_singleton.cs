@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus.Configuration;
 using NUnit.Framework;
 using Shouldly;
 using StructureMap;
@@ -11,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         [Test]
         public void must_be_a_singleton()
         {
-            using (var runtime = FubuTransport.DefaultPolicies()
+            using (var runtime = FubuRuntime.BasicBus()
                 )
             {
                 var container = runtime.Get<IContainer>();

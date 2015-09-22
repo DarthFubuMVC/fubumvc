@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         [Test]
         public void service_registrations()
         {
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 var container = runtime.Get<IContainer>();
 

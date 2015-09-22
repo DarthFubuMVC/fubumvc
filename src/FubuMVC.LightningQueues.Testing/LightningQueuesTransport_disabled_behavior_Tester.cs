@@ -1,4 +1,5 @@
 ﻿using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
@@ -68,13 +69,15 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void do_not_blow_up()
         {
-            var container = new Container();
-            container.Inject(new LightningQueueSettings
+            var registry = new FubuRegistry();
+            registry.ServiceBus.Enable(true);
+            registry.ServiceBus.EnableInMemoryTransport();
+            registry.Services.For<LightningQueueSettings>().Use(new LightningQueueSettings
             {
                 DisableIfNoChannels = true
             });
 
-            using (var runtime = FubuTransport.DefaultPolicies(container))
+            using (var runtime = registry.ToRuntime())
             {
                 // just looking for the absence of an exception here
             }
@@ -83,14 +86,15 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void does_blow_up_if_not_opted_into_the_disable_behavior()
         {
-            var container = new Container();
-            container.Inject(new LightningQueueSettings
+            var registry = new FubuRegistry();
+            registry.ServiceBus.Enable(true);
+            registry.Services.For<LightningQueueSettings>().Use(new LightningQueueSettings
             {
                 DisableIfNoChannels = false
             });
 
             Exception<FubuException>.ShouldBeThrownBy(() => {
-                using (var runtime = FubuTransport.DefaultPolicies(container))
+                using (var runtime = registry.ToRuntime())
                 {
                 }
             });

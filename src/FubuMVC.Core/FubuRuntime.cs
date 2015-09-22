@@ -56,6 +56,15 @@ namespace FubuMVC.Core
             return new FubuRuntime(registry);
         }
 
+        public static FubuRuntime BasicBus(Action<FubuRegistry> configure = null)
+        {
+            return Basic(r =>
+            {
+                r.ServiceBus.Enable(true);
+                r.ServiceBus.EnableInMemoryTransport();
+            });
+        }
+
         public static FubuRuntime For<T>(Action<FubuRegistry> configure = null) where T : FubuRegistry, new()
         {
             var registry = new T();

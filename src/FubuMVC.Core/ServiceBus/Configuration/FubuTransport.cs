@@ -20,20 +20,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             });
         }
 
-        public static FubuRuntime DefaultPolicies(IContainer container = null)
-        {
-            var registry = new FubuRegistry();
-            if (container != null) registry.StructureMap(container);
-
-            registry.ServiceBus.Configure(x =>
-            {
-                x.Enabled = true;
-                x.EnableInMemoryTransport = true;
-            });
-
-            return registry.ToRuntime();
-        }
-
         static FubuTransport()
         {
             Reset();

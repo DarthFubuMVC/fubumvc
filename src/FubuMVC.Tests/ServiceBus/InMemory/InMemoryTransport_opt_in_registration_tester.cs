@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         {
             FubuTransport.AllQueuesInMemory = true;
 
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 var container = runtime.Get<IContainer>();
                 container.ShouldHaveRegistration<ITransport, InMemoryTransport>();
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
                 _.Enabled = true;
             });
 
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.BasicBus())
             {
                 var container = runtime.Get<IContainer>();
                 container.ShouldHaveRegistration<ITransport, InMemoryTransport>();
