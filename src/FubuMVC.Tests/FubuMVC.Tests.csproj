@@ -378,7 +378,6 @@
     <Compile Include="ServiceBus\Runtime\Cascading\RespondToSenderTester.cs" />
     <Compile Include="ServiceBus\Runtime\Cascading\SendDirectlyToTester.cs" />
     <Compile Include="ServiceBus\Runtime\Delayed\DelayedEnvelopeProcessorTester.cs" />
-    <Compile Include="ServiceBus\Runtime\Delayed\Delayed_Processing_Job_Registration_Tester.cs" />
     <Compile Include="ServiceBus\Runtime\EnvelopeModifierTester.cs" />
     <Compile Include="ServiceBus\Runtime\EnvelopeSenderTester.cs" />
     <Compile Include="ServiceBus\Runtime\EnvelopeTester.cs" />

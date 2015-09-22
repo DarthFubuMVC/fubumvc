@@ -150,6 +150,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuitEndpoint.cs" />
     <Compile Include="Runtime\Files\FileChangeWatcher_integration_tester.cs" />
+    <Compile Include="ScheduledJobs\ScheduledJobIntegrationTester.cs" />
     <Compile Include="Security\Authentication\authenticated_request_against_an_authenticated_route.cs" />
     <Compile Include="Security\Authentication\AuthenticationHarness.cs" />
     <Compile Include="Security\Authentication\SampleController.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Serenity\SerenitySystemTester.cs" />
     <Compile Include="Serenity\WaitTester.cs" />
     <Compile Include="ServiceBus\ChainInvokerIntegrationTester.cs" />
+    <Compile Include="ServiceBus\Delayed_Processing_Job_Registration_Tester.cs" />
     <Compile Include="ServiceBus\end_to_end_diagnostics_specs.cs" />
     <Compile Include="ServiceBus\Messages.cs" />
     <Compile Include="ServiceBus\Publishing\PublishingConfigurationIntegrationTester.cs" />

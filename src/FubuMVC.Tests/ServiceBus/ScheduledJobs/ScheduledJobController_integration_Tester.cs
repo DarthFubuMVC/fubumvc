@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         [TestFixtureSetUp]
         public void FixtureSetUp()
         {
-            FubuTransport.AllQueuesInMemory = true;
+            //FubuTransport.AllQueuesInMemory = true;
 
             runtime = FubuRuntime.For<TestingJobRegistry>();
 

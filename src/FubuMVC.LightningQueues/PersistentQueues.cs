@@ -47,7 +47,10 @@ namespace FubuMVC.LightningQueues
             {
                 return _queueManagers[port];
             }
-            return _queueManagers.First();
+
+
+
+            return _queueManagers.Any() ? _queueManagers.First() : _queueManagers[port];
         }
 
         public IQueueManager ManagerForReply()

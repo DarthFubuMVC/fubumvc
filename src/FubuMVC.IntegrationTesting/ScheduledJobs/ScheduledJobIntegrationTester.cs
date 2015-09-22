@@ -10,11 +10,11 @@ using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
+using FubuMVC.Tests.ServiceBus;
 using NUnit.Framework;
 using Shouldly;
-using StructureMap;
 
-namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
+namespace FubuMVC.IntegrationTesting.ScheduledJobs
 {
     [TestFixture]
     public class ScheduledJobIntegrationTester
@@ -112,7 +112,13 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
     {
         public ScheduledJobRegistry()
         {
-            ServiceBus.EnableInMemoryTransport();
+            AlterSettings<BusSettings>(x =>
+            {
+                x.Downstream = new Uri("lq.tcp://localhost:2233/scheduled_jobs_downstream");
+                x.Upstream = new Uri("lq.tcp://localhost:2233/scheduled_jobs_upstream");
+            });
+
+            Channel(x => x.Downstream).ReadIncoming();
 
             ScheduledJob.DefaultJobChannel(x => x.Downstream);
             ScheduledJob.RunJob<AJob>().ScheduledBy<DummyScheduleRule>().Channel(x => x.Upstream);

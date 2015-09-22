@@ -29,7 +29,6 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         [SetUp]
         public void SetUp()
         {
-            FubuTransport.SetupForInMemoryTesting();
 
             theLogger = new SagaLogger();
             theContainer = new Container(x =>
@@ -51,7 +50,6 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         [TearDown]
         public void TearDown()
         {
-            InMemoryQueueManager.ClearAll();
             theRuntime.Dispose();
         }
 
