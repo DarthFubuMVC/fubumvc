@@ -24,7 +24,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 
                 handlers.Add(allCalls);
 
-                handlers.ApplyGeneralizedHandlers();
+                handlers.Compile();
 
                 return handlers.OfType<BehaviorChain>().ToArray();
             });

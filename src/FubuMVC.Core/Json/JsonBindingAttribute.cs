@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Json
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class JsonBindingAttribute : ModifyChainAttribute
     {
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             call.ParentChain().Input.Add(typeof(NewtonSoftBindingReader<>));
         }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using NUnit.Framework;
@@ -88,7 +89,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             theGraph.Add(specific2);
 
             theGraph.ShouldHaveCount(2);
-            theGraph.ApplyGeneralizedHandlers();
+            theGraph.Compile();
 
             theGraph.ShouldHaveCount(2);
 
@@ -108,7 +109,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             theGraph.Add(baseHandler);
             theGraph.Add(derivedHandler);
 
-            theGraph.ApplyGeneralizedHandlers();
+            theGraph.Compile();
 
             theGraph.ShouldHaveCount(1);
 
@@ -165,7 +166,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
             theGraph.Import(other);
 
-            theGraph.ApplyGeneralizedHandlers();
+            theGraph.Compile();
 
             theGraph.ChainFor(typeof(Concrete1)).Last()
                 .Equals(general).ShouldBeTrue();
@@ -174,6 +175,21 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .Equals(general).ShouldBeTrue();
 
 
+        }
+
+        [Test]
+        public void compile_applies_modify_chain_attributes()
+        {
+            var specific1 = HandlerCall.For<ConcreteHandler>(x => x.Specific1(null));
+            var specific2 = HandlerCall.For<ConcreteHandler>(x => x.Specific2(null));
+
+            theGraph.Add(specific1);
+            theGraph.Add(specific2);
+
+            theGraph.Compile();
+
+            theGraph.ChainFor<Concrete1>().IsWrappedBy(typeof(BlueWrapper)).ShouldBeTrue();
+            theGraph.ChainFor<Concrete2>().IsWrappedBy(typeof(GreenWrapper)).ShouldBeTrue();
         }
     }
 
@@ -188,7 +204,11 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         }
 
         public void General(IMessage input){}
+
+        [WrapWith(typeof(BlueWrapper))]
         public void Specific1(Concrete1 input){}
+
+        [WrapWith(typeof(GreenWrapper))]
         public void Specific2(Concrete2 input){}
 
         public void Base(BaseMesage message){}

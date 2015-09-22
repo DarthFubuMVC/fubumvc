@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Security.Authorization
             _roles = roles;
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             var chain = call.ParentChain();
             _roles.Each(role => chain.Authorization.AddPolicy(new RequireRole(role)));

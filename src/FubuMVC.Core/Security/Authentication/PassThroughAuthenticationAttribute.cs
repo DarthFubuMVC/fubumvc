@@ -6,7 +6,7 @@ namespace FubuMVC.Core.Security.Authentication
 {
 	public class PassThroughAuthenticationAttribute : ModifyChainAttribute
 	{
-	    public override void Alter(ActionCall call)
+	    public override void Alter(ActionCallBase call)
 	    {
 	        var chain = call.ParentChain();
 

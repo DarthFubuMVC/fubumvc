@@ -25,7 +25,7 @@ namespace FubuMVC.Core
             get { return _behaviorTypes; }
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             _behaviorTypes.Each(x => call.WrapWith(x));
         }

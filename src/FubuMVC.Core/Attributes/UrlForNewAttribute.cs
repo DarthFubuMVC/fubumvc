@@ -24,7 +24,7 @@ namespace FubuMVC.Core
             get { return _type; }
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             call.ParentChain().As<RoutedChain>().UrlCategory.Creates.Add(Type);
         }

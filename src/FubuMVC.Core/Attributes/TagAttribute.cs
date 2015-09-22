@@ -15,7 +15,7 @@ namespace FubuMVC.Core
             _tags = tags;
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             var chain = call.ParentChain();
             chain.Tags.Fill(_tags);

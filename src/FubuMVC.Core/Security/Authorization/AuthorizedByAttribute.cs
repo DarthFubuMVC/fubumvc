@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Security.Authorization
             _type = failureHandler;
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             call.ParentChain().Authorization.FailureHandler(_type);
         }
@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Security.Authorization
             get { return _types; }
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             var authorizationNode = call.ParentChain().Authorization;
 

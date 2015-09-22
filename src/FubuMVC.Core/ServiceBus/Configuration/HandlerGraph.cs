@@ -38,14 +38,14 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             }
         }
 
-        public void ApplyGeneralizedHandlers()
+        public void Compile()
         {
             _stagedCalls.Each(call => {
                 var matching = _chains.Values.Where(x => call.CouldHandleOtherMessageType(x.InputType()));
                 matching.Each(call.AddClone);
             });
 
-
+            _chains.Each(pair => pair.Value.ReadAttributes());
         }
 
         public HandlerChain ChainFor(Type inputType)

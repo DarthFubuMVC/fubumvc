@@ -128,7 +128,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             _types = types;
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             var outputNode = call.ParentChain().Output;
             _types.Each(t => outputNode.Add(t));
@@ -148,7 +148,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             _types = types;
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             var inputNode = call.ParentChain().Input;
 

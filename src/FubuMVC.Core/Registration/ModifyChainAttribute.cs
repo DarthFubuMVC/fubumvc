@@ -5,6 +5,6 @@ namespace FubuMVC.Core.Registration
 {
     public abstract class ModifyChainAttribute : Attribute
     {
-        public abstract void Alter(ActionCall call);
+        public abstract void Alter(ActionCallBase call);
     }
 }

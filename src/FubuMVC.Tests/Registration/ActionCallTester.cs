@@ -439,7 +439,7 @@ namespace FubuMVC.Tests.Registration
 
     public class WonkyAttribute : ModifyChainAttribute
     {
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             call.ParentChain().InsertFirst(Wrapper.For<WonkyWrapper>());
         }

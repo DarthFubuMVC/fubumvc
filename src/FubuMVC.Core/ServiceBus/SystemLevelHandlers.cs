@@ -36,7 +36,7 @@ namespace FubuMVC.Core.ServiceBus
             };
 
 
-            handlers.ApplyGeneralizedHandlers();
+            handlers.Compile();
 
             // TODO -- need to apply [ModifyChainAttribute]'s here. See GH-958
 

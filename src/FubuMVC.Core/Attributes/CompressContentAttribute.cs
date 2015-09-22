@@ -7,7 +7,7 @@ namespace FubuMVC.Core
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CompressContentAttribute : ModifyChainAttribute
     {
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             call.Chain.ApplyCompression();
         }

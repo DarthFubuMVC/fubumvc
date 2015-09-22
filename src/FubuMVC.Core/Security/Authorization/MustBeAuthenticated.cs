@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Security.Authorization
 {
     public class MustBeAuthenticatedAttribute : ModifyChainAttribute
     {
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             call.ParentChain().Authorization.AddPolicy(new MustBeAuthenticated());
         }

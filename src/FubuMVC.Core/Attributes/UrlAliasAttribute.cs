@@ -18,12 +18,15 @@ namespace FubuMVC.Core
             _pattern = pattern;
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
-            var chain = call.ParentChain();
-            var alias = call.BuildRouteForPattern(_pattern);
+            if (call is ActionCall)
+            {
+                var chain = call.ParentChain();
+                var alias = call.As<ActionCall>().BuildRouteForPattern(_pattern);
 
-            chain.As<RoutedChain>().AddRouteAlias(alias);
+                chain.As<RoutedChain>().AddRouteAlias(alias);
+            }
         }
     }
 }

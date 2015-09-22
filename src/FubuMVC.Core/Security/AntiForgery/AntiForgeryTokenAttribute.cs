@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Security.AntiForgery
 
         public string Salt { get; set; }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             call.AddBefore(new AntiForgeryNode(Salt));
         }

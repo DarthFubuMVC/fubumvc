@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Registration
             _method = DetermineMethod(filterType);
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             var filter = new ActionFilter(_filterType, _method);
             call.AddBefore(filter);

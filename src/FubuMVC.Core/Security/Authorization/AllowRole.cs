@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Security.Authorization
             get { return _roles; }
         }
 
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             var authorizationNode = call.ParentChain().Authorization;
             _roles.Each(r => authorizationNode.AddRole(r));

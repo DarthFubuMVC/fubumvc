@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
-using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
@@ -24,6 +23,14 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         public HandlerChain(IEnumerable<HandlerCall> calls) : this()
         {
             calls.Each(AddToEnd);
+        }
+
+        public void ReadAttributes()
+        {
+            this.OfType<HandlerCall>().ToArray().Each(call =>
+            {
+                call.ForAttributes<ModifyChainAttribute>(att => att.Alter(call));
+            });
         }
 
         public virtual bool IsPollingJob()

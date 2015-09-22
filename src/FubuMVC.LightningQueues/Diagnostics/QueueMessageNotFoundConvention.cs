@@ -9,7 +9,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
 {
     public class QueueMessageResourceNotFoundAttribute : ModifyChainAttribute
     {
-        public override void Alter(ActionCall call)
+        public override void Alter(ActionCallBase call)
         {
             call.ParentChain().Output.As<OutputNode>().UseForResourceNotFound<QueueMessageNotFoundWriter>();
         }
