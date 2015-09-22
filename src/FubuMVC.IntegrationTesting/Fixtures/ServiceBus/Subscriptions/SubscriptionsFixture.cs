@@ -4,7 +4,6 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.Services.Messaging.Tracking;
@@ -32,7 +31,6 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Subscriptions
             RunningNode.Subscriptions.ClearAll();
             MessageHistory.ClearAll();
             InMemoryQueueManager.ClearAll();
-            FubuTransport.ApplyMessageHistoryWatching = true;
         }
 
         public override void TearDown()

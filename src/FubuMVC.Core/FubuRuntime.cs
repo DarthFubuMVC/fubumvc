@@ -60,6 +60,7 @@ namespace FubuMVC.Core
         {
             return Basic(r =>
             {
+                if (configure != null) configure(r);
                 r.ServiceBus.Enable(true);
                 r.ServiceBus.EnableInMemoryTransport();
             });

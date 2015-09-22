@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using NUnit.Framework;
@@ -12,15 +13,17 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         [Test]
         public void should_have_an_error_behavior_on_each_chain()
         {
-            var graph = FubuTransport.BehaviorGraphFor(x => { });
-
-            foreach (HandlerChain chain in graph.Handlers)
+            using (var runtime = FubuRuntime.BasicBus())
             {
-                chain.First().ShouldBeOfType<ExceptionHandlerNode>()
-                     .Chain.ShouldBeTheSameAs(chain);
+                foreach (HandlerChain chain in runtime.Behaviors.Handlers)
+                {
+                    chain.First().ShouldBeOfType<ExceptionHandlerNode>()
+                         .Chain.ShouldBeTheSameAs(chain);
 
 
+                }
             }
+
         }
     }
 }

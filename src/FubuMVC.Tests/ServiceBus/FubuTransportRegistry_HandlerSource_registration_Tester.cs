@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using NUnit.Framework;
@@ -12,31 +13,40 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void can_register_a_handler_source_by_explicit_config()
         {
-            var graph = FubuTransport.BehaviorGraphFor(x => {
+            using (var runtime = FubuRuntime.BasicBus(x =>
+            {
                 x.Handlers.DisableDefaultHandlerSource();
-                x.Handlers.FindBy(source => {
+                x.Handlers.FindBy(source =>
+                {
                     source.UseThisAssembly();
                     source.IncludeTypesNamed(name => name.Contains("FooHandler"));
                 });
-            });
+            }))
+            {
+                var graph = runtime.Behaviors;
 
-            graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Where(x => x.HandlerType.Assembly != typeof(HandlerCall).Assembly).Select(x => x.HandlerType).OrderBy(x => x.Name)
-                .ShouldHaveTheSameElementsAs(typeof(MyFooHandler), typeof(MyOtherFooHandler));
+                graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Where(x => x.HandlerType.Assembly != typeof(HandlerCall).Assembly).Select(x => x.HandlerType).OrderBy(x => x.Name)
+                    .ShouldHaveTheSameElementsAs(typeof(MyFooHandler), typeof(MyOtherFooHandler));
+
+            }
 
         }
 
         [Test]
         public void extra_handler_sources_are_additive()
         {
-            var graph = FubuTransport.BehaviorGraphFor(x =>
+            using (var runtime = FubuRuntime.BasicBus(x =>
             {
                 x.Handlers.Include<RandomThing>();
-            });
+            }))
+            {
+                var graph = runtime.Behaviors;
 
-            var handlerTypes = graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Select(x => x.HandlerType).ToArray();
-            handlerTypes.ShouldContain(typeof(MyOtherConsumer));
-            handlerTypes.ShouldContain(typeof(MyFooHandler));
-            handlerTypes.ShouldContain(typeof(RandomThing));
+                var handlerTypes = graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Select(x => x.HandlerType).ToArray();
+                handlerTypes.ShouldContain(typeof(MyOtherConsumer));
+                handlerTypes.ShouldContain(typeof(MyFooHandler));
+                handlerTypes.ShouldContain(typeof(RandomThing));
+            }
 
         }
     }

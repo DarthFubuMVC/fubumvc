@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FubuCore.Logging;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
@@ -17,28 +18,29 @@ using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-
-
-
-
     [TestFixture]
     public class find_the_chain_by_envelope_message_type
     {
         [Test]
         public void can_find_chain_for_input_type()
         {
-            var graph = FubuTransport.BehaviorGraphFor(x => {
+            using (var runtime = FubuRuntime.BasicBus(x =>
+            {
                 x.Handlers.Include<OneHandler>();
                 x.Handlers.Include<TwoHandler>();
 
                 x.Handlers.DisableDefaultHandlerSource();
-            });
+            }))
+            {
+                var graph = runtime.Behaviors;
 
-            var invoker = new ChainInvoker(null, graph, null, null, null);
 
-            invoker.FindChain(new Envelope {Message = new OneMessage()})
-                   .OfType<HandlerCall>().Single()
-                   .HandlerType.ShouldBe(typeof (OneHandler));
+                var invoker = new ChainInvoker(null, graph, null, null, null);
+
+                invoker.FindChain(new Envelope { Message = new OneMessage() })
+                       .OfType<HandlerCall>().Single()
+                       .HandlerType.ShouldBe(typeof(OneHandler));
+            }
         }
 
         

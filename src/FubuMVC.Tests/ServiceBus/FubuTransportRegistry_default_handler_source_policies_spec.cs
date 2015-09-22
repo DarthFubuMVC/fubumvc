@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
@@ -16,44 +17,51 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void should_automatically_pick_up_classes_suffixed_with_Handler()
         {
-            FubuTransport.BehaviorGraphFor(r => {})
-                .ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewHandler))
+            using (var runtime = FubuRuntime.BasicBus())
+            {
+                runtime.Behaviors.ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewHandler))
                 .ShouldBeTrue();
+            }
+
         }
 
         [Test]
         public void should_automatically_pick_up_classes_suffixed_with_Consumer()
         {
-            FubuTransport.BehaviorGraphFor(r => { })
-                .ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewConsumer))
+            using (var runtime = FubuRuntime.BasicBus())
+            {
+                runtime.Behaviors.ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewConsumer))
                 .ShouldBeTrue();
+            }
         }
 
         [Test]
         public void default_handler_sources_are_not_used_if_a_custom_one_is_registered_and_disabled()
         {
-            var graph = FubuTransport.BehaviorGraphFor(r => {
+            using (var runtime = FubuRuntime.BasicBus(r =>
+            {
                 r.Handlers.DisableDefaultHandlerSource();
                 r.Handlers.FindBy<MyFunkyHandlerSource>();
-            });
-
-            graph.ChainFor(typeof (Message1)).OfType<HandlerCall>().Select(x => x.HandlerType)
+            }))
+            {
+                runtime.Behaviors.ChainFor(typeof (Message1)).OfType<HandlerCall>().Select(x => x.HandlerType)
                 .Single().ShouldBe(typeof (MyFunkySpaceAgeProcessor));
-
+            }
 
         }
 
         [Test]
         public void default_handler_sources_are_not_used_if_a_custom_one_is_registered_2_and_disabled()
         {
-            var graph = FubuTransport.BehaviorGraphFor(r =>
+            using (var runtime = FubuRuntime.BasicBus(r =>
             {
                 r.Handlers.FindBy(new MyFunkyHandlerSource());
                 r.Handlers.DisableDefaultHandlerSource();
-            });
-
-            graph.ChainFor(typeof(Message1)).OfType<HandlerCall>().Select(x => x.HandlerType)
+            }))
+            {
+                runtime.Behaviors.ChainFor(typeof(Message1)).OfType<HandlerCall>().Select(x => x.HandlerType)
                 .Single().ShouldBe(typeof(MyFunkySpaceAgeProcessor));
+            }
 
 
         }
@@ -61,21 +69,22 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void can_override_the_default_handler_source_by_explicits_and_disabled()
         {
-            var graph = FubuTransport.BehaviorGraphFor(r =>
+            using (var runtime = FubuRuntime.BasicBus(r =>
             {
-                
-                r.Handlers.FindBy(x => {
-                    x.IncludeClassesSuffixedWithConsumer();
-                });
+                r.Handlers.FindBy(x => x.IncludeClassesSuffixedWithConsumer());
 
                 r.Handlers.DisableDefaultHandlerSource();
-            });
+            }))
+            {
+                var graph = runtime.Behaviors;
+                graph.ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewConsumer))
+                    .ShouldBeTrue();
 
-            graph.ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewConsumer))
-                .ShouldBeTrue();
+                graph.ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewHandler))
+                    .ShouldBeFalse();
+            }
 
-            graph.ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewHandler))
-                .ShouldBeFalse();
+
         }
     }
 

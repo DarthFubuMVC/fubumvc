@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Async;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
@@ -15,13 +15,18 @@ namespace FubuMVC.Tests.ServiceBus.Async
         [Test]
         public void async_handling_node_should_be_right_before_any_calls()
         {
-            var graph = FubuTransport.BehaviorGraphFor(x => { });
+            using (var runtime = FubuRuntime.BasicBus())
+            {
+                var graph = runtime.Behaviors;
 
-            graph.ChainFor(typeof (Message)).OfType<HandlerCall>()
-                .First().Previous.ShouldBeOfType<AsyncHandlingNode>();
+                graph.ChainFor(typeof(Message)).OfType<HandlerCall>()
+                    .First().Previous.ShouldBeOfType<AsyncHandlingNode>();
 
-            graph.ChainFor(typeof(Message3)).OfType<HandlerCall>()
-                .First().Previous.ShouldBeOfType<AsyncHandlingNode>();
+                graph.ChainFor(typeof(Message3)).OfType<HandlerCall>()
+                    .First().Previous.ShouldBeOfType<AsyncHandlingNode>();
+            }
+
+
         }
     }
 

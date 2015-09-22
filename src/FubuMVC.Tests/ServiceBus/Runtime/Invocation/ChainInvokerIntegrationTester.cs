@@ -10,7 +10,6 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using NUnit.Framework;
 using Shouldly;
-using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {

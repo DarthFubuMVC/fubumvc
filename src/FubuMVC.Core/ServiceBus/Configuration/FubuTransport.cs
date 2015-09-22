@@ -11,19 +11,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
     /// </summary>
     public static class FubuTransport
     {
-        public static BehaviorGraph BehaviorGraphFor(Action<FubuRegistry> configuration)
-        {
-            return BehaviorGraph.BuildFrom(x =>
-            {
-                x.ServiceBus.Enable(true);
-                configuration(x);
-            });
-        }
-
-        static FubuTransport()
-        {
-        }
-
         public static bool UseSynchronousLogging { get; set; }
 
         public static bool ApplyMessageHistoryWatching { get; set; }

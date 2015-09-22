@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -191,30 +192,24 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         [Test]
         public void use_the_special_storage_just_fine()
         {
-            var graph = FubuTransport.BehaviorGraphFor(x => {
-                x.ServiceBus.SagaStorage<SpecialSagaStorage>();
-            });
+            using (var runtime = FubuRuntime.BasicBus(x => x.ServiceBus.SagaStorage<SpecialSagaStorage>()))
+            {
+                var graph = runtime.Behaviors;
+                var chain = graph.ChainFor(typeof(SagaMessageOne));
+                chain.OfType<StatefulSagaNode>()
+                    .FirstOrDefault()  // there are two saga's using this message, just worry about the first one
+                    .Repository.ReturnedType.ShouldBe(typeof(SpecialSagaRepository<MySagaState, SagaMessageOne>));
 
-            var chain = graph.ChainFor(typeof (SagaMessageOne));
-            chain.OfType<StatefulSagaNode>()
-                .FirstOrDefault()  // there are two saga's using this message, just worry about the first one
-                .Repository.ReturnedType.ShouldBe(typeof (SpecialSagaRepository<MySagaState, SagaMessageOne>));
+                // The saga node should be before the handler calls
+                var sagaNode = chain.OfType<StatefulSagaNode>()
+                    .FirstOrDefault();
+
+                sagaNode.PreviousNodes.Any(x => x is HandlerCall).ShouldBeFalse();
+                sagaNode.Any(x => x is HandlerCall).ShouldBeTrue();
+            }
+
         }
 
-        [Test]
-        public void the_saga_node_is_before_the_handler_calls()
-        {
-            var graph = FubuTransport.BehaviorGraphFor(x => {
-                x.ServiceBus.SagaStorage<SpecialSagaStorage>();
-            });
-
-            var chain = graph.ChainFor(typeof (SagaMessageOne));
-            var sagaNode = chain.OfType<StatefulSagaNode>()
-                .FirstOrDefault();
-
-            sagaNode.PreviousNodes.Any(x => x is HandlerCall).ShouldBeFalse();
-            sagaNode.Any(x => x is HandlerCall).ShouldBeTrue();
-        }
     }
 
     public class SpecialSagaStorage : ISagaStorage
