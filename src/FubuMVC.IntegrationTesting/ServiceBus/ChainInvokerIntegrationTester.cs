@@ -15,6 +15,12 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
     [TestFixture]
     public class ChainInvokerIntegrationTester
     {
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            MessageHistory.StartListening();
+        }
+
         [Test]
         public void invoking_a_chain_will_execute_completely_with_cascading_messages()
         {
@@ -28,8 +34,6 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
                 {
                     invoker.InvokeNow(new WebMessage { Text = "I'm good" });
                 });
-
-                recorder.Messages.Each(x => Debug.WriteLine(x));
 
                 // Should process all the cascading messages that bubble up
                 // and their cascaded messages
@@ -58,8 +62,6 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
                     invoker.InvokeNow(new WebMessage { Text = "Bad message" });
                 });
 
-                recorder.Messages.Each(x => Debug.WriteLine(x));
-
                 // NO MESSAGES SHOULD GET OUT WITH THE ORIGINAL 'Bad Message'
                 recorder.Messages.Any(x => x.Contains("Bad message")).ShouldBeFalse();
 
@@ -80,8 +82,6 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
                 {
                     invoker.InvokeNow(new TriggerImmediate { Text = "First", ContinueText = "I'm good" });
                 });
-
-                recorder.Messages.Each(x => Debug.WriteLine(x));
 
                 // Should process all the cascading messages that bubble up
                 // and their cascaded messages
@@ -108,8 +108,6 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
                     invoker.InvokeNow(new TriggerImmediate { Text = "First", ContinueText = "Bad message" });
                 });
 
-                recorder.Messages.Each(x => Debug.WriteLine(x));
-
                 // Should process all the cascading messages that bubble up
                 // and their cascaded messages
                 recorder.Messages.ShouldContain("First");
@@ -131,8 +129,6 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
                 {
                     invoker.InvokeNow(new TriggerImmediate { Text = "First", ContinueText = "Retry message" });
                 });
-
-                recorder.Messages.Each(x => Debug.WriteLine(x));
 
                 // Should process all the cascading messages that bubble up
                 // and their cascaded messages
