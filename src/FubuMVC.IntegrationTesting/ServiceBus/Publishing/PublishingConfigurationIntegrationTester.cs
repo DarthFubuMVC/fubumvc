@@ -9,6 +9,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Web;
+using FubuMVC.LightningQueues;
 using FubuMVC.Tests.ServiceBus;
 using Shouldly;
 using NUnit.Framework;
@@ -29,8 +30,6 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         [SetUp]
         public void SetUp()
         {
-            FubuTransport.AllQueuesInMemory = true;
-
             container = new Container();
             container.Inject(new TransportSettings
             {
@@ -43,7 +42,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
             registry.ServiceBus.Enable(true);
             registry.Actions.IncludeType<MessageOnePublisher>();
             registry.StructureMap(container);
-            registry.HostWith<Katana>();
+            registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
 
             theRuntime = registry.ToRuntime();
             theGraph = theRuntime.Get<BehaviorGraph>();

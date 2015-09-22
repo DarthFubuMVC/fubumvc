@@ -66,6 +66,11 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         /// </summary>
         public string DefaultContentType { get; set; }
 
+        public bool HasChannels
+        {
+            get { return _channels.Any(); }
+        }
+
         public ChannelNode ChannelFor<T>(Expression<Func<T, Uri>> property)
         {
             return ChannelFor(ReflectionHelper.GetAccessor(property));

@@ -41,6 +41,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
 
             var registry = new SagaTestRegistry();
             registry.StructureMap(theContainer);
+            registry.Mode = "testing";
 
             theRuntime = registry.ToRuntime();
 

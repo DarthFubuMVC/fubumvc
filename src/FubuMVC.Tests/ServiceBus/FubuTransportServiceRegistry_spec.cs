@@ -60,11 +60,9 @@ namespace FubuMVC.Tests.ServiceBus
 
 
         [Test]
-        public void use_synchronous_event_aggregator_if_FubuTransport_UseSynchronousLogging()
+        public void use_synchronous_event_aggregator_if_in_testing_mode()
         {
-            FubuTransport.UseSynchronousLogging = true;
-
-            using (var runtime = FubuRuntime.BasicBus())
+            using (var runtime = FubuRuntime.BasicBus(x => x.Mode = "testing"))
             {
                 var c = runtime.Get<IContainer>();
 
@@ -75,11 +73,10 @@ namespace FubuMVC.Tests.ServiceBus
 
 
         [Test]
-        public void service_registrations_when_FubuTransport_messagewatching_is_applied()
+        public void service_registrations_when_mode_is_testing()
         {
-            FubuTransport.ApplyMessageHistoryWatching = true;
 
-            using (var runtime = FubuRuntime.BasicBus())
+            using (var runtime = FubuRuntime.BasicBus(x => x.Mode = "testing"))
             {
                 var c = runtime.Get<IContainer>();
 
@@ -92,9 +89,8 @@ namespace FubuMVC.Tests.ServiceBus
 
 
         [Test]
-        public void service_registrations_when_FubuTransport_messagewatching_is_NOT_applied()
+        public void service_registrations_when_not_in_testing_mode()
         {
-            FubuTransport.ApplyMessageHistoryWatching = false;
 
             using (var runtime = FubuRuntime.BasicBus())
             {

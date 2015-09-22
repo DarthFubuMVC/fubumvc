@@ -30,6 +30,8 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
 
         public void Activate(IActivationLog log, IPerfTimer timer)
         {
+            if (!_graph.HasChannels) return;
+
             log.Trace("Determining subscriptions for node " + _cache.NodeName);
 
             // assuming that there are no automaticly persistent tasks
