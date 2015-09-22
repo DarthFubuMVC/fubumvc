@@ -146,7 +146,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
     {
         public SagaTestRegistry()
         {
-            AlterSettings<TransportSettings>(x => x.EnableInMemoryTransport = true);
+            AlterSettings<TransportSettings>(x => x.InMemoryTransport = InMemoryTransportMode.Enabled);
 
             Channel(x => x.Queue)
                 .AcceptsMessagesInAssemblyContainingType<SagaTestRegistry>()

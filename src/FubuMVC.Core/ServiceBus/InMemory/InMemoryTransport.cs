@@ -5,7 +5,6 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 
@@ -15,7 +14,10 @@ namespace FubuMVC.Core.ServiceBus.InMemory
     [Title("In Memory Transport")]
     public class InMemoryTransport : TransportBase, ITransport
     {
-        private TransportSettings _settings;
+        internal static Type DefaultSettings { get; set; }
+        internal static ChannelGraph DefaultChannelGraph { get; set; }
+
+        private readonly TransportSettings _settings;
 
         public InMemoryTransport(TransportSettings settings)
         {
@@ -113,12 +115,12 @@ namespace FubuMVC.Core.ServiceBus.InMemory
 
         private static Uri GetUriForProperty(SingleProperty accessor)
         {
-            var channelGraph = FubuTransport.DefaultChannelGraph;
-            if (channelGraph != null && accessor.DeclaringType != FubuTransport.DefaultSettings)
+            var channelGraph = DefaultChannelGraph;
+            if (channelGraph != null && accessor.DeclaringType != DefaultSettings)
             {
                 // A default graph has been set via SetupForInMemoryTesting, so
                 // sync the URIs for the channels that match.
-                var channel = channelGraph.FirstOrDefault(x =>
+                var channel = Enumerable.FirstOrDefault<ChannelNode>(channelGraph, x =>
                 {
                     string channelName = x.Key.Split(':')[1];
                     return channelName == accessor.Name;

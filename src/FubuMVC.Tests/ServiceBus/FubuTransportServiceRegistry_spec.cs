@@ -112,7 +112,7 @@ namespace FubuMVC.Tests.ServiceBus
                 _.ServiceBus.Configure(x =>
                 {
                     x.Enabled = true;
-                    x.EnableInMemoryTransport = true;
+                    x.InMemoryTransport = InMemoryTransportMode.Enabled;
                 });
             }))
             {
@@ -130,7 +130,7 @@ namespace FubuMVC.Tests.ServiceBus
                 _.ServiceBus.Configure(x =>
                 {
                     x.Enabled = true;
-                    x.EnableInMemoryTransport = true;
+                    x.InMemoryTransport = InMemoryTransportMode.Enabled;
                 });
             }))
             {

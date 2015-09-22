@@ -34,9 +34,9 @@ namespace Serenity
             _subSystems.Add(system);
         }
 
-        public void AddSubSystem<T>() where T : ISubSystem, new()
+        public void AddSubSystem<TSubsystem>() where TSubsystem : ISubSystem, new()
         {
-            AddSubSystem(new T());
+            AddSubSystem(new TSubsystem());
         }
 
         public void AddSubSystem(ISubSystem subSystem)

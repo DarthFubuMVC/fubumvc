@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void in_memory_transport_is_disabled_by_default()
         {
-            new TransportSettings().EnableInMemoryTransport = false;
+            new TransportSettings().InMemoryTransport.ShouldBe(InMemoryTransportMode.Disabled);
         }
     }
 }

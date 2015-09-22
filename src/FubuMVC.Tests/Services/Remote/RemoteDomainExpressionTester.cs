@@ -20,7 +20,14 @@ namespace FubuMVC.Tests.Services.Remote
         [TearDown]
         public void TearDown()
         {
-            new FileSystem().DeleteDirectory(serviceDirectory);
+            try
+            {
+                new FileSystem().DeleteDirectory(serviceDirectory);
+            }
+            catch (Exception)
+            {
+                // Don't fail the build because of this.
+            }
         }
 
         [Test]
@@ -28,6 +35,7 @@ namespace FubuMVC.Tests.Services.Remote
         {
             var fileSystem = new FileSystem();
 
+           
             fileSystem.DeleteDirectory(serviceDirectory);
 
             fileSystem.CreateDirectory(serviceDirectory);

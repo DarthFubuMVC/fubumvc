@@ -7,32 +7,18 @@ namespace FubuMVC.LightningQueues.Testing
     [TestFixture]
     public class FubuTransportRegistryActivationTester
     {
-        private FubuRegistry _registry;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _registry = new FubuRegistry();
-            //_registry.Services<FubuTransportServiceRegistry>();
-        }
-
         [Test]
         public void should_start_when_transport_disabled()
         {
-            _registry.AlterSettings<TransportSettings>(x => {
-                                                                x.Enabled = true;
-                                                                x.EnableInMemoryTransport = true;
-            });
-            _registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
-            BootstrapApplication();
-        }
-
-
-        private void BootstrapApplication()
-        {
-            using (var application = _registry.ToRuntime())
+            var registry = new FubuRegistry();
+            registry.AlterSettings<TransportSettings>(x =>
             {
-                
+                x.Enabled = true;
+                x.InMemoryTransport = InMemoryTransportMode.Enabled;
+            });
+            registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
+            using (var application = registry.ToRuntime())
+            {
             }
         }
     }

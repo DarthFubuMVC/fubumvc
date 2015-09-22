@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime;
@@ -28,9 +29,9 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             // TODO -- what is this? Why are we doing this?
             AlterSettings<ChannelGraph>(graph =>
             {
-                if (FubuTransport.DefaultSettings == typeof (T))
+                if (InMemoryTransport.DefaultSettings == typeof (T))
                 {
-                    FubuTransport.DefaultChannelGraph = graph;
+                    InMemoryTransport.DefaultChannelGraph = graph;
                 }
             });
         }

@@ -149,7 +149,6 @@
     <Compile Include="ServiceBus\Configuration\ByThreadScheduleMaker.cs" />
     <Compile Include="ServiceBus\Configuration\ChannelGraph.cs" />
     <Compile Include="ServiceBus\Configuration\ChannelNode.cs" />
-    <Compile Include="ServiceBus\Configuration\FubuTransport.cs" />
     <Compile Include="ServiceBus\Configuration\FubuTransportRegistry.cs" />
     <Compile Include="ServiceBus\Configuration\HandlerChain.cs" />
     <Compile Include="ServiceBus\Configuration\HandlerChainPolicy.cs" />

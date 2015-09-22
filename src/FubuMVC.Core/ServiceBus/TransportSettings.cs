@@ -19,6 +19,13 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus
 {
+    public enum InMemoryTransportMode
+    {
+        Disabled,
+        Enabled,
+        AllInMemory
+    }
+
     public class TransportSettings : IFeatureSettings
     {
         public readonly IList<ISagaStorage> SagaStorageProviders;
@@ -32,14 +39,14 @@ namespace FubuMVC.Core.ServiceBus
             ListenerCleanupPolling = 60000;
             SubscriptionRefreshPolling = 60000;
             Enabled = false;
+            InMemoryTransport = InMemoryTransportMode.Disabled;
         }
 
+        
         public bool Enabled { get; set; }
 
-        [Obsolete("If this is used in testing, move to LQ instead")]
-        public bool EnableInMemoryTransport { get; set; }
+        public InMemoryTransportMode InMemoryTransport { get; set; }
 
-        [Obsolete("If this is used in testing, move to LQ instead")]
         public Uri InMemoryReplyUri { get; set; }
 
         public bool DebugEnabled { get; set; }
@@ -83,19 +90,19 @@ namespace FubuMVC.Core.ServiceBus
                 });
             });
 
-            if (FubuTransport.AllQueuesInMemory)
+            if (InMemoryTransport == InMemoryTransportMode.AllInMemory)
             {
                 registry.Services.For<ITransport>().ClearAll();
                 registry.Services.AddService<ITransport, InMemoryTransport>();
 
                 SettingTypes.Each(settingType =>
                 {
-                    var settings = InMemoryTransport.ToInMemory(settingType);
+                    var settings = InMemory.InMemoryTransport.ToInMemory(settingType);
                     registry.Services.ReplaceService(settingType, new ObjectInstance(settings));
                 });
             }
 
-            if (FubuTransport.AllQueuesInMemory || EnableInMemoryTransport)
+            if (InMemoryTransport != InMemoryTransportMode.Disabled)
             {
                 registry.Services.AddService<ITransport, InMemoryTransport>();
             }
@@ -118,7 +125,7 @@ namespace FubuMVC.Core.ServiceBus
         {
             public void SetToInMemory(FubuRegistry registry)
             {
-                registry.AlterSettings<T>(x => InMemoryTransport.AllChannelsAreInMemory(typeof(T), x));
+                registry.AlterSettings<T>(x => InMemory.InMemoryTransport.AllChannelsAreInMemory(typeof(T), x));
             }
         }
     }
