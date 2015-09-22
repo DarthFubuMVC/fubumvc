@@ -19,7 +19,7 @@ using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Sagas
 {
-    [TestFixture]
+    [TestFixture, Explicit("About to be converted to ST")]
     public class SagaIntegrationTester
     {
         private SagaLogger theLogger;
@@ -146,7 +146,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
     {
         public SagaTestRegistry()
         {
-            AlterSettings<TransportSettings>(x => x.EnableInMemoryTransport = true);
+            //AlterSettings<TransportSettings>(x => x.EnableInMemoryTransport = true);
 
             Channel(x => x.Queue)
                 .AcceptsMessagesInAssemblyContainingType<SagaTestRegistry>()
