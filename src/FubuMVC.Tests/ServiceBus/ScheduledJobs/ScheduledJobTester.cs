@@ -14,6 +14,30 @@ using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
+    public class AJob : IJob
+    {
+        public void Execute(CancellationToken cancellation)
+        {
+            
+        }
+    }
+
+    public class BJob : IJob
+    {
+        public void Execute(CancellationToken cancellation)
+        {
+
+        }
+    }
+
+    public class CJob : IJob
+    {
+        public void Execute(CancellationToken cancellation)
+        {
+
+        }
+    }
+
     [TestFixture]
     public class when_deciding_whether_or_not_to_reschedule_a_job : InteractionContext<ScheduledJob<AJob>>
     {

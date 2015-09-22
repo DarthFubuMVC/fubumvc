@@ -64,20 +64,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             return Uri != null ? Uri.Scheme : null;
         }
 
-        public void Describe(IScenarioWriter writer)
-        {
-            writer.WriteLine(Key);
-            using (writer.Indent())
-            {
-                if (Incoming)
-                {
-                    writer.WriteLine("Listens to {0} with {1}", Uri, Scheduler);
-                }
-
-                Rules.Each(x => x.Describe());
-            }
-        }
-
         public override string ToString()
         {
             return string.Format("Channel: {0}", Key);

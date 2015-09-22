@@ -2,6 +2,7 @@
 using System.Threading;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using NUnit.Framework;
 using Shouldly;
@@ -57,6 +58,26 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         public void removes_obsolete_jobs()
         {
             theSchedule.Find(typeof (AJob)).Status.ShouldBe(JobExecutionStatus.Inactive);
+        }
+    }
+
+    public class DummyScheduleRule : IScheduleRule
+    {
+        private readonly DateTimeOffset _nextTime;
+
+        public DummyScheduleRule()
+        {
+            _nextTime = DateTimeOffset.UtcNow.AddDays(1);
+        }
+
+        public DummyScheduleRule(DateTimeOffset nextTime)
+        {
+            _nextTime = nextTime;
+        }
+
+        public DateTimeOffset ScheduleNextTime(DateTimeOffset currentTime, JobExecutionRecord lastExecution)
+        {
+            return _nextTime;
         }
     }
 

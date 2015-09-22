@@ -221,7 +221,6 @@
     <Compile Include="ServiceBus\InMemory\InMemoryTransport.cs" />
     <Compile Include="ServiceBus\InMemory\ISagaStateCache.cs" />
     <Compile Include="ServiceBus\InMemory\SagaStateCache.cs" />
-    <Compile Include="ServiceBus\IScenarioWriter.cs" />
     <Compile Include="ServiceBus\IServiceBus.cs" />
     <Compile Include="ServiceBus\Logging\ChainExecutionFinished.cs" />
     <Compile Include="ServiceBus\Logging\ChainExecutionStarted.cs" />
