@@ -307,7 +307,6 @@
     <Compile Include="ServiceBus\Docs\Polling\PollingJobSamples.cs" />
     <Compile Include="ServiceBus\Docs\Sagas\SagaRepositorySample.cs" />
     <Compile Include="ServiceBus\Docs\Sagas\SimpleSaga.cs" />
-    <Compile Include="ServiceBus\Docs\Transports\InMemorySamples.cs" />
     <Compile Include="ServiceBus\Docs\Transports\LightningQueuesSamples.cs" />
     <Compile Include="ServiceBus\envelope_handlers_are_registered_in_the_right_order.cs" />
     <Compile Include="ServiceBus\ErrorHandling\CompositeContinuation_integration_testing.cs" />
@@ -333,18 +332,7 @@
     <Compile Include="ServiceBus\FubuTransportRegistry_default_handler_source_policies_spec.cs" />
     <Compile Include="ServiceBus\FubuTransportRegistry_HandlerSource_registration_Tester.cs" />
     <Compile Include="ServiceBus\FubuTransportServiceRegistry_spec.cs" />
-    <Compile Include="ServiceBus\FubuTransport_default_options_Tester.cs" />
     <Compile Include="ServiceBus\FullStackConfigurationIntegrationTester.cs" />
-    <Compile Include="ServiceBus\InMemory\Full_end_to_end_delayed_message_processing_with_in_memory_queues.cs" />
-    <Compile Include="ServiceBus\InMemory\InMemoryCallbackTester.cs" />
-    <Compile Include="ServiceBus\InMemory\InMemoryQueueIntegrationTester.cs" />
-    <Compile Include="ServiceBus\InMemory\InMemoryReplyQueueIntegratedTester.cs" />
-    <Compile Include="ServiceBus\InMemory\InMemorySagaRepositoryTester.cs" />
-    <Compile Include="ServiceBus\InMemory\InMemorySagaStorageTester.cs" />
-    <Compile Include="ServiceBus\InMemory\InMemoryTransportTester.cs" />
-    <Compile Include="ServiceBus\InMemory\InMemoryTransport_opt_in_registration_tester.cs" />
-    <Compile Include="ServiceBus\InMemory\ReplayDelayedQueueIntegrationTester.cs" />
-    <Compile Include="ServiceBus\InMemory\SagaStateCacheTester.cs" />
     <Compile Include="ServiceBus\IntegratedFubuTransportRegistryTester.cs" />
     <Compile Include="ServiceBus\Logging\EventAggregationListenerTester.cs" />
     <Compile Include="ServiceBus\Monitoring\FakePersistentTask.cs" />

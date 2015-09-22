@@ -36,7 +36,6 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
         public void TearDown()
         {
             runtime.Dispose();
-            FubuTransport.Reset();
         }
     }
 

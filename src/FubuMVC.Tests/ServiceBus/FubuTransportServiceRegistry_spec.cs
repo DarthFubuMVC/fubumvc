@@ -25,8 +25,6 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void service_registrations()
         {
-            FubuTransport.Reset();
-
             using (var runtime = FubuRuntime.BasicBus())
             {
                 var c = runtime.Get<IContainer>();

@@ -3,10 +3,8 @@ using System.Linq;
 using System.Threading;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuMVC.Tests.ServiceBus.InMemory;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -34,21 +32,13 @@ namespace FubuMVC.Tests.ServiceBus.Events
         [Test]
         public void the_cleanup_job_is_registered()
         {
-            FubuTransport.SetupForInMemoryTesting();
-
-            using (var runtime = FubuRuntime.For<DelayedRegistry>()
+            using (var runtime = FubuRuntime.BasicBus()
                 )
             {
                 runtime.Get<IPollingJobs>()
                     .Any(x => x is PollingJob<ExpiringListenerCleanup, TransportSettings>)
                     .ShouldBeTrue();
             }
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            FubuTransport.Reset();
         }
     }
 }

@@ -67,13 +67,6 @@ namespace FubuMVC.LightningQueues.Testing
             message.Headers.Get("ExceptionType").ShouldBe("System.InvalidOperationException");
             report.RawData.ShouldNotBeNull();
         }
-
-
-        [TestFixtureTearDown]
-        public void TearDown()
-        {
-            FubuTransport.Reset();
-        }
     }
 
     public class ErrorRegistry : FubuTransportRegistry<BusSettings>

@@ -204,3 +204,34 @@ desc "Launches VS to the FubuMVC solution file"
 task :sln do
 	sh "start src/FubuMVC.sln"
 end
+
+def copyOutputFiles(fromDir, filePattern, outDir)
+	Dir.glob(File.join(fromDir, filePattern)){|file|		
+		copy(file, outDir) if File.file?(file)
+	} 
+end
+
+def waitfor(&block)
+	checks = 0
+	until block.call || checks >10 
+		sleep 0.5
+		checks += 1
+	end
+	raise 'waitfor timeout expired' if checks > 10
+end
+
+def cleanDirectory(dir)
+	if exists?(dir)
+		puts 'Cleaning directory ' + dir
+		FileUtils.rm_rf dir;
+		waitfor { !exists?(dir) }
+	end
+	
+	if dir == 'artifacts'
+		Dir.mkdir 'artifacts'
+	end
+end
+
+def cleanFile(file)
+	File.delete file unless !File.exist?(file)
+end

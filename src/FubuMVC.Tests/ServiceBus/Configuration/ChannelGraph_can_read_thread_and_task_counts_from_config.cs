@@ -22,7 +22,6 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         public void SetUp()
         {
             InMemoryQueueManager.ClearAll();
-            FubuTransport.Reset();
 
             theSettings = new ConfiguredSettings
             {

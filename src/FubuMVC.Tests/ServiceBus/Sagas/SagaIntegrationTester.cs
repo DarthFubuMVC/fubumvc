@@ -51,7 +51,6 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         public void TearDown()
         {
             InMemoryQueueManager.ClearAll();
-            FubuTransport.Reset();
             theRuntime.Dispose();
         }
 

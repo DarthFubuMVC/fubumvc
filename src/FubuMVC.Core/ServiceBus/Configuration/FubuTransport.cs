@@ -22,12 +22,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 
         static FubuTransport()
         {
-            Reset();
-        }
-
-        public static void Reset()
-        {
-            UseSynchronousLogging = ApplyMessageHistoryWatching = AllQueuesInMemory = false;
         }
 
         public static bool UseSynchronousLogging { get; set; }
