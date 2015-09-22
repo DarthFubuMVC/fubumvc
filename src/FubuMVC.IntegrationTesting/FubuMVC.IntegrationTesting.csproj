@@ -163,7 +163,9 @@
     <Compile Include="Serenity\Fixtures\OpenScreenFixture.cs" />
     <Compile Include="Serenity\SerenitySystemTester.cs" />
     <Compile Include="Serenity\WaitTester.cs" />
+    <Compile Include="ServiceBus\ChainInvokerIntegrationTester.cs" />
     <Compile Include="ServiceBus\end_to_end_diagnostics_specs.cs" />
+    <Compile Include="ServiceBus\Messages.cs" />
     <Compile Include="ServiceBus\Publishing\PublishingConfigurationIntegrationTester.cs" />
     <Compile Include="StaticFiles\reading_static_file_content_with_katana.cs" />
     <Compile Include="Routing\end_to_end_route_alias_tester.cs" />

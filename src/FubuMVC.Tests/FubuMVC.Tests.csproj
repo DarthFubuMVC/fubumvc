@@ -387,7 +387,6 @@
     <Compile Include="ServiceBus\Runtime\Invocation\CascadingHandlerInvokerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainExecutionEnvelopeHandlerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainFailureContinuationTester.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\ChainInvokerIntegrationTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainInvokerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainSuccessContinuationTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\CompositeContinuationTester.cs" />
@@ -397,7 +396,6 @@
     <Compile Include="ServiceBus\Runtime\Invocation\handling_a_batch_of_messages.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\InvocationContext.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\InvocationContextTester.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\Messages.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\multiple_handlers_for_one_message.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\NoSubscriberHandlerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ResponseEnvelopeHandlerTester.cs" />
