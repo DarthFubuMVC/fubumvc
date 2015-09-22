@@ -28,8 +28,6 @@ namespace FubuMVC.LightningQueues.Testing
         [TestFixtureSetUp]
         public void SetUp()
         {
-            FubuTransport.Reset();
-
             // Need to do something about this.  Little ridiculous
             var settings = new BusSettings
             {
@@ -92,7 +90,6 @@ namespace FubuMVC.LightningQueues.Testing
         public void TearDown()
         {
             _runtime.Dispose();
-            FubuTransport.Reset();
         }
     }
 

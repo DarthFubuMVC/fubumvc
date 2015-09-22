@@ -27,7 +27,6 @@ namespace FubuMVC.LightningQueues.Testing
         public void SetUp()
         {
             TestMessageRecorder.Clear();
-            FubuTransport.Reset();
 
             // Need to do something about this.  Little ridiculous
             var settings = new BusSettings
@@ -74,7 +73,6 @@ namespace FubuMVC.LightningQueues.Testing
         public void TearDown()
         {
             FubuTransport.Reset();
-            _runtime.Dispose();
         }
     }
 
