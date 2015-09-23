@@ -44,6 +44,32 @@
   <ItemGroup>
     <Compile Include="Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioSupport\AnotherOneHandler.cs" />
+    <Compile Include="ScenarioSupport\DifferentOneHandler.cs" />
+    <Compile Include="ScenarioSupport\FourHandler.cs" />
+    <Compile Include="ScenarioSupport\FourMessage.cs" />
+    <Compile Include="ScenarioSupport\GenericHandler.cs" />
+    <Compile Include="ScenarioSupport\HarnessSettings.cs" />
+    <Compile Include="ScenarioSupport\ManyResponseHandler.cs" />
+    <Compile Include="ScenarioSupport\Message.cs" />
+    <Compile Include="ScenarioSupport\MessageProcessed.cs" />
+    <Compile Include="ScenarioSupport\MirrorMessage.cs" />
+    <Compile Include="ScenarioSupport\OneHandler.cs" />
+    <Compile Include="ScenarioSupport\OneMessage.cs" />
+    <Compile Include="ScenarioSupport\RequestResponseHandler.cs" />
+    <Compile Include="ScenarioSupport\SimpleHandler.cs" />
+    <Compile Include="ScenarioSupport\SourceRecordingHandler.cs" />
+    <Compile Include="ScenarioSupport\TestMessageRecorder.cs" />
+    <Compile Include="ScenarioSupport\ThreeHandler.cs" />
+    <Compile Include="ScenarioSupport\ThreeMessage.cs" />
+    <Compile Include="ScenarioSupport\TwoHandler.cs" />
+    <Compile Include="ScenarioSupport\TwoMessage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -53,4 +79,31 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Reference Include="FubuCore">
+      <HintPath>..\..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+      <Private>True</Private>
+      <Paket>True</Paket>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Shouldly">
+          <HintPath>..\..\packages\Shouldly\lib\net35\Shouldly.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
+        <Reference Include="Shouldly">
+          <HintPath>..\..\packages\Shouldly\lib\net40\Shouldly.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>

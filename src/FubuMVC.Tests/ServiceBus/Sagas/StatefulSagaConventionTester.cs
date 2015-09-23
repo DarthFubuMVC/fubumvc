@@ -7,11 +7,11 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Sagas;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;
 using StructureMap.Pipeline;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Sagas
 {

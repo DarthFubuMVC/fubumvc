@@ -9,9 +9,9 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests.ServiceBus;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
 using Shouldly;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.IntegrationTesting.ServiceBus
 {

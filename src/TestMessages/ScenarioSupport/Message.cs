@@ -2,7 +2,7 @@
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime;
 
-namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support
+namespace TestMessages.ScenarioSupport
 {
     public class Message
     {

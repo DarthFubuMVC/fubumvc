@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using Shouldly;
 using NUnit.Framework;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime
 {

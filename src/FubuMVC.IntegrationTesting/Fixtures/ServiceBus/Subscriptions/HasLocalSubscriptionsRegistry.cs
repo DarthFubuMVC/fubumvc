@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Support;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Subscriptions
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core.ServiceBus.Runtime;
 
-namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
+namespace TestMessages.ScenarioSupport
 {
     public class ManyResponseHandler<T, TR1, TR2, TR3> where T : Message, new()
                                                        where TR1 : Message, new()

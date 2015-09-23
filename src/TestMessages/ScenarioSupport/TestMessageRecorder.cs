@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Shouldly;
 
-namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
+namespace TestMessages.ScenarioSupport
 {
     public static class TestMessageRecorder
     {
@@ -14,15 +14,15 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
             get { return _processed.ToArray(); }
         }
 
+        public static void ShouldMatch<THandler>(this MessageProcessed processed, Message message)
+        {
+            processed.Description.ShouldBe(typeof(THandler).Name);
+            processed.Message.ShouldBe(message);
+        }
+
         public static void Clear()
         {
             _processed.Clear();
-        }
-
-        public static void ShouldMatch<THandler>(this MessageProcessed processed, Message message)
-        {
-            processed.Description.ShouldBe(typeof (THandler).Name);
-            processed.Message.ShouldBe(message);
         }
 
         public static bool HasProcessed(Message message)

@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.Services.Messaging.Tracking;
 
-namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
+namespace TestMessages.ScenarioSupport
 {
     public class SourceRecordingHandler
     {

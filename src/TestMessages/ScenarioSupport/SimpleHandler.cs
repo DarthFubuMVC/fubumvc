@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using FubuMVC.Core.ServiceBus.Runtime;
 
-namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
+namespace TestMessages.ScenarioSupport
 {
     public class SimpleHandler<T> where T : Message
     {

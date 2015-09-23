@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Runtime;
 
-namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
+namespace TestMessages.ScenarioSupport
 {
     public class FourHandler : SimpleHandler<FourMessage>
     {

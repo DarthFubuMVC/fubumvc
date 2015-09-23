@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {

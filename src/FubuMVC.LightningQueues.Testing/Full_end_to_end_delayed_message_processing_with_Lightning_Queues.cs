@@ -7,10 +7,10 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Tests.ServiceBus;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using Shouldly;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.LightningQueues.Testing
 {

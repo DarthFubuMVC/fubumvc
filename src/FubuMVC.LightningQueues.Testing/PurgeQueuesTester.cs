@@ -5,12 +5,12 @@ using System.Threading;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
 using LightningQueues;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.LightningQueues.Testing
 {

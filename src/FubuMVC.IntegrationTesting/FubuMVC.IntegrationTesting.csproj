@@ -105,15 +105,11 @@
     <Compile Include="Fixtures\ServiceBus\Monitoring\PersistentTaskMessageListener.cs" />
     <Compile Include="Fixtures\ServiceBus\RunningNode.cs" />
     <Compile Include="Fixtures\ServiceBus\SendAndAwaitFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\ServiceBusFixture.cs" />
     <Compile Include="Fixtures\ServiceBus\Subscriptions\HasGlobalSubscriptionsRegistry.cs" />
     <Compile Include="Fixtures\ServiceBus\Subscriptions\HasLocalSubscriptionsRegistry.cs" />
     <Compile Include="Fixtures\ServiceBus\Subscriptions\PublishingRegistry.cs" />
     <Compile Include="Fixtures\ServiceBus\Subscriptions\SubscriptionsFixture.cs" />
-    <Compile Include="Fixtures\ServiceBus\Support\FourMessage.cs" />
-    <Compile Include="Fixtures\ServiceBus\Support\Message.cs" />
-    <Compile Include="Fixtures\ServiceBus\Support\OneMessage.cs" />
-    <Compile Include="Fixtures\ServiceBus\Support\ThreeMessage.cs" />
-    <Compile Include="Fixtures\ServiceBus\Support\TwoMessage.cs" />
     <Compile Include="FubuRegistry_using_parallel_folder_spec.cs" />
     <Compile Include="HarnessSettings.cs" />
     <Compile Include="HelloWorld.cs" />
@@ -259,6 +255,10 @@
       <Project>{c71136ae-8197-4a9a-aa5f-9102f657c502}</Project>
       <Name>ServiceNode</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestMessages\TestMessages.csproj">
+      <Project>{3735a25a-28b6-4da3-a4cf-7606538e0155}</Project>
+      <Name>TestMessages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
       <Name>TestPackage1</Name>
@@ -297,9 +297,9 @@
     <Content Include="Specs\ServiceBus\HealthMonitoring\Reassign_a_job_running_on_multiple_nodes.xml" />
     <Content Include="Specs\ServiceBus\HealthMonitoring\Reassign_a_single_dormant_task.xml" />
     <Content Include="Specs\ServiceBus\HealthMonitoring\Simple_assignment_of_dormant_tasks.xml" />
-    <Content Include="Specs\ServiceBus\LightningQueues\Batch Messages\All_messages_in_a_batch_are_processed.xml" />
-    <Content Include="Specs\ServiceBus\LightningQueues\SendAndAwait\SendAndAwait_Happy_Path.xml" />
-    <Content Include="Specs\ServiceBus\LightningQueues\SendAndAwait\SendAndAwait_Sad_Path_Exception_reporting.xml" />
+    <Content Include="Specs\ServiceBus\Basics\Batch Messages\All_messages_in_a_batch_are_processed.xml" />
+    <Content Include="Specs\ServiceBus\Basics\SendAndAwait\SendAndAwait_Happy_Path.xml" />
+    <Content Include="Specs\ServiceBus\Basics\SendAndAwait\SendAndAwait_Sad_Path_Exception_reporting.xml" />
     <Content Include="Specs\ServiceBus\Subscriptions\2nd_publisher_with_global_subscriptions_is_brought_online.xml" />
     <Content Include="Specs\ServiceBus\Subscriptions\Multiple_nodes_of_global_subscriptions_does_not_duplicate_entries.xml" />
     <Content Include="Specs\ServiceBus\Subscriptions\Multiple_publishers_all_get_new_subscriptions.xml" />

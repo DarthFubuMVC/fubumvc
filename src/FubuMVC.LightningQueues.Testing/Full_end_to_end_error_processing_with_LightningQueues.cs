@@ -6,12 +6,12 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Tests.ServiceBus;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
 using LightningQueues;
 using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.LightningQueues.Testing
 {

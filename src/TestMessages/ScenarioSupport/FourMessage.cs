@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
+﻿namespace TestMessages.ScenarioSupport
 {
     public class FourMessage : Message
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
+namespace TestMessages.ScenarioSupport
 {
     public class HarnessSettings
     {

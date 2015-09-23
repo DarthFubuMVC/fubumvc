@@ -87,6 +87,10 @@
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuMVC.LightningQueues</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestMessages\TestMessages.csproj">
+      <Project>{3735a25a-28b6-4da3-a4cf-7606538e0155}</Project>
+      <Name>TestMessages</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

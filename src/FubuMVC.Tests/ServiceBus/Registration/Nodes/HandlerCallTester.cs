@@ -6,9 +6,9 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
 using Shouldly;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Registration.Nodes
 {

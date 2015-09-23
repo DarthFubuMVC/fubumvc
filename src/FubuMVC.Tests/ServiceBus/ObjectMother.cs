@@ -6,8 +6,8 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using Rhino.Mocks;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus
 {
