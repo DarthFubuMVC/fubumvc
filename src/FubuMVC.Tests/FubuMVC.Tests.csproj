@@ -392,7 +392,6 @@
     <Compile Include="ServiceBus\Runtime\Invocation\DelayedEnvelopeHandlerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\DeserializationFailureContinuationTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\HandlerPipelineTester.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\handling_a_batch_of_messages.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\InvocationContext.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\InvocationContextTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\multiple_handlers_for_one_message.cs" />
