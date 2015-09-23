@@ -10,6 +10,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.LightningQueues;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus
 {

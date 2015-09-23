@@ -8,10 +8,10 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Subscriptions
         public HasGlobalSubscriptionsRegistry()
         {
             NodeName = "GlobalSubscriber";
-            Channel(x => x.Subscriber1).ReadIncoming();
+            Channel(x => x.Website1).ReadIncoming();
 
-            SubscribeAt(x => x.Subscriber1)
-                .ToSource(x => x.Publisher1)
+            SubscribeAt(x => x.Website1)
+                .ToSource(x => x.Service1)
                 .ToMessage<OneMessage>();
         }
     }

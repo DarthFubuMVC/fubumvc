@@ -24,7 +24,8 @@ namespace TestMessages.ScenarioSupport
         {
             return new TResponse
             {
-                Id = request.Id
+                Id = request.Id,
+                Key = request.Key
             };
         }
     }

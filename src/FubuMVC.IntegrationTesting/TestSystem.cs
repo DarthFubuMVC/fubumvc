@@ -7,6 +7,7 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Basic;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.RavenDb.Reset;
 using Serenity;
@@ -14,6 +15,7 @@ using ServiceNode;
 using Shouldly;
 using StoryTeller;
 using StoryTeller.Engine;
+using StoryTeller.Model.Lists;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting
@@ -56,20 +58,18 @@ namespace FubuMVC.IntegrationTesting
         {
             using (var runner = new StoryTeller.SpecRunner<TestSystem>())
             {
-                runner.Run("ServiceBus/LightningQueues/SendAndAwait/SendAndAwait Happy Path");
+                runner.Run("ServiceBus/Basics/Sending a message that results in replies");
                 runner.OpenResultsInBrowser();
             }
         }
 
         public TestSystem()
         {
-            
             AddRemoteSubSystem("ServiceNode", x =>
             {
                 x.UseParallelServiceDirectory("ServiceNode");
                 x.Setup.ShadowCopyFiles = false.ToString();
             });
-            
         }
 
         protected override void beforeEach(IContainer scope)

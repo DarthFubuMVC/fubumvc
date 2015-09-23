@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
+using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Subscriptions
 {
@@ -7,7 +8,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Subscriptions
         public PublishingRegistry()
         {
             NodeName = "Publishing";
-            Channel(x => x.Publisher1).ReadIncoming();
+            Channel(x => x.Service1).ReadIncoming();
         }
     }
 }

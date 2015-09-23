@@ -17,6 +17,11 @@ namespace TestMessages.ScenarioSupport
 
         public Envelope Envelope { get; set; }
 
+        public string Type
+        {
+            get { return GetType().Name; }
+        }
+
         protected bool Equals(Message other)
         {
             return Id.Equals(other.Id);

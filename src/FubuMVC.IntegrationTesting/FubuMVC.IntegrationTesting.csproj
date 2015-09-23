@@ -94,6 +94,9 @@
     <Compile Include="Fixtures\LoginAuditingFixture.cs" />
     <Compile Include="Fixtures\ModelFixture.cs" />
     <Compile Include="Fixtures\OtherScreenFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Basic\ServiceBusActionFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Basic\ServiceBusNodeFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Basic\ServiceBusNodes.cs" />
     <Compile Include="Fixtures\ServiceBus\BatchMessageFixture.cs" />
     <Compile Include="Fixtures\ServiceBus\Monitoring\FakePersistentTask.cs" />
     <Compile Include="Fixtures\ServiceBus\Monitoring\FakePersistentTaskSource.cs" />
@@ -105,13 +108,12 @@
     <Compile Include="Fixtures\ServiceBus\Monitoring\PersistentTaskMessageListener.cs" />
     <Compile Include="Fixtures\ServiceBus\RunningNode.cs" />
     <Compile Include="Fixtures\ServiceBus\SendAndAwaitFixture.cs" />
-    <Compile Include="Fixtures\ServiceBus\ServiceBusFixture.cs" />
+    <Compile Include="Fixtures\ServiceBus\Basic\ServiceBusFixture.cs" />
     <Compile Include="Fixtures\ServiceBus\Subscriptions\HasGlobalSubscriptionsRegistry.cs" />
     <Compile Include="Fixtures\ServiceBus\Subscriptions\HasLocalSubscriptionsRegistry.cs" />
     <Compile Include="Fixtures\ServiceBus\Subscriptions\PublishingRegistry.cs" />
     <Compile Include="Fixtures\ServiceBus\Subscriptions\SubscriptionsFixture.cs" />
     <Compile Include="FubuRegistry_using_parallel_folder_spec.cs" />
-    <Compile Include="HarnessSettings.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="DifferentEndpoint.cs" />
     <Compile Include="Http\partial_invocations.cs" />

@@ -8,10 +8,10 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Subscriptions
         public HasLocalSubscriptionsRegistry()
         {
             NodeName = "LocalSubscriber";
-            Channel(x => x.Subscriber1).ReadIncoming();
+            Channel(x => x.Website1).ReadIncoming();
 
             SubscribeLocally()
-                .ToSource(x => x.Publisher1)
+                .ToSource(x => x.Service1)
                 .ToMessage<OneMessage>()
                 .ToMessage<TwoMessage>();
         }

@@ -13,22 +13,20 @@ namespace Serenity.ServiceBus
         public MessageContextualInfoProvider(IMessagingSession session)
         {
             _session = session;
+
+            Title = "Messaging Log";
+            ShortTitle = "ServiceBus";
         }
+
 
         public string ToHtml()
         {
             return GenerateReports().ToTagList().ToString();
         }
 
-        public string Title
-        {
-            get { return "Messaging Log"; }
-        }
+        public string Title { get; set; }
 
-        public string ShortTitle
-        {
-            get { return "ServiceBus"; }
-        }
+        public string ShortTitle { get; set; }
 
         public int Count
         {
