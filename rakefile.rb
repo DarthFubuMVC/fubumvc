@@ -9,7 +9,7 @@ build_revision = tc_build_number || Time.new.strftime('5%H%M')
 build_number = "#{BUILD_VERSION}.#{build_revision}"
 BUILD_NUMBER = build_number 
 
-task :ci => [:default, :integration_test, :archive_gem, :publish]
+task :ci => [:default, :integration_test, :archive_gem, :publish, :storyteller]
 
 task :default => [:test]
 
@@ -18,6 +18,7 @@ task :clean do
 	#TODO: do any other tasks required to clean/prepare the working directory
 	FileUtils.rm_rf RESULTS_DIR
 	FileUtils.rm_rf 'artifacts'
+	Dir.mkdir 'artifacts'
 
 	Dir.mkdir RESULTS_DIR
 end
