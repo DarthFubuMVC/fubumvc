@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using NUnit.Framework;
 using Shouldly;
@@ -25,45 +24,54 @@ namespace FubuMVC.Tests.ServiceBus
             {
                 var graph = runtime.Behaviors;
 
-                graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Where(x => x.HandlerType.Assembly != typeof(HandlerCall).Assembly).Select(x => x.HandlerType).OrderBy(x => x.Name)
-                    .ShouldHaveTheSameElementsAs(typeof(MyFooHandler), typeof(MyOtherFooHandler));
 
+                var handlers =
+                    graph.Chains.SelectMany(x => x.OfType<HandlerCall>())
+                        .Where(x => x.HandlerType.Assembly != typeof (HandlerCall).Assembly)
+                        .Select(x => x.HandlerType)
+                        .ToArray();
+
+
+                handlers.ShouldContain(typeof (MyFooHandler));
+                handlers.ShouldContain(typeof (MyOtherFooHandler));
             }
-
         }
 
         [Test]
         public void extra_handler_sources_are_additive()
         {
-            using (var runtime = FubuRuntime.BasicBus(x =>
-            {
-                x.Handlers.Include<RandomThing>();
-            }))
+            using (var runtime = FubuRuntime.BasicBus(x => { x.Handlers.Include<RandomThing>(); }))
             {
                 var graph = runtime.Behaviors;
 
-                var handlerTypes = graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Select(x => x.HandlerType).ToArray();
-                handlerTypes.ShouldContain(typeof(MyOtherConsumer));
-                handlerTypes.ShouldContain(typeof(MyFooHandler));
-                handlerTypes.ShouldContain(typeof(RandomThing));
+                var handlerTypes =
+                    graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Select(x => x.HandlerType).ToArray();
+                handlerTypes.ShouldContain(typeof (MyOtherConsumer));
+                handlerTypes.ShouldContain(typeof (MyFooHandler));
+                handlerTypes.ShouldContain(typeof (RandomThing));
             }
-
         }
     }
 
     public class RandomThing
     {
-        public void Consume(Message1 message1){}
+        public void Consume(Message1 message1)
+        {
+        }
     }
 
     public class MyFooHandler
     {
-        public void Handle(Message1 message1){}
+        public void Handle(Message1 message1)
+        {
+        }
     }
 
     public class MyOtherFooHandler
     {
-        public void Handle(Message2 message2){}
+        public void Handle(Message2 message2)
+        {
+        }
     }
 
     public class MissingCompletedSaga

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using NUnit.Framework;
@@ -17,8 +18,18 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             {
                 foreach (HandlerChain chain in runtime.Behaviors.Handlers)
                 {
-                    chain.First().ShouldBeOfType<ExceptionHandlerNode>()
-                         .Chain.ShouldBeTheSameAs(chain);
+                    if (chain.First() is AsyncHandlingNode)
+                    {
+                        chain.First().Next.ShouldBeOfType<ExceptionHandlerNode>()
+                             .Chain.ShouldBeTheSameAs(chain);
+                    }
+                    else
+                    {
+                        chain.First().ShouldBeOfType<ExceptionHandlerNode>()
+                             .Chain.ShouldBeTheSameAs(chain);
+                    }
+
+
 
 
                 }
