@@ -9,6 +9,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Registration;
 using StructureMap;
 using StructureMap.Configuration.DSL;
@@ -178,6 +179,12 @@ namespace FubuMVC.Core.Registration
             {
                 CategoryMustBeAfter = BehaviorCategory.Authorization,
                 CategoryMustBeBefore = BehaviorCategory.Authentication
+            };
+
+            yield return new ReorderBehaviorsPolicy
+            {
+                WhatMustBeBefore = x => x is ExceptionHandlerNode,
+                WhatMustBeAfter = x => true
             };
         }
 
