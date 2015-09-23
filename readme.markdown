@@ -1,34 +1,34 @@
-# FubuMVC
+# Building FubuMVC
 
-FubuMVC was originally created because of frustrations experienced when trying to override functionality in some of the other MVC frameworks, because of frustrations with
-static typed languages, and because we wanted to do something truly different.
+The FubuMVC codebase still uses Rake for build automation, but as of September 2015, you don't **have** to use Rake to develop with FubuMVC if you don't want to. You **will need 
+to have Node.js or Io.js and npm installed** in order to build the client side assets for FubuMVC's diagnostics package before working with the C# code.
 
-## So what makes it different?
+## With Rake
 
-We encourage you to see for yourself. We leverage compositional architecture, semantic models, and hardcore conventions to cook up a lot of "black magic". This isn't the
-kind of C# you see everyday.
+Assuming you have Ruby 2.1+ installed on your computer, go to a command line and type...
 
-Want some proof? Check this out:
-http://lostechies.com/josharnold/2013/01/28/introducing-fubumvc-validation-for-real/
-
-## Where's the documentation?
-
-Yeah, we know. We've been criticized about this for a long time and it's still a problem. For now, hop on over to our Wiki.
-
-* https://github.com/DarthFubuMVC/fubumvc/wiki
-* https://github.com/DarthFubuMVC/fubumvc/wiki/Getting-Started
-
-What we lack in documentation, we make up for in response time in our mailing list. We welcome EVERY question and have a vibrant community willing to answer
-questions at all hours of the day/night. 
-
-https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel
-
-## Show me some examples
-
-We have a working codebase that we're using for our documentation and screencasts. Take a look for an example of a barebones application:
-https://github.com/DarthFubuMVC/FubuInAction
+1. bundle install
+1. rake
 
 
-  
-  
-#### Looking for our contribution guides? [We moved them](https://github.com/DarthFubuMVC/fubumvc/wiki/Contribution-Guide).
+## Visual Studio.Net Only
+
+There is a small command file called `build.cmd` that can be executed once to bring down nuget and npm dependencies and build the client side assets that FubuMVC 
+needs for its embedded. diagnostics. Run this command at least once before opening Visual Studio.Net.
+
+From there, open the solution file at `src/FubuMVC.sln` and go to town.
+
+
+# Working with Storyteller
+
+* `rake open_st` -- Opens the Storyteller test suite in the Storyteller client for interactive editing and execution
+* `rake storyteller` -- Runs all the Storyteller specifications
+
+# Working with Diagnostics
+
+Open the diagnostics harness application to the browser with the command `rake diagnostics`. This command will start webpack in a new window against the client side
+attributes in the `javascript` folder in "watched" mode. This command also compiles and starts the `DiagnosticsHarness` application in a NOWIN server before opening a browser
+window to the newly launched application. The browser will auto-refresh whenever a new version of the webpack `bundle.js` file is saved. You will have to stop and restart
+the FubuMVC application to see any changes to the server side.
+ 
+
