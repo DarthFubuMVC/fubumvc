@@ -12,7 +12,7 @@ build_revision = tc_build_number || Time.new.strftime('5%H%M')
 build_number = "#{BUILD_VERSION}.#{build_revision}"
 BUILD_NUMBER = build_number 
 
-task :ci => [:default, :integration_test, :archive_gem, :publish, :storyteller]
+task :ci => [:default, :integration_test, :storyteller, :publish]
 
 task :default => [:test]
 
@@ -144,7 +144,7 @@ end
 
 desc "Run the storyteller specifications"
 task :storyteller => [:compile] do
-	sh "packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm "
+	sh "packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm --build #{COMPILE_TARGET}"
 end
 
 desc "Run the storyteller specifications"
@@ -154,7 +154,7 @@ end
 
 desc "Outputs the command line usage"
 task :dump_usages => [:compile] do
-  sh "src/Fubu/bin/#{@solution.compilemode}/fubu.exe dump-usages fubu src/Fubu.Docs/fubu.cli.xml"
+  sh "src/Fubu/bin/#{COMPILE_TARGET}/fubu.exe dump-usages fubu src/Fubu.Docs/fubu.cli.xml"
 end
 
 desc "Creates the gem for fubu.exe"
@@ -167,9 +167,9 @@ task :create_gem => [:compile] do
 	Dir.mkdir 'bin' unless Dir.exists?('bin')
 	Dir.mkdir 'pkg' unless Dir.exists?('pkg')
 	
-	copyOutputFiles "src/Fubu/bin/#{@solution.compilemode}", '*.dll', 'bin'
-	copyOutputFiles "src/Fubu/bin/#{@solution.compilemode}", 'Fubu.exe', 'bin'
-	copyOutputFiles "src/Fubu/bin/#{@solution.compilemode}", 'chromedriver.exe', 'bin'
+	copyOutputFiles "src/Fubu/bin/#{COMPILE_TARGET}", '*.dll', 'bin'
+	copyOutputFiles "src/Fubu/bin/#{COMPILE_TARGET}", 'Fubu.exe', 'bin'
+	copyOutputFiles "src/Fubu/bin/#{COMPILE_TARGET}", 'chromedriver.exe', 'bin'
 	FileUtils.cp_r 'templates', 'bin'
 	
 	FileUtils.copy 'fubu', 'bin'
@@ -200,7 +200,7 @@ task :create_gem => [:compile] do
 
     Gem::Package::build spec, true
 	
-	FileUtils.mv "fubu-#{@solution.options[:build_number]}.alpha.gem", "pkg/fubu-#{@solution.options[:build_number]}.alpha.gem"
+	FileUtils.mv "fubu-#{build_number}.alpha.gem", "pkg/fubu-#{build_number}.alpha.gem"
 	
 end
 
