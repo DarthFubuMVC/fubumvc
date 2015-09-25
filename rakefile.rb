@@ -4,6 +4,9 @@ BUILD_VERSION = '3.0.0'
 
 NUGET_KEY = ENV['api_key']
 
+include FileUtils
+include FileTest
+
 tc_build_number = ENV["BUILD_NUMBER"]
 build_revision = tc_build_number || Time.new.strftime('5%H%M')
 build_number = "#{BUILD_VERSION}.#{build_revision}"

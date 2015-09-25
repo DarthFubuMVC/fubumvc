@@ -14,11 +14,19 @@ namespace FubuMVC.Core.Services.Remote
             _callback = callback;
         }
 
+        public string Exclude { get; set; }
+
         public void WatchBinariesAt(string directory)
         {
             Console.WriteLine("Watching for binary and config file changes at " + directory);
 
-            _watcher = new FileChangeWatcher(directory, FileSet.Deep("*.dll;*.config;*.exe"), this)
+            var fileSet = FileSet.Deep("*.dll;*.config;*.exe");
+            if (Exclude.IsNotEmpty())
+            {
+                fileSet.Exclude = Exclude;
+            }
+
+            _watcher = new FileChangeWatcher(directory, fileSet, this)
             {
                 ChangeBuffer = 500
             };
