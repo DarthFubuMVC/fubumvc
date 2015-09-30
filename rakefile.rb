@@ -83,8 +83,6 @@ end
 
 desc 'Build Nuspec packages'
 task :pack => [:compile] do
-	Dir.mkdir "artifacts"
-
 	sh "nuget.exe pack packaging/nuget/fubumvc.aspnet.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.core.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.lightningqueues.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
