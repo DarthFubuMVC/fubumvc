@@ -97,7 +97,7 @@
     </Reference>
   </ItemGroup>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="HtmlTags">
           <HintPath>..\..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
@@ -117,7 +117,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="Spark">
           <HintPath>..\..\packages\Spark\lib\NET40\Spark.dll</HintPath>
@@ -128,25 +128,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')">
-      <ItemGroup>
-        <Reference Include="StructureMap">
-          <HintPath>..\..\packages\structuremap\lib\wp80\StructureMap.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6')">
-      <ItemGroup>
-        <Reference Include="StructureMap">
-          <HintPath>..\..\packages\structuremap\lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\StructureMap.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="StructureMap.Net4">
           <HintPath>..\..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
@@ -160,19 +142,37 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78')">
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')">
       <ItemGroup>
         <Reference Include="StructureMap">
-          <HintPath>..\..\packages\structuremap\lib\portable-win+net40+wp8\StructureMap.dll</HintPath>
+          <HintPath>..\..\packages\structuremap\lib\wp80\StructureMap.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile44')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile44')">
       <ItemGroup>
         <Reference Include="StructureMap">
           <HintPath>..\..\packages\structuremap\lib\portable-net45+win+wp81\StructureMap.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
+        <Reference Include="StructureMap">
+          <HintPath>..\..\packages\structuremap\lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\StructureMap.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78')">
+      <ItemGroup>
+        <Reference Include="StructureMap">
+          <HintPath>..\..\packages\structuremap\lib\portable-win+net40+wp8\StructureMap.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

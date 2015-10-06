@@ -94,7 +94,7 @@
     </Reference>
   </ItemGroup>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="HtmlTags">
           <HintPath>..\..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
@@ -114,6 +114,15 @@
         </Reference>
       </ItemGroup>
     </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+      <ItemGroup>
+        <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
+          <HintPath>..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(TargetFrameworkVersion) == 'v5.0'">
       <ItemGroup>
         <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5">
@@ -123,17 +132,17 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
-        <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
-          <HintPath>..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+        <Reference Include="Microsoft.Data.Edm">
+          <HintPath>..\..\packages\Microsoft.Data.Edm\lib\net40\Microsoft.Data.Edm.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
     </When>
-  </Choose>
-  <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="Microsoft.Data.Edm.SL">
@@ -143,7 +152,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile14') Or ($(TargetFrameworkProfile) == 'Profile19') Or ($(TargetFrameworkProfile) == 'Profile24') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile37') Or ($(TargetFrameworkProfile) == 'Profile42') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile47') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile147') Or ($(TargetFrameworkProfile) == 'Profile158')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac') Or ($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile14') Or ($(TargetFrameworkProfile) == 'Profile19') Or ($(TargetFrameworkProfile) == 'Profile24') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile37') Or ($(TargetFrameworkProfile) == 'Profile42') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile47') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile147') Or ($(TargetFrameworkProfile) == 'Profile158')">
       <ItemGroup>
         <Reference Include="Microsoft.Data.Edm.Portable">
           <HintPath>..\..\packages\Microsoft.Data.Edm\lib\portable-net40+sl5+wp8+win8\Microsoft.Data.Edm.Portable.dll</HintPath>
@@ -152,17 +161,17 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
-        <Reference Include="Microsoft.Data.Edm">
-          <HintPath>..\..\packages\Microsoft.Data.Edm\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+        <Reference Include="Microsoft.Data.OData">
+          <HintPath>..\..\packages\Microsoft.Data.OData\lib\net40\Microsoft.Data.OData.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
     </When>
-  </Choose>
-  <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="Microsoft.Data.OData.SL">
@@ -172,7 +181,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile14') Or ($(TargetFrameworkProfile) == 'Profile19') Or ($(TargetFrameworkProfile) == 'Profile24') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile37') Or ($(TargetFrameworkProfile) == 'Profile42') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile47') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile147') Or ($(TargetFrameworkProfile) == 'Profile158')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac') Or ($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile14') Or ($(TargetFrameworkProfile) == 'Profile19') Or ($(TargetFrameworkProfile) == 'Profile24') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile37') Or ($(TargetFrameworkProfile) == 'Profile42') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile47') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile147') Or ($(TargetFrameworkProfile) == 'Profile158')">
       <ItemGroup>
         <Reference Include="Microsoft.Data.OData.Portable">
           <HintPath>..\..\packages\Microsoft.Data.OData\lib\portable-net40+sl5+wp8+win8\Microsoft.Data.OData.Portable.dll</HintPath>
@@ -181,17 +190,17 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
-        <Reference Include="Microsoft.Data.OData">
-          <HintPath>..\..\packages\Microsoft.Data.OData\lib\net40\Microsoft.Data.OData.dll</HintPath>
+        <Reference Include="Microsoft.Data.Services.Client">
+          <HintPath>..\..\packages\Microsoft.Data.Services.Client\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
     </When>
-  </Choose>
-  <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="Microsoft.Data.Services.Client.SL">
@@ -204,7 +213,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile24') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile47') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile158')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile24') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile47') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile158')">
       <ItemGroup>
         <Reference Include="Microsoft.Data.Services.Client.Portable">
           <HintPath>..\..\packages\Microsoft.Data.Services.Client\lib\portable-net45+sl5+wp8+win8\Microsoft.Data.Services.Client.Portable.dll</HintPath>
@@ -213,18 +222,9 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
-      <ItemGroup>
-        <Reference Include="Microsoft.Data.Services.Client">
-          <HintPath>..\..\packages\Microsoft.Data.Services.Client\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="Microsoft.WindowsAzure.Configuration">
           <HintPath>..\..\packages\Microsoft.WindowsAzure.ConfigurationManager\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
@@ -271,7 +271,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\packages\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -289,7 +289,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78')">
+    <When Condition="($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78')">
       <ItemGroup>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\packages\Newtonsoft.Json\lib\portable-net45+wp80+win8\Newtonsoft.Json.dll</HintPath>
@@ -300,7 +300,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="Owin">
           <HintPath>..\..\packages\Owin\lib\net40\Owin.dll</HintPath>
@@ -328,16 +328,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(TargetFrameworkVersion) == 'v5.0'">
-      <ItemGroup>
-        <Reference Include="Raven.Client.Silverlight">
-          <HintPath>..\..\packages\RavenDB.Client\lib\sl50\Raven.Client.Silverlight.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="Raven.Abstractions">
           <HintPath>..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
@@ -346,6 +337,15 @@
         </Reference>
         <Reference Include="Raven.Client.Lightweight">
           <HintPath>..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="Raven.Client.Silverlight">
+          <HintPath>..\..\packages\RavenDB.Client\lib\sl50\Raven.Client.Silverlight.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -370,7 +370,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="Raven.Abstractions">
           <HintPath>..\..\packages\RavenDB.Database\lib\net45\Raven.Abstractions.dll</HintPath>
@@ -395,7 +395,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="Raven.Client.Embedded">
           <HintPath>..\..\packages\RavenDB.Embedded\lib\net45\Raven.Client.Embedded.dll</HintPath>
@@ -406,25 +406,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')">
-      <ItemGroup>
-        <Reference Include="StructureMap">
-          <HintPath>..\..\packages\structuremap\lib\wp80\StructureMap.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6')">
-      <ItemGroup>
-        <Reference Include="StructureMap">
-          <HintPath>..\..\packages\structuremap\lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\StructureMap.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="StructureMap.Net4">
           <HintPath>..\..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
@@ -438,16 +420,16 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78')">
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')">
       <ItemGroup>
         <Reference Include="StructureMap">
-          <HintPath>..\..\packages\structuremap\lib\portable-win+net40+wp8\StructureMap.dll</HintPath>
+          <HintPath>..\..\packages\structuremap\lib\wp80\StructureMap.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile44')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile44')">
       <ItemGroup>
         <Reference Include="StructureMap">
           <HintPath>..\..\packages\structuremap\lib\portable-net45+win+wp81\StructureMap.dll</HintPath>
@@ -456,8 +438,35 @@
         </Reference>
       </ItemGroup>
     </When>
+    <When Condition="($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
+        <Reference Include="StructureMap">
+          <HintPath>..\..\packages\structuremap\lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\StructureMap.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78')">
+      <ItemGroup>
+        <Reference Include="StructureMap">
+          <HintPath>..\..\packages\structuremap\lib\portable-win+net40+wp8\StructureMap.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
   </Choose>
   <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+      <ItemGroup>
+        <Reference Include="System.Spatial">
+          <HintPath>..\..\packages\System.Spatial\lib\net40\System.Spatial.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="System.Spatial.SL">
@@ -467,7 +476,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile14') Or ($(TargetFrameworkProfile) == 'Profile19') Or ($(TargetFrameworkProfile) == 'Profile24') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile37') Or ($(TargetFrameworkProfile) == 'Profile42') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile47') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile147') Or ($(TargetFrameworkProfile) == 'Profile158')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac') Or ($(TargetFrameworkProfile) == 'Profile5') Or ($(TargetFrameworkProfile) == 'Profile6') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile14') Or ($(TargetFrameworkProfile) == 'Profile19') Or ($(TargetFrameworkProfile) == 'Profile24') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile37') Or ($(TargetFrameworkProfile) == 'Profile42') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile47') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile147') Or ($(TargetFrameworkProfile) == 'Profile158')">
       <ItemGroup>
         <Reference Include="System.Spatial.Portable">
           <HintPath>..\..\packages\System.Spatial\lib\portable-net40+sl5+wp8+win8\System.Spatial.Portable.dll</HintPath>
@@ -476,18 +485,9 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
-      <ItemGroup>
-        <Reference Include="System.Spatial">
-          <HintPath>..\..\packages\System.Spatial\lib\net40\System.Spatial.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
         <Reference Include="Microsoft.WindowsAzure.Storage">
           <HintPath>..\..\packages\WindowsAzure.Storage\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
