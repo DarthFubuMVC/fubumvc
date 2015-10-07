@@ -154,7 +154,6 @@
     <Compile Include="Security\Authorization\RequireRoleTester.cs" />
     <Compile Include="ServerSentEvents\ChannelTester.cs" />
     <Compile Include="ServerSentEvents\ChannelWriterTester.cs" />
-    <Compile Include="ServerSentEvents\DataFormatterTester.cs" />
     <Compile Include="ServerSentEvents\EventPublisherTester.cs" />
     <Compile Include="ServerSentEvents\EventQueryFactoryTester.cs" />
     <Compile Include="ServerSentEvents\ServerEventWriterTester.cs" />

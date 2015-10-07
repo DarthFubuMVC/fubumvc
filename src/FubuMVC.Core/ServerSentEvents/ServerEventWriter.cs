@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Text;
 using System.Web;
 using FubuCore;
@@ -15,13 +14,11 @@ namespace FubuMVC.Core.ServerSentEvents
         public readonly string Retry = "retry: ";
 
         private readonly IOutputWriter _writer;
-		private readonly IDataFormatter _formatter;
         private bool _first = true;
 
-        public ServerEventWriter(IOutputWriter writer, IDataFormatter formatter)
+        public ServerEventWriter(IOutputWriter writer)
         {
         	_writer = writer;
-        	_formatter = formatter;
         }
 
         public bool WriteData(object data, string id = null, string @event = null, int? retry = null)
@@ -48,13 +45,10 @@ namespace FubuMVC.Core.ServerSentEvents
             }
             
             writeProp(builder, Retry, retry);
-			writeProp(builder, Data, _formatter.DataFor(data));
+			writeProp(builder, Data, data);
             builder.Append("\n");
 
             _writer.Write(builder.ToString());
-
-            // TEMPORARY
-            Debug.WriteLine(builder.ToString());
 
             try
             {

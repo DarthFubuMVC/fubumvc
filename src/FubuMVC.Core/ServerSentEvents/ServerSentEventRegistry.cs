@@ -15,7 +15,6 @@ namespace FubuMVC.Core.ServerSentEvents
 
             SetServiceIfNone<IServerEventWriter, ServerEventWriter>();
             SetServiceIfNone<ITopicChannelCache, TopicChannelCache>().Singleton();
-            SetServiceIfNone<IDataFormatter, DataFormatter>();
             if (Type.GetType("Mono.Runtime") == null)
             {
                 SetServiceIfNone<IAspNetShutDownDetector, AspNetShutDownDetector>();

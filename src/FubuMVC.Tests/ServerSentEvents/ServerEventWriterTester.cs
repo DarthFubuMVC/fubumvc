@@ -81,28 +81,28 @@ namespace FubuMVC.Tests.ServerSentEvents
         public void SetUp()
         {
             output = new RecordingOutputWriter();
-            writer = new ServerEventWriter(output, new DataFormatter());
+            writer = new ServerEventWriter(output);
         }
 
         [Test]
         public void write_only_data_and_id()
         {
             writer.Write(new ServerEvent("the id", "the data"));
-            output.Text.ShouldBe("id: the id\ndata: \"the data\"\n\n");
+            output.Text.ShouldBe("id: the id\ndata: the data\n\n");
         }
 
         [Test]
         public void write_with_id_data_and_event()
         {
             writer.Write(new ServerEvent("the id", "the data"){Event = "something"});
-            output.Text.ShouldBe("id: the id/something\ndata: \"the data\"\n\n");  
+            output.Text.ShouldBe("id: the id/something\ndata: the data\n\n");  
         }
 
         [Test]
         public void write_with_id_data_and_event_and_retry()
         {
             writer.Write(new ServerEvent("the id", "the data") { Event = "something", Retry = 1000});
-            output.Text.ShouldBe("id: the id/something\nretry: 1000\ndata: \"the data\"\n\n");
+            output.Text.ShouldBe("id: the id/something\nretry: 1000\ndata: the data\n\n");
         }
     }
 

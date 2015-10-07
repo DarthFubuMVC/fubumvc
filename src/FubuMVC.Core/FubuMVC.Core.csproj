@@ -118,7 +118,6 @@
     <Compile Include="ServerSentEvents\EventQueueFactory.cs" />
     <Compile Include="ServerSentEvents\IChannel.cs" />
     <Compile Include="ServerSentEvents\IChannelInitializer.cs" />
-    <Compile Include="ServerSentEvents\IDataFormatter.cs" />
     <Compile Include="ServerSentEvents\IEventPublisher.cs" />
     <Compile Include="ServerSentEvents\IEventQueue.cs" />
     <Compile Include="ServerSentEvents\IEventQueueFactory.cs" />

@@ -1,5 +1,4 @@
 using FubuMVC.Core;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServerSentEvents;
 using NUnit.Framework;
 using StructureMap;
@@ -20,7 +19,6 @@ namespace FubuMVC.Tests.ServerSentEvents
                 var container = runtime.Get<IContainer>();
 
                 container.DefaultRegistrationIs<IEventPublisher, EventPublisher>();
-                container.DefaultRegistrationIs<IDataFormatter, DataFormatter>();
                 container.DefaultRegistrationIs<IServerEventWriter, ServerEventWriter>();
                 container.DefaultRegistrationIs(typeof (IEventQueueFactory<>), typeof (DefaultEventQueueFactory<>));
 
