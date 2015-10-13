@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
-using LightningQueues;
 
 namespace FubuMVC.LightningQueues.Diagnostics
 {
     public class LightningQueuesFubuDiagnostics
     {
         private readonly IPersistentQueues _queues;
+        private readonly IQueueMessageRetrieval _queueMessageRetrieval;
 
-        public LightningQueuesFubuDiagnostics(IPersistentQueues queues)
+        public LightningQueuesFubuDiagnostics(IPersistentQueues queues, IQueueMessageRetrieval queueMessageRetrieval)
         {
             _queues = queues;
+            _queueMessageRetrieval = queueMessageRetrieval;
         }
 
         public QueueManagersVisualization get_queues()
@@ -22,49 +24,67 @@ namespace FubuMVC.LightningQueues.Diagnostics
 
             return visualization;
         }
+
+        public QueueMessagesVisualization get_messages_Port_QueueName(MessagesInputModel input)
+        {
+            var request = new QueueMessageRetrievalRequest
+            {
+                Port = input.Port,
+                QueueName = input.QueueName
+            };
+
+            var messages = _queueMessageRetrieval.GetAllMessagesInQueue(request).Select(msg => new MessageSummary
+            {
+                id = msg.Id.ToString(),
+                status = msg.Status.ToString(),
+                sentat = msg.SentAt.ToString(),
+                sourceinstanceid = msg.Id.SourceInstanceId.ToString(),
+                headers = msg.Headers.ToDictionary()
+            }).ToArray();
+
+            return new QueueMessagesVisualization
+            {
+                Port = input.Port,
+                QueueName = input.QueueName,
+                Messages = messages
+            };
+        }
     }
 
-    public class QueueManagerModel
+    public static class NameValueCollectionExtensions
     {
-        public QueueManagerModel(IQueueManager queueManager)
+        public static Dictionary<string, string> ToDictionary(this NameValueCollection collection)
         {
-            EnableProcessedMessageHistory = queueManager.Configuration.EnableProcessedMessageHistory;
-            EnableOutgoingMessageHistory = queueManager.Configuration.EnableOutgoingMessageHistory;
-            Path = queueManager.Path;
-            Port = queueManager.Endpoint.Port;
-            OldestMessageInOutgoingHistory = queueManager.Configuration.OldestMessageInOutgoingHistory.TotalMilliseconds;
-            OldestMessageInProcessedHistory =
-                queueManager.Configuration.OldestMessageInProcessedHistory.TotalMilliseconds;
-            NumberOfMessagesToKeepInOutgoingHistory = queueManager.Configuration.NumberOfMessagesToKeepInOutgoingHistory;
-            NumberOfMessagesToKeepInProcessedHistory =
-                queueManager.Configuration.NumberOfMessagesToKeepInProcessedHistory;
-            NumberOfMessagIdsToKeep = queueManager.Configuration.NumberOfReceivedMessageIdsToKeep;
-            Queues = buildQueues(queueManager).ToArray();
-        }
-
-        public int Port { get; set; }
-        public string Path { get; set; }
-        public bool EnableProcessedMessageHistory { get; set; }
-        public bool EnableOutgoingMessageHistory { get; set; }
-        public double OldestMessageInOutgoingHistory { get; set; }
-        public double OldestMessageInProcessedHistory { get; set; }
-        public int NumberOfMessagesToKeepInOutgoingHistory { get; set; }
-        public int NumberOfMessagesToKeepInProcessedHistory { get; set; }
-        public int NumberOfMessagIdsToKeep { get; set; }
-        public QueueDto[] Queues { get; set; }
-
-        private IEnumerable<QueueDto> buildQueues(IQueueManager queues)
-        {
-            foreach (var queue in queues.Queues)
+            var dict = new Dictionary<string, string>();
+            collection.AllKeys.Each(key =>
             {
-                yield return new QueueDto
-                {
-                    Port = queues.Endpoint.Port,
-                    QueueName = queue,
-                    NumberOfMessages = queues.GetNumberOfMessages(queue)
-                };
-            }
+                dict.Add(key, collection[key]);
+            });
+
+            return dict;
         }
+    }
+
+    public class MessageSummary
+    {
+        public string id { get; set; }
+        public string status { get; set; }
+        public string sentat { get; set; }
+        public string sourceinstanceid { get; set; }
+        public IDictionary<string, string> headers { get; set; }
+    }
+
+    public class QueueMessagesVisualization
+    {
+        public string QueueName { get; set; }
+        public MessageSummary[] Messages { get; set; }
+        public int Port { get; set; }
+    }
+
+    public class MessagesInputModel
+    {
+        public int Port { get; set; }
+        public string QueueName { get; set; }
     }
 
     public class QueueDto

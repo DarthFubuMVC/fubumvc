@@ -16,13 +16,15 @@ namespace DiagnosticsHarness
         private readonly INumberCache _cache;
         private readonly FubuHtmlDocument _document;
         private readonly FubuRuntime _runtime;
+        private readonly MessagePumper _pumper;
 
-        public HomeEndpoint(IServiceBus serviceBus, INumberCache cache, FubuHtmlDocument document, FubuRuntime runtime)
+        public HomeEndpoint(IServiceBus serviceBus, INumberCache cache, FubuHtmlDocument document, FubuRuntime runtime, MessagePumper pumper)
         {
             _serviceBus = serviceBus;
             _cache = cache;
             _document = document;
             _runtime = runtime;
+            _pumper = pumper;
         }
 
         public FubuContinuation post_numbers(NumberPost input)
@@ -44,6 +46,12 @@ namespace DiagnosticsHarness
             return _cache.Captured.Select(x => x.ToString()).Join("\n");
         }
 
+        public FubuContinuation get_pump_messages()
+        {
+            _pumper.Start();
+            return FubuContinuation.RedirectTo("/_fubu#/lq");
+        }
+
         public HtmlDocument Index()
         {
             _document.Title = "Diagnostics Harness";
@@ -52,6 +60,8 @@ namespace DiagnosticsHarness
             _document.Add("br");
 
             _document.Add("a").Attr("href", "requests").Text("Run some fake Http Requests");
+            _document.Add("br");
+            _document.Add("a").Attr("href", "pump/messages").Text("Run a bunch of fake messages to see LQ diagnostics");
 
             _document.Add("br");
             _document.Add("a")

@@ -49,8 +49,8 @@
     </Compile>
     <Compile Include="Diagnostics\MessageFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\LightningQueuesFubuDiagnostics.cs" />
-    <Compile Include="Diagnostics\MessagesFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\MessagesTableTag.cs" />
+    <Compile Include="Diagnostics\QueueManagerModel.cs" />
     <Compile Include="Diagnostics\QueueMessageNotFoundConvention.cs" />
     <Compile Include="Diagnostics\QueueMessageRetrieval.cs" />
     <Compile Include="IPersistentQueues.cs" />
