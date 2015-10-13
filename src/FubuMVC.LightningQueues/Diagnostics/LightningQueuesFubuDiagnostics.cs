@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
@@ -35,6 +36,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
             return visualization;
         }
 
+
         public QueueMessagesVisualization get_messages_Port_QueueName(MessagesInputModel input)
         {
             var request = new QueueMessageRetrievalRequest
@@ -43,13 +45,24 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 QueueName = input.QueueName
             };
 
-            var messages = _queueMessageRetrieval.GetAllMessagesInQueue(request).Select(msg => new MessageSummary
+            var messages = _queueMessageRetrieval.GetAllMessagesInQueue(request).Select(msg =>
             {
-                id = msg.Id.ToString(),
-                status = msg.Status.ToString(),
-                sentat = msg.SentAt.ToString(),
-                sourceinstanceid = msg.Id.SourceInstanceId.ToString(),
-                headers = msg.Headers.ToDictionary()
+                var summary = new MessageSummary
+                {
+                    id = msg.Id.ToString(),
+                    status = msg.Status.ToString(),
+                    sentat = msg.SentAt.ToString(),
+                    sourceinstanceid = msg.Id.SourceInstanceId.ToString(),
+                    headers = msg.Headers.ToDictionary()
+                };
+
+                if (msg is PersistentMessageToSend)
+                {
+                    summary.destination = msg.As<PersistentMessageToSend>().Endpoint.ToString();
+                }
+
+
+                return summary;
             }).ToArray();
 
             return new QueueMessagesVisualization
@@ -179,11 +192,17 @@ namespace FubuMVC.LightningQueues.Diagnostics
 
     public class MessageSummary
     {
+        public MessageSummary()
+        {
+            destination = "n/a";
+        }
+
         public string id { get; set; }
         public string status { get; set; }
         public string sentat { get; set; }
         public string sourceinstanceid { get; set; }
         public IDictionary<string, string> headers { get; set; }
+        public string destination { get; set; }
     }
 
     public class QueueMessagesVisualization

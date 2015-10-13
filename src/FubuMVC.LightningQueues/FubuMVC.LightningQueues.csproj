@@ -75,10 +75,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Diagnostics\_StandardMessageDetails.spark" />
-    <None Include="Diagnostics\QueueMessageVisualization.spark" />
-    <None Include="Diagnostics\QueueManagersVisualization.spark" />
-    <None Include="Diagnostics\QueueMessagesVisualization.spark" />
     <None Include="Diagnostics\ErrorQueueMessageVisualization.spark" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

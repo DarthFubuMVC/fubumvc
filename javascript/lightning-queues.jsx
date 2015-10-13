@@ -16,6 +16,9 @@ var QueueManager = React.createClass({
 			);
 		});
 
+		var outgoingUrl = "#lq/messages/" + this.props.Port + "/outgoing";
+		var outgoingHistoryUrl = "#lq/messages/" + this.props.Port + "/outgoing_history";
+
 		return (
 		<div>
 		  <ul style={{float:'left'}}>
@@ -38,6 +41,16 @@ var QueueManager = React.createClass({
 		  		<th style={{textAlign: "right"}}>Number of Messages</th>
 		  	</tr>
 		  	{queueRows}
+			<tr>
+				<td><a href={outgoingUrl}>outgoing</a></td>
+				<td>{this.props.Port}</td>
+				<td style={{textAlign: "right"}}>n/a</td>
+			</tr>
+			<tr>
+				<td><a href={outgoingHistoryUrl}>outgoing_history</a></td>
+				<td>{this.props.Port}</td>
+				<td style={{textAlign: "right"}}>n/a</td>
+			</tr>
 		  </table>
 		  <hr></hr>
 		  </div>
@@ -77,16 +90,7 @@ var AllQueues = React.createClass({
 	}
 });
 
-/*
 
-        public string id { get; set; }
-        public string status { get; set; }
-        public string sentat { get; set; }
-        public string sourceinstanceid { get; set; }
-        public IDictionary<string, string> headers { get; set; }
-
-
-*/
 var QueueDetails = React.createClass({
 	mixins: [Router.State],
 
@@ -119,6 +123,7 @@ var QueueDetails = React.createClass({
 					<td>{msg.headers['message-type']}</td>
 					<td>{msg.status}</td>
 					<td>{msg.sentat}</td>
+					<td>{msg.destination}</td>
 				</tr>
 			);
 		});
@@ -132,6 +137,7 @@ var QueueDetails = React.createClass({
 					<th>Type</th>
 					<th>Status</th>
 					<th>Sent At</th>
+					<th>Destination</th>
 				</tr>
 
 				{rows}
