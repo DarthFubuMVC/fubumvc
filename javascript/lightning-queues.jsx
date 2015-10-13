@@ -5,7 +5,7 @@ var _ = require('lodash');
 var QueueManager = React.createClass({
 	render: function(){
 		var queueRows = this.props.Queues.map(q => {
-			var url = "#lq/lq-messages/" + q.Port + "/" + q.QueueName;
+			var url = "#lq/messages/" + q.Port + "/" + q.QueueName;
 
 			return (
 				<tr>
@@ -109,9 +109,13 @@ var QueueDetails = React.createClass({
 		}
 
 		var rows = this.state.data.Messages.map(msg => {
+			// For whatever reason, LQ is sending us two different id's separated by a 'q', so this matches the route
+			var url = "#lq/message-details/" + this.state.data.Port + "/" + this.state.data.QueueName + "/" + msg.id;
+
+
 			return (
 				<tr>
-					<td>{msg.id}</td>
+					<td><a href={url}>{msg.id}</a></td>
 					<td>{msg.headers['message-type']}</td>
 					<td>{msg.status}</td>
 					<td>{msg.sentat}</td>
@@ -138,6 +142,65 @@ var QueueDetails = React.createClass({
 	}
 });
 
+var MessageDetails = React.createClass({
+	mixins: [Router.State],
+
+	getInitialState: function(){
+		return {
+			loading: true,
+		}
+	},
+
+	componentDidMount: function(){
+		var params = this.getParams();
+		FubuDiagnostics.get('LightningQueues:message_Port_QueueName_SourceInstanceId_MessageId', params, data => {
+			this.setState({loading: false, data: data});
+		});
+	},
+
+	render: function(){
+		if (this.state.loading){
+			return (<p>Loading...</p>);
+		}
+
+		if (this.state.data.NotFound){
+			return (
+				<div>This message cannot be found</div>
+			);
+		}
+
+		var keys = _.keys(this.state.data.Headers);
+		var headers = keys.map(key => {
+			return (
+				<li><b>{key}</b> = {this.state.data.Headers[key]}</li>
+			);
+		});
+
+		return (
+			<div>
+				<h1>Message Id: {this.state.data.MessageId}</h1>
+
+				<br></br>
+				<h3>Queue: {this.state.data.QueueName}</h3>
+				<h3>Sub Queue: {this.state.data.SubQueueName}</h3>
+				<h3>Status: {this.state.data.Status}</h3>
+				<h3>Sent At: {this.state.data.SentAt}</h3>
+				<br></br>
+
+				<h3>Headers</h3>
+				<ul>
+					{headers}
+				</ul>
+
+				<h3>Message Payload</h3>
+				<pre>{this.state.data.Payload}</pre>
+
+			</div>
+
+		);
+	}
+});
+
 
 FubuDiagnostics.addSection({
 	title: 'LightningQueues',
@@ -150,4 +213,10 @@ FubuDiagnostics.addSection({
 	key: 'messages',
 	route: 'LightningQueues:messages_Port_QueueName',
 	component: QueueDetails
+}).add({
+	title: 'Message Details',
+	description: 'Message Details',
+	key: 'message-details',
+	route: 'LightningQueues:message_Port_QueueName_SourceInstanceId_MessageId',
+	component: MessageDetails
 });

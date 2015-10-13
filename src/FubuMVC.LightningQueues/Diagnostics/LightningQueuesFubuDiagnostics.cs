@@ -1,6 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Core.ServiceBus.ErrorHandling;
+using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime.Headers;
+using FubuMVC.Core.ServiceBus.Runtime.Serializers;
+using FubuMVC.Core.Services;
+using LightningQueues.Model;
 
 namespace FubuMVC.LightningQueues.Diagnostics
 {
@@ -8,11 +16,13 @@ namespace FubuMVC.LightningQueues.Diagnostics
     {
         private readonly IPersistentQueues _queues;
         private readonly IQueueMessageRetrieval _queueMessageRetrieval;
+        private readonly IEnvelopeSerializer _serializer;
 
-        public LightningQueuesFubuDiagnostics(IPersistentQueues queues, IQueueMessageRetrieval queueMessageRetrieval)
+        public LightningQueuesFubuDiagnostics(IPersistentQueues queues, IQueueMessageRetrieval queueMessageRetrieval, IEnvelopeSerializer serializer)
         {
             _queues = queues;
             _queueMessageRetrieval = queueMessageRetrieval;
+            _serializer = serializer;
         }
 
         public QueueManagersVisualization get_queues()
@@ -48,6 +58,108 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 QueueName = input.QueueName,
                 Messages = messages
             };
+        }
+
+        public QueueMessageVisualization get_message_Port_QueueName_SourceInstanceId_MessageId(
+            MessageInputModel input)
+        {
+            var messageId = new MessageId
+            {
+                MessageIdentifier = input.MessageId,
+                SourceInstanceId = input.SourceInstanceId
+            };
+
+            var message = retrieveMessage(messageId, input.Port, input.QueueName);
+
+            if (message == null)
+            {
+                return new QueueMessageVisualization {NotFound = true};
+            }
+
+            var envelope = message.ToEnvelope();
+            envelope.UseSerializer(_serializer);
+
+            // TODO -- show errors if in error queue
+
+            var model = new QueueMessageVisualization
+            {
+                MessageId = messageId,
+                QueueName = message.Queue,
+                SubQueueName = message.SubQueue,
+                Status = message.Status,
+                SentAt = message.SentAt,
+                Headers = message.Headers.ToDictionary(),
+                
+            };
+
+            try
+            {
+                // TODO -- gotta watch how big this monster would be
+                model.Payload = JsonSerialization.ToJson(envelope.Message, true);
+            }
+            catch (Exception)
+            {
+                model.Payload = "Could not render as JSON";
+            }
+
+            return model;
+        }
+
+        public ErrorQueueMessageVisualization get_error_message_Port_QueueName_SourceInstanceId_MessageId(
+            ErrorMessageInputModel input)
+        {
+            var messageId = new MessageId
+            {
+                MessageIdentifier = input.MessageId,
+                SourceInstanceId = input.SourceInstanceId
+            };
+            var message = retrieveMessage(messageId, input.Port, input.QueueName);
+
+            if (message == null)
+            {
+                return new ErrorQueueMessageVisualization
+                {
+                    NotFound = true
+                };
+            }
+
+            var errorReport = ErrorReport.Deserialize(message.Data);
+            var exceptionDetails = new ExceptionDetails
+            {
+                Explanation = errorReport.Explanation,
+                ExceptionType = errorReport.ExceptionType,
+                ExceptionMessage = errorReport.ExceptionMessage,
+                ExceptionText = errorReport.ExceptionText
+            };
+
+            var envelope = new Envelope(new NameValueHeaders(message.Headers)) { Data = errorReport.RawData };
+            envelope.UseSerializer(_serializer);
+
+            return new ErrorQueueMessageVisualization
+            {
+                MessageId = messageId,
+                QueueName = message.Queue,
+                SubQueueName = message.SubQueue,
+                Status = message.Status,
+                SentAt = message.SentAt,
+                ExceptionDetails = exceptionDetails
+            };
+        }
+
+        private PersistentMessage retrieveMessage(MessageId messageId, int port, string queueName)
+        {
+            var request = new QueueMessageRetrievalRequest
+            {
+                Port = port,
+                QueueName = queueName,
+                MessageId = new MessageId
+                {
+                    MessageIdentifier = messageId.MessageIdentifier,
+                    SourceInstanceId = messageId.SourceInstanceId
+                }
+            };
+
+            return _queueMessageRetrieval.GetSingleMessageInQueue(request);
         }
     }
 

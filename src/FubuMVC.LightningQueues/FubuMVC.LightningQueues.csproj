@@ -47,11 +47,14 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Diagnostics\MessageFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\ErrorMessageInputModel.cs" />
+    <Compile Include="Diagnostics\ErrorQueueMessageVisualization.cs" />
+    <Compile Include="Diagnostics\ExceptionDetails.cs" />
+    <Compile Include="Diagnostics\QueueMessageVisualization.cs" />
     <Compile Include="Diagnostics\LightningQueuesFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\MessageInputModel.cs" />
     <Compile Include="Diagnostics\MessagesTableTag.cs" />
     <Compile Include="Diagnostics\QueueManagerModel.cs" />
-    <Compile Include="Diagnostics\QueueMessageNotFoundConvention.cs" />
     <Compile Include="Diagnostics\QueueMessageRetrieval.cs" />
     <Compile Include="IPersistentQueues.cs" />
     <Compile Include="LightningQueuesChannel.cs" />
