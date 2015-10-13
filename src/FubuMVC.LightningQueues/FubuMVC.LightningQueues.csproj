@@ -85,6 +85,11 @@
   </Target>
   -->
   <ItemGroup>
+    <EmbeddedResource Include="..\DiagnosticsHarness\fubu-diagnostics\lq.js">
+      <Link>fubu-diagnostics\lq.js</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="FubuCore">
       <HintPath>..\..\packages\FubuCore\lib\FubuCore.dll</HintPath>
       <Private>True</Private>
