@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
-using FubuMVC.Core.Urls;
-using HtmlTags;
 using LightningQueues;
 
 namespace FubuMVC.LightningQueues.Diagnostics
@@ -12,19 +7,17 @@ namespace FubuMVC.LightningQueues.Diagnostics
     public class LightningQueuesFubuDiagnostics
     {
         private readonly IPersistentQueues _queues;
-        private readonly IUrlRegistry _urls;
 
-        public LightningQueuesFubuDiagnostics(IPersistentQueues queues, IUrlRegistry urls)
+        public LightningQueuesFubuDiagnostics(IPersistentQueues queues)
         {
             _queues = queues;
-            _urls = urls;
         }
 
-        public QueueManagersVisualization get_queue__managers()
+        public QueueManagersVisualization get_queues()
         {
             var visualization = new QueueManagersVisualization
             {
-                QueueManagers = _queues.AllQueueManagers.Select(x => new QueueManagerModel(x, _urls)).ToList()
+                QueueManagers = _queues.AllQueueManagers.Select(x => new QueueManagerModel(x)).ToList()
             };
 
             return visualization;
@@ -33,67 +26,56 @@ namespace FubuMVC.LightningQueues.Diagnostics
 
     public class QueueManagerModel
     {
-        public QueueManagerModel(IQueueManager queueManager, IUrlRegistry urls)
+        public QueueManagerModel(IQueueManager queueManager)
         {
-            Queues = new QueueManagerTableTag(queueManager, urls);
             EnableProcessedMessageHistory = queueManager.Configuration.EnableProcessedMessageHistory;
             EnableOutgoingMessageHistory = queueManager.Configuration.EnableOutgoingMessageHistory;
             Path = queueManager.Path;
             Port = queueManager.Endpoint.Port;
-            OldestMessageInOutgoingHistory = queueManager.Configuration.OldestMessageInOutgoingHistory;
-            OldestMessageInProcessedHistory = queueManager.Configuration.OldestMessageInProcessedHistory;
+            OldestMessageInOutgoingHistory = queueManager.Configuration.OldestMessageInOutgoingHistory.TotalMilliseconds;
+            OldestMessageInProcessedHistory =
+                queueManager.Configuration.OldestMessageInProcessedHistory.TotalMilliseconds;
             NumberOfMessagesToKeepInOutgoingHistory = queueManager.Configuration.NumberOfMessagesToKeepInOutgoingHistory;
-            NumberOfMessagesToKeepInProcessedHistory = queueManager.Configuration.NumberOfMessagesToKeepInProcessedHistory;
+            NumberOfMessagesToKeepInProcessedHistory =
+                queueManager.Configuration.NumberOfMessagesToKeepInProcessedHistory;
             NumberOfMessagIdsToKeep = queueManager.Configuration.NumberOfReceivedMessageIdsToKeep;
+            Queues = buildQueues(queueManager).ToArray();
         }
 
         public int Port { get; set; }
         public string Path { get; set; }
         public bool EnableProcessedMessageHistory { get; set; }
         public bool EnableOutgoingMessageHistory { get; set; }
-        public TimeSpan OldestMessageInOutgoingHistory { get; set; }
-        public TimeSpan OldestMessageInProcessedHistory { get; set; }
+        public double OldestMessageInOutgoingHistory { get; set; }
+        public double OldestMessageInProcessedHistory { get; set; }
         public int NumberOfMessagesToKeepInOutgoingHistory { get; set; }
         public int NumberOfMessagesToKeepInProcessedHistory { get; set; }
         public int NumberOfMessagIdsToKeep { get; set; }
-        public QueueManagerTableTag Queues { get; set; }
+        public QueueDto[] Queues { get; set; }
+
+        private IEnumerable<QueueDto> buildQueues(IQueueManager queues)
+        {
+            foreach (var queue in queues.Queues)
+            {
+                yield return new QueueDto
+                {
+                    Port = queues.Endpoint.Port,
+                    QueueName = queue,
+                    NumberOfMessages = queues.GetNumberOfMessages(queue)
+                };
+            }
+        }
+    }
+
+    public class QueueDto
+    {
+        public string QueueName { get; set; }
+        public int Port { get; set; }
+        public int NumberOfMessages { get; set; }
     }
 
     public class QueueManagersVisualization
     {
         public IList<QueueManagerModel> QueueManagers { get; set; }
-    }
-
-    public class QueueManagerTableTag : TableTag
-    {
-        public QueueManagerTableTag(IQueueManager queueManager, IUrlRegistry urls)
-        {
-            AddClass("table");
-
-            AddHeaderRow(x =>
-            {
-                x.Header("Queue Name");
-                x.Header("Message Count");
-            });
-
-            queueManager.Queues.Each(queueName =>
-            {
-                AddBodyRow(row => addQueueRow(row, queueManager, queueName, urls));
-                AddBodyRow(row => addQueueRow(row, queueManager, "{0}_history".ToFormat(queueName), urls, "N/A"));
-            });
-            AddBodyRow(row => addQueueRow(row, queueManager, "outgoing", urls, "N/A"));
-            AddBodyRow(row => addQueueRow(row, queueManager, "outgoing_history", urls, "N/A"));
-        }
-
-        private void addQueueRow(TableRowTag row, IQueueManager queueManager, string queueName, IUrlRegistry urls, string displayForCount = null)
-        {
-            var url = urls.UrlFor(new MessagesInputModel {Port = queueManager.Endpoint.Port, QueueName = queueName});
-
-            row.Cell().Add("a")
-                .Attr("href", url)
-                .Text(queueName);
-            
-            row.Cell(displayForCount ?? queueManager.GetNumberOfMessages(queueName).ToString(CultureInfo.InvariantCulture));
-        }
     }
 }

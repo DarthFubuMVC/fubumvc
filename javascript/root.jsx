@@ -96,6 +96,7 @@ require('./structuremap');
 require('./service-bus');
 require('./message-table');
 require('./polling-jobs');
+require('./lightning-queues');
 
 
 FubuDiagnostics.addSection({    
