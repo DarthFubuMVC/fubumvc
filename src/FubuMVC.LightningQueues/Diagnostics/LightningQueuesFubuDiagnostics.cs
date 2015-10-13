@@ -102,6 +102,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 Status = message.Status,
                 SentAt = message.SentAt,
                 Headers = message.Headers.ToDictionary(),
+                Port = input.Port
                 
             };
 
@@ -118,46 +119,6 @@ namespace FubuMVC.LightningQueues.Diagnostics
             return model;
         }
 
-        public ErrorQueueMessageVisualization get_error_message_Port_QueueName_SourceInstanceId_MessageId(
-            ErrorMessageInputModel input)
-        {
-            var messageId = new MessageId
-            {
-                MessageIdentifier = input.MessageId,
-                SourceInstanceId = input.SourceInstanceId
-            };
-            var message = retrieveMessage(messageId, input.Port, input.QueueName);
-
-            if (message == null)
-            {
-                return new ErrorQueueMessageVisualization
-                {
-                    NotFound = true
-                };
-            }
-
-            var errorReport = ErrorReport.Deserialize(message.Data);
-            var exceptionDetails = new ExceptionDetails
-            {
-                Explanation = errorReport.Explanation,
-                ExceptionType = errorReport.ExceptionType,
-                ExceptionMessage = errorReport.ExceptionMessage,
-                ExceptionText = errorReport.ExceptionText
-            };
-
-            var envelope = new Envelope(new NameValueHeaders(message.Headers)) { Data = errorReport.RawData };
-            envelope.UseSerializer(_serializer);
-
-            return new ErrorQueueMessageVisualization
-            {
-                MessageId = messageId,
-                QueueName = message.Queue,
-                SubQueueName = message.SubQueue,
-                Status = message.Status,
-                SentAt = message.SentAt,
-                ExceptionDetails = exceptionDetails
-            };
-        }
 
         private PersistentMessage retrieveMessage(MessageId messageId, int port, string queueName)
         {

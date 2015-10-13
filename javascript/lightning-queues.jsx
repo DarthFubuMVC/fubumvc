@@ -130,6 +130,8 @@ var QueueDetails = React.createClass({
 
 		return (
 			<div>
+			<p><a href="#/lq">Back to LightningQueues...</a></p>
+
 			<h1>Messages in {this.state.data.QueueName} ({this.state.data.Port}) queue</h1>
 			<table className="table">
 				<tr>
@@ -182,12 +184,14 @@ var MessageDetails = React.createClass({
 			);
 		});
 
+		var queueUrl = "#/lq/messages/" + this.state.data.Port + "/" + this.state.data.QueueName;
+
 		return (
 			<div>
 				<h1>Message Id: {this.state.data.MessageId}</h1>
 
 				<br></br>
-				<h3>Queue: {this.state.data.QueueName}</h3>
+				<h3>Queue: <a href={queueUrl}>{this.state.data.QueueName}</a></h3>
 				<h3>Sub Queue: {this.state.data.SubQueueName}</h3>
 				<h3>Status: {this.state.data.Status}</h3>
 				<h3>Sent At: {this.state.data.SentAt}</h3>

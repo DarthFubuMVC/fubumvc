@@ -25,5 +25,6 @@ namespace FubuMVC.LightningQueues.Diagnostics
         public string Payload { get; set; }
 
         public bool NotFound { get; set; }
+        public int Port { get; set; }
     }
 }
