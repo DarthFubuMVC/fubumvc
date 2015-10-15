@@ -1,4 +1,4 @@
-var React = require('react');
+var React = FubuDiagnostics.React;
 var Router = require('react-router');
 var _ = require('lodash');
 
