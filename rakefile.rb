@@ -83,13 +83,13 @@ end
 
 desc 'Build Nuspec packages'
 task :pack => [:compile] do
-	sh "nuget.exe pack packaging/nuget/fubumvc.aspnet.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.core.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.lightningqueues.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.ravendb.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.razor.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.spark.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/serenity.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.aspnet.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.core.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.lightningqueues.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.ravendb.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.razor.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.spark.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/serenity.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	
 
 
