@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>JasperService</id>
+    <version>0.0.0</version>
+    <authors>Jeremy D. Miller</authors>
+    <owners>Jeremy D. Miller</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://github.com/DarthFubuMVC/fubumvc</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>TopShelf service hosting for FubuMVC 3 applications</description>
+    <tags>fubumvc topshelf</tags>
+    <dependencies>
+      <dependency id="FubuMVC.Core" version="3.0" />
+      <dependency id="TopShelf" version="[3.1.3.0]" />
+    </dependencies>
+  </metadata>
+  <files xmlns="">
+    <file src="..\..\src\JasperService\bin\release\JasperService.*" target="lib\net45" />
+  </files>
+</package>
