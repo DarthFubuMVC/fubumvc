@@ -97,13 +97,13 @@ task :pack => [:compile] do
 end
 
 task :publish => [:pack] do
-	sh "nuget.exe push artifacts/FubuMVC.Core.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
-	sh "nuget.exe push artifacts/FubuMVC.AspNet.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
-	sh "nuget.exe push artifacts/FubuMVC.LightningQueues.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
-	sh "nuget.exe push artifacts/FubuMVC.RavenDb.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
-	sh "nuget.exe push artifacts/FubuMVC.Razor.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
-	sh "nuget.exe push artifacts/FubuMVC.Spark.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
-	sh "nuget.exe push artifacts/Serenity.#{build_number}.nupkg #{NUGET_KEY} -s https://www.myget.org/F/fubumvc-edge"
+	sh "nuget.exe push artifacts/FubuMVC.Core.#{build_number}-alpha.nupkg #{NUGET_KEY} "
+	sh "nuget.exe push artifacts/FubuMVC.AspNet.#{build_number}-alpha.nupkg #{NUGET_KEY} "
+	sh "nuget.exe push artifacts/FubuMVC.LightningQueues.#{build_number}-alpha.nupkg #{NUGET_KEY} "
+	sh "nuget.exe push artifacts/FubuMVC.RavenDb.#{build_number}-alpha.nupkg #{NUGET_KEY} "
+	sh "nuget.exe push artifacts/FubuMVC.Razor.#{build_number}-alpha.nupkg #{NUGET_KEY} "
+	sh "nuget.exe push artifacts/FubuMVC.Spark.#{build_number}-alpha.nupkg #{NUGET_KEY} "
+	sh "nuget.exe push artifacts/Serenity.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 end
 
 desc "Launches the diagnostics harness for client side development"

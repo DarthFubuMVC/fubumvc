@@ -15,7 +15,7 @@
       <dependency id="FubuCore" version="2.0" />
       <dependency id="HtmlTags" version="3.0" />
       <dependency id="FubuLocalization" version="1.1" />
-      <dependency id="structuremap" version="3.2" />
+      <dependency id="structuremap" version="4.0" />
 	  <dependency id="Newtonsoft.Json" version="[4.5.9]" />
     </dependencies>
     <frameworkAssemblies>
