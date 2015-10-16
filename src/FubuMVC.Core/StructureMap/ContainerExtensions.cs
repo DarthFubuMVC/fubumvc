@@ -3,7 +3,6 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Runtime;
 using StructureMap;
-using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.StructureMap
@@ -20,13 +19,6 @@ namespace FubuMVC.Core.StructureMap
         public static void Activate(this Registry registry, string description, Action activation)
         {
             registry.For<IActivator>().Add<LambdaActivator>()
-                .Ctor<string>().Is(description)
-                .Ctor<Action>().Is(activation);
-        }
-
-        public static void Activate(this IInitializationExpression expression, string description, Action activation)
-        {
-            expression.For<IActivator>().Add<LambdaActivator>()
                 .Ctor<string>().Is(description)
                 .Ctor<Action>().Is(activation);
         }

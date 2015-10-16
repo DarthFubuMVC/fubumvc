@@ -3,7 +3,7 @@ using FubuCore.Logging;
 using FubuMVC.RavenDb.MultiTenancy;
 using FubuMVC.RavenDb.Reset;
 using FubuMVC.RavenDb.Storage;
-using StructureMap.Configuration.DSL;
+using StructureMap;
 
 namespace FubuMVC.RavenDb.InMemory
 {

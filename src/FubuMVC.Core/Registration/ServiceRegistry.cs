@@ -1,6 +1,6 @@
 using System;
 using FubuCore.Reflection;
-using StructureMap.Configuration.DSL;
+using StructureMap;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration

@@ -97,7 +97,6 @@
     <Compile Include="Http\Hosting\Nowin.cs" />
     <Compile Include="Http\Hosting\ReflectionExtensions.cs" />
     <Compile Include="Registration\ActionlessViewChainSource.cs" />
-    <Compile Include="Registration\SingletonAttribute.cs" />
     <Compile Include="Resources\Conneg\OutputPartialBehavior.cs" />
     <Compile Include="Resources\Conneg\ReaderChoice.cs" />
     <Compile Include="Resources\Conneg\ViewAttachment.cs" />

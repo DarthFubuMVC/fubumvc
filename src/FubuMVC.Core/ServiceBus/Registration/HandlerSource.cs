@@ -12,7 +12,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Sagas;
-using StructureMap;
+using StructureMap.Graph.Scanning;
 
 namespace FubuMVC.Core.ServiceBus.Registration
 {

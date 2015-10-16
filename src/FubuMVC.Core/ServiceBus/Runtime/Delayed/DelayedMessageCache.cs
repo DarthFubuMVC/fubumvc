@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using FubuCore;
-using FubuMVC.Core.Registration;
+using StructureMap;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Delayed
 {

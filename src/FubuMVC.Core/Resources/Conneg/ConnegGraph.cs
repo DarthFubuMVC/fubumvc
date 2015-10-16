@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration;
-using StructureMap;
+using StructureMap.Graph.Scanning;
 
 namespace FubuMVC.Core.Resources.Conneg
 {

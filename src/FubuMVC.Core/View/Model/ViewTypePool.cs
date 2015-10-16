@@ -4,7 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Registration;
-using StructureMap;
+using StructureMap.Graph.Scanning;
 
 namespace FubuMVC.Core.View.Model
 {

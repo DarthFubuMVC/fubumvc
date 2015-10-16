@@ -1,7 +1,7 @@
 using System;
 using FubuMVC.RavenDb.RavenDb.Multiple;
 using Raven.Client;
-using StructureMap.Configuration.DSL;
+using StructureMap;
 
 namespace FubuMVC.RavenDb.RavenDb
 {

@@ -5,6 +5,11 @@ namespace FubuMVC.Core.Localization
 {
     public class LocalizationSettings : IFeatureSettings
     {
+        public LocalizationSettings()
+        {
+            DefaultCulture = CultureInfo.CurrentCulture;
+        }
+
         public bool Enabled { get; set; }
         public CultureInfo DefaultCulture { get; set; }
 

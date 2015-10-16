@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
 using FubuCore;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.RavenDb.RavenDb;
 using FubuMVC.RavenDb.RavenDb.Multiple;
 using FubuMVC.RavenDb.Reset;
@@ -53,7 +52,8 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
         
             theReset.As<RavenPersistenceReset>()
                 .FindOtherSettingTypes()
-                .ShouldHaveTheSameElementsAs(typeof(SecondDbSettings), typeof(ThirdDbSettings), typeof(FourthDbSettings));
+                .OrderBy(x => x.Name)
+                .ShouldHaveTheSameElementsAs(typeof(FourthDbSettings), typeof(SecondDbSettings), typeof(ThirdDbSettings));
         
         
         }

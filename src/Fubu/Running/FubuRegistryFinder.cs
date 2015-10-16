@@ -4,7 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using StructureMap;
+using StructureMap.Graph.Scanning;
 
 namespace Fubu.Running
 {

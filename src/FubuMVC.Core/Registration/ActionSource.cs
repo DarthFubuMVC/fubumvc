@@ -11,6 +11,7 @@ using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
 using StructureMap;
+using StructureMap.Graph.Scanning;
 
 namespace FubuMVC.Core.Registration
 {

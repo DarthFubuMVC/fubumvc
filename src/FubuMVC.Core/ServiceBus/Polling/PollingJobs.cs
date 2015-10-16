@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
-using FubuMVC.Core.Registration;
+using StructureMap;
+
 
 namespace FubuMVC.Core.ServiceBus.Polling
 {

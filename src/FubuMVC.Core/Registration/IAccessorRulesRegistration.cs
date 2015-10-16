@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.Packaging;
-using StructureMap;
+using StructureMap.Graph.Scanning;
 
 namespace FubuMVC.Core.Registration
 {

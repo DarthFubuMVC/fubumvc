@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuCore.Configuration;
-using StructureMap.Configuration.DSL;
+using StructureMap;
 using StructureMap.Graph;
+using StructureMap.Graph.Scanning;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.StructureMap
@@ -24,10 +27,15 @@ namespace FubuMVC.Core.StructureMap
             _filter = filter;
         }
 
+        public void ScanTypes(TypeSet types, Registry registry)
+        {
+            types.FindTypes(TypeClassification.Concretes | TypeClassification.Closed)
+                .Where(_filter)
+                .Each(type => Process(type, registry));
+        }
+
         public void Process(Type type, Registry graph)
         {
-            if (!_filter(type)) return;
-
             var instanceType = typeof(SettingsInstance<>).MakeGenericType(type);
             var instance = Activator.CreateInstance(instanceType).As<Instance>();
             graph.For(type).Add(instance).Singleton();

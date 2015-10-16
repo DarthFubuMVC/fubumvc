@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FubuCore;
-using StructureMap;
+using StructureMap.Graph.Scanning;
 
 namespace FubuMVC.Core.Registration
 {

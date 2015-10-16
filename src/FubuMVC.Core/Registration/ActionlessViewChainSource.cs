@@ -5,7 +5,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
-using StructureMap;
+using StructureMap.Graph.Scanning;
 
 namespace FubuMVC.Core.Registration
 {
@@ -36,13 +36,10 @@ namespace FubuMVC.Core.Registration
                 var route = type.GetAttribute<UrlPatternAttribute>().BuildRoute(type);
                 return new RoutedChain(route, type, type);
             }
-            else
-            {
-                var chain = BehaviorChain.ForResource(type);
-                chain.IsPartialOnly = true;
+            var chain = BehaviorChain.ForResource(type);
+            chain.IsPartialOnly = true;
 
-                return chain;
-            }
+            return chain;
         }
     }
 }

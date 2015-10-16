@@ -13,6 +13,7 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
+using StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Core.Registration
