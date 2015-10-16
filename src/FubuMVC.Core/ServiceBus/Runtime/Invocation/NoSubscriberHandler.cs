@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using FubuMVC.Core.ServiceBus.Logging;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         {
             context.SendFailureAcknowledgement(envelope, "No subscriber");
             envelope.Callback.MarkSuccessful();
-            // TODO -- do more here.  There's a GH issue for this.
+            context.InfoMessage(() => new NoHandlerForMessage{Envelope = envelope.ToToken()});
         }
     }
 }

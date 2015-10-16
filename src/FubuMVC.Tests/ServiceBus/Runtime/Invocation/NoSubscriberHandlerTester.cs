@@ -1,4 +1,6 @@
-﻿using FubuMVC.Core.ServiceBus.Runtime;
+﻿using System.Linq;
+using FubuMVC.Core.ServiceBus.Logging;
+using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -32,6 +34,15 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         {
             theContext.RecordedOutgoing.FailureAcknowledgementMessage
                 .ShouldBe("No subscriber");
+        }
+
+        [Test]
+        public void should_log_a_message_for_there_being_no_handler()
+        {
+            var log = theContext.RecordedLogs.InfoMessages.OfType<NoHandlerForMessage>()
+                .Single();
+
+            log.ShouldNotBeNull();
         }
     }
 }
