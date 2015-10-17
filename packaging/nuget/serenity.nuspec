@@ -13,7 +13,7 @@
     <tags>web framework specification fubumvc</tags>
     <dependencies>
       <dependency id="FubuMVC.Core" version="3.0" />
-      <dependency id="Microsoft.Hosting.Owin" />
+      <dependency id="Microsoft.Owin.Hosting" />
       <dependency id="Microsoft.Owin.Host.HttpListener" />
       <dependency id="Storyteller" version="3.0.0" />
       <dependency id="Selenium.RC" version="2.46.0" />
