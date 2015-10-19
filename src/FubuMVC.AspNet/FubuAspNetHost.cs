@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
@@ -30,21 +31,35 @@ namespace FubuMVC.AspNet
             var logger = Runtime.Get<IExecutionLogger>();
             _startRequest = () =>
             {
-                HttpContext.Current.Items.Add("owin.Environment", new Dictionary<string, object>());
+                try
+                {
+                    HttpContext.Current.Items.Add("owin.Environment", new Dictionary<string, object>());
 
-                var log = new ChainExecutionLog();
-                HttpContext.Current.Response.AppendHeader(HttpRequestExtensions.REQUEST_ID, log.Id.ToString());
-                HttpContext.Current.Items.Add(AspNetServiceArguments.CHAIN_EXECUTION_LOG, log);
+                    var log = new ChainExecutionLog();
+                    HttpContext.Current.Response.AppendHeader(HttpRequestExtensions.REQUEST_ID, log.Id.ToString());
+                    HttpContext.Current.Items.Add(AspNetServiceArguments.CHAIN_EXECUTION_LOG, log);
+                }
+                catch (Exception e)
+                {
+                    Runtime.Get<ILogger>().Error("Error in request logging", e);
+                }
             };
 
             _endRequest = () =>
             {
-                if (!HttpContext.Current.Items.Contains(AspNetServiceArguments.CHAIN_EXECUTION_LOG)) return;
+                try
+                {
+                    if (!HttpContext.Current.Items.Contains(AspNetServiceArguments.CHAIN_EXECUTION_LOG)) return;
 
-                var log = HttpContext.Current.Items[AspNetServiceArguments.CHAIN_EXECUTION_LOG].As<ChainExecutionLog>();
-                log.MarkFinished();
+                    var log = HttpContext.Current.Items[AspNetServiceArguments.CHAIN_EXECUTION_LOG].As<ChainExecutionLog>();
+                    log.MarkFinished();
 
-                logger.Record(log, new AspNetDictionary());
+                    logger.Record(log, new AspNetDictionary());
+                }
+                catch (Exception e)
+                {
+                    Runtime.Get<ILogger>().Error("Error in request logging", e);
+                }
             };
         }
 
