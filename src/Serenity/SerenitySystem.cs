@@ -41,14 +41,14 @@ namespace Serenity
     public partial class SerenitySystem<T> : ISystem, ISubSystem, IRemoteSubsystems where T : FubuRegistry, new()
     {
         public readonly CellHandling CellHandling = new CellHandling(new EquivalenceChecker(), new Conversions());
-        public readonly T Registry = new T();
+        public readonly T Registry;
         private FubuRuntime _runtime;
         private Task _warmup;
         private StructureMapServiceFactory _factory;
 
-        public SerenitySystem()
+        public SerenitySystem(T registry)
         {
-            _subSystems.Add(this);
+            Registry = registry;
 
             Registry.Services.ReplaceService<ISystemTime, SystemTime>().Singleton();
             Registry.Services.ReplaceService<IClock, Clock>().Singleton();
@@ -64,6 +64,15 @@ namespace Serenity
             injectJavascriptErrorDetection();
 
             Registry.Mode = "testing";
+
+            _subSystems.Add(this);
+        }
+
+        public SerenitySystem() : this(new T())
+        {
+            
+
+
         }
 
 
