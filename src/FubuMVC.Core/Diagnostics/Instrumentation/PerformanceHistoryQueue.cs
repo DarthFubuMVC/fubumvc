@@ -22,7 +22,15 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public void Enqueue(ChainExecutionLog log)
         {
-            _collection.Add(log);
+            try
+            {
+                // Yeah, I know, but don't allow an exception here to *ever* bubble up
+                _collection.Add(log);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private void record()

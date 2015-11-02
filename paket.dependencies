@@ -20,7 +20,7 @@ nuget RavenDB.Embedded 2.5.2750
 nuget RhinoMocks 3.6.1
 nuget Shouldly ~> 2.5.0
 nuget Spark 1.7.5.0
-nuget structuremap 4.0.0.272-alpha
+nuget structuremap 4.0.0.272-alpha prerelease
 nuget Storyteller 3.0.0.269-alpha
 nuget System.Spatial 5.6.0.0
 nuget WindowsAzure.Storage 3.0.1.0

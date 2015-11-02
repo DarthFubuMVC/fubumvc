@@ -28,12 +28,17 @@ namespace FubuMVC.AspNet
             var settings = Runtime.Get<DiagnosticsSettings>();
             if (settings.TraceLevel == TraceLevel.None) return;
 
-            var logger = Runtime.Get<IExecutionLogger>();
+            var executionLogger = Runtime.Get<IExecutionLogger>();
+            var logger = Runtime.Get<ILogger>();
+
             _startRequest = () =>
             {
                 try
                 {
-                    HttpContext.Current.Items.Add("owin.Environment", new Dictionary<string, object>());
+                    if (!HttpContext.Current.Items.Contains("owin.Environment"))
+                    {
+                        HttpContext.Current.Items.Add("owin.Environment", new Dictionary<string, object>());
+                    }
 
                     var log = new ChainExecutionLog();
                     HttpContext.Current.Response.AppendHeader(HttpRequestExtensions.REQUEST_ID, log.Id.ToString());
@@ -41,7 +46,15 @@ namespace FubuMVC.AspNet
                 }
                 catch (Exception e)
                 {
-                    Runtime.Get<ILogger>().Error("Error in request logging", e);
+                    try
+                    {
+                        logger.Error("Error in request logging", e);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                        Console.WriteLine(e);
+                    }
                 }
             };
 
@@ -54,11 +67,20 @@ namespace FubuMVC.AspNet
                     var log = HttpContext.Current.Items[AspNetServiceArguments.CHAIN_EXECUTION_LOG].As<ChainExecutionLog>();
                     log.MarkFinished();
 
-                    logger.Record(log, new AspNetDictionary());
+                    executionLogger.Record(log, new AspNetDictionary());
                 }
                 catch (Exception e)
                 {
-                    Runtime.Get<ILogger>().Error("Error in request logging", e);
+
+                    try
+                    {
+                        logger.Error("Error in request logging", e);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                        Console.WriteLine(e);
+                    }
                 }
             };
         }
