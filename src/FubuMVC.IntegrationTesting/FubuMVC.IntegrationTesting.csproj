@@ -116,6 +116,7 @@
     <Compile Include="FubuRegistry_using_parallel_folder_spec.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="DifferentEndpoint.cs" />
+    <Compile Include="Http\Hosting\KatanaTester.cs" />
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Http\compression_testing.cs" />

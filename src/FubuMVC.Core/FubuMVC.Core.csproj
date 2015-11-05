@@ -93,7 +93,7 @@
     <Compile Include="Http\Compression\ApplyCompression.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />
     <Compile Include="Http\Hosting\Katana.cs" />
-    <Compile Include="Http\Hosting\AdminRightsException.cs" />
+    <Compile Include="Http\Hosting\HostingFailedException.cs" />
     <Compile Include="Http\Hosting\Nowin.cs" />
     <Compile Include="Http\Hosting\ReflectionExtensions.cs" />
     <Compile Include="Registration\ActionlessViewChainSource.cs" />

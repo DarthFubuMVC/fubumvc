@@ -49,7 +49,7 @@ namespace Fubu.Running
                     Watcher = _server.Get<AssetSettings>().CreateFileWatcherManifest(_server.Files)
                 });
             }
-            catch (AdminRightsException e)
+            catch (HostingFailedException e)
             {
                 EventAggregator.SendMessage(new InvalidApplication
                 {
