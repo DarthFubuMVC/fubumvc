@@ -10,13 +10,13 @@ namespace FubuMVC.IntegrationTesting
 {
     // This little endpoint class handles
     // the root url of the application
-    public class HomeEndpoint
+public class HomeEndpoint
+{
+    public string Index()
     {
-        public string Index()
-        {
-            return "Hello, World";
-        }
+        return "Hello, World";
     }
+}
 
     [TestFixture]
     public class RunHelloWorld
@@ -26,18 +26,19 @@ namespace FubuMVC.IntegrationTesting
         {
             // Bootstrap a basic FubuMVC applications
             // with just the default policies and services
-            using (var runtime = FubuRuntime.Basic())
-            {
-                // Execute the home route and verify
-                // the response
-                runtime.Scenario(_ =>
-                {
-                    _.Get.Url("/");
+using (var runtime = FubuRuntime.Basic())
+{
+    // Execute the home route and verify
+    // the response
+    runtime.Scenario(_ =>
+    {
+        _.Get.Url("/");
 
-                    _.StatusCodeShouldBeOk();
-                    _.ContentShouldBe("Hello, World");
-                });
-            }
+        _.StatusCodeShouldBeOk();
+        _.ContentShouldBe("Hello, World");
+        _.ContentTypeShouldBe("text/plain");
+    });
+}
         }
     }
 

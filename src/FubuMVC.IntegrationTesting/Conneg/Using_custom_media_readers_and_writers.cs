@@ -21,6 +21,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 host.Scenario(x =>
                 {
                     x.Post.Input<SomeInput>();
+
                     x.Request
                         .AppendHeader("x-name", "Jeremy")
                         .ContentType("some/input")
