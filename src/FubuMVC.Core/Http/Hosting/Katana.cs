@@ -46,12 +46,7 @@ namespace FubuMVC.Core.Http.Hosting
             }
             catch (TargetInvocationException e)
             {
-                if (e.InnerException != null && e.InnerException.Message.Contains("Access is denied"))
-                {
-                    throw new AdminRightsException(e.InnerException);
-                }
-
-                throw;
+                throw new HostingFailedException(e.InnerException, port);
             }
         }
 
@@ -66,6 +61,8 @@ namespace FubuMVC.Core.Http.Hosting
         private object build(string typeName, params object[] args)
         {
             var type = Type.GetType(typeName);
+            if(type == null)
+                throw new TypeLoadException("Could not find type: {0}. Are you missing an assembly reference?".ToFormat(typeName));
             return Activator.CreateInstance(type, args);
         }
     }
