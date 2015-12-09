@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Http.Hosting
             return Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => { host.Scenario(configuration); });
         }
 
-        [Test]
+        [Test, Explicit]
         public void examples()
         {
 host.Scenario(_ =>

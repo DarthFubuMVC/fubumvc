@@ -85,6 +85,8 @@ namespace FubuMVC.Core
 
         public FubuRuntime(FubuRegistry registry)
         {
+            _registry = registry;
+
             _appFunc = new Lazy<AppFunc>(() => FubuOwinHost.ToAppFunc(this));
 
             RouteTable.Routes.Clear();
@@ -136,7 +138,7 @@ namespace FubuMVC.Core
 
             _routes = routeTask.Result();
 
-            _registry = registry;
+            
 
             if (registry.Host != null)
             {

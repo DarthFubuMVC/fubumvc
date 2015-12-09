@@ -10,6 +10,7 @@ NUGET
     DotNetZip (1.9.6)
     Fixie (1.0.0.33)
     Fleck (0.10.0.26)
+    FubuCore (2.0.0.311)
     FubuLocalization (1.1.0.182)
       FubuCore (>= 0.9.9.139)
     ManagedEsent (1.9.3.2)
@@ -76,9 +77,6 @@ NUGET
       Microsoft.Data.Services.Client (>= 5.6.0)
       Microsoft.WindowsAzure.ConfigurationManager (>= 1.8.0.0)
       Newtonsoft.Json (>= 5.0.6)
-  remote: https://www.myget.org/F/fubumvc-edge
-  specs:
-    FubuCore (2.0.0.311)
   remote: http://build.fubu-project.org/guestAuth/app/nuget/v1/FeedService.svc
   specs:
     HtmlTags (3.0.0.187)
