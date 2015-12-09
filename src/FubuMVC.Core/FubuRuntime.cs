@@ -42,6 +42,7 @@ namespace FubuMVC.Core
         private readonly Lazy<AppFunc> _appFunc;
         private IDisposable _server;
         private string _baseAddress = "http://memory"; // leave this here
+        private FubuRegistry _registry;
 
 
         public static FubuRuntime Basic(Action<FubuRegistry> configure = null)
@@ -85,9 +86,6 @@ namespace FubuMVC.Core
         public FubuRuntime(FubuRegistry registry)
         {
             _appFunc = new Lazy<AppFunc>(() => FubuOwinHost.ToAppFunc(this));
-
-            Port = registry.Port;
-            Mode = registry.Mode;
 
             RouteTable.Routes.Clear();
 
@@ -138,7 +136,7 @@ namespace FubuMVC.Core
 
             _routes = routeTask.Result();
 
-            Host = registry.Host;
+            _registry = registry;
 
             if (registry.Host != null)
             {
@@ -171,11 +169,20 @@ namespace FubuMVC.Core
             get { return _baseAddress; }
         }
 
-        public IHost Host { get; private set; }
+        public IHost Host
+        {
+            get { return _registry.Host; }
+        }
 
-        public int Port { get; private set; }
+        public int Port
+        {
+            get { return _registry.Port; }
+        }
 
-        public string Mode { get; set; }
+        public string Mode
+        {
+            get { return _registry.Mode; }
+        }
 
         // Build route objects from route definitions on graph + add packaging routes
         private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
