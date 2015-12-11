@@ -65,7 +65,7 @@ end
 
 desc 'Compile the code'
 task :compile => [:npm, :clean, :version] do
-	sh "paket.exe install"
+	sh "paket.exe restore"
 	sh "C:/Windows/Microsoft.NET/Framework/v4.0.30319/msbuild.exe src/FubuMVC.sln   /property:Configuration=#{COMPILE_TARGET} /v:m /t:rebuild /nr:False /maxcpucount:2"
 end
 
