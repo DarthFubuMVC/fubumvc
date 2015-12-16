@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             return _graph.Chains
                 .Where(x => x.Performance.HitCount > 0)
-                .OrderByDescending(x => x.Performance.TotalExecutionTime)
+                .OrderByDescending(x => x.Performance.Average)
                 .Select(chain =>
             {
                 var dict = chain.Performance.ToDictionary();
