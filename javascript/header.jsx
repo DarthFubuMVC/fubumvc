@@ -22,7 +22,11 @@ var Header = React.createClass({
 		}
 
 		var sectionItems = FubuDiagnostics.sections.map(section => {
-			return (<NavItem href={section.anchor} title={section.description}>{section.title}</NavItem>);
+			var onclick = () => {
+				window.location = section.anchor;
+			}
+
+			return (<NavItem onClick={onclick} href={section.anchor} title={section.description}>{section.title}</NavItem>);
 		});
 
 		return (
