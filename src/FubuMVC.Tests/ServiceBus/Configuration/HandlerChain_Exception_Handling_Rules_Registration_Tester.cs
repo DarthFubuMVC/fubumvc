@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
             var handler = chain.ErrorHandlers.Single().ShouldBeOfType<ErrorHandler>();
             handler.Conditions.Single().ShouldBeOfType<ExceptionTypeMatch<NotImplementedException>>();
-            handler.Continuation().ShouldBeOfType<RetryNowContinuation>();
+            handler.Continuation(null, null).ShouldBeOfType<RetryNowContinuation>();
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
             var handler = chain.ErrorHandlers.Single().ShouldBeOfType<ErrorHandler>();
             handler.Conditions.Single().ShouldBeOfType<ExceptionTypeMatch<NotSupportedException>>();
-            handler.Continuation().ShouldBeOfType<RequeueContinuation>();
+            handler.Continuation(null, null).ShouldBeOfType<RequeueContinuation>();
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
             var handler = chain.ErrorHandlers.Single().ShouldBeOfType<ErrorHandler>();
             handler.Conditions.Single().ShouldBeOfType<ExceptionTypeMatch<NotSupportedException>>();
-            handler.Continuation().ShouldBeOfType<DelayedRetryContinuation>()
+            handler.Continuation(null, null).ShouldBeOfType<DelayedRetryContinuation>()
                 .Delay.ShouldBe(10.Minutes());
         }
 
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .ContinueWith<TellTheSenderHeSentSomethingWrong>();
 
             var handler = chain.ErrorHandlers.Single().ShouldBeOfType<ErrorHandler>();
-            var continuation = handler.Continuation().ShouldBeOfType<CompositeContinuation>();
+            var continuation = handler.Continuation(null, null).ShouldBeOfType<CompositeContinuation>();
             continuation.Select(x => x.GetType())
                 .ShouldHaveTheSameElementsAs(typeof(DelayedRetryContinuation), typeof(TellTheSenderHeSentSomethingWrong));
 

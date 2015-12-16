@@ -15,14 +15,14 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
         private readonly IList<IExceptionMatch> _conditions = new List<IExceptionMatch>(); 
 
        
-        private readonly IList<IContinuation> _continuations = new List<IContinuation>(); 
+        private readonly IList<Func<Envelope, Exception, IContinuation>> _continuations = new List<Func<Envelope, Exception, IContinuation>>(); 
 
         public void AddContinuation(IContinuation continuation)
         {
-            _continuations.Add(continuation);
+            _continuations.Add((env, ex) => continuation);
         }
 
-        public IContinuation Continuation()
+        public IContinuation Continuation(Envelope envelope, Exception ex)
         {
             var count = _continuations.Count;
             switch (count)
@@ -31,10 +31,10 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
                     return Requeue;
 
                 case 1:
-                    return _continuations.Single();
+                    return _continuations.Single()(envelope, ex);
 
                 default:
-                    return new CompositeContinuation(_continuations.ToArray());
+                    return new CompositeContinuation(_continuations.Select(x => x(envelope, ex)).ToArray());
             }
         }
 
@@ -50,7 +50,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
 
         public IContinuation DetermineContinuation(Envelope envelope, Exception ex)
         {
-            return Matches(envelope, ex) ? Continuation() : null;
+            return Matches(envelope, ex) ? Continuation(envelope, ex) : null;
         }
 
         public bool Matches(Envelope envelope, Exception ex)
@@ -66,7 +66,8 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
                 ? _conditions.Select(x => Description.For(x).Title).Join(" and ") 
                 : "Always";
 
-            var continuation = Continuation();
+            /*
+            var continuation = Continuation(TODO, TODO);
 
             if (continuation is CompositeContinuation)
             {
@@ -76,7 +77,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
             {
                 description.ShortDescription = Description.For(continuation).ShortDescription;
             }
-
+            */
             
         }
     }
