@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using FubuCore;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
     public class PerformanceHistory
     {
+        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+
         public void Read(IRequestLog log)
         {
-            LastExecution = log as ChainExecutionLog;
+            _lock.Write(() =>
+            {
+                LastExecution = log as ChainExecutionLog;
 
-            HitCount++;
-            if (log.HadException) ExceptionCount++;
-            TotalExecutionTime += log.ExecutionTime;
+                HitCount++;
+                if (log.HadException) ExceptionCount++;
+                TotalExecutionTime += log.ExecutionTime;
 
-            if (log.ExecutionTime > MaxTime) MaxTime = log.ExecutionTime;
-            if (log.ExecutionTime < MinTime || MinTime == 0) MinTime = log.ExecutionTime;
+                if (log.ExecutionTime > MaxTime) MaxTime = log.ExecutionTime;
+                if (log.ExecutionTime < MinTime || MinTime == 0) MinTime = log.ExecutionTime;
+            });
         }
 
         public long HitCount { get; private set; }
@@ -57,16 +64,19 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public Dictionary<string, object> ToDictionary()
         {
-            return new Dictionary<string, object>
+            return _lock.Read(() =>
             {
-                {"hits", HitCount},
-                {"total", TotalExecutionTime.ToString("N")},
-                {"average", Average.ToString("N")},
-                {"exceptions", ExceptionPercentage.ToString("N")},
-                {"min", MinTime.ToString("N")},
-                {"max", MaxTime.ToString("N")}
+                return new Dictionary<string, object>
+                {
+                    {"hits", HitCount},
+                    {"total", TotalExecutionTime.ToString("N")},
+                    {"average", Average.ToString("N")},
+                    {"exceptions", ExceptionPercentage.ToString("N")},
+                    {"min", MinTime.ToString("N")},
+                    {"max", MaxTime.ToString("N")}
 
-            };
+                };
+            });
         }
 
         public override string ToString()

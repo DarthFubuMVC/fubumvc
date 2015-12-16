@@ -75,7 +75,6 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultSingletonIs<IExecutionLogStorage, InMemoryExecutionLogStorage>();
 
                 c.DefaultSingletonIs<IChainExecutionHistory, ChainExecutionHistory>();
-                c.ShouldHaveRegistration<IActivator, PerformanceHistoryQueueActivator>();
                 c.DefaultSingletonIs<IPerformanceHistoryQueue, PerformanceHistoryQueue>();
 
                 

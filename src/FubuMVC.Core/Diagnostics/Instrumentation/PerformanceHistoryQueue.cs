@@ -1,59 +1,45 @@
 using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using FubuCore.Logging;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
     // Break it out. This needs to be a singleton
 
-    public class PerformanceHistoryQueue : IDisposable, IPerformanceHistoryQueue
+    public class PerformanceHistoryQueue : IPerformanceHistoryQueue
     {
-        private readonly BlockingCollection<ChainExecutionLog> _collection =
-            new BlockingCollection<ChainExecutionLog>(new ConcurrentBag<ChainExecutionLog>());
+        private readonly ILogger _logger;
 
-        private Task _readingTask;
-
-        public void Dispose()
+        public PerformanceHistoryQueue(ILogger logger)
         {
-            _collection.CompleteAdding();
-            _collection.Dispose();
+            _logger = logger;
         }
 
 
         public void Enqueue(ChainExecutionLog log)
         {
-            try
-            {
-                // Yeah, I know, but don't allow an exception here to *ever* bubble up
-                _collection.Add(log);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-        private void record()
-        {
-            foreach (var log in _collection.GetConsumingEnumerable())
+            Task.Factory.StartNew(() =>
             {
                 try
                 {
-                    if (log.RootChain != null)
+                    log.RootChain.Performance.Read(log);
+                }
+                catch (Exception ex)
+                {
+                    try
                     {
-                        log.RootChain.Performance.Read(log);
+                        _logger.Error("Failed while updating performance history", ex);
+                    }
+                    catch (Exception e)
+                    {
+                        // Yeah, I know, but don't allow an exception here to *ever* bubble up
+                        Console.WriteLine(e);
                     }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
+            });
+
         }
 
-        public void Start()
-        {
-            _readingTask = Task.Factory.StartNew(record);
-        }
     }
 }

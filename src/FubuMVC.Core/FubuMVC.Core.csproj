@@ -81,7 +81,6 @@
     <Compile Include="Diagnostics\Instrumentation\NulloExecutionLogger.cs" />
     <Compile Include="Diagnostics\Instrumentation\PerformanceHistory.cs" />
     <Compile Include="Diagnostics\Instrumentation\PerformanceHistoryQueue.cs" />
-    <Compile Include="Diagnostics\Instrumentation\PerformanceHistoryQueueActivator.cs" />
     <Compile Include="Diagnostics\Instrumentation\ProductionExecutionLogger.cs" />
     <Compile Include="Diagnostics\Instrumentation\RequestStep.cs" />
     <Compile Include="Diagnostics\Instrumentation\ChainExecutionListener.cs" />
