@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             chain.OnException<NotSupportedException>()
                 .MoveToErrorQueue();
 
-            chain.ErrorHandlers.Single().ShouldBeOfType<MoveToErrorQueueHandler<NotSupportedException>>();
+            chain.ErrorHandlers.Single().As<ErrorHandler>().Sources.Single().ShouldBeOfType<MoveToErrorQueueHandler<NotSupportedException>>();
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             chain.OnException<NotImplementedException>()
                 .RespondWithMessage((ex, env) => new object());
 
-            chain.ErrorHandlers.Single().ShouldBeOfType<RespondWithMessageHandler<NotImplementedException>>();
+            chain.ErrorHandlers.Single().As<ErrorHandler>().Sources.Single().ShouldBeOfType<RespondWithMessageHandler<NotImplementedException>>();
         }
     }
 

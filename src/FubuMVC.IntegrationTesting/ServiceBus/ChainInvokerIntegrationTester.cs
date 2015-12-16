@@ -5,9 +5,11 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using NUnit.Framework;
+using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.ServiceBus
@@ -138,6 +140,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
             }
         }
 
+
         private static void AssertCascadedMessages(MessageRecorder recorder)
         {
             // will succeed on the retry because we change the text in the handler.
@@ -189,6 +192,15 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
             chain.MaximumAttempts = 3;
             chain.OnException<DivideByZeroException>().Requeue();
             chain.OnException<InvalidOperationException>().Retry();
+
+            chain.OnException<NotSupportedException>()
+                .MoveToErrorQueue()
+                .Then.RespondWithMessage((ex, env) => new ErrorMessage {Message = ex.Message});
         }
+    }
+
+    public class ErrorMessage
+    {
+        public string Message { get; set; }
     }
 }

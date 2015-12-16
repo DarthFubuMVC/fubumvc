@@ -28,8 +28,6 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                 runtime.Behaviors.Handlers.Each(x =>
                 {
                     x.ErrorHandlers.Count.ShouldBe(1);
-
-                    var handler = x.ErrorHandlers.Single();
                 });
             }
         }

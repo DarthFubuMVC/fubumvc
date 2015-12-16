@@ -94,7 +94,8 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 
             public ThenContinueExpression MoveToErrorQueue()
             {
-                _parent.ErrorHandlers.Add(new MoveToErrorQueueHandler<T>());
+                var handler = new MoveToErrorQueueHandler<T>();
+                _handler.Value.AddContinuation(handler);
 
                 return this;
             }
@@ -127,7 +128,8 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             public ThenContinueExpression RespondWithMessage(Func<Exception, Envelope, object> messageFunc)
             {
                 var handler = new RespondWithMessageHandler<T>(messageFunc);
-                _parent.ErrorHandlers.Add(handler);
+
+                _handler.Value.AddContinuation(handler);
 
                 return this;
             }

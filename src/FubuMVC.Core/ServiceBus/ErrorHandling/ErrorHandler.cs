@@ -15,32 +15,42 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
         private readonly IList<IExceptionMatch> _conditions = new List<IExceptionMatch>(); 
 
        
-        private readonly IList<Func<Envelope, Exception, IContinuation>> _continuations = new List<Func<Envelope, Exception, IContinuation>>(); 
+        private readonly IList<IContinuationSource> _sources = new List<IContinuationSource>(); 
 
         public void AddContinuation(IContinuation continuation)
         {
-            _continuations.Add((env, ex) => continuation);
+            _sources.Add(new ContinuationSource(continuation));
         }
 
         public IContinuation Continuation(Envelope envelope, Exception ex)
         {
-            var count = _continuations.Count;
+            var count = _sources.Count;
             switch (count)
             {
                 case 0:
                     return Requeue;
 
                 case 1:
-                    return _continuations.Single()(envelope, ex);
+                    return _sources.Single().DetermineContinuation(envelope, ex);
 
                 default:
-                    return new CompositeContinuation(_continuations.Select(x => x(envelope, ex)).ToArray());
+                    return new CompositeContinuation(_sources.Select(x => x.DetermineContinuation(envelope, ex)).ToArray());
             }
         }
 
         public void AddCondition(IExceptionMatch condition)
         {
             _conditions.Add(condition);
+        }
+
+        public void AddContinuation(IContinuationSource source)
+        {
+            _sources.Add(source);
+        }
+
+        public IList<IContinuationSource> Sources
+        {
+            get { return _sources; }
         }
 
         public IEnumerable<IExceptionMatch> Conditions
@@ -60,25 +70,53 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
             return _conditions.All(x => x.Matches(envelope, ex));
         }
 
+
         public void Describe(Description description)
         {
             description.Title = _conditions.Any() 
                 ? _conditions.Select(x => Description.For(x).Title).Join(" and ") 
                 : "Always";
 
-            /*
-            var continuation = Continuation(TODO, TODO);
-
-            if (continuation is CompositeContinuation)
+            if (_sources.Count > 1)
             {
-                description.AddList("Continuations", continuation.As<CompositeContinuation>());
+                description.AddList("Continuations", _sources);
+            }
+            else if (_sources.Count == 1)
+            {
+                description.ShortDescription = Description.For(_sources.Single()).ShortDescription;
+            }
+        }
+    }
+
+    public class ContinuationSource : IContinuationSource, DescribesItself
+    {
+        private readonly IContinuation _continuation;
+
+        public ContinuationSource(IContinuation continuation)
+        {
+            _continuation = continuation;
+        }
+
+        public IContinuation DetermineContinuation(Envelope envelope, Exception ex)
+        {
+            return _continuation;
+        }
+
+        public void Describe(Description description)
+        {
+            if (_continuation is DescribesItself)
+            {
+                _continuation.As<DescribesItself>().Describe(description);
             }
             else
             {
-                description.ShortDescription = Description.For(continuation).ShortDescription;
+                description.ShortDescription = _continuation.ToString();
             }
-            */
-            
         }
+    }
+
+    public interface IContinuationSource
+    {
+        IContinuation DetermineContinuation(Envelope envelope, Exception ex);
     }
 }

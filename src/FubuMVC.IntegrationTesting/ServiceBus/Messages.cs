@@ -56,6 +56,8 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
         public string ContinueText { get; set; }
     }
 
+    public class NotSupportedMessage { }
+
     public class WebMessageHandler
     {
         private readonly MessageRecorder _recorder;
@@ -75,6 +77,11 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
         public void Handle(WebMessageTrace trace)
         {
             _recorder.Messages.Add(trace.Text);
+        }
+
+        public void Handle(NotSupportedMessage message)
+        {
+            throw new NotSupportedException("I cannot do this");
         }
 
         public WebMessageTrace Trace(WebMessage message)

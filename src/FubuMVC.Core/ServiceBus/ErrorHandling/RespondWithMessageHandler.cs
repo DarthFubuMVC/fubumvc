@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 
 namespace FubuMVC.Core.ServiceBus.ErrorHandling
 {
-    public class RespondWithMessageHandler<T> : IErrorHandler, DescribesItself where T : Exception
+    public class RespondWithMessageHandler<T> : IContinuationSource, DescribesItself where T : Exception
     {
         private readonly Func<T, Envelope, object> _messageFunc;
 

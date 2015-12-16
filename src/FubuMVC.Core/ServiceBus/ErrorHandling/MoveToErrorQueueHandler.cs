@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 
 namespace FubuMVC.Core.ServiceBus.ErrorHandling
 {
-    public class MoveToErrorQueueHandler<T> : IErrorHandler, DescribesItself where T : Exception
+    public class MoveToErrorQueueHandler<T> : IErrorHandler, IContinuationSource, DescribesItself where T : Exception
     {
         public IContinuation DetermineContinuation(Envelope envelope, Exception ex)
         {
