@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Formatters;
 using HtmlTags;
+using Newtonsoft.Json;
+using StringWriter = System.IO.StringWriter;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -59,7 +65,12 @@ namespace FubuMVC.Core.Diagnostics
             AddToEnd(call);
 
             if (call.HasInput) Input.Add(new NewtonsoftJsonFormatter());
-            if (call.HasOutput && call.OutputType() != typeof(HtmlTag) && !call.OutputType().CanBeCastTo<HtmlDocument>()) Output.Add(new NewtonsoftJsonFormatter());
+            if (call.HasOutput && call.OutputType() != typeof(HtmlTag) && !call.OutputType().CanBeCastTo<HtmlDocument>())
+            {
+                var writerType = typeof(DiagnosticJsonWriter<>).MakeGenericType(call.OutputType());
+                var writer = Activator.CreateInstance(writerType).As<IMediaWriter>();
+                Output.Add(writer);
+            }
         }
 
         public new static DiagnosticChain For<T>(Expression<Action<T>> method)
@@ -67,5 +78,36 @@ namespace FubuMVC.Core.Diagnostics
             var call = ActionCall.For(method);
             return new DiagnosticChain(call);
         }
+    }
+
+    public class DiagnosticJsonWriter<T> : IMediaWriter<T>
+    {
+        private readonly JsonSerializer _serializer;
+
+        public DiagnosticJsonWriter()
+        {
+            _serializer = new Newtonsoft.Json.JsonSerializer();
+        }
+
+        public IEnumerable<string> Mimetypes
+        {
+            get
+            {
+                yield return "application/json";
+                yield return "text/json";
+            }
+        }
+
+
+        
+        public void Write(string mimeType, IFubuRequestContext context, T resource)
+        {
+            var stringWriter = new StringWriter();
+            var writer = new JsonTextWriter(stringWriter);
+            _serializer.Serialize(writer, resource);
+
+            context.Writer.Write(mimeType, stringWriter.ToString());
+        }
+        
     }
 }
