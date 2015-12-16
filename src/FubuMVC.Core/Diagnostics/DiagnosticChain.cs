@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Json;
@@ -80,6 +81,7 @@ namespace FubuMVC.Core.Diagnostics
         }
     }
 
+    [Description("Diagnostics Json Writer")]
     public class DiagnosticJsonWriter<T> : IMediaWriter<T>
     {
         private readonly JsonSerializer _serializer;
