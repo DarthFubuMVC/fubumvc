@@ -122,11 +122,6 @@ namespace Serenity
         {
             get
             {
-                if (_warmup != null)
-                {
-                    _warmup.Wait();
-                }
-
                 if (_runtime == null)
                 {
                     throw new InvalidOperationException(
