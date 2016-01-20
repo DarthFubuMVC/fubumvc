@@ -23,13 +23,13 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             {
                 try
                 {
-                    log.RootChain.Performance.Read(log);
+                    log.RootChain?.Performance?.Read(log);
                 }
                 catch (Exception ex)
                 {
                     try
                     {
-                        _logger.Error("Failed while updating performance history", ex);
+                        _logger.Info("Failed while updating performance history: " + ex);
                     }
                     catch (Exception e)
                     {
