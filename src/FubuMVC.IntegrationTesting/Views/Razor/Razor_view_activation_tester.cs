@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Razor
 {
-    [TestFixture]
+    [TestFixture, Explicit]
     public class Razor_view_activation_tester : ViewIntegrationContext
     {
         public Razor_view_activation_tester()
