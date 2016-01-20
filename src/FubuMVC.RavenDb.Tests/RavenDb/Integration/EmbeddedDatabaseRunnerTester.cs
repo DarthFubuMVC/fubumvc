@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using FubuMVC.RavenDb.RavenDb;
 using NUnit.Framework;
 using Shouldly;
@@ -6,7 +7,7 @@ using StructureMap;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
 {
-    [TestFixture]
+    [TestFixture, Explicit]
     public class EmbeddedDatabaseRunnerTester
     {
         private EmbeddedDatabaseRunner theRunner;
@@ -20,6 +21,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
 
             container = new Container(x => {
                 x.IncludeRegistry<RavenDbRegistry>();
+
                 x.For<RavenDbSettings>().Use(new RavenDbSettings {Url = "http://localhost:8080"});
             });
         }
