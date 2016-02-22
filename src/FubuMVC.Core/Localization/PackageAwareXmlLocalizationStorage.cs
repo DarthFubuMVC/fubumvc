@@ -1,4 +1,4 @@
-using FubuLocalization.Basic;
+using FubuMVC.Core.Localization.Basic;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.Localization

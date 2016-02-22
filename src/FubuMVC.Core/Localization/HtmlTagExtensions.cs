@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using FubuLocalization;
 using FubuMVC.Core.View;
 using HtmlTags;
 

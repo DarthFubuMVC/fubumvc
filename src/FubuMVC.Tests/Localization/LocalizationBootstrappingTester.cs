@@ -1,8 +1,7 @@
 using System.Globalization;
-using FubuLocalization;
-using FubuLocalization.Basic;
 using FubuMVC.Core;
 using FubuMVC.Core.Localization;
+using FubuMVC.Core.Localization.Basic;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;
 using Shouldly;

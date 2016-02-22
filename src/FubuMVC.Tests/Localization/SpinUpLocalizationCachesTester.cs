@@ -1,6 +1,6 @@
-using FubuLocalization.Basic;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Localization;
+using FubuMVC.Core.Localization.Basic;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

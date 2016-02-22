@@ -1,6 +1,5 @@
 using System.Globalization;
-using FubuLocalization;
-using FubuLocalization.Basic;
+using FubuMVC.Core.Localization.Basic;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Localization

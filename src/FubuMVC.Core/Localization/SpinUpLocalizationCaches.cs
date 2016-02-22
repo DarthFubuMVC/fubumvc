@@ -1,5 +1,5 @@
-using FubuLocalization.Basic;
 using FubuMVC.Core.Diagnostics.Packaging;
+using FubuMVC.Core.Localization.Basic;
 
 namespace FubuMVC.Core.Localization
 {

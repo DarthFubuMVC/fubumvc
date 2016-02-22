@@ -1,4 +1,4 @@
-using FubuLocalization;
+using FubuMVC.Core.Localization;
 
 namespace FubuMVC.Core.Security.Authentication.Endpoints
 {
