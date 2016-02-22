@@ -616,6 +616,68 @@
     <Compile Include="Services\FubuRegistryLoader.cs" />
     <Compile Include="Services\JasperServiceConfiguration.cs" />
     <Compile Include="Services\JasperServiceRuntime.cs" />
+    <Compile Include="Validation\ClassValidationRules.cs" />
+    <Compile Include="Validation\CollectionLengthAttribute.cs" />
+    <Compile Include="Validation\ContinueValidationAttribute.cs" />
+    <Compile Include="Validation\CoreExtensions.cs" />
+    <Compile Include="Validation\EmailAttribute.cs" />
+    <Compile Include="Validation\FieldEqualityRule.cs" />
+    <Compile Include="Validation\Fields\AttributeFieldValidationSource.cs" />
+    <Compile Include="Validation\Fields\ClassFieldValidationRules.cs" />
+    <Compile Include="Validation\Fields\CollectionLengthRule.cs" />
+    <Compile Include="Validation\Fields\ConditionalFieldRule.cs" />
+    <Compile Include="Validation\Fields\ContinuationFieldRule.cs" />
+    <Compile Include="Validation\Fields\EmailFieldRule.cs" />
+    <Compile Include="Validation\Fields\FieldRuleSource.cs" />
+    <Compile Include="Validation\Fields\FieldRulesRegistry.cs" />
+    <Compile Include="Validation\Fields\FieldValidationAttribute.cs" />
+    <Compile Include="Validation\Fields\FieldValidationRuleExtensions.cs" />
+    <Compile Include="Validation\Fields\GreaterOrEqualToZeroRule.cs" />
+    <Compile Include="Validation\Fields\GreaterThanZeroRule.cs" />
+    <Compile Include="Validation\Fields\IFieldRuleCondition.cs" />
+    <Compile Include="Validation\Fields\IFieldRulesRegistry.cs" />
+    <Compile Include="Validation\Fields\IFieldValidationQuery.cs" />
+    <Compile Include="Validation\Fields\IFieldValidationRule.cs" />
+    <Compile Include="Validation\Fields\IFieldValidationSource.cs" />
+    <Compile Include="Validation\Fields\IgnoreClientLocalizationAttribute.cs" />
+    <Compile Include="Validation\Fields\IsValid.cs" />
+    <Compile Include="Validation\Fields\LambdaFieldValidationSource.cs" />
+    <Compile Include="Validation\Fields\MaximumLengthRule.cs" />
+    <Compile Include="Validation\Fields\MaxValueFieldRule.cs" />
+    <Compile Include="Validation\Fields\MinimumLengthRule.cs" />
+    <Compile Include="Validation\Fields\MinValueFieldRule.cs" />
+    <Compile Include="Validation\Fields\RangeLengthFieldRule.cs" />
+    <Compile Include="Validation\Fields\RegularExpressionFieldRule.cs" />
+    <Compile Include="Validation\Fields\RequiredFieldRule.cs" />
+    <Compile Include="Validation\FubuValidationException.cs" />
+    <Compile Include="Validation\GreaterOrEqualToZeroAttribute.cs" />
+    <Compile Include="Validation\GreaterThanZeroAttribute.cs" />
+    <Compile Include="Validation\IValidated.cs" />
+    <Compile Include="Validation\IValidationRegistration.cs" />
+    <Compile Include="Validation\IValidationRule.cs" />
+    <Compile Include="Validation\IValidationSource.cs" />
+    <Compile Include="Validation\IValidator.cs" />
+    <Compile Include="Validation\MaximumStringLengthAttribute.cs" />
+    <Compile Include="Validation\MaxValueAttribute.cs" />
+    <Compile Include="Validation\MinimumStringLengthAttribute.cs" />
+    <Compile Include="Validation\MinValueAttribute.cs" />
+    <Compile Include="Validation\Notification.cs" />
+    <Compile Include="Validation\NotificationMessage.cs" />
+    <Compile Include="Validation\RangeLengthAttribute.cs" />
+    <Compile Include="Validation\RegularExpressionAttribute.cs" />
+    <Compile Include="Validation\RequiredAttribute.cs" />
+    <Compile Include="Validation\TemplateExtensions.cs" />
+    <Compile Include="Validation\TemplateValue.cs" />
+    <Compile Include="Validation\ValidationAttribute.cs" />
+    <Compile Include="Validation\ValidationContext.cs" />
+    <Compile Include="Validation\ValidationError.cs" />
+    <Compile Include="Validation\ValidationGraph.cs" />
+    <Compile Include="Validation\ValidationKeys.cs" />
+    <Compile Include="Validation\ValidationMode.cs" />
+    <Compile Include="Validation\ValidationPlan.cs" />
+    <Compile Include="Validation\ValidationScenario.cs" />
+    <Compile Include="Validation\ValidationStep.cs" />
+    <Compile Include="Validation\Validator.cs" />
     <Compile Include="View\ImageTag.cs" />
     <Compile Include="Runtime\IFubuRequestContext.cs" />
     <Compile Include="Projections\AccessorProjection.cs" />
@@ -1128,6 +1190,7 @@
       <Paket>True</Paket>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>

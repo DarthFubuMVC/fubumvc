@@ -574,6 +574,28 @@
     <Compile Include="TestSupport\SelfMockingServiceLocator.cs" />
     <Compile Include="TestSupport\VoidMethod.cs" />
     <Compile Include="TestSupport\Wait.cs" />
+    <Compile Include="Validation\ClassValidationRulesTester.cs" />
+    <Compile Include="Validation\ContinuationRuleTester.cs" />
+    <Compile Include="Validation\FieldEqualityRuleTester.cs" />
+    <Compile Include="Validation\intregated_rule_using_service_tester.cs" />
+    <Compile Include="Validation\IsValidTester.cs" />
+    <Compile Include="Validation\IValidatedRuleSourceTester.cs" />
+    <Compile Include="Validation\Models\AddressModel.cs" />
+    <Compile Include="Validation\Models\CompositeModel.cs" />
+    <Compile Include="Validation\Models\ContactModel.cs" />
+    <Compile Include="Validation\Models\ModelWithNoAttributes.cs" />
+    <Compile Include="Validation\Models\SimpleModel.cs" />
+    <Compile Include="Validation\Models\SiteModel.cs" />
+    <Compile Include="Validation\NotificationMessageTester.cs" />
+    <Compile Include="Validation\NotificationSnippets.cs" />
+    <Compile Include="Validation\NotificationTester.cs" />
+    <Compile Include="Validation\RuleSnippets.cs" />
+    <Compile Include="Validation\TemplateValueTester.cs" />
+    <Compile Include="Validation\ValidationContextTester.cs" />
+    <Compile Include="Validation\ValidationGraphTester.cs" />
+    <Compile Include="Validation\ValidationPlanTester.cs" />
+    <Compile Include="Validation\ValidationStepTester.cs" />
+    <Compile Include="Validation\ValidatorTester.cs" />
     <Compile Include="View\Attachment\FakeViewToken.cs" />
     <Compile Include="View\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="View\AuthorizedLinkExpressionsTester.cs" />
@@ -693,6 +715,7 @@
     <Folder Include="Diagnostics\Shared\" />
     <Folder Include="Docs\Examples\" />
     <Folder Include="Results\" />
+    <Folder Include="Validation\Fields\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
     <Folder Include="View\Model\" />
   </ItemGroup>
