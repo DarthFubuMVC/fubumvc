@@ -66,7 +66,7 @@ NUGET
       Selenium.WebDriver (>= 2.48.0)
     Shouldly (2.5.0)
     Spark (1.7.5.0)
-    Storyteller (3.0.0.269-alpha)
+    Storyteller (3.0.0.325-rc)
     structuremap (4.0.0.272-alpha)
     System.Spatial (5.6.0.0)
     Topshelf (3.1.2)
