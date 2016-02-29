@@ -55,7 +55,8 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Basic
                 //_.Compare(x => x.Handler).DefaultValue("None");
             };
 
-            return VerifySetOf(processed).Titled("The messages processed should be").MatchOn(configure);
+            return VerifySetOf(processed).Titled("The messages processed should be").Comparisons(configure);
+
         }
 
         private IEnumerable<ProcessedMessage> processed()
