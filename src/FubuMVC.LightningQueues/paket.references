@@ -6,3 +6,4 @@ NLog
 Owin
 PowerThreading
 structuremap
+LightningQueues.Storage.LMDB

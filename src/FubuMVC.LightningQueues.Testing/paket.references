@@ -8,3 +8,4 @@ Owin
 RhinoMocks
 Shouldly
 structuremap
+LightningQueues.Storage.LMDB

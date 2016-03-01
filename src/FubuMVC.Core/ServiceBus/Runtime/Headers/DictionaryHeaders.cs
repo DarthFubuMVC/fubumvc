@@ -18,6 +18,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Headers
             _inner = inner;
         }
 
+        public IDictionary<string, string> ToDictionary()
+        {
+            return _inner;
+        }
+
         public string this[string key]
         {
             get { return _inner.ContainsKey(key) ? _inner[key] : null; }

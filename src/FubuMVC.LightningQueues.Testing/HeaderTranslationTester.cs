@@ -11,7 +11,7 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void translates_max_attempts()
         {
-            var message = new MessagePayload();
+            var message = new OutgoingMessage();
             message.Headers.Add(LightningQueuesChannel.MaxAttemptsHeader, 1.ToString());
             message.TranslateHeaders();
             message.MaxAttempts.ShouldBe(1);
@@ -21,7 +21,7 @@ namespace FubuMVC.LightningQueues.Testing
         public void translates_deliver_by()
         {
             var now = DateTime.Now;
-            var message = new MessagePayload();
+            var message = new OutgoingMessage();
             message.Headers.Add(LightningQueuesChannel.DeliverByHeader, now.ToString("o"));
             message.TranslateHeaders();
             message.DeliverBy.ShouldBe(now);
@@ -30,7 +30,7 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void empty_when_headers_arent_present()
         {
-            var message = new MessagePayload();
+            var message = new OutgoingMessage();
             message.TranslateHeaders();
             message.MaxAttempts.ShouldBeNull();
             message.DeliverBy.ShouldBeNull();

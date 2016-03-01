@@ -13,6 +13,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Headers
 
         NameValueCollection ToNameValues();
 
+        IDictionary<string, string> ToDictionary();
+
         bool Has(string key);
         void Remove(string key);
     }

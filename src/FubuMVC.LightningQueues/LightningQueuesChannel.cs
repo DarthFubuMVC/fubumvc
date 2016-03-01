@@ -1,11 +1,9 @@
 using System;
-using System.Linq;
+using System.Reactive.Disposables;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using LightningQueues;
-using LightningQueues.Model;
 
 namespace FubuMVC.LightningQueues
 {
@@ -15,46 +13,45 @@ namespace FubuMVC.LightningQueues
         public static string DeliverByHeader = "deliver-by";
         private readonly Uri _address;
         private readonly string _queueName;
-        private readonly IQueueManager _queueManager;
-        private readonly IDelayedMessageCache<MessageId> _delayedMessages;
-        private bool _disposed;
+        private readonly Queue _queueManager;
+        private IDisposable _disposable;
 
-        public static LightningQueuesChannel Build(LightningUri uri, IPersistentQueues queues, IDelayedMessageCache<MessageId> delayedMessages, bool incoming)
+        public static LightningQueuesChannel Build(LightningUri uri, IPersistentQueues queues, bool incoming)
         {
             var queueManager = queues.ManagerFor(uri.Port, incoming);
-            return new LightningQueuesChannel(uri.Address, uri.QueueName, queueManager, delayedMessages);
+            return new LightningQueuesChannel(uri.Address, uri.QueueName, queueManager);
         }
 
-        public LightningQueuesChannel(Uri address, string queueName, IQueueManager queueManager, IDelayedMessageCache<MessageId> delayedMessages)
+        public LightningQueuesChannel(Uri address, string queueName, Queue queueManager)
         {
             _address = address;
             _queueName = queueName;
             _queueManager = queueManager;
-            _delayedMessages = delayedMessages;
+            _disposable = Disposable.Empty;
         }
 
         public Uri Address => _address;
 
         public ReceivingState Receive(IReceiver receiver)
         {
-            var stream = _queueManager.ReceiveStream(_queueName);
-            foreach (var message in stream.TakeWhile(message => !_disposed))
+            _disposable = _queueManager.Receive(_queueName).Subscribe(message =>
             {
-                receiver.Receive(message.Message.Data, new NameValueHeaders(message.Message.Headers),
-                    new TransactionCallback(message.TransactionalScope, message.Message, _delayedMessages));
-            }
+                receiver.Receive(message.Message.Data, new DictionaryHeaders(message.Message.Headers),
+                    new TransactionCallback(message.QueueContext, message.Message));
+            });
+
             return ReceivingState.StopReceiving;
         }
 
         public void Send(byte[] data, IHeaders headers)
         {
-            _queueManager.Send(data, headers, _address);
+            _queueManager.Send(data, headers, _address, _queueName);
         }
 
 
         public void Dispose()
         {
-            _disposed = true;
+            _disposable.Dispose();
         }
     }
 
@@ -62,7 +59,7 @@ namespace FubuMVC.LightningQueues
     {
         public static Envelope ToEnvelope(this Message message)
         {
-            var envelope = new Envelope(new NameValueHeaders(message.Headers))
+            var envelope = new Envelope(new DictionaryHeaders(message.Headers))
             {
                 Data = message.Data
             };
@@ -75,19 +72,19 @@ namespace FubuMVC.LightningQueues
             return new EnvelopeToken
             {
                 Data = message.Data,
-                Headers = new NameValueHeaders(message.Headers)
+                Headers = new DictionaryHeaders(message.Headers)
             };
         }
 
-        public static MessagePayload ToPayload(this Message message)
+        public static Message Copy(this Message message)
         {
-            var payload = new MessagePayload
+            var copy = new Message
             {
                 Data = message.Data,
                 Headers = message.Headers,
             };
-            
-            return payload;
+
+            return copy;
         }
 
         public static DateTime ExecutionTime(this Message message)
@@ -95,51 +92,37 @@ namespace FubuMVC.LightningQueues
             return message.ToEnvelope().ExecutionTime.Value;
         }
 
-        public static void TranslateHeaders(this MessagePayload messagePayload)
+        public static void TranslateHeaders(this OutgoingMessage messagePayload)
         {
-            var headerValue = messagePayload.Headers[LightningQueuesChannel.MaxAttemptsHeader];
+            string headerValue;
+            messagePayload.Headers.TryGetValue(LightningQueuesChannel.MaxAttemptsHeader, out headerValue);
             if (headerValue.IsNotEmpty())
             {
                 messagePayload.MaxAttempts = int.Parse(headerValue);
             }
-            headerValue = messagePayload.Headers[LightningQueuesChannel.DeliverByHeader];
+            messagePayload.Headers.TryGetValue(LightningQueuesChannel.DeliverByHeader, out headerValue);
             if (headerValue.IsNotEmpty())
             {
                 messagePayload.DeliverBy = DateTime.Parse(headerValue);
             }
         }
 
-        public static void Send(this IQueueManager queueManager, byte[] data, IHeaders headers, Uri address)
+        public static void Send(this Queue queueManager, byte[] data, IHeaders headers, Uri address, string queueName)
         {
-            var messagePayload = new MessagePayload
+            var messagePayload = new OutgoingMessage
             {
+                Id = MessageId.GenerateRandom(),
                 Data = data,
-                Headers = headers.ToNameValues()
+                Headers = headers.ToDictionary(),
+                SentAt = DateTime.Now,
+                Destination = address,
+                Queue = queueName,
             };
             //TODO Maybe expose something to modify transport specific payloads?
             messagePayload.TranslateHeaders();
 
-            var sendingScope = queueManager.BeginTransactionalScope();
-            var id = sendingScope.Send(address, messagePayload);
-            
-            // TODO -- do we grab this?
-            
-            //data.CorrelationId = id.MessageIdentifier;
-            sendingScope.Commit();
-        }
 
-        public static QueueManagerConfiguration ToConfiguration(this LightningQueueSettings settings)
-        {
-            return new QueueManagerConfiguration
-            {
-                EnableOutgoingMessageHistory = settings.EnableOutgoingMessageHistory,
-                EnableProcessedMessageHistory = settings.EnableProcessedMessageHistory,
-                NumberOfMessagesToKeepInOutgoingHistory = settings.NumberOfMessagesToKeepInOutgoingHistory,
-                NumberOfMessagesToKeepInProcessedHistory = settings.NumberOfMessagesToKeepInProcessedHistory,
-                NumberOfReceivedMessageIdsToKeep = settings.NumberOfReceivedMessageIdsToKeep,
-                OldestMessageInOutgoingHistory = settings.OldestMessageInOutgoingHistory,
-                OldestMessageInProcessedHistory = settings.OldestMessageInProcessedHistory,
-            };
+            queueManager.Send(messagePayload);
         }
     }
 }

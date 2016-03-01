@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LightningQueues;
 
@@ -6,8 +7,10 @@ namespace FubuMVC.LightningQueues.Diagnostics
 {
     public class QueueManagerModel
     {
-        public QueueManagerModel(IQueueManager queueManager)
+        public QueueManagerModel(Queue queueManager)
         {
+            throw new NotImplementedException();
+            /*
             EnableProcessedMessageHistory = queueManager.Configuration.EnableProcessedMessageHistory;
             EnableOutgoingMessageHistory = queueManager.Configuration.EnableOutgoingMessageHistory;
             Path = queueManager.Path;
@@ -20,6 +23,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 queueManager.Configuration.NumberOfMessagesToKeepInProcessedHistory;
             NumberOfMessagIdsToKeep = queueManager.Configuration.NumberOfReceivedMessageIdsToKeep;
             Queues = buildQueues(queueManager).ToArray();
+            */
         }
 
         public int Port { get; set; }
@@ -33,6 +37,8 @@ namespace FubuMVC.LightningQueues.Diagnostics
         public int NumberOfMessagIdsToKeep { get; set; }
         public QueueDto[] Queues { get; set; }
 
+
+        /*
         private IEnumerable<QueueDto> buildQueues(IQueueManager queues)
         {
             foreach (var queue in queues.Queues)
@@ -45,5 +51,6 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 };
             }
         }
+        */
     }
 }

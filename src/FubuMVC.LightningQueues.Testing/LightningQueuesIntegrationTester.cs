@@ -7,7 +7,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests.ServiceBus;
 using FubuMVC.Tests.TestSupport;
-using LightningQueues.Model;
+using LightningQueues;
 using NUnit.Framework;
 using Shouldly;
 
@@ -30,9 +30,9 @@ namespace FubuMVC.LightningQueues.Testing
             node.Incoming = true;
 
             var delayedCache = new DelayedMessageCache<MessageId>();
-            queues = new PersistentQueues(new RecordingLogger(), delayedCache, new LightningQueueSettings());
+            queues = new PersistentQueues();
             queues.ClearAll();
-            transport = new LightningQueuesTransport(queues, new LightningQueueSettings(), delayedCache);
+            transport = new LightningQueuesTransport(queues, new LightningQueueSettings());
 
             transport.OpenChannels(graph);
         }
@@ -70,7 +70,7 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void send_a_message_and_get_it_back()
         {
-            var envelope = new Envelope {Data = new byte[] {1, 2, 3, 4, 5}};
+            var envelope = new Envelope { Data = new byte[] { 1, 2, 3, 4, 5 } };
             envelope.Headers["foo"] = "bar";
 
             var receiver = new RecordingReceiver();

@@ -1,9 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Core.ServiceBus.Runtime.Delayed;
-using FubuMVC.LightningQueues.Diagnostics;
-using LightningQueues.Model;
 
 namespace FubuMVC.LightningQueues
 {
@@ -12,8 +9,6 @@ namespace FubuMVC.LightningQueues
         public void Configure(FubuRegistry registry)
         {
             registry.Services.IncludeRegistry<LightningQueuesServiceRegistry>();
-            registry.Polling.RunJob<PurgeQueuesJob>()
-                .ScheduledAtInterval<LightningQueueSettings>(x => x.PurgeQueuesPolling);
         }
     }
 
@@ -22,11 +17,8 @@ namespace FubuMVC.LightningQueues
         public LightningQueuesServiceRegistry()
         {
             AddService<ITransport, LightningQueuesTransport>();
-            AddService<IQueueMessageRetrieval, QueueMessageRetrieval>(); // For diagnostics
+            //AddService<IQueueMessageRetrieval, QueueMessageRetrieval>(); // For diagnostics
             SetServiceIfNone<IPersistentQueues, PersistentQueues>().Singleton();
-            SetServiceIfNone<IDelayedMessageCache<MessageId>, DelayedMessageCache<MessageId>>().Singleton();
         }
     }
-
-
 }

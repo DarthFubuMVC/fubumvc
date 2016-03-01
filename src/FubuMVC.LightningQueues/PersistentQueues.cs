@@ -1,32 +1,84 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reactive.Concurrency;
 using System.Runtime.Serialization;
-using FubuCore.Logging;
+using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using LightningQueues;
-using LightningQueues.Model;
+using LightningQueues.Logging;
+using LightningQueues.Storage.LMDB;
 
 namespace FubuMVC.LightningQueues
 {
+
+    public class ConsoleLogger : ILogger
+    {
+        public void Debug(string message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+        }
+
+        public void DebugFormat(string message, params object[] args)
+        {
+            System.Diagnostics.Debug.WriteLine(message.ToFormat(args));
+        }
+
+        public void Debug<TMessage>(TMessage message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+        }
+
+        public void Info(string message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+        }
+
+        public void InfoFormat(string message, params object[] args)
+        {
+            System.Diagnostics.Debug.WriteLine(message.ToFormat(args));
+        }
+
+        public void Info<TMessage>(TMessage message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+        }
+
+        public void Error(string message, Exception exception)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+            System.Diagnostics.Debug.WriteLine(exception);
+        }
+
+        public void ErrorFormat(string message, Exception ex, params object[] args)
+        {
+            System.Diagnostics.Debug.WriteLine(message.ToFormat(args));
+            System.Diagnostics.Debug.WriteLine(ex);
+        }
+    }
+
     public class PersistentQueues : IPersistentQueues
     {
-        private readonly ILogger _logger;
-        private readonly IDelayedMessageCache<MessageId> _delayedMessages;
-        private readonly QueueManagerConfiguration _queueManagerConfiguration;
-        public const string EsentPath = "fubutransportation.esent";
+        public string QueuePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fubutransportationqueues");
 
-        private readonly Cache<int, QueueManager> _queueManagers;
+        private readonly Cache<int, Queue> _queueManagers;
 
-        public PersistentQueues(ILogger logger, IDelayedMessageCache<MessageId> delayedMessages, LightningQueueSettings settings)
+        public PersistentQueues()
         {
-            _logger = logger;
-            _delayedMessages = delayedMessages;
-            _queueManagerConfiguration = settings.ToConfiguration();
-            _queueManagers = new Cache<int, QueueManager>(port => new QueueManager(new IPEndPoint(IPAddress.Any, port), EsentPath + "." + port, _queueManagerConfiguration));
+            _queueManagers = new Cache<int, Queue>(port => BuildQueue(new IPEndPoint(IPAddress.Any, port), QueuePath + "-" + port));
+        }
+
+        private Queue BuildQueue(IPEndPoint endpoint, string queuePath)
+        {
+            return new QueueConfiguration()
+                .ReceiveMessagesAt(endpoint)
+                .StoreWithLmdb(queuePath)
+                .LogWith(new NulloLogger()) //todo better logger for queues
+                .ScheduleQueueWith(TaskPoolScheduler.Default)
+                .LogWith(new ConsoleLogger())
+                .BuildQueue();
         }
 
         public void Dispose()
@@ -34,14 +86,14 @@ namespace FubuMVC.LightningQueues
             _queueManagers.Each(x => x.Dispose());
         }
 
-        public IEnumerable<IQueueManager> AllQueueManagers { get { return _queueManagers.GetAll(); } }
+        public IEnumerable<Queue> AllQueueManagers => _queueManagers.GetAll();
 
         public void ClearAll()
         {
-            _queueManagers.Each(x => x.ClearAllMessages());
+            _queueManagers.Each(x => x.Store.ClearAllStorage());
         }
 
-        public IQueueManager ManagerFor(int port, bool incoming)
+        public Queue ManagerFor(int port, bool incoming)
         {
             if (incoming)
             {
@@ -53,7 +105,7 @@ namespace FubuMVC.LightningQueues
             return _queueManagers.Any() ? _queueManagers.First() : _queueManagers[port];
         }
 
-        public IQueueManager ManagerForReply()
+        public Queue ManagerForReply()
         {
             return _queueManagers.First();
         }
@@ -67,12 +119,9 @@ namespace FubuMVC.LightningQueues
                     string[] queueNames = group.Select(x => x.QueueName).ToArray();
 
                     var queueManager = _queueManagers[@group.Key];
-                    queueManager.CreateQueues(queueNames);
-                    queueManager.CreateQueues(LightningQueuesTransport.DelayedQueueName);
-                    queueManager.CreateQueues(LightningQueuesTransport.ErrorQueueName);
-
+                    queueNames.Each(x => queueManager.CreateQueue(x));
+                    queueManager.CreateQueue(LightningQueuesTransport.ErrorQueueName);
                     queueManager.Start();
-                    RecoverDelayedMessages(queueManager);
                 }
                 catch (Exception e)
                 {
@@ -81,50 +130,9 @@ namespace FubuMVC.LightningQueues
             });
         }
 
-        private void RecoverDelayedMessages(QueueManager queueManager)
-        {
-            queueManager.GetQueue(LightningQueuesTransport.DelayedQueueName)
-                .GetAllMessages(null)
-                .Each(x => _delayedMessages.Add(x.Id, x.ExecutionTime()));
-        }
-
         public void CreateQueue(LightningUri uri)
         {
-            _queueManagers[uri.Port].CreateQueues(uri.QueueName);
-        }
-
-        public IEnumerable<EnvelopeToken> ReplayDelayed(DateTime currentTime)
-        {
-            return _queueManagers.SelectMany(x => ReplayDelayed(x, currentTime));
-        }
-
-        public IEnumerable<EnvelopeToken> ReplayDelayed(QueueManager queueManager, DateTime currentTime)
-        {
-            var list = new List<EnvelopeToken>();
-
-            var transactionalScope = queueManager.BeginTransactionalScope();
-            try
-            {
-                var readyToSend = _delayedMessages.AllMessagesBefore(currentTime);
-
-                readyToSend.Each(x =>
-                {
-                    var message = transactionalScope.ReceiveById(LightningQueuesTransport.DelayedQueueName, x);
-                    var uri = message.Headers[Envelope.ReceivedAtKey].ToLightningUri();
-                    MessagePayload messagePayload = message.ToPayload();
-                    transactionalScope.EnqueueDirectlyTo(uri.QueueName, messagePayload);
-                    list.Add(message.ToToken());
-                });
-                transactionalScope.Commit();
-            }
-
-            catch (Exception e)
-            {
-                transactionalScope.Rollback();
-                _logger.Error("Error trying to move delayed messages back to the original queue", e);
-            }
-
-            return list;
+            _queueManagers[uri.Port].CreateQueue(uri.QueueName);
         }
     }
 

@@ -1,27 +1,63 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Core.ServiceBus.Runtime.Delayed;
-using LightningQueues.Model;
 
 namespace FubuMVC.LightningQueues
 {
     public class LightningQueuesTransport : TransportBase, ITransport
     {
-        public static readonly string DelayedQueueName = "delayed";
+        private const string StaticLibraryName = "lmdb.dll";
+        private static bool _exported = false;
+
+        static LightningQueuesTransport()
+        {
+            if (!_exported)
+            {
+                try
+                {
+
+
+                    var folder = Environment.Is64BitProcess ? "x64" : "x86";
+                    var assembly = Assembly.GetExecutingAssembly();
+
+                    string resourceName = $"FubuMVC.LightningQueues.{folder}.{StaticLibraryName}";
+                    var stream = assembly.GetManifestResourceStream(resourceName);
+
+                    var path = AppDomain.CurrentDomain.BaseDirectory.AppendPath(StaticLibraryName);
+                    using (var file = new FileStream(path, FileMode.Create))
+                    {
+                        stream.CopyTo(file);
+                    }
+
+                    Console.WriteLine($"Successfully wrote resource {resourceName} to {path}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unable to write the lmdb.dll file-->\n\n" + e);
+                }
+                finally
+                {
+                    _exported = true;
+                }
+            } 
+        }
+    
+
         public static readonly string ErrorQueueName = "errors";
 
         private readonly IPersistentQueues _queues;
         private readonly LightningQueueSettings _settings;
-        private readonly IDelayedMessageCache<MessageId> _delayedMessages;
 
-        public LightningQueuesTransport(IPersistentQueues queues, LightningQueueSettings settings, IDelayedMessageCache<MessageId> delayedMessages)
+        public LightningQueuesTransport(IPersistentQueues queues, LightningQueueSettings settings)
         {
             _queues = queues;
             _settings = settings;
-            _delayedMessages = delayedMessages;
         }
 
         public void Dispose()
@@ -29,10 +65,7 @@ namespace FubuMVC.LightningQueues
             // IPersistentQueues is disposable
         }
 
-        public override string Protocol
-        {
-            get { return LightningUri.Protocol; }
-        }
+        public override string Protocol => LightningUri.Protocol;
 
         public override bool Disabled(IEnumerable<ChannelNode> nodes)
         {
@@ -45,12 +78,13 @@ namespace FubuMVC.LightningQueues
 
         public IChannel BuildDestinationChannel(Uri destination)
         {
-            return new LightningQueuesReplyChannel(destination, _queues.ManagerForReply());
+            var lqUri = new LightningUri(destination);
+            return new LightningQueuesReplyChannel(destination, _queues.ManagerForReply(), lqUri.QueueName);
         }
 
         public IEnumerable<EnvelopeToken> ReplayDelayed(DateTime currentTime)
         {
-            return _queues.ReplayDelayed(currentTime);
+            return Enumerable.Empty<EnvelopeToken>();
         }
 
         public void ClearAll()
@@ -60,7 +94,7 @@ namespace FubuMVC.LightningQueues
 
         protected override IChannel buildChannel(ChannelNode channelNode)
         {
-            return LightningQueuesChannel.Build(new LightningUri(channelNode.Uri), _queues, _delayedMessages, channelNode.Incoming);
+            return LightningQueuesChannel.Build(new LightningUri(channelNode.Uri), _queues, channelNode.Incoming);
         }
 
         protected override void seedQueues(IEnumerable<ChannelNode> channels)

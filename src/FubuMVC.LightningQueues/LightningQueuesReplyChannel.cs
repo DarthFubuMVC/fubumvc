@@ -7,11 +7,13 @@ namespace FubuMVC.LightningQueues
 {
     public class LightningQueuesReplyChannel : IChannel
     {
-        private readonly IQueueManager _queueManager;
+        private readonly Queue _queueManager;
+        private readonly string _queueName;
 
-        public LightningQueuesReplyChannel(Uri destination, IQueueManager queueManager)
+        public LightningQueuesReplyChannel(Uri destination, Queue queueManager, string queueName)
         {
             _queueManager = queueManager;
+            _queueName = queueName;
             Address = destination;
         }
 
@@ -27,7 +29,7 @@ namespace FubuMVC.LightningQueues
 
         public void Send(byte[] data, IHeaders headers)
         {
-            _queueManager.Send(data, headers, Address);
+            _queueManager.Send(data, headers, Address, _queueName);
         }
     }
 }

@@ -84,7 +84,7 @@
   <Target Name="AfterBuild" Condition="Exists('..\..\.paket\paket.exe')">
     <CopyRuntimeDependencies OutputPath="$(OutDir)" TargetFramework="$(TargetFrameworkIdentifier) - $(TargetFrameworkVersion)" ProjectsWithRuntimeLibs="Microsoft.Win32.Registry;System.AppContext;System.Diagnostics.Contracts;System.Diagnostics.Process;System.Diagnostics.StackTrace;System.Dynamic.Runtime;System.Globalization.Extensions;System.IO.Compression;System.Linq.Expressions;System.Net.Http;System.Net.NameResolution;System.Net.NetworkInformation;System.Net.Security;System.Reflection.TypeExtensions;System.Runtime.InteropServices.RuntimeInformation;System.Runtime.Serialization.Primitives;System.Security.Cryptography.Algorithms;System.Security.Cryptography.Cng;System.Security.Cryptography.Csp;System.Security.Cryptography.Encoding;System.Security.Cryptography.OpenSsl;System.Security.Cryptography.X509Certificates;System.Security.Principal.Windows;System.Threading;System.Threading.Overlapped;System.Xml.XmlSerializer" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

@@ -110,6 +110,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                     }
                 }
             });
+            
         }
 
         // virtual for testing of course
