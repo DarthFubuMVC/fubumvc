@@ -7,6 +7,7 @@ using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
+using HtmlTags.Extended.Attributes;
 
 namespace FubuMVC.Core.Security.Authentication
 {

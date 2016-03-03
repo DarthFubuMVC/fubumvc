@@ -85,13 +85,6 @@
     <Folder Include="Diagnostics\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FubuCore">
-      <HintPath>..\..\packages\FubuCore\lib\FubuCore.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\..\packages\LightningDB\runtimes\win7-x86\native\lmdb.dll">
       <Link>x86\lmdb.dll</Link>
     </EmbeddedResource>
@@ -100,6 +93,13 @@
     <EmbeddedResource Include="..\..\packages\LightningDB\runtimes\win7-x64\native\lmdb.dll">
       <Link>x64\lmdb.dll</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FubuCore">
+      <HintPath>..\..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+      <Private>True</Private>
+      <Paket>True</Paket>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
