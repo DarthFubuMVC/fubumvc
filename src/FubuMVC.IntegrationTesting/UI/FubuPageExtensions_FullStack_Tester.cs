@@ -3,6 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.View;
+using FubuMVC.Tests;
 using NUnit.Framework;
 using Shouldly;
 
@@ -155,9 +156,20 @@ namespace FubuMVC.IntegrationTesting.UI
 
     public class ConventionTarget
     {
+        public int Age { get; set; }
+        public string Name { get; set; }
+        public bool Passed { get; set; }
         public string BigName { get; set; }
 
+        public DateTime Now { get; set; }
         public DateTime? NullableNow { get; set; }
+
+        [FakeRequired]
+        public string PropWithFakeReqired { get; set; }
+        public string PropWithNoAttributes { get; set; }
+
+        [FakeMaximumStringLength(25)]
+        public string MaximumLengthProp { get; set; }
     }
 
 
