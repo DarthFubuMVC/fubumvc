@@ -20,7 +20,9 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.StructureMap.Settings;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
+using HtmlTags.Conventions;
 using StructureMap;
 
 namespace FubuMVC.Core
@@ -123,6 +125,8 @@ namespace FubuMVC.Core
                 return routes;
             });
 
+            var library = HtmlConventionCollator.BuildHtmlConventions(graph);
+
             _container.Configure(_ =>
             {
                 _.Policies.OnMissingFamily<SettingPolicy>();
@@ -131,6 +135,7 @@ namespace FubuMVC.Core
                 _.For<IServiceLocator>().Use<StructureMapServiceLocator>();
                 _.For<FubuRuntime>().Use(this);
                 _.For<IServiceFactory>().Use(_factory);
+                _.For<HtmlConventionLibrary>().Use(library);
             });
 
 

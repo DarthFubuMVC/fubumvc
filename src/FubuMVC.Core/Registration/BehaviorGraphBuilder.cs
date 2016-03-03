@@ -12,7 +12,9 @@ using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Core.ServiceBus.Subscriptions;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
+using HtmlTags.Conventions;
 
 namespace FubuMVC.Core.Registration
 {
