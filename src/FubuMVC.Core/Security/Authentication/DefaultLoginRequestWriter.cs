@@ -3,6 +3,7 @@ using FubuCore;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication.Endpoints;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 

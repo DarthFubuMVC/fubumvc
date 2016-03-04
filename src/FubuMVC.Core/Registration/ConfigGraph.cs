@@ -11,6 +11,7 @@ using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Registration;
+using FubuMVC.Core.UI;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
@@ -211,6 +212,7 @@ namespace FubuMVC.Core.Registration
             yield return new SecurityServicesRegistry();
             yield return new HttpStandInServiceRegistry();
             yield return new CoreServiceRegistry(mode);
+            yield return new UIServiceRegistry();
         }
 
         public void BuildLocal(BehaviorGraph graph, IPerfTimer timer)

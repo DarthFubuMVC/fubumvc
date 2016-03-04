@@ -14,9 +14,11 @@ namespace FubuMVC.Core.UI
 
             SetServiceIfNone<IElementNamingConvention, DefaultElementNamingConvention>();
 
-            SetServiceIfNone(typeof (IElementGenerator<>), typeof (ElementGenerator<>));
 
-            SetServiceIfNone(typeof (ITagGenerator<>), typeof (TagGenerator<>));
+
+            For(typeof (IElementGenerator<>)).Use(typeof (ElementGenerator<>));
+            For(typeof(ITagGenerator<>)).Use(typeof(TagGenerator<>));
+
 
             AddService<ITagRequestActivator, ElementRequestActivator>();
             AddService<ITagRequestActivator, ServiceLocatorTagRequestActivator>();

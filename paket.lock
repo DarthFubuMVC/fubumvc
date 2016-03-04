@@ -11,6 +11,7 @@ NUGET
     Fixie (1.0.0.33)
     Fleck (0.10.0.26)
     FubuCore (2.0.0.311)
+    HtmlTags (2.1.0.183)
     ManagedEsent (1.9.3.2)
     Microsoft.AspNet.Razor (2.0.20715.0)
     Microsoft.AspNet.WebApi.Client (4.0.30506)
@@ -77,7 +78,6 @@ NUGET
       Newtonsoft.Json (>= 5.0.6)
   remote: http://build.fubu-project.org/guestAuth/app/nuget/v1/FeedService.svc
   specs:
-    HtmlTags (3.0.0.187)
     LightningQueues (0.1.0.97)
       FubuCore (>= 1.1.0.256)
       NLog

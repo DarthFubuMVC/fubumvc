@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
@@ -357,7 +358,8 @@ namespace FubuMVC.Core.Projections
 
             write(context, node);
 
-            request.Writer.Write(mimeType, JsonUtil.ToJson(node.Values));
+            var serializer = request.Services.GetInstance<IJsonSerializer>();
+            request.Writer.Write(mimeType, serializer.Serialize(node.Values, false));
         }
 
         public virtual IEnumerable<string> Mimetypes

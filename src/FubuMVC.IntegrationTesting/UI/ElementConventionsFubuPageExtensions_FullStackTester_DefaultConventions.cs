@@ -54,10 +54,10 @@ namespace FubuMVC.IntegrationTesting.UI
         public void label_for_expression()
         {
             execute(page => page.LabelFor(x => x.Name));
-            theResult.ShouldBe("<label for=\"Name\">Name</label>");
+            theResult.ShouldBe("<label for=\"Name\">en-US_Name</label>");
 
             execute(page => page.LabelFor(x => x.MaximumLengthProp));
-            theResult.ShouldBe("<label for=\"MaximumLengthProp\">Maximum Length Prop</label>");
+            theResult.ShouldBe("<label for=\"MaximumLengthProp\">en-US_MaximumLengthProp</label>");
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             execute(page => page.LabelFor<DifferentThing>(x => x.Order));
 
-            theResult.ShouldBe("<label for=\"Order\">Order</label>");
+            theResult.ShouldBe("<label for=\"Order\">en-US_Order</label>");
         }
 
 

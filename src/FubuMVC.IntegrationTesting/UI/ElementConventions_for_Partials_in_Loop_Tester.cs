@@ -24,13 +24,6 @@ namespace FubuMVC.IntegrationTesting.UI
                 "<span id=\"Name\">Item1</span><span id=\"Name\">Item2</span><span id=\"Name\">Item3</span>");
         }
 
-        [Test]
-        public void LabelFor_in_partials_in_a_for_each_loop()
-        {
-            execute(page => page.LabelFor(x => x.Name));
-            theResult.ShouldBe(
-                "<label for=\"Name\">Name</label><label for=\"Name\">Name</label><label for=\"Name\">Name</label>");
-        }
 
         [Test]
         public void InputFor_in_partials_in_a_for_each_loop()
