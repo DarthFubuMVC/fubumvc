@@ -3,6 +3,7 @@ source http://nuget.org/api/v2
 nuget Castle.Core 3.2.1
 nuget Fixie ~> 1.0.0.29
 nuget Fleck 0.10.0.26
+nuget Marten
 nuget Microsoft.AspNet.Razor 2.0.20715.0
 nuget Microsoft.Data.Edm 5.6.0
 nuget Microsoft.Net.Http 2.0.20710.0
