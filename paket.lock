@@ -45,7 +45,7 @@ NUGET
     Newtonsoft.Json (5.0.8)
     NLog (2.1)
     Nowin (0.16.0.0)
-    Npgsql (3.0.5)
+    Npgsql (3.0.3)
     Owin (1.0)
     PowerThreading (20120420.0.0)
     RavenDB.Client (2.5.2750)
