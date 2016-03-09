@@ -1,5 +1,5 @@
-﻿using FubuCore.Util;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
+using Marten;
 
 namespace FubuMVC.Marten
 {
@@ -8,6 +8,13 @@ namespace FubuMVC.Marten
         public void Configure(FubuRegistry registry)
         {
             registry.Services.IncludeRegistry<MartenStructureMapServices>();
+
+            if (registry.Mode.InDevelopment())
+            {
+                registry.Services.For<IMartenSessionLogger>().Use<CommandRecordingLogger>();
+            }
+
+
         }
     }
 }

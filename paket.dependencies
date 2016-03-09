@@ -3,7 +3,7 @@ source http://nuget.org/api/v2
 nuget Castle.Core 3.2.1
 nuget Fixie ~> 1.0.0.29
 nuget Fleck 0.10.0.26
-nuget Marten
+nuget Marten 0.8.0.132
 nuget Microsoft.AspNet.Razor 2.0.20715.0
 nuget Microsoft.Data.Edm 5.6.0
 nuget Microsoft.Net.Http 2.0.20710.0
@@ -21,7 +21,7 @@ nuget RavenDB.Embedded 2.5.2750
 nuget RhinoMocks 3.6.1
 nuget Shouldly ~> 2.5.0
 nuget Spark 1.7.5.0
-nuget structuremap 4.0.0.272-alpha prerelease
+nuget structuremap 4.1.0.361
 nuget Storyteller 3.0.0.325-rc
 nuget System.Spatial 5.6.0.0
 nuget WindowsAzure.Storage 3.0.1.0

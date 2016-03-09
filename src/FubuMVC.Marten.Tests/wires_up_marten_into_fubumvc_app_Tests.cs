@@ -15,7 +15,7 @@ namespace FubuMVC.Marten.Tests
             AlterSettings<StoreOptions>(_ =>
             {
                 _.Connection(ConnectionSource.GetConnectionString());
-                _.AutoCreateSchemaObjects = true;
+                _.AutoCreateSchemaObjects = AutoCreate.All;
             });
 
             //Policies.Local.Add<TransactionalBehaviorPolicy>();
@@ -25,6 +25,12 @@ namespace FubuMVC.Marten.Tests
     [TestFixture]
     public class wires_up_marten_into_fubumvc_app_Tests
     {
+        [Test, Explicit]
+        public void set_up_connection_string()
+        {
+            ConnectionSource.SetConnectionString("Host=localhost;Username=postgres;Password=jasper;Database=marten_test");
+        }
+
         [Test]
         public void should_wire_up_document_store_into_application()
         {
@@ -39,6 +45,37 @@ namespace FubuMVC.Marten.Tests
                     session.SaveChanges();
                     session.Query<User>().Count().ShouldBe(3);
                 }
+            }
+        }
+
+        [Test]
+        public void command_logging_in_prod_mode()
+        {
+
+            using (var runtime = FubuRuntime.For<MartenApp>())
+            {
+                runtime.Get<IMartenSessionLogger>().ShouldBeOfType<NulloMartenLogger>();
+
+                runtime.Get<IDocumentSession>().Logger.ShouldNotBeOfType<CommandRecordingLogger>();
+                runtime.Get<IQuerySession>().Logger.ShouldNotBeOfType<CommandRecordingLogger>();
+
+
+            }
+        }
+
+        [Test]
+        public void command_logging_in_dev_mode()
+        {
+            var app = new MartenApp {Mode = "Development"};
+
+            using (var runtime = app.ToRuntime())
+            {
+                runtime.Get<IMartenSessionLogger>().ShouldBeOfType<CommandRecordingLogger>();
+
+                runtime.Get<IDocumentSession>().Logger.ShouldBeOfType<CommandRecordingLogger>();
+                runtime.Get<IQuerySession>().Logger.ShouldBeOfType<CommandRecordingLogger>();
+
+
             }
         }
 

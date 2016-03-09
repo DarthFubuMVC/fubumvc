@@ -7,12 +7,14 @@ namespace FubuMVC.Marten
     public class SessionBoundary : ISessionBoundary
     {
         private readonly IDocumentStore _store;
+        private readonly IMartenSessionLogger _logger;
 
         private Lazy<IDocumentSession> _session;
 
-        public SessionBoundary(IDocumentStore store)
+        public SessionBoundary(IDocumentStore store, IMartenSessionLogger logger)
         {
             _store = store;
+            _logger = logger;
 
             reset();
         }
@@ -58,7 +60,13 @@ namespace FubuMVC.Marten
         private void reset()
         {
             WithOpenSession(s => s.Dispose());
-            _session = new Lazy<IDocumentSession>(() => _store.OpenSession());
+            _session = new Lazy<IDocumentSession>(() =>
+            {
+                var s = _store.OpenSession();
+                s.Logger = _logger;
+
+                return s;
+            });
         }
     }
 }
