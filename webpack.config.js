@@ -2,7 +2,8 @@
 module.exports = {
   entry: {
     "root": './javascript/root.jsx',
-	"lq": './javascript/lightning-queues.jsx'
+	  "lq": './javascript/lightning-queues.jsx',
+    "marten": './javascript/marten.jsx'
   },
   output: {
     path: __dirname + '/src/DiagnosticsHarness/fubu-diagnostics',

@@ -45,6 +45,7 @@
     </Compile>
     <Compile Include="CompleteReset.cs" />
     <Compile Include="ContainerExtensions.cs" />
+    <Compile Include="Diagnostics\MartenSessionFubuDiagnostics.cs" />
     <Compile Include="ICompleteReset.cs" />
     <Compile Include="IInitialState.cs" />
     <Compile Include="IPersistenceReset.cs" />
@@ -76,6 +77,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\DiagnosticsHarness\fubu-diagnostics\marten.js">
+      <Link>fubu-diagnostics\marten.js</Link>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="FubuCore">
       <HintPath>..\..\packages\FubuCore\lib\FubuCore.dll</HintPath>

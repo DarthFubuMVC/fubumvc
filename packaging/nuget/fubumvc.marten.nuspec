@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC.Marten</id>
+    <version>0.0.0</version>
+    <authors>Jeremy D. Miller</authors>
+    <owners>Jeremy D. Miller</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubutransportation/raw/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/DarthFubuMVC/FubuMVC</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Integrates Marten into FubuMVC 3 applications</description>
+    <tags>fubumvc service bus</tags>
+    <dependencies>
+      <dependency id="FubuMVC.Core" version="3.0" />
+      <dependency id="Marten" version="0.8" />
+    </dependencies>
+  </metadata>
+  <files xmlns="">
+    <file src="..\..\src\FubuMVC.Marten\bin\release\FubuMVC.Marten.dll" target="lib\4.5" />
+    <file src="..\..\src\FubuMVC.Marten\bin\release\FubuMVC.Marten.pdb" target="lib\4.5" />
+  </files>
+</package>
