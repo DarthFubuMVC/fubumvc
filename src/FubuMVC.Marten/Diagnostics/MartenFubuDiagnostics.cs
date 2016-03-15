@@ -7,11 +7,11 @@ using FubuMVC.Core.Diagnostics.Instrumentation;
 
 namespace FubuMVC.Marten.Diagnostics
 {
-    public class MartenSessionFubuDiagnostics
+    public class MartenFubuDiagnostics
     {
         private readonly IChainExecutionHistory _history;
 
-        public MartenSessionFubuDiagnostics(IChainExecutionHistory history)
+        public MartenFubuDiagnostics(IChainExecutionHistory history)
         {
             _history = history;
         }

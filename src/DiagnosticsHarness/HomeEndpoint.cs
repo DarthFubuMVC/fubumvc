@@ -80,7 +80,7 @@ namespace DiagnosticsHarness
 
         public FubuContinuation get_requests()
         {
-            
+            /*
             _serviceBus.Send(new NumberMessage{Value = 1});
             _serviceBus.Send(new NumberMessage{Value = 2});
             _serviceBus.Send(new NumberMessage{Value = 3});
@@ -90,10 +90,11 @@ namespace DiagnosticsHarness
             _serviceBus.Send(new NumberMessage{Value = 7});
             _serviceBus.Send(new NumberMessage{Value = 8});
             _serviceBus.Send(new NumberMessage{Value = 9});
-
+            */
             runRequests();
             runRequests();
             runRequests();
+            
             runRequests();
             runRequests();
             runRequests();
@@ -104,6 +105,7 @@ namespace DiagnosticsHarness
 
         private void runRequests()
         {
+            /*
             _runtime.Scenario(_ => _.Get.Url("hello"));
             _runtime.Scenario(_ =>
             {
@@ -116,14 +118,26 @@ namespace DiagnosticsHarness
                 _.Get.Url("redirects");
                 _.StatusCodeShouldBe(302);
             });
+            */
 
 
-            _runtime.Scenario(_ => { _.Post.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
+            //_runtime.Scenario(_ => { _.Post.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
+
+            
+            //_runtime.Scenario(_ => { _.Delete.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
+
+            //_runtime.Scenario(_ => { _.Put.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
+            
 
 
-            _runtime.Scenario(_ => { _.Delete.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
+            writeMartenData();
+        }
 
-            _runtime.Scenario(_ => { _.Put.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*"); });
+        private void writeMartenData()
+        {
+            _runtime.Scenario(_ => { _.Post.Action<MartenEndpoint>(x => x.post_marten_writes()); });
+
+            _runtime.Scenario(_ => { _.Get.Action<MartenEndpoint>(x => x.get_marten_reads()); });
         }
     }
 }

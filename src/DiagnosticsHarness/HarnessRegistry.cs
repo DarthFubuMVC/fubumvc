@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
+using Marten;
 
 namespace DiagnosticsHarness
 {
@@ -34,6 +35,11 @@ namespace DiagnosticsHarness
                 .DefaultSerializer<XmlMessageSerializer>();
 
             Polling.RunJob<SampleJob>().ScheduledAtInterval<HarnessSettings>(x => x.SampleJobTime).RunImmediately();
+
+            AlterSettings<StoreOptions>(_ =>
+            {
+                _.Connection("Host=localhost;Username=postgres;Password=jasper;Database=marten_test");
+            });
         }
     }
 

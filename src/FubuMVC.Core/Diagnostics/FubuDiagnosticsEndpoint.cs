@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using FubuCore;
@@ -70,9 +71,10 @@ namespace FubuMVC.Core.Diagnostics
 
             if (_runtime.Mode.InDiagnostics())
             {
-                var names = _scripts.Union(extensionFiles.Select(x => x.Name));
+                var names = _scripts.Union(extensionFiles.Select(x => x.Name.Split('.').Reverse().Take(2).Reverse().Join(".")));
                 var links = _tags.BuildScriptTags(names.Select(x => "fubu-diagnostics/" + x));
                 links.Each(x => foot.Append(x));
+
             }
             else
             {

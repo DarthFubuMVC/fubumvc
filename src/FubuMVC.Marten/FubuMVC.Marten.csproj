@@ -45,7 +45,7 @@
     </Compile>
     <Compile Include="CompleteReset.cs" />
     <Compile Include="ContainerExtensions.cs" />
-    <Compile Include="Diagnostics\MartenSessionFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\MartenFubuDiagnostics.cs" />
     <Compile Include="ICompleteReset.cs" />
     <Compile Include="IInitialState.cs" />
     <Compile Include="IPersistenceReset.cs" />

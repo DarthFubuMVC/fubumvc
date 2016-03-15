@@ -50,6 +50,7 @@
     <Compile Include="HomeEndpoint.cs" />
     <Compile Include="HomeModel.cs" />
     <Compile Include="INumberCache.cs" />
+    <Compile Include="MartenEndpoint.cs" />
     <Compile Include="NumberCache.cs" />
     <Compile Include="NumberHandler.cs" />
     <Compile Include="NumberMessage.cs" />
@@ -106,6 +107,13 @@
       <Private>True</Private>
       <Paket>True</Paket>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fubu-diagnostics\jquery.min.js" />
+    <Content Include="fubu-diagnostics\lq.js" />
+    <Content Include="fubu-diagnostics\marten.js" />
+    <Content Include="fubu-diagnostics\root.js" />
+    <Content Include="fubu-diagnostics\typeahead.bundle.min.js" />
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">

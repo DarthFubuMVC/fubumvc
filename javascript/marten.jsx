@@ -9,7 +9,7 @@ var MartenSessions = React.createClass({
 	},
 
 	componentDidMount: function(){
-		FubuDiagnostics.get('LightningQueues:queues', {}, data => {
+		FubuDiagnostics.get('Marten:sessions', {}, data => {
 			this.setState({sessions: data, loading: false});
 		});
 	},
@@ -28,8 +28,9 @@ var MartenSessions = React.createClass({
 			return (
 				<tr>
 					<td><a href={chainUrl}>{session.chain}</a></td>
+					<td style={{textAlign: 'right'}}>{session.execution_time}</td>
 					<td><a href={requestUrl}>{session.time}</a></td>
-					<td style={{align: 'right'}}><a href={sessionUrl}>{session.request_count}</a></td>
+					<td style={{textAlign: 'right'}}><a href={sessionUrl}>{session.request_count}</a></td>
 				</tr>
 			);
 		});
@@ -39,6 +40,7 @@ var MartenSessions = React.createClass({
 				<thead>
 					<tr>
 						<th>Chain</th>
+						<th style={{align: 'right'}}>Execution Time (ms)</th>
 						<th>Time (Local)</th>
 						<th style={{align: 'right'}}>Command Count</th>
 					</tr>
@@ -125,7 +127,11 @@ var MartenSession = React.createClass({
 FubuDiagnostics.addSection({
 	title: 'Marten',
 	description: 'Information about Marten Activity',
-	key: 'marten',
+	key: 'marten'
+}).add({
+	title: 'Marten Sessions',
+	description: 'Marten Request Count per Session',
+	key: 'sessions',
 	component: MartenSessions
 }).add({
 	title: 'Session Details',

@@ -215,7 +215,11 @@ var MessageDetails = React.createClass({
 FubuDiagnostics.addSection({
 	title: 'LightningQueues',
 	description: 'The active LightningQueues queues in this application',
-	key: 'lq',
+	key: 'lq'
+}).add({
+	title: 'LightningQueues',
+	description: 'The active LightningQueues queues in this application',
+	key: 'summary',
 	component: AllQueues
 }).add({
 	title: 'Queue Messages',
