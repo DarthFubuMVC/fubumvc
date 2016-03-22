@@ -134,6 +134,18 @@
     <Compile Include="Runtime\Files\IChangeSetHandler.cs" />
     <Compile Include="Runtime\Files\TrackedSet.cs" />
     <Compile Include="Security\Authentication\DefaultLoginRequestWriter.cs" />
+    <Compile Include="Security\Authentication\Windows\ApplyWindowsAuthentication.cs" />
+    <Compile Include="Security\Authentication\Windows\AspNetWindowsAuthenticationContext.cs" />
+    <Compile Include="Security\Authentication\Windows\DefaultWindowsPrincipalHandler.cs" />
+    <Compile Include="Security\Authentication\Windows\IWindowsAuthentication.cs" />
+    <Compile Include="Security\Authentication\Windows\IWindowsAuthenticationContext.cs" />
+    <Compile Include="Security\Authentication\Windows\IWindowsPrincipalHandler.cs" />
+    <Compile Include="Security\Authentication\Windows\SuccessfulWindowsAuthentication.cs" />
+    <Compile Include="Security\Authentication\Windows\WindowsActionSource.cs" />
+    <Compile Include="Security\Authentication\Windows\WindowsAuthentication.cs" />
+    <Compile Include="Security\Authentication\Windows\WindowsAuthenticationServiceRegistry.cs" />
+    <Compile Include="Security\Authentication\Windows\WindowsController.cs" />
+    <Compile Include="Security\Authentication\Windows\WindowsSignInRequest.cs" />
     <Compile Include="Security\Authorization\MustBeAuthenticated.cs" />
     <Compile Include="Security\Authorization\RequireRole.cs" />
     <Compile Include="ServerSentEvents\AspNetShutDownDetector.cs" />
@@ -1250,7 +1262,6 @@
       <Paket>True</Paket>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>

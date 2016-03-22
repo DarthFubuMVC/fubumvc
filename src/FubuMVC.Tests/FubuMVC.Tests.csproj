@@ -166,6 +166,11 @@
     <Compile Include="Runtime\Files\ChangeSetTester.cs" />
     <Compile Include="Runtime\Files\StubFubuFile.cs" />
     <Compile Include="Runtime\Files\TrackedSetTester.cs" />
+    <Compile Include="Security\Authentication\Windows\DefaultWindowsPrincipalHandlerTester.cs" />
+    <Compile Include="Security\Authentication\Windows\setup_with_windows_authentication.cs" />
+    <Compile Include="Security\Authentication\Windows\WindowsAuthenticationTester.cs" />
+    <Compile Include="Security\Authentication\Windows\WindowsControllerTester.cs" />
+    <Compile Include="Security\Authentication\Windows\WindowsSignInRequestTester.cs" />
     <Compile Include="Security\Authorization\RequireRoleTester.cs" />
     <Compile Include="ServerSentEvents\ChannelTester.cs" />
     <Compile Include="ServerSentEvents\ChannelWriterTester.cs" />
