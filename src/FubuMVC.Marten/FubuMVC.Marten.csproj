@@ -55,6 +55,14 @@
     <Compile Include="MartenExtension.cs" />
     <Compile Include="MartenPersistenceReset.cs" />
     <Compile Include="MartenStructureMapServices.cs" />
+    <Compile Include="Membership\Audit.cs" />
+    <Compile Include="Membership\Entity.cs" />
+    <Compile Include="Membership\LoginAuditPersistor.cs" />
+    <Compile Include="Membership\LoginFailureHistory.cs" />
+    <Compile Include="Membership\MembershipRepository.cs" />
+    <Compile Include="Membership\PersistedLoginAuditor.cs" />
+    <Compile Include="Membership\PersistedMembership.cs" />
+    <Compile Include="Membership\User.cs" />
     <Compile Include="NulloInitialState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResetMessage.cs" />

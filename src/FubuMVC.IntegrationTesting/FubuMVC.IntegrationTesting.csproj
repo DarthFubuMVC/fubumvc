@@ -88,6 +88,8 @@
     <Compile Include="Diagnostics\end_to_end_execution_log_tracing_for_http_requests.cs" />
     <Compile Include="Diagnostics\serving_up_embedded_diagnostic_assets.cs" />
     <Compile Include="DifferentInput.cs" />
+    <Compile Include="Downloads\DownloadFileConventionIntegratedTester.cs" />
+    <Compile Include="Downloads\DownloadTestController.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
     <Compile Include="FixieConvention.cs" />
     <Compile Include="Fixtures\LockedOutLogicFixture.cs" />
