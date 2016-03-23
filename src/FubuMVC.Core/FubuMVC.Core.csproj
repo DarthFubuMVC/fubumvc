@@ -759,7 +759,6 @@
     <Compile Include="UI\FubuPageFormExtensions.cs" />
     <Compile Include="UI\HtmlConventionCollator.cs" />
     <Compile Include="UI\HtmlConventionRegistry.cs" />
-    <Compile Include="UI\HtmlTagExtensions.cs" />
     <Compile Include="UI\LabelBuilder.cs" />
     <Compile Include="UI\ProfileExpression.cs" />
     <Compile Include="UI\Security\AccessRight.cs" />
