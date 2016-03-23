@@ -5,6 +5,8 @@ using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Http.Hosting;
+using FubuMVC.RavenDb.InMemory;
+using FubuMVC.RavenDb.MultiTenancy;
 using FubuMVC.RavenDb.RavenDb;
 using NUnit.Framework;
 using Raven.Client;
@@ -20,6 +22,8 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
         public void posts_are_committed()
         {
             var container = new Container(new RavenDbRegistry());
+            container.Configure(x => x.For<ITenantContext>().Use<NulloTenantContext>());
+
             container.Inject(new RavenDbSettings{RunInMemory = true});
 
             using (var application = FubuRuntime.For<NamedEntityRegistry>(_ =>

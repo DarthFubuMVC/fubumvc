@@ -14,7 +14,7 @@ namespace FubuMVC.RavenDb.InMemory
             // This acts as "SetServiceIfNone"
             For<ISystemTime>().UseIfNone(() => SystemTime.Default());
             For<IInitialState>().Add<NulloInitialState>();
-            For<ITenantContext>().Add<NulloTenantContext>();
+            For<ITenantContext>().UseIfNone<NulloTenantContext>();
 
             // It's important that these are in this order
             For<IEntityStoragePolicy>().Add<ByTenantStoragePolicy>();
