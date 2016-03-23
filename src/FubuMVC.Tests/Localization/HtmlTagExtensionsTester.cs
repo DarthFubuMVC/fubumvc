@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core.Localization;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.View;
 using Shouldly;
 using HtmlTags;
 using NUnit.Framework;

@@ -5,6 +5,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
 using HtmlTags;
 
 namespace FubuMVC.Core.Security.Authentication
