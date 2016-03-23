@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<samlp:Response Destination="https://qa2.online.com/qa2/sso/saml" ID="A5092bc640a235880200023f80002aa33" IssueInstant="2012-11-01T18:16:04Z" Version="2.0" xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol">
+ <saml:Issuer xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">urn:idp:fakecompany:nbpartgenoutbds20:uat</saml:Issuer>
+ <samlp:Status xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol">
+  <samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success" xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"/>
+ </samlp:Status>
+ <saml:Assertion ID="A5092bc640a235880200023f80001aa33" IssueInstant="2012-11-01T18:16:04Z" Version="2.0" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+  <saml:Issuer xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">urn:idp:fakecompany:nbpartgenoutbds20:uat</saml:Issuer>
+  <dsig:Signature xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+   <dsig:SignedInfo>
+    <dsig:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+    <dsig:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+    <dsig:Reference URI="#A5092bc640a235880200023f80001aa33">
+     <dsig:Transforms>
+      <dsig:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+      <dsig:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+     </dsig:Transforms>
+     <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+     <dsig:DigestValue>u7qV24NzNKNylFopTuOLtxtERXE=</dsig:DigestValue>
+    </dsig:Reference>
+   </dsig:SignedInfo>
+   <dsig:SignatureValue>PBbRZPrV+DCcf27wJy4GnwkXKKS1i4fvOkoURqzfaRRZs0lSgGBnTdWdDrg7qUcKMv/Gr2a4nqvk2Drnw8/RHry4a69U2wFfvr2t9Ozb3qS4eQX2njv83Oy24voy9DyeLv4CUwRQgYgF3tmoruAOzEA7ZYyCbeDvD+SyRMj97O2FrRme3U69jaf35Y1sgYGDU6ELfWT9ansaLYvMuU7mJp2SSNOv76QJN1qLLfmuOZMtR3qDyLwUunpWXJxBKui1p/h2McRoM2QCTodeWrs3zilBBuyiedGDqcsuawvLJ5LeWoteCKGA/YjYr7tlmV0OGnXhBnhLqeyxAuWb6EO+Yw==</dsig:SignatureValue>
+   <dsig:KeyInfo>
+    <dsig:X509Data>
+     <dsig:X509Certificate>MIIFVTCCBD2gAwIBAgIQQHTa0Xj8yQTuFvvrZcTuMzANBgkqhkiG9w0BAQUFADCBtTELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZlcmlTaWduLCBJbmMuMR8wHQYDVQQLExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2UgYXQgaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykxMDEvMC0GA1UEAxMmVmVyaVNpZ24gQ2xhc3MgMyBTZWN1cmUgU2VydmVyIENBIC0gRzMwHhcNMTIwODE3MDAwMDAwWhcNMTMwODE4MjM1OTU5WjCBijELMAkGA1UEBhMCVVMxFjAUBgNVBAgTDU1hc3NhY2h1c2V0dHMxDzANBgNVBAcUBkJvc3RvbjEdMBsGA1UEChQURmlkZWxpdHkgSW52ZXN0bWVudHMxEDAOBgNVBAsUB1BXSSBPUFMxITAfBgNVBAMUGHNhbWxzc28teHFhLmZpZGVsaXR5LmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJlg65XETv8nkTNPAoEoTw9Nnsz+2EJcywDXvtEx+zQ6Lhmcb9Sm0/MT+/A0RpVZ32ex+8JNQ83K36sqSClebYAaNsuCviSKuatcqSQUEmw3Y5mMxKgGReTfo5qv/x9s96vXq5jtcsX5oLQZprYU5yqqI21eJRQSh4HlgdVdlPpCUdFqdw1AWCWR1Hfq56QBnxuu7X/CMIK4Tk73ppyVC7cTEswSRz+5/znsmHfmereQ/GM469qsxU9NpZKusp0VZfhK08rEc+Gh+3q2dzzYKrBHd/XGnQsZYykbJ9tE4nCFqqPVN/siLuqSyvv+ayyOtB3GRr5aur5FT6n3ezOg3sECAwEAAaOCAYgwggGEMCMGA1UdEQQcMBqCGHNhbWxzc28teHFhLmZpZGVsaXR5LmNvbTAJBgNVHRMEAjAAMA4GA1UdDwEB/wQEAwIFoDBFBgNVHR8EPjA8MDqgOKA2hjRodHRwOi8vU1ZSU2VjdXJlLUczLWNybC52ZXJpc2lnbi5jb20vU1ZSU2VjdXJlRzMuY3JsMEMGA1UdIAQ8MDowOAYKYIZIAYb4RQEHNjAqMCgGCCsGAQUFBwIBFhxodHRwczovL3d3dy52ZXJpc2lnbi5jb20vY3BzMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBQNRFwWU0TBgn4dIKsl9AFj2L55pTB2BggrBgEFBQcBAQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLnZlcmlzaWduLmNvbTBABggrBgEFBQcwAoY0aHR0cDovL1NWUlNlY3VyZS1HMy1haWEudmVyaXNpZ24uY29tL1NWUlNlY3VyZUczLmNlcjANBgkqhkiG9w0BAQUFAAOCAQEAcAtfdy2ZPOfF1IXK+txdjkFQg8k8VdI57goX6HgblDMezwz4bYFuBhCPBuBYE+39DETC/zxmPGpzQCyuWUZNNKMueisGjeFVxcHWnekBLBeEW6QuJoB+WOo4FZ9f7HDSUrgjRtV2/RXmnsSEkrBaBCS17YD16+W8anti2cuymvWlEPWCFUkkteIgDSVaXLHWaTICYB7r7LwH8lpyS8EMMmW6ExCzs2G+hfBw/ts9SljzqLdo49zfKYmQgB0atVzkRhVsKI4rEjgAak1Wzy+u3bEmG3XnHvdRLQWSRXENjGp9CgHZyldlYPFd+TMDDaabwI8Im6E/ieZp2j+kkvQ5pQ==</dsig:X509Certificate>
+     <dsig:X509IssuerSerial>
+      <dsig:X509IssuerName>CN=VeriSign Class 3 Secure Server CA - G3,OU=Terms of use at https://www.verisign.com/rpa (c)10,OU=VeriSign Trust Network,O=VeriSign\, Inc.,C=US</dsig:X509IssuerName>
+      <dsig:X509SerialNumber>85677336327248017187862671695081172531</dsig:X509SerialNumber>
+     </dsig:X509IssuerSerial>
+     <dsig:X509SubjectName>CN=samlsso-xqa.company.com,OU=PWI OPS,O=Company,L=Boston,ST=Massachusetts,C=US</dsig:X509SubjectName>
+    </dsig:X509Data>
+   </dsig:KeyInfo>
+  </dsig:Signature>
+  <saml:Subject xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+   <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" NameQualifier="urn:idp:fakecompany:nbpartgenoutbds20:uat" SPNameQualifier="https://qa2.online.com/qa2/sso/saml" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">aa50045c6d0a233e7c20003d7d0000aa33</saml:NameID>
+   <saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+    <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified">aa50045c6d0a233e7c20003d7d0000aa33</saml:NameID>
+    <saml:SubjectConfirmationData NotOnOrAfter="2012-11-01T18:19:04Z" Recipient="https://qa2.online.com/qa2/sso/saml" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"/>
+   </saml:SubjectConfirmation>
+  </saml:Subject>
+  <saml:Conditions NotBefore="2012-11-01T18:13:04Z" NotOnOrAfter="2012-11-01T18:19:04Z" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+   <saml:AudienceRestriction xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+    <saml:Audience>https://qa2.online.com/qa2/sso/saml</saml:Audience>
+   </saml:AudienceRestriction>
+  </saml:Conditions>
+  <saml:AuthnStatement AuthnInstant="2012-11-01T18:15:47Z" SessionIndex="21171a497ffc16b87b8179afd5f9b69fc3f8cd8c" SessionNotOnOrAfter="2012-11-02T04:15:47Z" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+   <saml:AuthnContext xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+    <saml:AuthnContextDeclRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml:AuthnContextDeclRef>
+    <saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</saml:AuthnContextClassRef>
+   </saml:AuthnContext>
+  </saml:AuthnStatement>
+  <saml:AttributeStatement xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+   <saml:Attribute Name="ClientId" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <saml:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">000012345</saml:AttributeValue>
+   </saml:Attribute>
+   <saml:Attribute Name="CustomerId" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <saml:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">001010111</saml:AttributeValue>
+   </saml:Attribute>
+  </saml:AttributeStatement>
+ </saml:Assertion>
+</samlp:Response>
+

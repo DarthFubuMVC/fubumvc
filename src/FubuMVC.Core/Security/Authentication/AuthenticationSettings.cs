@@ -5,6 +5,8 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.Security.Authentication.Membership;
+using FubuMVC.Core.Security.Authentication.Saml2;
+using FubuMVC.Core.Security.Authentication.Saml2.Validation;
 using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core.Security.Authentication
@@ -25,6 +27,8 @@ namespace FubuMVC.Core.Security.Authentication
 
             _strategies = new AuthenticationChain();
         }
+
+        public Saml Saml2 { get; set; } = new Saml();
 
 
         public bool ExcludeDiagnostics { get; set; }
@@ -97,14 +101,56 @@ namespace FubuMVC.Core.Security.Authentication
                 }
             }
 
+            if (Saml2.Enabled)
+            {
+                Strategies.InsertFirst(new AuthenticationNode(typeof(SamlAuthenticationStrategy)));
+                registry.Services.IncludeRegistry<Saml2ServicesRegistry>();
+
+
+                if (Saml2.RequireSignature)
+                {
+                    registry.Services.AddService<ISamlValidationRule, SignatureIsRequired>();
+                }
+
+                if (Saml2.RequireCertificate)
+                {
+                    registry.Services.AddService<ISamlValidationRule, CertificateValidation>();
+                }
+
+                if (Saml2.EnforceConditionalTimeSpan)
+                {
+                    registry.Services.AddService<ISamlValidationRule, ConditionTimeFrame>();
+                }
+            }
+
             foreach (IContainerModel strategy in Strategies)
             {
                 var instance = strategy.ToInstance();
 
                 registry.Services.AddService(typeof (IAuthenticationStrategy), instance);
             }
+
+
+        }
+
+        public class Saml
+        {
+            public Saml()
+            {
+                RequireCertificate = true;
+                RequireSignature = true;
+                EnforceConditionalTimeSpan = true;
+            }
+
+            public bool RequireSignature { get; set; }
+            public bool RequireCertificate { get; set; }
+            public bool EnforceConditionalTimeSpan { get; set; }
+
+            public bool Enabled { get; set; }
         }
     }
+
+
 
     public enum MembershipStatus
     {

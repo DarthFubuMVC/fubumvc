@@ -41,7 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Extensions" />
@@ -162,6 +162,63 @@
     <Compile Include="Runtime\Files\IChangeSetHandler.cs" />
     <Compile Include="Runtime\Files\TrackedSet.cs" />
     <Compile Include="Security\Authentication\DefaultLoginRequestWriter.cs" />
+    <Compile Include="Security\Authentication\Saml2\AudienceRestriction.cs" />
+    <Compile Include="Security\Authentication\Saml2\AuthenticationStatement.cs" />
+    <Compile Include="Security\Authentication\Saml2\BasicSamlResponseHandler.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\BasicSamlCertificateRepository.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\CertificateLoader.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\CertificateService.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\ICertificate.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\ICertificateLoader.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\ICertificateService.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\InMemoryCertificate.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\InMemoryCertificateLoader.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\ISamlCertificateRepository.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\SamlCertificate.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\X509CertificateWrapper.cs" />
+    <Compile Include="Security\Authentication\Saml2\ConditionGroup.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\AssertionXmlDecryptor.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\AssertionXmlEncryptor.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\IAssertionXmlDecryptor.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\IAssertionXmlEncryptor.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\ISamlResponseXmlSigner.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\SamlResponseReader.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\SamlResponseWriter.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\SamlResponseXmlSigner.cs" />
+    <Compile Include="Security\Authentication\Saml2\EnvironmentTestExtensions.cs" />
+    <Compile Include="Security\Authentication\Saml2\ICondition.cs" />
+    <Compile Include="Security\Authentication\Saml2\ISamlDirector.cs" />
+    <Compile Include="Security\Authentication\Saml2\ISamlResponseHandler.cs" />
+    <Compile Include="Security\Authentication\Saml2\ISamlResponseRedirector.cs" />
+    <Compile Include="Security\Authentication\Saml2\NameFormat.cs" />
+    <Compile Include="Security\Authentication\Saml2\Saml2ServicesRegistry.cs" />
+    <Compile Include="Security\Authentication\Saml2\Saml2VerificationActivator.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlAuthenticationStrategy.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlDirector.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlError.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlName.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlNameType.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlResponse.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlResponseRedirectionDocument.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlResponseRedirector.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlResponseSettings.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlStatus.cs" />
+    <Compile Include="Security\Authentication\Saml2\SignatureStatus.cs" />
+    <Compile Include="Security\Authentication\Saml2\Subject.cs" />
+    <Compile Include="Security\Authentication\Saml2\SubjectConfirmation.cs" />
+    <Compile Include="Security\Authentication\Saml2\SubjectConfirmationData.cs" />
+    <Compile Include="Security\Authentication\Saml2\UriEnum.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\AudienceValidationRule.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\CertificateValidation.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\ConditionTimeFrame.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\ISamlValidationRule.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\SamlValidationKeys.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\SignatureIsRequired.cs" />
+    <Compile Include="Security\Authentication\Saml2\Xml\ReadsSamlXml.cs" />
+    <Compile Include="Security\Authentication\Saml2\Xml\SamlBasicExtensions.cs" />
+    <Compile Include="Security\Authentication\Saml2\Xml\SamlResponseXmlReader.cs" />
+    <Compile Include="Security\Authentication\Saml2\Xml\SamlResponseXmlWriter.cs" />
+    <Compile Include="Security\Authentication\Saml2\Xml\XmlElementStack.cs" />
     <Compile Include="Security\Authentication\Windows\ApplyWindowsAuthentication.cs" />
     <Compile Include="Security\Authentication\Windows\AspNetWindowsAuthenticationContext.cs" />
     <Compile Include="Security\Authentication\Windows\DefaultWindowsPrincipalHandler.cs" />
@@ -1290,6 +1347,7 @@
       <Paket>True</Paket>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>

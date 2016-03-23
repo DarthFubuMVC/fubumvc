@@ -45,6 +45,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
@@ -186,6 +187,30 @@
     <Compile Include="Runtime\Files\ChangeSetTester.cs" />
     <Compile Include="Runtime\Files\StubFubuFile.cs" />
     <Compile Include="Runtime\Files\TrackedSetTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\bottle_configuration_integration_tester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\BasicSamlCertificateIssuerRepositoryTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\CertificateLoaderTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\CertificateServiceTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Certificates\SamlCertificateTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\AssertionXmlDecryptorTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Encryption\BigBangRoundTripWritingReadingAndEncryptionIntegratedTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\EnvironmentTestExtensionsTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\ObjectMother.cs" />
+    <Compile Include="Security\Authentication\Saml2\Saml2ServicesRegistry_specification.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlAuthenticationRegistryTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlDirectorTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlErrorTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlNameTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlResponseSettingsTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlResponseTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlResponseValidationRulesRegistrationTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\SamlStatusTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\AudienceValidationRuleTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\CertificateValidationTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\ConditionTimeFrameTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Validation\SignatureIsRequiredTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Xml\SamlResponseXmlReaderTester.cs" />
+    <Compile Include="Security\Authentication\Saml2\Xml\SamlResponseXmlWriterTester.cs" />
     <Compile Include="Security\Authentication\Windows\DefaultWindowsPrincipalHandlerTester.cs" />
     <Compile Include="Security\Authentication\Windows\setup_with_windows_authentication.cs" />
     <Compile Include="Security\Authentication\Windows\WindowsAuthenticationTester.cs" />
@@ -725,6 +750,9 @@
     <Content Include="Runtime\Files\Data\d.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="sample.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="View\FakeViews\Folder1\A.aspx" />
     <Content Include="View\FakeViews\Folder1\ViewModel3.aspx" />
   </ItemGroup>
@@ -735,6 +763,18 @@
     </None>
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="cert1.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="cert2.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="cert2.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="cert2.pvk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="StructureMap\ripple.dependencies.config" />
   </ItemGroup>
