@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
 using FubuMVC.Core.Ajax;
@@ -35,7 +36,8 @@ namespace FubuMVC.Core.Validation.Web.Remote
             return _continuation.Resolve(notification);
         }
     }
-
+    
+    [Description("Remote Validation Rules")]
     public class RemoteRulesSource : IActionSource
     {
         Task<ActionCall[]> IActionSource.FindActions(Assembly applicationAssembly)

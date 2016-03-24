@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
@@ -6,6 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Validation.Web.UI
 {
+    [Description("Validation Summary Endpoint")]
     public class ValidationSummarySource : IActionSource
     {
         public class ValidationSummaryController
