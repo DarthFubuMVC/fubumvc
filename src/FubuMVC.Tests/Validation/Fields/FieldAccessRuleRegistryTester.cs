@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuCore.Util;
-using FubuTestingSupport;
-using FubuValidation.Fields;
-using NUnit.Framework;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuCore.Util;
+using FubuMVC.Core.Validation.Fields;
+using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class when_fetching_rules_for_a_type

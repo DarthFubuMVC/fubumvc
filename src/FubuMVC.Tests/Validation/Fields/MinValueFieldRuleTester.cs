@@ -1,9 +1,10 @@
 using System.Linq;
-using FubuTestingSupport;
-using FubuValidation.Fields;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class MinValueFieldRuleTester
@@ -33,7 +34,7 @@ namespace FubuValidation.Tests.Fields
 		[Test]
 		public void uses_the_default_token()
 		{
-			new MinValueFieldRule(0).Token.ShouldEqual(ValidationKeys.MinValue);
+			new MinValueFieldRule(0).Token.ShouldBe(ValidationKeys.MinValue);
 		}
 
         [Test]
@@ -41,7 +42,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Value = 6;
             var messages = theNotification.MessagesFor<MinValueTarget>(x => x.Value);
-            messages.Single().StringToken.ShouldEqual(ValidationKeys.MinValue);
+            messages.Single().StringToken.ShouldBe(ValidationKeys.MinValue);
         }
 
         [Test]
@@ -63,7 +64,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Value = 7;
             var message = theNotification.MessagesFor<MinValueTarget>(x => x.Value).Single();
-            message.GetMessage().ShouldEqual("Value must be greater than or equal to 10");
+            message.GetMessage().ShouldBe("Value must be greater than or equal to 10");
         }
 
 

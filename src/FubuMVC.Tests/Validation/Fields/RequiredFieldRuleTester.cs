@@ -1,10 +1,11 @@
 using System.Linq;
-using FubuTestingSupport;
-using FubuValidation.Fields;
-using FubuValidation.Tests.Models;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
+using FubuMVC.Tests.Validation.Models;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class RequiredFieldRuleTester
@@ -34,7 +35,7 @@ namespace FubuValidation.Tests.Fields
 		[Test]
 		public void defaults_to_required_key()
 		{
-			new RequiredFieldRule().Token.ShouldEqual(ValidationKeys.Required);
+			new RequiredFieldRule().Token.ShouldBe(ValidationKeys.Required);
 		}
 
         [Test]
@@ -49,14 +50,14 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Address1 = "";
             var messages = theNotification.MessagesFor<AddressModel>(x => x.Address1);
-            messages.Single().StringToken.ShouldEqual(ValidationKeys.Required);
+            messages.Single().StringToken.ShouldBe(ValidationKeys.Required);
         }
 
         [Test]
         public void registers_message_if_value_is_null()
         {
             theTarget.Address1 = null;
-            theNotification.MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldEqual(ValidationKeys.Required);
+            theNotification.MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldBe(ValidationKeys.Required);
         }
     }
 }

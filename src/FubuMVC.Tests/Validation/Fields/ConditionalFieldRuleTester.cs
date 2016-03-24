@@ -1,11 +1,10 @@
-using System.Diagnostics;
-using FubuCore.Descriptions;
 using FubuCore.Reflection;
-using FubuValidation.Fields;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class ConditionalFieldRuleTester

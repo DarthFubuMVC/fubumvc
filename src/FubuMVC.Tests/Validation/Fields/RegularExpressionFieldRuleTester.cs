@@ -1,9 +1,10 @@
 ﻿using System.Linq;
-using FubuTestingSupport;
-using FubuValidation.Fields;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
 	[TestFixture]
 	public class RegularExpressionFieldRuleTester
@@ -33,7 +34,7 @@ namespace FubuValidation.Tests.Fields
 		[Test]
 		public void uses_the_default_token()
 		{
-			new RegularExpressionFieldRule("[a-zA-Z0-9]+$").Token.ShouldEqual(ValidationKeys.RegEx);
+			new RegularExpressionFieldRule("[a-zA-Z0-9]+$").Token.ShouldBe(ValidationKeys.RegEx);
 		}
 
 		[Test]
@@ -41,7 +42,7 @@ namespace FubuValidation.Tests.Fields
 		{
 			theTarget.Value = "hello//";
 			var messages = theNotification.MessagesFor<RegExTarget>(x => x.Value);
-			messages.Single().StringToken.ShouldEqual(ValidationKeys.RegEx);
+			messages.Single().StringToken.ShouldBe(ValidationKeys.RegEx);
 		}
 
 		[Test]

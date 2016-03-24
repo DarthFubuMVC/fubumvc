@@ -1,9 +1,10 @@
 using System.Linq;
-using FubuTestingSupport;
-using FubuValidation.Fields;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class EmailFieldRuleTester
@@ -33,7 +34,7 @@ namespace FubuValidation.Tests.Fields
         [Test]
         public void default_token_is_email_key()
         {
-            new EmailFieldRule().Token.ShouldEqual(ValidationKeys.Email);
+            new EmailFieldRule().Token.ShouldBe(ValidationKeys.Email);
         }
 
         [Test]
@@ -51,7 +52,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Email = "something";
             var messages = theNotification.MessagesFor<EmailTarget>(x => x.Email);
-            messages.Single().StringToken.ShouldEqual(ValidationKeys.Email);
+            messages.Single().StringToken.ShouldBe(ValidationKeys.Email);
         }
 
         [Test]

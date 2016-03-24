@@ -1,9 +1,10 @@
 ﻿using System.Linq;
-using FubuTestingSupport;
-using FubuValidation.Fields;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class MaxValueFieldRuleTester
@@ -33,7 +34,7 @@ namespace FubuValidation.Tests.Fields
 		[Test]
 		public void uses_the_default_token()
 		{
-			new MaxValueFieldRule(0).Token.ShouldEqual(ValidationKeys.MaxValue);
+			new MaxValueFieldRule(0).Token.ShouldBe(ValidationKeys.MaxValue);
 		}
 
         [Test]
@@ -41,7 +42,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Value = 6;
             var messages = theNotification.MessagesFor<MaxValueTarget>(x => x.Value);
-            messages.Single().StringToken.ShouldEqual(ValidationKeys.MaxValue);
+            messages.Single().StringToken.ShouldBe(ValidationKeys.MaxValue);
         }
 
         [Test]
@@ -63,7 +64,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Value = 7;
             var message = theNotification.MessagesFor<MaxValueTarget>(x => x.Value).Single();
-            message.GetMessage().ShouldEqual("Value must be less than or equal to 5");
+            message.GetMessage().ShouldBe("Value must be less than or equal to 5");
         }
 
 

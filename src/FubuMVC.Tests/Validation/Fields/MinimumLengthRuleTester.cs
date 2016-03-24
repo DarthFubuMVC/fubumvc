@@ -1,10 +1,11 @@
 using System.Linq;
-using FubuTestingSupport;
-using FubuValidation.Fields;
-using FubuValidation.Tests.Models;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
+using FubuMVC.Tests.Validation.Models;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class MinimumLengthRuleTester
@@ -34,7 +35,7 @@ namespace FubuValidation.Tests.Fields
 		[Test]
 		public void uses_the_default_token()
 		{
-			new MinimumLengthRule(0).Token.ShouldEqual(ValidationKeys.MinLength);
+			new MinimumLengthRule(0).Token.ShouldBe(ValidationKeys.MinLength);
 		}
 
         [Test]
@@ -49,7 +50,7 @@ namespace FubuValidation.Tests.Fields
         {
             theModel.Address1 = "Inva";
             var theMessage = theNotification.MessagesFor<AddressModel>(x => x.Address1).Single();
-            theMessage.GetMessage().ShouldEqual("Minimum length not met. Must be greater than or equal to 5");
+            theMessage.GetMessage().ShouldBe("Minimum length not met. Must be greater than or equal to 5");
         }
 
         [Test]

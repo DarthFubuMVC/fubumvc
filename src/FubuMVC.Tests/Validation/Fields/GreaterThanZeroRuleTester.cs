@@ -1,10 +1,11 @@
-using FubuTestingSupport;
-using FubuValidation.Fields;
-using FubuValidation.Tests.Models;
-using NUnit.Framework;
 using System.Linq;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
+using FubuMVC.Tests.Validation.Models;
+using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class GreaterThanZeroRuleTester
@@ -22,7 +23,7 @@ namespace FubuValidation.Tests.Fields
 		[Test]
 		public void uses_the_default_token()
 		{
-			theRule.Token.ShouldEqual(ValidationKeys.GreaterThanZero);
+			theRule.Token.ShouldBe(ValidationKeys.GreaterThanZero);
 		}
 
         [Test]

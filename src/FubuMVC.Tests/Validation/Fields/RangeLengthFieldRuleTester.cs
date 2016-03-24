@@ -1,9 +1,10 @@
 using System.Linq;
-using FubuTestingSupport;
-using FubuValidation.Fields;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class RangeLengthFieldRuleTester
@@ -33,7 +34,7 @@ namespace FubuValidation.Tests.Fields
 		[Test]
 		public void uses_the_default_token()
 		{
-			new RangeLengthFieldRule(0, 0).Token.ShouldEqual(ValidationKeys.RangeLength);
+			new RangeLengthFieldRule(0, 0).Token.ShouldBe(ValidationKeys.RangeLength);
 		}
 
         [Test]
@@ -41,7 +42,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Value = "1234";
             var messages = theNotification.MessagesFor<RangeLengthTarget>(x => x.Value);
-            messages.Single().StringToken.ShouldEqual(ValidationKeys.RangeLength);
+            messages.Single().StringToken.ShouldBe(ValidationKeys.RangeLength);
         }
 
         [Test]
@@ -70,7 +71,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Value = "12345678910";
             var messages = theNotification.MessagesFor<RangeLengthTarget>(x => x.Value);
-            messages.Single().StringToken.ShouldEqual(ValidationKeys.RangeLength);
+            messages.Single().StringToken.ShouldBe(ValidationKeys.RangeLength);
         }
 
         [Test]
@@ -78,7 +79,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Value = "1234";
             var message = theNotification.MessagesFor<RangeLengthTarget>(x => x.Value).Single();
-            message.GetMessage().ShouldEqual("Value must be between 5 and 10 characters");
+            message.GetMessage().ShouldBe("Value must be between 5 and 10 characters");
         }
 
 

@@ -834,6 +834,72 @@
     <Compile Include="Validation\ValidationScenario.cs" />
     <Compile Include="Validation\ValidationStep.cs" />
     <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Validation\Web\AccessorRulesExtensions.cs" />
+    <Compile Include="Validation\Web\AccessorRulesFieldSource.cs" />
+    <Compile Include="Validation\Web\AccessorRulesValidationModePolicy.cs" />
+    <Compile Include="Validation\Web\AjaxContinuationResolver.cs" />
+    <Compile Include="Validation\Web\AjaxValidation.cs" />
+    <Compile Include="Validation\Web\AjaxValidationBehavior.cs" />
+    <Compile Include="Validation\Web\AjaxValidationNode.cs" />
+    <Compile Include="Validation\Web\FubuMvcValidation.cs" />
+    <Compile Include="Validation\Web\FubuMvcValidationServices.cs" />
+    <Compile Include="Validation\Web\FubuValidationServiceRegistry.cs" />
+    <Compile Include="Validation\Web\IAjaxValidationFailureHandler.cs" />
+    <Compile Include="Validation\Web\IHaveValidation.cs" />
+    <Compile Include="Validation\Web\IValidationModePolicy.cs" />
+    <Compile Include="Validation\Web\ModelBindingErrors.cs" />
+    <Compile Include="Validation\Web\NotValidatedAttribute.cs" />
+    <Compile Include="Validation\Web\RemoteRuleExpression.cs" />
+    <Compile Include="Validation\Web\Remote\IRemoteFieldValidationRule.cs" />
+    <Compile Include="Validation\Web\Remote\IRemoteRuleFilter.cs" />
+    <Compile Include="Validation\Web\Remote\IRemoteRuleQuery.cs" />
+    <Compile Include="Validation\Web\Remote\IRuleRunner.cs" />
+    <Compile Include="Validation\Web\Remote\IValidationTargetResolver.cs" />
+    <Compile Include="Validation\Web\Remote\RemoteAttribute.cs" />
+    <Compile Include="Validation\Web\Remote\RemoteFieldRule.cs" />
+    <Compile Include="Validation\Web\Remote\RemoteRuleGraph.cs" />
+    <Compile Include="Validation\Web\Remote\RemoteRuleGraphActivator.cs" />
+    <Compile Include="Validation\Web\Remote\ValidateField.cs" />
+    <Compile Include="Validation\Web\UI\CssValidationAnnotationStrategy.cs" />
+    <Compile Include="Validation\Web\UI\DateElementModifier.cs" />
+    <Compile Include="Validation\Web\UI\DefaultValidationSummaryWriter.cs" />
+    <Compile Include="Validation\Web\UI\ElementLocalizationMessages.cs" />
+    <Compile Include="Validation\Web\UI\FieldEqualityFormModifier.cs" />
+    <Compile Include="Validation\Web\UI\FieldOptions.cs" />
+    <Compile Include="Validation\Web\UI\FieldValidationElementModifier.cs" />
+    <Compile Include="Validation\Web\UI\FormValidationModifier.cs" />
+    <Compile Include="Validation\Web\UI\FormValidationSummaryModifier.cs" />
+    <Compile Include="Validation\Web\UI\IFieldValidationModifier.cs" />
+    <Compile Include="Validation\Web\UI\InputElementModifier.cs" />
+    <Compile Include="Validation\Web\UI\IRenderingStrategy.cs" />
+    <Compile Include="Validation\Web\UI\IValidationAnnotationStrategy.cs" />
+    <Compile Include="Validation\Web\UI\LocalizationAnnotationStrategy.cs" />
+    <Compile Include="Validation\Web\UI\LocalizationLabelModifier.cs" />
+    <Compile Include="Validation\Web\UI\MaximumLengthModifier.cs" />
+    <Compile Include="Validation\Web\UI\MaxValueModifier.cs" />
+    <Compile Include="Validation\Web\UI\MinimumLengthModifier.cs" />
+    <Compile Include="Validation\Web\UI\MinValueModifier.cs" />
+    <Compile Include="Validation\Web\UI\NotificationSerializationModifier.cs" />
+    <Compile Include="Validation\Web\UI\NumberElementModifier.cs" />
+    <Compile Include="Validation\Web\UI\RangeLengthModifier.cs" />
+    <Compile Include="Validation\Web\UI\RegularExpressionModifier.cs" />
+    <Compile Include="Validation\Web\UI\RemoteValidationElementModifier.cs" />
+    <Compile Include="Validation\Web\UI\RenderingStrategies.cs" />
+    <Compile Include="Validation\Web\UI\RuleAliases.cs" />
+    <Compile Include="Validation\Web\UI\ValidationOptions.cs" />
+    <Compile Include="Validation\Web\UI\ValidationSummarySource.cs" />
+    <Compile Include="Validation\Web\ValidationActionFilter.cs" />
+    <Compile Include="Validation\Web\ValidationAjaxExtensions.cs" />
+    <Compile Include="Validation\Web\ValidationBehaviorChainExtensions.cs" />
+    <Compile Include="Validation\Web\ValidationFilter.cs" />
+    <Compile Include="Validation\Web\ValidationModeAttributePolicy.cs" />
+    <Compile Include="Validation\Web\ValidationNode.cs" />
+    <Compile Include="Validation\Web\ValidationNodeModification.cs" />
+    <Compile Include="Validation\Web\ValidationPolicy.cs" />
+    <Compile Include="Validation\Web\ValidationSettings.cs" />
+    <Compile Include="Validation\Web\ValidationSettingsRegistry.cs" />
+    <Compile Include="Validation\Web\ValidationSummary.cs" />
+    <Compile Include="Validation\Web\ValidationUrlRegistryExtensions.cs" />
     <Compile Include="View\ImageTag.cs" />
     <Compile Include="Runtime\IFubuRequestContext.cs" />
     <Compile Include="Projections\AccessorProjection.cs" />
@@ -1346,7 +1412,6 @@
       <Paket>True</Paket>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>

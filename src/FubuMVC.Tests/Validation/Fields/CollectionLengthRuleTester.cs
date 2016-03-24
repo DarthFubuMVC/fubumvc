@@ -1,9 +1,10 @@
 using System.Linq;
-using FubuTestingSupport;
-using FubuValidation.Fields;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class CollectionLengthRuleTester
@@ -28,7 +29,7 @@ namespace FubuValidation.Tests.Fields
 
             var rule = new CollectionLengthRule(1);
             rule.ValidateProperty(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
-                .ShouldEqual("Must be exactly 1 element(s)"); 
+                .ShouldBe("Must be exactly 1 element(s)"); 
         }
 
         [Test]
@@ -41,7 +42,7 @@ namespace FubuValidation.Tests.Fields
 
             var rule = new CollectionLengthRule(1);
             rule.ValidateProperty(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
-                .ShouldEqual("Must be exactly 1 element(s)");
+                .ShouldBe("Must be exactly 1 element(s)");
         }
 
 
@@ -55,13 +56,13 @@ namespace FubuValidation.Tests.Fields
 
             var rule = new CollectionLengthRule(2);
             rule.ValidateProperty(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
-                .ShouldEqual("Must be exactly 2 element(s)");
+                .ShouldBe("Must be exactly 2 element(s)");
         }
 
 		[Test]
 		public void uses_default_collection_length_token()
 		{
-			new CollectionLengthRule(0).Token.ShouldEqual(ValidationKeys.CollectionLength);
+			new CollectionLengthRule(0).Token.ShouldBe(ValidationKeys.CollectionLength);
 		}
     }
     

@@ -1,10 +1,10 @@
 using FubuCore.Reflection;
-using FubuTestingSupport;
-using FubuValidation.Fields;
-using FubuValidation.Tests.Models;
+using FubuMVC.Core.Validation.Fields;
+using FubuMVC.Tests.Validation.Models;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class FieldValidationQueryTester

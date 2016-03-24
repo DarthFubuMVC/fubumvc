@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using FubuCore.Reflection;
-using FubuValidation.Fields;
-using FubuTestingSupport;
-using NUnit.Framework;
 using System.Linq;
+using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Reflection;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
+using NUnit.Framework;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class LambdaFieldValidationSourceTester
@@ -33,7 +34,7 @@ namespace FubuValidation.Tests.Fields
             theSource = new LambdaFieldValidationSource(new RequiredFieldRule());
 
             Exception<FubuValidationException>.ShouldBeThrownBy(() => theSource.As<IFieldValidationSource>().AssertIsValid())
-                .Message.ShouldEqual("Missing filter on validation convention");
+                .Message.ShouldBe("Missing filter on validation convention");
         }
 
         [Test]
@@ -82,8 +83,8 @@ namespace FubuValidation.Tests.Fields
             theSource.If(a => a.Name.StartsWith("Address"));
 
             rulesFor(x => x.Name).Any().ShouldBeFalse();
-            rulesFor(x => x.Address1).Single().ShouldBeOfType<MaximumLengthRule>().Length.ShouldEqual(1);
-            rulesFor(x => x.Address2).Single().ShouldBeOfType<MaximumLengthRule>().Length.ShouldEqual(2);
+            rulesFor(x => x.Address1).Single().ShouldBeOfType<MaximumLengthRule>().Length.ShouldBe(1);
+            rulesFor(x => x.Address2).Single().ShouldBeOfType<MaximumLengthRule>().Length.ShouldBe(2);
         }
     }
 

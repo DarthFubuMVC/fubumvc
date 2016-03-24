@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuTestingSupport;
-using FubuValidation.Fields;
+using FubuMVC.Core.Validation;
+using FubuMVC.Core.Validation.Fields;
 using NUnit.Framework;
-using System.Linq;
+using Shouldly;
 
-namespace FubuValidation.Tests.Fields
+namespace FubuMVC.Tests.Validation.Fields
 {
     [TestFixture]
     public class attribute_scanning_tester
@@ -38,7 +39,7 @@ namespace FubuValidation.Tests.Fields
         [Test]
         public void found_maximum_string_length_rule()
         {
-            rulesFor(x => x.Name).OfType<MaximumLengthRule>().Single().Length.ShouldEqual(45);
+            rulesFor(x => x.Name).OfType<MaximumLengthRule>().Single().Length.ShouldBe(45);
         }
 
         [Test]
@@ -57,7 +58,7 @@ namespace FubuValidation.Tests.Fields
         public void found_collection_length_rule()
         {
             rulesFor(x => x.Names).Single().ShouldBeOfType<CollectionLengthRule>()
-                .Length.ShouldEqual(2);
+                .Length.ShouldBe(2);
         }
     }
 
