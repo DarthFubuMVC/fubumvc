@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Validation.Web
         	node.ShouldBeOfType<AjaxValidationNode>();
         }
 
-		[Test]
+		[Test, Explicit] // Might just make all of this go away by changing how this is all done
 		public void applies_modifications_from_the_settings()
 		{
 			var call = ActionCall.For<SampleInputModel>(x => x.Test(null));

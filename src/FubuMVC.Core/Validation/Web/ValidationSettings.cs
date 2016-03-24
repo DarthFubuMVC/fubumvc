@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Validation.Web.Remote;
 
@@ -34,9 +35,10 @@ namespace FubuMVC.Core.Validation.Web
         public RemoteRuleExpression Remotes { get { return new RemoteRuleExpression(_remoteFilters); } }
         public IEnumerable<IRemoteRuleFilter> Filters { get { return _remoteFilters; } }
 
-        public Func<BehaviorChain, bool> ExcludeFormActivation { get; set; }
+        public Func<BehaviorChain, bool> ExcludeFormActivation { get; set; } = chain => false;
 
-        public Func<BehaviorChain, bool> Where { get; set; }
+        public Func<BehaviorChain, bool> Where { get; set; } =
+            chain => chain is RoutedChain && chain.As<RoutedChain>().MatchesCategoryOrHttpMethod("POST") && chain.InputType() != null && !chain.Calls.Any(x => x.HasAttribute<NotValidatedAttribute>());
         
         public void Import<T>()
             where T : ValidationSettingsRegistry, new()

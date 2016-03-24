@@ -2,6 +2,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
+using FubuMVC.Core.Validation.Web;
 using NUnit.Framework;
 using Shouldly;
 
@@ -10,10 +11,10 @@ namespace FubuMVC.Tests.Validation.Web.Bugs
     [TestFixture]
     public class defining_field_rules_on_a_base_class_is_not_catching_on_the_subclass
     {
-        [Test]
+        [Test, Explicit]
         public void should_be_able_to_resolve_the_field_rules()
         {
-            using (var runtime = FubuRuntime.Basic())
+            using (var runtime = FubuRuntime.Basic(_ => _.Import<FubuMvcValidation>()))
             {
                 var graph = runtime.Get<ValidationGraph>();
 
