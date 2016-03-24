@@ -219,7 +219,40 @@ namespace Serenity.Fixtures
 
                     return x.ToString();
                 }).ToArray();
-        } 
+        }
+
+        protected bool AssertIsOnScreen<TInput>(TInput input)
+        {
+            var expected = Urls.UrlFor(input, "GET");
+            var actual = Driver.Url;
+
+            if (!expected.Matches(Driver.Url))
+            {
+                StoryTellerAssert.Fail("The actual Url of the browser is " + actual.Canonize());
+            }
+
+            return true;
+        }
+
+        protected bool AssertIsOnScreen(string expected)
+        {
+            var actual = Driver.Url;
+
+            if (!expected.Matches(Driver.Url))
+            {
+                StoryTellerAssert.Fail("The actual Url of the browser is " + actual.Canonize());
+            }
+
+            return true;
+        }
+
+        protected bool AssertIsNotOnScreen<TInput>(TInput input)
+        {
+            var actual = new Uri(Driver.Url).AbsolutePath;
+            var expected = Urls.UrlFor(input, "GET");
+
+            return !expected.Matches(actual);
+        }
     }
 
     public class ScreenFixture<T> : ScreenFixture
@@ -300,39 +333,6 @@ namespace Serenity.Fixtures
 
                     EditableElement(expression);
                 });
-        }
-
-        protected bool AssertIsOnScreen<TInput>(TInput input)
-        {
-            var expected = Urls.UrlFor(input, "GET");
-            var actual = Driver.Url;
-
-            if (!expected.Matches(Driver.Url))
-            {
-                StoryTellerAssert.Fail("The actual Url of the browser is " + actual.Canonize());
-            }
-
-            return true;
-        }
-
-        protected bool AssertIsOnScreen(string expected)
-        {
-            var actual = Driver.Url;
-
-            if (!expected.Matches(Driver.Url))
-            {
-                StoryTellerAssert.Fail("The actual Url of the browser is " + actual.Canonize());
-            }
-
-            return true;
-        }
-
-        protected bool AssertIsNotOnScreen<TInput>(TInput input)
-        {
-            var actual = new Uri(Driver.Url).AbsolutePath;
-            var expected = Urls.UrlFor(input, "GET");
-
-            return !expected.Matches(actual);
         }
     }
 }
