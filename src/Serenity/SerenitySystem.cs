@@ -16,6 +16,7 @@ using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.TestSupport;
 using FubuMVC.Core.StructureMap;
 using HtmlTags;
+using OpenQA.Selenium;
 using Serenity.ServiceBus;
 using StoryTeller;
 using StoryTeller.Conversion;
@@ -60,6 +61,8 @@ namespace Serenity
                 var browserType = BrowserFactory.DetermineBrowserType(DefaultBrowser);
                 return BrowserFactory.GetBrowserLifecyle(browserType);
             });
+
+            Registry.Services.ForSingletonOf<IWebDriver>().Use(c => c.GetInstance<IBrowserLifecycle>().Driver);
 
             injectJavascriptErrorDetection();
 
