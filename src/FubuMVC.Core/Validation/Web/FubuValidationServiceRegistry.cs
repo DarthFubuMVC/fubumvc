@@ -17,6 +17,11 @@ namespace FubuMVC.Core.Validation.Web
             ForConcreteType<ValidationGraph>().Configure.Singleton();
             ForSingletonOf<IFieldRulesRegistry>().Use<FieldRulesRegistry>();
             ForConcreteType<RemoteRuleGraph>().Configure.Singleton();
+
+
+
+            For<IFieldValidationQuery>().Use<FieldValidationQuery>();
+
         }
 
     }

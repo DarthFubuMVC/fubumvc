@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
 			theGraph = BehaviorGraph.BuildFrom(x =>
 			{
 				x.Actions.IncludeType<ValidationOptionsEndpoint>();
-				x.Import<FubuMvcValidation>();
+			    x.Features.Validation.Enable(true);
 			});
 		}
 

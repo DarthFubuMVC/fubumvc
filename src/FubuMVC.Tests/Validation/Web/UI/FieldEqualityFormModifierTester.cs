@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
 			theGraph = BehaviorGraph.BuildFrom(x =>
 			{
 				x.Actions.IncludeType<FormValidationModeEndpoint>();
-				x.Import<FubuMvcValidation>();
+			    x.Features.Validation.Enable(true);
                 x.Policies.Local.Add<ValidationPolicy>();
 			});
 		}

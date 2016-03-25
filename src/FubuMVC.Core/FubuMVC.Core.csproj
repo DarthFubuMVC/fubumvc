@@ -841,7 +841,6 @@
     <Compile Include="Validation\Web\AjaxValidation.cs" />
     <Compile Include="Validation\Web\AjaxValidationBehavior.cs" />
     <Compile Include="Validation\Web\AjaxValidationNode.cs" />
-    <Compile Include="Validation\Web\FubuMvcValidation.cs" />
     <Compile Include="Validation\Web\FubuMvcValidationServices.cs" />
     <Compile Include="Validation\Web\FubuValidationServiceRegistry.cs" />
     <Compile Include="Validation\Web\IAjaxValidationFailureHandler.cs" />

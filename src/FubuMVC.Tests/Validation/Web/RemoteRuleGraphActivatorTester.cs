@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Validation.Web
             theBehaviorGraph = BehaviorGraph.BuildFrom(r =>
             {
                 r.Actions.IncludeType<RemoteRuleGraphEndpoint>();
-                r.Import<FubuMvcValidation>();
+                r.Features.Validation.Enable(true);
             });
 
             theValidationGraph = ValidationGraph.BasicGraph();

@@ -8,6 +8,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Sagas;
+using FubuMVC.Core.Validation.Web;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -72,6 +73,14 @@ namespace FubuMVC.Core.Registration.DSL
             get
             {
                 return new Feature<ServerSentEventsSettings, bool>(_parent, (x, enabled) => x.Enabled = enabled);
+            }
+        }
+
+        public Feature<ValidationSettings, bool> Validation
+        {
+            get
+            {
+                return new Feature<ValidationSettings, bool>(_parent, (x, enabled) => x.Enabled = enabled);
             }
         } 
 

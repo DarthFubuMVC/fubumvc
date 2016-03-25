@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.Validation.Web.Bugs
         [Test, Explicit]
         public void should_be_able_to_resolve_the_field_rules()
         {
-            using (var runtime = FubuRuntime.Basic(_ => _.Import<FubuMvcValidation>()))
+            using (var runtime = FubuRuntime.Basic(_ => _.Features.Validation.Enable(true)))
             {
                 var graph = runtime.Get<ValidationGraph>();
 
