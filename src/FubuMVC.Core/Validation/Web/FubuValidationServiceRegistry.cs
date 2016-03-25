@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Validation.Fields;
@@ -14,7 +15,13 @@ namespace FubuMVC.Core.Validation.Web
 
             AddService<IFieldValidationSource, AccessorRulesFieldSource>();
 
-            ForConcreteType<ValidationGraph>().Configure.Singleton();
+            // Done explicitly now in BehaviorGraphBuilder
+            ForConcreteType<ValidationGraph>().Configure.Singleton().OnCreation("Apply all the validation registrations", (context, graph) =>
+            {
+                var registrations = context.GetAllInstances<IValidationRegistration>();
+                registrations.Each(x => x.Register(graph));
+            });
+
             ForSingletonOf<IFieldRulesRegistry>().Use<FieldRulesRegistry>();
             ForConcreteType<RemoteRuleGraph>().Configure.Singleton();
 

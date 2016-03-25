@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Packaging;
@@ -13,6 +14,7 @@ using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.Validation;
 using FubuMVC.Core.View;
 using HtmlTags.Conventions;
 
@@ -42,6 +44,7 @@ namespace FubuMVC.Core.Registration
             };
 
             var accessorRules = AccessorRulesCompiler.Compile(graph, perfTimer);
+            var validationCompilation = ValidationCompiler.Compile(graph, perfTimer, registry);
 
 
 
@@ -68,7 +71,8 @@ namespace FubuMVC.Core.Registration
                 perfTimer.Record("Applying Tracing", () => ApplyTracing.Configure(graph));
             }
 
-            accessorRules.Wait();
+
+            Task.WaitAll(accessorRules, validationCompilation);
 
             new AutoImportModelNamespacesConvention().Configure(graph);
 

@@ -660,6 +660,7 @@
     <Compile Include="Validation\NotificationTester.cs" />
     <Compile Include="Validation\RuleSnippets.cs" />
     <Compile Include="Validation\TemplateValueTester.cs" />
+    <Compile Include="Validation\ValidationCompilerTester.cs" />
     <Compile Include="Validation\ValidationContextTester.cs" />
     <Compile Include="Validation\ValidationGraphTester.cs" />
     <Compile Include="Validation\ValidationPlanTester.cs" />

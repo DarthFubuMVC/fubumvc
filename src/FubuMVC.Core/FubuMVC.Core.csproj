@@ -825,6 +825,7 @@
     <Compile Include="Validation\TemplateExtensions.cs" />
     <Compile Include="Validation\TemplateValue.cs" />
     <Compile Include="Validation\ValidationAttribute.cs" />
+    <Compile Include="Validation\ValidationCompiler.cs" />
     <Compile Include="Validation\ValidationContext.cs" />
     <Compile Include="Validation\ValidationError.cs" />
     <Compile Include="Validation\ValidationGraph.cs" />
