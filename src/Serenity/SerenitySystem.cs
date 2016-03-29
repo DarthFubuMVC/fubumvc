@@ -62,7 +62,7 @@ namespace Serenity
                 return BrowserFactory.GetBrowserLifecyle(browserType);
             });
 
-            Registry.Services.ForSingletonOf<IWebDriver>().Use(c => c.GetInstance<IBrowserLifecycle>().Driver);
+            Registry.Services.For<IWebDriver>().Use(c => c.GetInstance<IBrowserLifecycle>().Driver);
 
             injectJavascriptErrorDetection();
 
@@ -119,6 +119,11 @@ namespace Serenity
         public void AfterNavigation<TNavigation>() where TNavigation : IAfterNavigation
         {
             Registry.Services.ReplaceService<IAfterNavigation, TNavigation>();
+        }
+
+        public void AfterNavigation(IAfterNavigation navigation)
+        {
+            Registry.Services.ReplaceService(navigation);
         }
 
         public FubuRuntime Runtime

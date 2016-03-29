@@ -19,10 +19,7 @@ namespace FubuMVC.Core.StructureMap
             _containers.Push(container);
         }
 
-        public IContainer Container
-        {
-            get { return _containers.Peek(); }
-        }
+        public IContainer Container => _containers.Peek();
 
         public virtual IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {

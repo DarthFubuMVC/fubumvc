@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Conventions;
@@ -53,7 +54,6 @@ namespace FubuMVC.Core.Registration
 
             _sources.Add(_actionSourceAggregator);
             _sources.Add(_handlers);
-            _sources.Add(new ActionlessViewChainSource());
         }
 
         public Assembly ApplicationAssembly
@@ -222,12 +222,12 @@ namespace FubuMVC.Core.Registration
 
             var imports = UniqueImports().Select(x => x.BuildChains(graph, timer)).ToArray();
 
-
             var chainSources =
                 Sources.Select(
                     source => source.BuildChains(graph, timer)).ToArray();
 
-            Task.WaitAll(chainSources);
+
+            Task.WaitAll(chainSources, 5.Seconds()).AssertFinished();
 
             chainSources.Each(x => graph.AddChains(x.Result));
 
@@ -235,7 +235,7 @@ namespace FubuMVC.Core.Registration
             Local.Policies.RunActions(graph);
             Local.Reordering.RunActions(graph);
 
-            Task.WaitAll(imports);
+            Task.WaitAll(imports, 5.Seconds()).AssertFinished();
 
             imports.Each(x => graph.AddChains(x.Result));
         }

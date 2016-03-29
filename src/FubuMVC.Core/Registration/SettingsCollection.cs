@@ -102,8 +102,16 @@ namespace FubuMVC.Core.Registration
     {
         public static T Result<T>(this Task<T> task)
         {
-            task.Wait();
+            task.Wait(5.Seconds()).AssertFinished();
             return task.Result;
+        }
+
+        public static void AssertFinished(this bool waited)
+        {
+            if (!waited)
+            {
+                throw new TimeoutException("Task operation timed out");
+            }
         }
     }
 }

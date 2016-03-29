@@ -44,7 +44,7 @@ namespace FubuMVC.Core
         private readonly Lazy<AppFunc> _appFunc;
         private IDisposable _server;
         private string _baseAddress = "http://memory"; // leave this here
-        private FubuRegistry _registry;
+        private readonly FubuRegistry _registry;
 
 
         public static FubuRuntime Basic(Action<FubuRegistry> configure = null)
@@ -63,7 +63,7 @@ namespace FubuMVC.Core
         {
             return Basic(r =>
             {
-                if (configure != null) configure(r);
+                configure?.Invoke(r);
                 r.ServiceBus.Enable(true);
                 r.ServiceBus.EnableInMemoryTransport();
             });
@@ -72,10 +72,7 @@ namespace FubuMVC.Core
         public static FubuRuntime For<T>(Action<FubuRegistry> configure = null) where T : FubuRegistry, new()
         {
             var registry = new T();
-            if (configure != null)
-            {
-                configure(registry);
-            }
+            configure?.Invoke(registry);
 
             return new FubuRuntime(registry);
         }
@@ -171,25 +168,13 @@ namespace FubuMVC.Core
             });
         }
 
-        public string BaseAddress
-        {
-            get { return _baseAddress; }
-        }
+        public string BaseAddress => _baseAddress;
 
-        public IHost Host
-        {
-            get { return _registry.Host; }
-        }
+        public IHost Host => _registry.Host;
 
-        public int Port
-        {
-            get { return _registry.Port; }
-        }
+        public int Port => _registry.Port;
 
-        public string Mode
-        {
-            get { return _registry.Mode; }
-        }
+        public string Mode => _registry.Mode;
 
         // Build route objects from route definitions on graph + add packaging routes
         private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
@@ -208,21 +193,15 @@ namespace FubuMVC.Core
             var importers = packageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
                 assem => Task.Factory.StartNew(() => assem.FindAllExtensions(diagnostics))).ToArray();
 
-            Task.WaitAll(importers);
+            Task.WaitAll(importers, 5.Seconds());
 
             importers.SelectMany(x => x.Result).Each(x => x.Apply(registry));
         }
 
 
-        public ActivationDiagnostics ActivationDiagnostics
-        {
-            get { return _diagnostics; }
-        }
+        public ActivationDiagnostics ActivationDiagnostics => _diagnostics;
 
-        public IFubuApplicationFiles Files
-        {
-            get { return _files; }
-        }
+        public IFubuApplicationFiles Files => _files;
 
         public T Get<T>()
         {
@@ -232,15 +211,11 @@ namespace FubuMVC.Core
             return _factory.Get<T>();
         }
 
-        public IList<RouteBase> Routes
-        {
-            get { return _routes; }
-        }
+        public IContainer CurrentContainer => _factory.As<StructureMapServiceFactory>().Container;
 
-        public BehaviorGraph Behaviors
-        {
-            get { return Get<BehaviorGraph>(); }
-        }
+        public IList<RouteBase> Routes => _routes;
+
+        public BehaviorGraph Behaviors => Get<BehaviorGraph>();
 
         public void Dispose()
         {
@@ -254,7 +229,7 @@ namespace FubuMVC.Core
 
             _disposed = true;
 
-            if (_server != null) _server.SafeDispose();
+            _server?.SafeDispose();
 
             if (_factory != null)
             {
@@ -262,7 +237,7 @@ namespace FubuMVC.Core
             }
 
 
-            if (_container != null) _container.Dispose();
+            _container?.Dispose();
         }
 
         private void runDeactivators()

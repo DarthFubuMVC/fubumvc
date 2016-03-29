@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuCore;
 
 namespace FubuMVC.Core.Diagnostics.Packaging
 {
@@ -25,7 +26,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
                 });
             }).ToArray();
 
-            Task.WaitAll(tasks);
+            Task.WaitAll(tasks, 10.Seconds());
         }
 
 
