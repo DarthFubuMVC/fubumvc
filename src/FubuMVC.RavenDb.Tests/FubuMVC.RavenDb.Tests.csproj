@@ -50,6 +50,7 @@
     <Compile Include="FixieConvention.cs" />
     <Compile Include="InMemory\InMemoryPersistentResetTester.cs" />
     <Compile Include="InMemory\InMemoryPersistorTester.cs" />
+    <Compile Include="loading_the_bottle_with_string_conversions.cs" />
     <Compile Include="Membership\is_registering_the_persisted_login_auditor.cs" />
     <Compile Include="Membership\LoginAuditPersistorTester.cs" />
     <Compile Include="Membership\MembershipRepositoryTester.cs" />

@@ -39,9 +39,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         private void addStringConversions(DisplayConversionRegistry conversions)
         {
-            var registry = new ServiceRegistry();
-            registry.AddService(typeof(DisplayConversionRegistry), new ObjectInstance(conversions));
-            _graph.Add(registry);
+            _graph.ApplicationServices.For<DisplayConversionRegistry>().Add(conversions);
         }
 
         public void StringConversions(Action<DisplayConversionRegistry> configure)
