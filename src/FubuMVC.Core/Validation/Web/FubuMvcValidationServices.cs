@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Validation.Web
             SetServiceIfNone<IAjaxValidationFailureHandler, AjaxValidationFailureHandler>();
             SetServiceIfNone<IValidationTargetResolver, ValidationTargetResolver>();
             SetServiceIfNone<IRuleRunner, RuleRunner>();
-            SetServiceIfNone(typeof(IValidationFilter<>), typeof(ValidationFilter<>));
+            For(typeof(IValidationFilter<>)).Use(typeof(ValidationFilter<>));
             SetServiceIfNone<IFieldValidationModifier, FieldValidationModifier>();
 
             // Order is kind of important here

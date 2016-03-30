@@ -118,13 +118,13 @@ namespace FubuMVC.Core.Registration
 
             SetServiceIfNone<IJavascriptRouteData, JavascriptRouteData>();
 
-            SetServiceIfNone(typeof (IValues<>), typeof (SimpleValues<>));
-            SetServiceIfNone(typeof (IValueSource<>), typeof (ValueSource<>));
+            For(typeof (IValues<>)).Use(typeof (SimpleValues<>));
+            For(typeof (IValueSource<>)).Use(typeof (ValueSource<>));
 
             SetServiceIfNone<IProjectionRunner, ProjectionRunner>();
-            SetServiceIfNone(typeof (IProjectionRunner<>), typeof (ProjectionRunner<>));
+            For(typeof (IProjectionRunner<>)).Use(typeof (ProjectionRunner<>));
+
             SetServiceIfNone<IProjectionRunner, ProjectionRunner>();
-            SetServiceIfNone(typeof (IProjectionRunner<>), typeof (ProjectionRunner<>));
 
             SetServiceIfNone<ISettingsProvider, SettingsProvider>();
             AddService<ISettingsSource>(new AppSettingsSettingSource(SettingCategory.environment));
