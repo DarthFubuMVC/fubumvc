@@ -91,6 +91,7 @@ task :pack => [:compile] do
 	sh "nuget.exe pack packaging/nuget/fubumvc.ravendb.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.razor.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.spark.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
+	sh "nuget.exe pack packaging/nuget/fubumvc.marten.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/serenity.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/jasperservice.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	
@@ -106,6 +107,7 @@ task :publish => [:pack] do
 	sh "nuget.exe push artifacts/FubuMVC.RavenDb.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/FubuMVC.Razor.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/FubuMVC.Spark.#{build_number}-alpha.nupkg #{NUGET_KEY} "
+	sh "nuget.exe push artifacts/FubuMVC.Marten.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/Serenity.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/JasperService.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 end
