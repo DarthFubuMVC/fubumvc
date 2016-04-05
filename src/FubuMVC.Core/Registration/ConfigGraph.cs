@@ -227,7 +227,7 @@ namespace FubuMVC.Core.Registration
                     source => source.BuildChains(graph, timer)).ToArray();
 
 
-            Task.WaitAll(chainSources, 5.Seconds()).AssertFinished();
+            Task.WaitAll(chainSources, 30.Seconds()).AssertFinished();
 
             chainSources.Each(x => graph.AddChains(x.Result));
 
@@ -235,7 +235,7 @@ namespace FubuMVC.Core.Registration
             Local.Policies.RunActions(graph);
             Local.Reordering.RunActions(graph);
 
-            Task.WaitAll(imports, 5.Seconds()).AssertFinished();
+            Task.WaitAll(imports, 30.Seconds()).AssertFinished();
 
             imports.Each(x => graph.AddChains(x.Result));
         }

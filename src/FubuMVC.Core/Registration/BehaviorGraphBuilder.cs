@@ -54,7 +54,7 @@ namespace FubuMVC.Core.Registration
             perfTimer.Record("Applying Settings", () => applySettings(config, graph, diagnostics, files));
 
             perfTimer.Record("Enable built in polling jobs", () => enableBuiltInJobs(graph));
-            perfTimer.Record("Applying Feature Settings", () => featureLoader.ApplyAll(graph.Settings, registry).Wait(5.Seconds()).AssertFinished());
+            perfTimer.Record("Applying Feature Settings", () => featureLoader.ApplyAll(graph.Settings, registry).Wait(30.Seconds()).AssertFinished());
 
 
             config.Add(new ActionlessViewChainSource());
@@ -75,7 +75,7 @@ namespace FubuMVC.Core.Registration
             }
 
 
-            Task.WaitAll(new Task[] { accessorRules, validationCompilation}, 5.Seconds()).AssertFinished();
+            Task.WaitAll(new Task[] { accessorRules, validationCompilation}, 30.Seconds()).AssertFinished();
 
             new AutoImportModelNamespacesConvention().Configure(graph);
 

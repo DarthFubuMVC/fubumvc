@@ -9,12 +9,7 @@ namespace FubuMVC.Marten
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Chains.OfType<RoutedChain>()
-                .Where(
-                    x =>
-                        x.Route.RespondsToMethod("POST") || x.Route.RespondsToMethod("PUT") ||
-                        x.Route.RespondsToMethod("DELETE"))
-                .Each(x => x.InsertFirst(Wrapper.For<TransactionalBehavior>()));
+            graph.Routes.Commands.Each(x => x.InsertFirst(Wrapper.For<TransactionalBehavior>()));
         }
     }
 }

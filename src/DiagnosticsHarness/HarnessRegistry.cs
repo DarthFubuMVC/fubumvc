@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
+using FubuMVC.Marten;
 using Marten;
 
 namespace DiagnosticsHarness
@@ -25,6 +26,8 @@ namespace DiagnosticsHarness
             Channel(x => x.Channel).ReadIncoming().AcceptsMessages(x => x != typeof(TraceMessage)).DefaultSerializer<XmlMessageSerializer>();
 
             Policies.Global.Add<ErrorHandlingPolicy>();
+
+            Policies.Global.Add<TransactionalBehaviorPolicy>();
 
             SubscribeLocally().ToSource(x => x.Publisher)
                 .ToMessage<NumberMessage>();
