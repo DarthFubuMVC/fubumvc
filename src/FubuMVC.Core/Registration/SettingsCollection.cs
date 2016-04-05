@@ -102,7 +102,7 @@ namespace FubuMVC.Core.Registration
     {
         public static T Result<T>(this Task<T> task)
         {
-            task.Wait(5.Seconds()).AssertFinished();
+            task.Wait(30.Seconds()).AssertFinished();
             return task.Result;
         }
 

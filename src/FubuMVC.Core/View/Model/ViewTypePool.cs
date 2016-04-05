@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Registration;
@@ -34,7 +35,7 @@ namespace FubuMVC.Core.View.Model
 
 
             var types =
-                TypeRepository.FindTypes(_graph.AllAssemblies(),
+                TypeRepository.FindTypes(_graph.AllAssemblies().Concat(new [] { Assembly.GetExecutingAssembly() }),
                     TypeClassification.Closed | TypeClassification.Concretes, x => x.FullName == typeFullName).Result();
 
             var typeCount = types.Count();
