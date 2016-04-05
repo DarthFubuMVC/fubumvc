@@ -94,6 +94,7 @@
     <Compile Include="FixieConvention.cs" />
     <Compile Include="Fixtures\LockedOutLogicFixture.cs" />
     <Compile Include="Fixtures\LoginAuditingFixture.cs" />
+    <Compile Include="Fixtures\LoginScreenFixture.cs" />
     <Compile Include="Fixtures\ModelFixture.cs" />
     <Compile Include="Fixtures\OtherScreenFixture.cs" />
     <Compile Include="Fixtures\ServiceBus\Basic\ServiceBusActionFixture.cs" />
