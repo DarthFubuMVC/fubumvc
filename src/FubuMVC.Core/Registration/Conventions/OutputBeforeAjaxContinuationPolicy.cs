@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void Configure(BehaviorGraph graph)
         {
             graph.Behaviors
-                .Where(x => x.ResourceType().CanBeCastTo<AjaxContinuation>())
+                .Where(x => x.ResourceType().CanBeCastTo<AjaxContinuation>() && !x.IsAsynchronous())
                 .ToList()
                 .Each(Modify);
 

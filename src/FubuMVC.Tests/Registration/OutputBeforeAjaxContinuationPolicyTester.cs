@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
@@ -25,6 +26,19 @@ namespace FubuMVC.Tests.Registration
             var chain = graph.BehaviorFor<AjaxController>(x => x.get_success());
             chain.First().ShouldBeOfType<OutputNode>();
             chain.Last().ShouldBeOfType<ActionCall>();
+        }
+
+        [Test]
+        public void does_not_reorder_async_continuation()
+        {
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<AjaxController>();
+            });
+
+            var chain = graph.BehaviorFor<AjaxController>(x => x.get_async());
+
+            chain.FirstCall().Next.Next.ShouldBeOfType<OutputNode>();
         }
 
         [Test]
@@ -58,6 +72,11 @@ namespace FubuMVC.Tests.Registration
 
         public class AjaxController
         {
+            public Task<AjaxContinuation> get_async()
+            {
+                return Task.FromResult(new AjaxContinuation());
+            }
+
             public AjaxContinuation get_success()
             {
                 return AjaxContinuation.Successful();
