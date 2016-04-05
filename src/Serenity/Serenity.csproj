@@ -78,7 +78,6 @@
     <Compile Include="IAfterNavigation.cs" />
     <Compile Include="INavigationLogger.cs" />
     <Compile Include="IRemoteSubsystems.cs" />
-    <Compile Include="LoginScreenFixture.cs" />
     <Compile Include="NulloAfterNavigation.cs" />
     <Compile Include="NulloNavigationLogger.cs" />
     <Compile Include="RequestReporter.cs" />
