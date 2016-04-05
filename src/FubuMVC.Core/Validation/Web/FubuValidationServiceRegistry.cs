@@ -10,6 +10,8 @@ namespace FubuMVC.Core.Validation.Web
     {
         public FubuValidationServiceRegistry()
         {
+            For(typeof (IValidationFilter<>)).Use(typeof (ValidationFilter<>));
+
             SetServiceIfNone<ITypeResolver, TypeResolver>();
             SetServiceIfNone<IValidator, Validator>();
 
