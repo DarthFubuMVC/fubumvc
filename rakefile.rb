@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'fuburake'
 
+
 @solution = FubuRake::Solution.new do |sln|
 	sln.compile = {
 		:solutionfile => 'src/FubuMVC.sln'
@@ -21,6 +22,7 @@ require 'fuburake'
 
 	sln.options[:nuget_publish_folder] = 'nupkgs'
 	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'
+	sln.options[:nuget_api_key] = '8286178a-6726-4955-8b22-316c39eb330b'
 end
 
 
