@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
@@ -6,7 +7,6 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using NUnit.Framework;
-using SpecificationExtensions = Shouldly.SpecificationExtensions;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration
@@ -25,6 +25,19 @@ namespace FubuMVC.Tests.Registration
             var chain = graph.ChainFor<AjaxController>(x => x.get_success());
             chain.First().ShouldBeOfType<OutputNode>();
             chain.Last().ShouldBeOfType<ActionCall>();
+        }
+
+        [Test]
+        public void does_not_reorder_async_continuation()
+        {
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<AjaxController>();
+            });
+
+            var chain = graph.ChainFor<AjaxController>(x => x.get_async());
+
+            chain.FirstCall().Next.Next.ShouldBeOfType<OutputNode>();
         }
 
         [Test]
@@ -58,6 +71,11 @@ namespace FubuMVC.Tests.Registration
 
         public class AjaxController
         {
+            public Task<AjaxContinuation> get_async()
+            {
+                return Task.FromResult(new AjaxContinuation());
+            }
+
             public AjaxContinuation get_success()
             {
                 return AjaxContinuation.Successful();
@@ -70,7 +88,8 @@ namespace FubuMVC.Tests.Registration
 
             public AjaxContinuation get_with_failures()
             {
-                return new AjaxContinuation{
+                return new AjaxContinuation
+                {
                     Success = false,
                     Message = "You stink!"
                 };
