@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Validation.Fields;
@@ -11,6 +12,13 @@ namespace FubuMVC.Core.Validation.Web
         public FubuValidationServiceRegistry()
         {
             For(typeof (IValidationFilter<>)).Use(typeof (ValidationFilter<>));
+            Scan(_ =>
+            {
+                _.Assembly(Assembly.GetExecutingAssembly());
+                _.IncludeNamespace(typeof(IModelBindingErrors).Namespace);
+                _.WithDefaultConventions();
+            });
+
 
             SetServiceIfNone<ITypeResolver, TypeResolver>();
             SetServiceIfNone<IValidator, Validator>();
