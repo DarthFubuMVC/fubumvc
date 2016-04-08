@@ -892,6 +892,7 @@
     <Compile Include="Validation\Web\ValidationAjaxExtensions.cs" />
     <Compile Include="Validation\Web\ValidationBehaviorChainExtensions.cs" />
     <Compile Include="Validation\Web\ValidationFilter.cs" />
+    <Compile Include="Validation\Web\ValidationHtmlConventions.cs" />
     <Compile Include="Validation\Web\ValidationModeAttributePolicy.cs" />
     <Compile Include="Validation\Web\ValidationNode.cs" />
     <Compile Include="Validation\Web\ValidationNodeModification.cs" />

@@ -2,6 +2,7 @@
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.Validation.Web;
 using HtmlTags.Conventions;
 
 namespace FubuMVC.Core.UI
@@ -38,11 +39,20 @@ namespace FubuMVC.Core.UI
                 builders.InsertFirst(policy);
             }
         }
-
+         
         public static HtmlConventionLibrary BuildHtmlConventions(BehaviorGraph graph)
         {
+            var validation = graph.Settings.Get<ValidationSettings>();
+
             var rules = graph.Settings.Get<AccessorRules>();
             var library = graph.Settings.Get<HtmlConventionLibrary>();
+
+
+            if (validation.Enabled)
+            {
+                library.Import(new ValidationHtmlConventions().Library);
+            }
+
             BuildHtmlConventionLibrary(library, rules);
 
             return library;

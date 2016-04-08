@@ -12,15 +12,17 @@ namespace FubuMVC.Core.View
 
         public static IHtmlString PartialFor(this IFubuPage page, object input, bool withModelBinding = false, string categoryOrHttpMethod = null)
         {
-            return new HtmlString(page.Get<IPartialInvoker>().InvokeObject(input, withModelBinding, categoryOrHttpMethod));
+
+            return new HtmlString(page.Get<IPartialInvoker>().InvokeAsHtml(input));
         }
 
         public static IHtmlString Partial<TInputModel>(this IFubuPage page, TInputModel model, bool withModelBinding = false, string categoryOrHttpMethod = null) where TInputModel : class
         {
             if (typeof(TInputModel) == typeof(object))
             {
-                return new HtmlString(page.Get<IPartialInvoker>().InvokeObject(model, withModelBinding, categoryOrHttpMethod));
+                return new HtmlString(page.Get<IPartialInvoker>().InvokeAsHtml(model));
             }
+
 
             page.Get<IFubuRequest>().Set(model);
             return new HtmlString(InvokePartial<TInputModel>(page, categoryOrHttpMethod));
