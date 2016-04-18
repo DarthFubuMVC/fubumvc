@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core.Validation.Web.Remote
@@ -28,6 +29,7 @@ namespace FubuMVC.Core.Validation.Web.Remote
             _continuation = continuation;
         }
 
+        [PassThroughAuthentication]
         [UrlPattern("_validation/remote")]
         public AjaxContinuation Validate(ValidateField field)
         {
