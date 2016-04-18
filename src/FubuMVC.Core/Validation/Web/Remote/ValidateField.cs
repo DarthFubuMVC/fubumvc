@@ -28,7 +28,6 @@ namespace FubuMVC.Core.Validation.Web.Remote
             _continuation = continuation;
         }
 
-        [NotAuthenticated]
         [UrlPattern("_validation/remote")]
         public AjaxContinuation Validate(ValidateField field)
         {
