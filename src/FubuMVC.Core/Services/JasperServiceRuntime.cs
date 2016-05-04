@@ -8,6 +8,7 @@ namespace FubuMVC.Core.Services
     /// </summary>
     public class JasperServiceRuntime
     {
+        private bool _shutdownLatched;
         private readonly JasperServiceConfiguration _configuration;
         private readonly Lazy<IApplicationLoader> _runner;
         private IDisposable _shutdown;
@@ -36,6 +37,9 @@ namespace FubuMVC.Core.Services
 
         public void Stop()
         {
+            if (_shutdownLatched) return;
+            _shutdownLatched = true;
+
             _shutdown.Dispose();
         }
     }
