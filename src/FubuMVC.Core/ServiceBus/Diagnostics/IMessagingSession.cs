@@ -8,7 +8,6 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
         void Record(MessageRecord record);
         IEnumerable<MessageHistory> TopLevelMessages();
         IEnumerable<MessageHistory> AllMessages();
-
         IEnumerable<MessageRecord> All();
     }
 }

@@ -14,6 +14,7 @@ using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.TestSupport;
+using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Core.StructureMap;
 using HtmlTags;
 using OpenQA.Selenium;
@@ -23,7 +24,6 @@ using StoryTeller.Conversion;
 using StoryTeller.Engine;
 using StoryTeller.Equivalence;
 using StructureMap;
-using EventAggregator = FubuMVC.Core.Services.Messaging.EventAggregator;
 using MessageHistory = FubuMVC.Core.Services.Messaging.Tracking.MessageHistory;
 
 namespace Serenity
@@ -166,7 +166,7 @@ namespace Serenity
             if (_runtime != null)
             {
                 afterAll();
-                EventAggregator.Stop();
+                GlobalMessageTracking.Stop();
                 stopAll();
                 _isDisposed = true;
             }
@@ -267,7 +267,7 @@ namespace Serenity
                 if (_runtime.Get<TransportSettings>().Enabled)
                 {
                     var messaging = _runtime.Get<IMessagingSession>();
-                    EventAggregator.Messaging.AddListener(messaging);
+                    GlobalMessageTracking.Messaging.AddListener(messaging);
                 }
             });
         }

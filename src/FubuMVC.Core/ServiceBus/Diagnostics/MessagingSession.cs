@@ -10,13 +10,20 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
 {
     public class MessagingSession : IMessagingSession, IListener<MessageRecord>
     {
+        private readonly IList<MessageRecord> _all = new List<MessageRecord>();
         private readonly ChannelGraph _graph;
-        private readonly ConcurrentCache<string, MessageHistory> _histories = new ConcurrentCache<string, MessageHistory>(id => new MessageHistory{Id = id});
-        private readonly IList<MessageRecord> _all = new List<MessageRecord>(); 
+
+        private readonly ConcurrentCache<string, MessageHistory> _histories =
+            new ConcurrentCache<string, MessageHistory>(id => new MessageHistory {Id = id});
 
         public MessagingSession(ChannelGraph graph)
         {
             _graph = graph;
+        }
+
+        public void Receive(MessageRecord message)
+        {
+            Record(message);
         }
 
         public void ClearAll()
@@ -39,7 +46,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
             }
 
             // Letting the remote AppDomain's know about it.
-            FubuMVC.Core.Services.Messaging.EventAggregator.SendMessage(record);
+            GlobalMessageTracking.SendMessage(record);
 
             var history = _histories[record.Id];
             history.Record(record);
@@ -64,11 +71,6 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
         public IEnumerable<MessageRecord> All()
         {
             return AllMessages().SelectMany(x => x.Records());
-        }
-
-        public void Receive(MessageRecord message)
-        {
-            Record(message);
         }
     }
 }

@@ -49,8 +49,8 @@ namespace SampleService
         public IDisposable Load(Dictionary<string, string> properties)
         {
             //ObjectFactory.Initialize(x => x.AddRegistry<SampleRegistry>());
-            EventAggregator.SendMessage(new ServiceStarted{ActivatorTypeName = typeof(SampleService).AssemblyQualifiedName});
-            EventAggregator.SendMessage(new ServiceStarted{ActivatorTypeName = typeof(RemoteService).AssemblyQualifiedName});
+            GlobalMessageTracking.SendMessage(new ServiceStarted{ActivatorTypeName = typeof(SampleService).AssemblyQualifiedName});
+            GlobalMessageTracking.SendMessage(new ServiceStarted{ActivatorTypeName = typeof(RemoteService).AssemblyQualifiedName});
 
             return this;
         }
@@ -75,7 +75,7 @@ namespace SampleService
         {
             Write("Starting SampleService...");
 
-            EventAggregator.Messaging.AddListener(this);
+            GlobalMessageTracking.Messaging.AddListener(this);
         }
 
         public void Deactivate(IActivationLog log)
@@ -93,7 +93,7 @@ namespace SampleService
             Task.Factory.StartNew(() =>
             {
                 Thread.Sleep(500);
-                EventAggregator.ReceivedMessage(message);
+                GlobalMessageTracking.ReceivedMessage(message);
             });
         }
     }
@@ -102,7 +102,7 @@ namespace SampleService
     {
         public void Activate(IActivationLog log, IPerfTimer timer)
         {
-            EventAggregator.Messaging.AddListener(this);
+            GlobalMessageTracking.Messaging.AddListener(this);
         }
 
 
@@ -112,7 +112,7 @@ namespace SampleService
 
         public void Receive(TestSignal message)
         {
-            EventAggregator.SendMessage(new TestResponse {Number = message.Number});
+            GlobalMessageTracking.SendMessage(new TestResponse {Number = message.Number});
         }
     }
 

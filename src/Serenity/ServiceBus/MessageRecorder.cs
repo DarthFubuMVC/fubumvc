@@ -38,7 +38,7 @@ namespace Serenity.ServiceBus
                 Status = MessageTrack.Received,
                 Type = "OutstandingEnvelope"
             };
-            FubuMVC.Core.Services.Messaging.EventAggregator.SendMessage(track);
+            FubuMVC.Core.Services.Messaging.GlobalMessageTracking.SendMessage(track);
         }
 
         public IEnumerable<EnvelopeToken> ReceivedEnvelopes

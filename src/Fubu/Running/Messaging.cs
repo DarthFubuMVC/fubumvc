@@ -6,7 +6,7 @@ namespace Fubu.Running
     {
         public void Send<T>(T message)
         {
-            EventAggregator.SendMessage(message);
+            GlobalMessageTracking.SendMessage(message);
         }
     }
 }

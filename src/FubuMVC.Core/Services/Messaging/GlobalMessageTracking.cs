@@ -6,22 +6,19 @@ using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.Services.Messaging
 {
-    public static class EventAggregator
+    public static class GlobalMessageTracking
     {
         private static readonly BlockingCollection<object> _messages;
         private static IRemoteListener _remoteListener;
         private static CancellationTokenSource _cancellationSource;
         private static readonly IMessagingHub _messaging = new MessagingHub();
 
-        static EventAggregator()
+        static GlobalMessageTracking()
         {
             _messages = new BlockingCollection<object>(new ConcurrentQueue<object>());
         }
 
-        public static IMessagingHub Messaging
-        {
-            get { return _messaging; }
-        }
+        public static IMessagingHub Messaging => _messaging;
 
         public static void Start(IRemoteListener remoteListener)
         {
@@ -45,7 +42,7 @@ namespace FubuMVC.Core.Services.Messaging
 
         public static void Stop()
         {
-            if (_cancellationSource != null) _cancellationSource.Cancel();
+            _cancellationSource?.Cancel();
         }
 
         public static void SendMessage(string category, string message)

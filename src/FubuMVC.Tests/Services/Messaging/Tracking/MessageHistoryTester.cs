@@ -19,14 +19,14 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             MessageHistory.ClearAll();
 
             listener = MockRepository.GenerateMock<IListener<AllMessagesComplete>>();
-            EventAggregator.Messaging.AddListener(listener);
+            GlobalMessageTracking.Messaging.AddListener(listener);
 
         }
 
         [TearDown]
         public void TearDown()
         {
-            EventAggregator.Messaging.RemoveListener(listener);
+            GlobalMessageTracking.Messaging.RemoveListener(listener);
         }
 
         private void assertHasNotReceivedAllCompleteMessage()

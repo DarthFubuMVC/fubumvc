@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Services.Messaging
         [TearDown]
         public void Teardown()
         {
-            EventAggregator.Stop();
+            GlobalMessageTracking.Stop();
         }
 
         [SetUp]
@@ -26,13 +26,13 @@ namespace FubuMVC.Tests.Services.Messaging
             hub.AddListener(theListener);
 
             var remoteListener = new RemoteListener(hub);
-            EventAggregator.Start(remoteListener);
+            GlobalMessageTracking.Start(remoteListener);
         }
 
         [Test]
         public void send_message_by_category()
         {
-            EventAggregator.SendMessage("category1", "some message");
+            GlobalMessageTracking.SendMessage("category1", "some message");
 
             var expected = new ServiceMessage
             {

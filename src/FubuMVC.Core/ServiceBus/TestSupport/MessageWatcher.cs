@@ -23,7 +23,7 @@ namespace FubuMVC.Core.ServiceBus.TestSupport
             MessageTrack track = MessageTrack.ForReceived(message, message.Envelope.CorrelationId);
             track.Type = track.FullName = MessageTrackType;
 
-            FubuMVC.Core.Services.Messaging.EventAggregator.SendMessage(track);
+            FubuMVC.Core.Services.Messaging.GlobalMessageTracking.SendMessage(track);
         }
 
         public void Handle(ChainExecutionStarted message)
@@ -33,7 +33,7 @@ namespace FubuMVC.Core.ServiceBus.TestSupport
             MessageTrack track = MessageTrack.ForSent(message, message.Envelope.CorrelationId);
             track.Type = track.FullName = MessageTrackType;
 
-            FubuMVC.Core.Services.Messaging.EventAggregator.SendMessage(track);
+            FubuMVC.Core.Services.Messaging.GlobalMessageTracking.SendMessage(track);
         }
 
         public void Handle(EnvelopeSent message)
@@ -63,7 +63,7 @@ namespace FubuMVC.Core.ServiceBus.TestSupport
                 Status = status
             };
 
-            FubuMVC.Core.Services.Messaging.EventAggregator.SendMessage(track);
+            FubuMVC.Core.Services.Messaging.GlobalMessageTracking.SendMessage(track);
         }
     }
 }

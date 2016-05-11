@@ -29,7 +29,7 @@ namespace Fubu.Running
 
         public IDisposable Load(Dictionary<string, string> properties)
         {
-            EventAggregator.Messaging.AddListener(this);
+            GlobalMessageTracking.Messaging.AddListener(this);
             return this;
         }
 

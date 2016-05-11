@@ -28,12 +28,12 @@ namespace FubuMVC.Core.Services.Remote
             //System.Environment.CurrentDirectory = domainSetup.ApplicationBase;
              
             // TODO -- need to handle exceptions gracefully here
-            EventAggregator.Start((IRemoteListener) remoteListener);
+            GlobalMessageTracking.Start((IRemoteListener) remoteListener);
 
             var loader = ApplicationLoaderFinder.FindLoader(bootstrapperName);
             _shutdown = loader.Load(properties);
 
-            EventAggregator.SendMessage(new LoaderStarted
+            GlobalMessageTracking.SendMessage(new LoaderStarted
             {
                 LoaderTypeName = _shutdown.GetType().FullName
             });
@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Services.Remote
 
         public void Shutdown()
         {
-            EventAggregator.Stop();
+            GlobalMessageTracking.Stop();
             if (_shutdown != null) _shutdown.Dispose();
         }
 
@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Services.Remote
 
         public void SendJson(string json)
         {
-            EventAggregator.Messaging.SendJson(json);
+            GlobalMessageTracking.Messaging.SendJson(json);
         }
     }
 }

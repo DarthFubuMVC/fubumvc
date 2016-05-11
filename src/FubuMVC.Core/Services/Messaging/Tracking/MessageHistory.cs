@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
             ClearAll();
 
             _hubs.AddRange(runners.Select(x => x.Messaging));
-            _hubs.Add(EventAggregator.Messaging);
+            _hubs.Add(GlobalMessageTracking.Messaging);
             _listener = new MessageTrackListener();
 
             _hubs.Each(x => x.AddListener(_listener));
@@ -70,7 +70,7 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
             _lock.Read(() => {
                 if (!_outstanding.Any())
                 {
-                    EventAggregator.SendMessage(new AllMessagesComplete());
+                    GlobalMessageTracking.SendMessage(new AllMessagesComplete());
                 }
 
                 return true;

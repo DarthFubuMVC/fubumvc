@@ -39,7 +39,7 @@ namespace RemoteService
     {
         public IDisposable Load(Dictionary<string, string> properties)
         {
-            EventAggregator.Messaging.AddListener(this);
+            GlobalMessageTracking.Messaging.AddListener(this);
             return this;
         }
 
@@ -53,7 +53,7 @@ namespace RemoteService
             Task.Factory.StartNew(() =>
             {
                 Thread.Sleep(500);
-                EventAggregator.ReceivedMessage(message);
+                GlobalMessageTracking.ReceivedMessage(message);
             });
         }
     }

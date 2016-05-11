@@ -41,7 +41,7 @@ namespace Fubu.Running
             {
                 _server = _registry.ToRuntime();
 
-                EventAggregator.SendMessage(new ApplicationStarted
+                GlobalMessageTracking.SendMessage(new ApplicationStarted
                 {
                     ApplicationName = _registry.GetType().Name,
                     HomeAddress = _server.BaseAddress,
@@ -51,7 +51,7 @@ namespace Fubu.Running
             }
             catch (HostingFailedException e)
             {
-                EventAggregator.SendMessage(new InvalidApplication
+                GlobalMessageTracking.SendMessage(new InvalidApplication
                 {
                     ExceptionText = e.Message,
                     Message = "Access denied."
@@ -59,7 +59,7 @@ namespace Fubu.Running
             }
             catch (Exception e)
             {
-                EventAggregator.SendMessage(new InvalidApplication
+                GlobalMessageTracking.SendMessage(new InvalidApplication
                 {
                     ExceptionText = e.ToString(),
                     Message = "Bootstrapping {0} Failed!".ToFormat(_registry.GetType().Name)

@@ -52,7 +52,7 @@ namespace Serenity.ServiceBus
             _isStarted = false;
             if (Runtime != null)
             {
-                FubuMVC.Core.Services.Messaging.EventAggregator.Messaging.RemoveListener(_messageListener);
+                FubuMVC.Core.Services.Messaging.GlobalMessageTracking.Messaging.RemoveListener(_messageListener);
                 Runtime.Dispose();
                 Runtime = null;
             }
@@ -156,7 +156,7 @@ namespace Serenity.ServiceBus
 
             // Wireup the messaging session so the MessageHistory gets notified of messages on this node
             _messageListener = Runtime.Get<IMessagingSession>();
-            FubuMVC.Core.Services.Messaging.EventAggregator.Messaging.AddListener(_messageListener);
+            FubuMVC.Core.Services.Messaging.GlobalMessageTracking.Messaging.AddListener(_messageListener);
         }
     }
 

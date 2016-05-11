@@ -186,10 +186,10 @@ namespace FubuMVC.Tests.Services.Remote
 
                 var foo = new Foo();
 
-                EventAggregator.SentMessage(foo);
+                GlobalMessageTracking.SentMessage(foo);
 
 
-                EventAggregator.Messaging.WaitForMessage<AllMessagesComplete>(() => runner.SendRemotely(foo), 60000)
+                GlobalMessageTracking.Messaging.WaitForMessage<AllMessagesComplete>(() => runner.SendRemotely(foo), 60000)
                                    .ShouldNotBeNull();
 
             }
@@ -209,10 +209,10 @@ namespace FubuMVC.Tests.Services.Remote
 
                 var foo = new Foo();
 
-                EventAggregator.SentMessage(foo);
+                GlobalMessageTracking.SentMessage(foo);
 
 
-                EventAggregator.Messaging.WaitForMessage<AllMessagesComplete>(() => runner.SendRemotely(foo))
+                GlobalMessageTracking.Messaging.WaitForMessage<AllMessagesComplete>(() => runner.SendRemotely(foo))
                                    .ShouldNotBeNull();
             }
         }
