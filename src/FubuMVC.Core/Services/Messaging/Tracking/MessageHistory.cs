@@ -3,48 +3,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using FubuCore;
+using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.Services.Remote;
 
 namespace FubuMVC.Core.Services.Messaging.Tracking
 {
     public static class MessageHistory
     {
-        private readonly static IList<MessageTrack> _sent = new List<MessageTrack>();
-        private readonly static IList<MessageTrack> _received = new List<MessageTrack>();
-        private readonly static IList<MessageTrack> _outstanding = new List<MessageTrack>();
-        
-        private readonly static ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+        private static readonly IList<MessageTrack> _sent = new List<MessageTrack>();
+        private static readonly IList<MessageTrack> _received = new List<MessageTrack>();
+        private static readonly IList<MessageTrack> _outstanding = new List<MessageTrack>();
+
+        private static readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
         private static MessageTrackListener _listener;
 
-        private static readonly IList<IMessagingHub> _hubs = new List<IMessagingHub>(); 
+        private static readonly IList<IMessagingHub> _hubs = new List<IMessagingHub>();
 
-        public static void StartListening(params RemoteServiceRunner[] runners)
+        static MessageHistory()
+        {
+            ClearAll();
+        }
+
+
+        public static void ConnectRemoteListeners(params RemoteServiceRunner[] runners)
         {
             ClearAll();
 
-            _hubs.AddRange(runners.Select(x => x.Messaging));
-            _hubs.Add(GlobalMessageTracking.Messaging);
-            _listener = new MessageTrackListener();
-
-            _hubs.Each(x => x.AddListener(_listener));
+            var hubs = runners.Select(x => x.Messaging).ToArray();
+            hubs.Each(x => x.AddListener(_listener));
+            _hubs.AddRange(hubs);
         }
 
+        /// <summary>
+        /// This completely resets MessageHistory tracking and will disconnect
+        /// any remote listeners
+        /// </summary>
         public static void ClearAll()
         {
             ClearHistory();
 
             if (_listener != null)
             {
-                _hubs.Each(x => { if (_listener != null) x.RemoveListener(_listener); });
-                
+                _hubs.Each(x =>
+                {
+                    if (_listener != null) x.RemoveListener(_listener);
+                });
             }
 
             _hubs.Clear();
+
+            _hubs.Add(GlobalMessageTracking.Messaging);
+
+            _listener = new MessageTrackListener();
+            GlobalMessageTracking.Messaging.AddListener(_listener);
         }
 
         public static void ClearHistory()
         {
-            _lock.Write(() => {
+            _lock.Write(() =>
+            {
                 _sent.Clear();
                 _received.Clear();
                 _outstanding.Clear();
@@ -52,9 +69,16 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
         }
 
 
+        public static void Record(MessageLogRecord record)
+        {
+            var messageTrack = record.ToMessageTrack();
+            if (messageTrack != null) Record(messageTrack);
+        }
+
         public static void Record(MessageTrack track)
         {
-            _lock.Write(() => {
+            _lock.Write(() =>
+            {
                 if (track.Status == MessageTrack.Sent)
                 {
                     _sent.Add(track);
@@ -67,7 +91,8 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
                 }
             });
 
-            _lock.Read(() => {
+            _lock.Read(() =>
+            {
                 if (!_outstanding.Any())
                 {
                     GlobalMessageTracking.SendMessage(new AllMessagesComplete());
@@ -75,25 +100,29 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
 
                 return true;
             });
-
-
         }
 
         public static IEnumerable<MessageTrack> Received()
         {
             return _lock.Read(() => _received.ToArray());
-        } 
+        }
 
         public static IEnumerable<MessageTrack> Outstanding()
         {
             return _lock.Read(() => _outstanding.ToArray());
-        } 
+        }
 
         public static IEnumerable<MessageTrack> All()
         {
             return _lock.Read(() => _sent.Union(_received).ToList());
         }
 
+        public static bool WaitForWorkToFinish(Action action, int timeoutMilliseconds = 5000)
+        {
+            ClearHistory();
+            action();
+            return Wait.Until(() => !Outstanding().Any() && All().Any(), timeoutInMilliseconds: timeoutMilliseconds);
+        }
 
 
         public class MessageTrackListener : IListener<MessageTrack>
@@ -103,14 +132,5 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
                 Record(message);
             }
         }
-
-        public static bool WaitForWorkToFinish(Action action, int timeoutMilliseconds = 5000)
-        {
-            ClearHistory();
-            action();
-            return Wait.Until(() => !Outstanding().Any() && All().Any(), timeoutInMilliseconds: timeoutMilliseconds);
-        }
     }
-
-
 }

@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Logging
 {
@@ -31,6 +32,11 @@ namespace FubuMVC.Core.ServiceBus.Logging
             {
                 Message = "No Handler for Message"
             };
+        }
+
+        public override MessageTrack ToMessageTrack()
+        {
+            return null;
         }
 
         public override string ToString()

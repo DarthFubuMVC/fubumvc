@@ -49,8 +49,6 @@ namespace FubuMVC.Core.ServiceBus
 
             if (mode.InTesting())
             {
-                AddService<IListener, MessageWatcher>();
-
                 var def = new SmartInstance<MessagingSession>();
                 def.Singleton();
                 SetServiceIfNone(typeof(IMessagingSession), def);

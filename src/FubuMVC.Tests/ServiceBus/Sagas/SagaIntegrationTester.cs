@@ -35,7 +35,6 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             {
                 x.For<SagaSettings>().Use(InMemoryTransport.ToInMemory<SagaSettings>());
                 x.For<SagaLogger>().Use(theLogger);
-                x.For<IListener>().Add<MessageWatcher>();
             });
 
             var registry = new SagaTestRegistry();
@@ -44,7 +43,6 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
 
             theRuntime = registry.ToRuntime();
 
-            MessageHistory.StartListening();
         }
 
         [TearDown]
@@ -104,7 +102,6 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             {
                 x.For<SagaSettings>().Use(InMemoryTransport.ToInMemory<SagaSettings>());
                 x.For<SagaLogger>().Use(theLogger);
-                x.For<IListener>().Add<MessageWatcher>();
             });
 
             var registry = new SagaTestRegistry();

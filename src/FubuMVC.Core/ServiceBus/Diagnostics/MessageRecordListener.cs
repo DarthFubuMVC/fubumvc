@@ -2,6 +2,7 @@
 using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Logging;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Diagnostics
 {
@@ -22,8 +23,12 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
 
         public void DebugMessage(object message)
         {
-            var record = message.As<MessageLogRecord>().ToRecord();
+            var log = message.As<MessageLogRecord>();
+            var record = log.ToRecord();
+
             if (record.IsPollingJobRelated()) return;
+
+            MessageHistory.Record(log);
 
             _session.Record(record);
         }

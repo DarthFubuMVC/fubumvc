@@ -13,8 +13,8 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
         private readonly IList<MessageRecord> _all = new List<MessageRecord>();
         private readonly ChannelGraph _graph;
 
-        private readonly ConcurrentCache<string, MessageHistory> _histories =
-            new ConcurrentCache<string, MessageHistory>(id => new MessageHistory {Id = id});
+        private readonly ConcurrentCache<string, MessageLog> _histories =
+            new ConcurrentCache<string, MessageLog>(id => new MessageLog {Id = id});
 
         public MessagingSession(ChannelGraph graph)
         {
@@ -58,12 +58,12 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
             }
         }
 
-        public IEnumerable<MessageHistory> TopLevelMessages()
+        public IEnumerable<MessageLog> TopLevelMessages()
         {
             return _histories.Where(x => x.Parent == null).OrderBy(x => x.Timestamp);
         }
 
-        public IEnumerable<MessageHistory> AllMessages()
+        public IEnumerable<MessageLog> AllMessages()
         {
             return _histories.OrderBy(x => x.Timestamp);
         }

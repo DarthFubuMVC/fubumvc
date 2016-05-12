@@ -80,7 +80,6 @@ namespace FubuMVC.Tests.ServiceBus
             {
                 var c = runtime.Get<IContainer>();
 
-                c.ShouldHaveRegistration<IListener, MessageWatcher>();
                 c.DefaultRegistrationIs<IMessagingSession, MessagingSession>();
                 c.ShouldHaveRegistration<ILogListener, MessageRecordListener>();
             }
@@ -96,7 +95,6 @@ namespace FubuMVC.Tests.ServiceBus
             {
                 var c = runtime.Get<IContainer>();
 
-                c.ShouldNotHaveRegistration<IListener, MessageWatcher>();
                 c.Model.HasImplementationsFor<IMessagingSession>().ShouldBeFalse();
                 c.ShouldNotHaveRegistration<ILogListener, MessageRecordListener>();
             }

@@ -243,7 +243,7 @@ namespace Serenity
             Task.WaitAll(_subSystems.Select(x => x.Start()).ToArray());
 
 
-            MessageHistory.StartListening(_remoteSubSystems.Select(x => x.Runner).ToArray());
+            MessageHistory.ConnectRemoteListeners(_remoteSubSystems.Select(x => x.Runner).ToArray());
 
             beforeAll();
         }

@@ -2,6 +2,7 @@
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Logging
 {
@@ -17,6 +18,11 @@ namespace FubuMVC.Core.ServiceBus.Logging
             {
                 Message = "Chose continuation {0} from handler {1}".ToFormat(ContinuationType.Name, HandlerType.Name)
             };
+        }
+
+        public override MessageTrack ToMessageTrack()
+        {
+            return null;
         }
 
         protected bool Equals(EnvelopeContinuationChosen other)

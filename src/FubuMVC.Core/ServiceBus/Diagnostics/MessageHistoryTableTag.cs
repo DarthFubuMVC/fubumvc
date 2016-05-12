@@ -7,7 +7,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
 {
     public class MessageHistoryTableTag : TableTag
     {
-        public MessageHistoryTableTag(MessageHistory history)
+        public MessageHistoryTableTag(MessageLog log)
         {
             AddClass("table");
 
@@ -15,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
             Style("margin-top", "50px");
 
             AddHeaderRow(tr => {
-                tr.Header(history.Description).Attr("colspan", "5").Style("text-align", "left");
+                tr.Header(log.Description).Attr("colspan", "5").Style("text-align", "left");
             });
 
             AddHeaderRow(tr => {
@@ -28,7 +28,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
 
            
 
-            history.Records().Each(rec => {
+            log.Records().Each(rec => {
                 var headers = rec.Headers.IsNotEmpty()  ? rec.Headers.Split(';').ToArray() : new string[0];
                 
 

@@ -182,7 +182,7 @@ namespace FubuMVC.Tests.Services.Remote
                 runner.WaitForServiceToStart<SampleService.SampleService>();
                 runner.WaitForServiceToStart<SampleService.RemoteService>();
 
-                MessageHistory.StartListening(runner);
+                MessageHistory.ConnectRemoteListeners(runner);
 
                 var foo = new Foo();
 
@@ -204,7 +204,7 @@ namespace FubuMVC.Tests.Services.Remote
                 runner.WaitForServiceToStart<SampleService.SampleService>();
                 runner.WaitForServiceToStart<SampleService.RemoteService>();
 
-                MessageHistory.StartListening(runner);
+                MessageHistory.ConnectRemoteListeners(runner);
                 MessageHistory.ClearHistory();
 
                 var foo = new Foo();

@@ -518,7 +518,7 @@
     <Compile Include="ServiceBus\Subscriptions\when_creating_local_subscriptions.cs" />
     <Compile Include="ServiceBus\TestEnvelopeContext.cs" />
     <Compile Include="ServiceBus\TestingSupportClasses.cs" />
-    <Compile Include="ServiceBus\TestSupport\MessageWatcherTester.cs" />
+    <Compile Include="ServiceBus\TestSupport\MessageHistory_Record_Tracking_Tester.cs" />
     <Compile Include="ServiceBus\TimeoutRunnerTester.cs" />
     <Compile Include="ServiceBus\TransportActivatorTester.cs" />
     <Compile Include="ServiceBus\TransportSettingsTester.cs" />

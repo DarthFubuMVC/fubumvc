@@ -1,6 +1,8 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Logging
 {
@@ -36,6 +38,17 @@ namespace FubuMVC.Core.ServiceBus.Logging
             {
                 Message = "Message failed!",
                 ExceptionText = Exception.ToString()
+            };
+        }
+
+        public override MessageTrack ToMessageTrack()
+        {
+            return new MessageTrack
+            {
+                Type = "OutstandingEnvelope",
+                Id = Envelope.CorrelationId,
+                FullName = "{0}@{1}".ToFormat(Envelope.CorrelationId, Envelope.Destination),
+                Status = MessageTrack.Received
             };
         }
 

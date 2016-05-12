@@ -6,6 +6,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Logging;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
@@ -87,6 +88,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
                 ParentId = Envelope.ParentId,
                 Headers = "{0}={1}".ToFormat(Envelope.MessageTypeKey, Message.GetType().FullName)
             };
+        }
+
+        public override MessageTrack ToMessageTrack()
+        {
+            return null;
         }
     }
 }

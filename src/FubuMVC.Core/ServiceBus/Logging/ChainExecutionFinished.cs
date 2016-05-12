@@ -2,6 +2,8 @@
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.ServiceBus.TestSupport;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Logging
 {
@@ -24,6 +26,14 @@ namespace FubuMVC.Core.ServiceBus.Logging
             {
                 Message = "Finished Chain Execution"
             };
+        }
+
+        public override MessageTrack ToMessageTrack()
+        {
+            var track = MessageTrack.ForReceived(this, Envelope.CorrelationId);
+            track.Type = track.FullName = MessageTrackType;
+
+            return track;
         }
     }
 }

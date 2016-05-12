@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Logging;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Delayed
 {
@@ -31,6 +32,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Delayed
             {
                 Message = "Envelope added back to the queue"
             };
+        }
+
+        public override MessageTrack ToMessageTrack()
+        {
+            return null;
         }
     }
 }

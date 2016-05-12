@@ -6,8 +6,8 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
     {
         void ClearAll();
         void Record(MessageRecord record);
-        IEnumerable<MessageHistory> TopLevelMessages();
-        IEnumerable<MessageHistory> AllMessages();
+        IEnumerable<MessageLog> TopLevelMessages();
+        IEnumerable<MessageLog> AllMessages();
         IEnumerable<MessageRecord> All();
     }
 }

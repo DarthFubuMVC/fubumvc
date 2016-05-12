@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Logging;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Delayed
 {
@@ -18,6 +19,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Delayed
             {
                 Message = "Delayed envelope received"
             };
+        }
+
+        public override MessageTrack ToMessageTrack()
+        {
+            return null;
         }
 
         public override bool Equals(object obj)

@@ -39,13 +39,13 @@ namespace Serenity.ServiceBus
 
             yield return new HtmlTag("ol", x =>
             {
-                foreach (MessageHistory topLevelMessage in _session.TopLevelMessages().ToList())
+                foreach (MessageLog topLevelMessage in _session.TopLevelMessages().ToList())
                 {
                     x.Append(topLevelMessage.ToLeafTag());
                 }
             });
 
-            foreach (MessageHistory history in _session.AllMessages().ToList())
+            foreach (MessageLog history in _session.AllMessages().ToList())
             {
                 yield return new MessageHistoryTableTag(history);
             }

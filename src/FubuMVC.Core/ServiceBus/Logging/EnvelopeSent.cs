@@ -1,7 +1,9 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
 namespace FubuMVC.Core.ServiceBus.Logging
 {
@@ -55,9 +57,20 @@ namespace FubuMVC.Core.ServiceBus.Logging
             };
         }
 
+        public override MessageTrack ToMessageTrack()
+        {
+            return  new MessageTrack
+            {
+                Type = "OutstandingEnvelope",
+                Id = Envelope.CorrelationId,
+                FullName = "{0}@{1}".ToFormat(Envelope.CorrelationId, Uri),
+                Status = MessageTrack.Sent
+            };
+        }
+
         public override string ToString()
         {
-            return string.Format("Sent {0} to {1} ({2})", Envelope, Uri, Key);
+            return $"Sent {Envelope} to {Uri} ({Key})";
         }
     }
 }

@@ -5,9 +5,9 @@ using HtmlTags;
 
 namespace FubuMVC.Core.ServiceBus.Diagnostics
 {
-    public class MessageHistory : MessageRecordNode
+    public class MessageLog : MessageRecordNode
     {
-        private readonly IList<MessageHistory> _children = new List<MessageHistory>();
+        private readonly IList<MessageLog> _children = new List<MessageLog>();
         private readonly IList<MessageRecord> _records = new List<MessageRecord>(); 
 
         public string Id { get; set; }
@@ -23,16 +23,16 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
             return _records.OrderBy(x => x.Timestamp);
         }
 
-        public void AddChild(MessageHistory child)
+        public void AddChild(MessageLog child)
         {
             _children.Fill(child);
             child.Parent = this;
         }
 
-        public MessageHistory Parent { get; set; }
+        public MessageLog Parent { get; set; }
 
 
-        protected bool Equals(MessageHistory other)
+        protected bool Equals(MessageLog other)
         {
             return Id.Equals(other.Id);
         }
@@ -42,7 +42,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((MessageHistory) obj);
+            return Equals((MessageLog) obj);
         }
 
         public override int GetHashCode()

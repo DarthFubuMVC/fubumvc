@@ -282,7 +282,7 @@
     <Compile Include="ServiceBus\Configuration\SchedulerMaker.cs" />
     <Compile Include="ServiceBus\Configuration\UriExtensions.cs" />
     <Compile Include="ServiceBus\Diagnostics\IMessagingSession.cs" />
-    <Compile Include="ServiceBus\Diagnostics\MessageHistory.cs" />
+    <Compile Include="ServiceBus\Diagnostics\MessageLog.cs" />
     <Compile Include="ServiceBus\Diagnostics\MessageHistoryTableTag.cs" />
     <Compile Include="ServiceBus\Diagnostics\MessageRecord.cs" />
     <Compile Include="ServiceBus\Diagnostics\MessageRecordListener.cs" />
@@ -551,7 +551,6 @@
     <Compile Include="ServiceBus\Subscriptions\TransportNode.cs" />
     <Compile Include="ServiceBus\TaskExtensions.cs" />
     <Compile Include="ServiceBus\TestSupport\ClearAllTransports.cs" />
-    <Compile Include="ServiceBus\TestSupport\MessageWatcher.cs" />
     <Compile Include="ServiceBus\TestSupport\TransportCleanup.cs" />
     <Compile Include="ServiceBus\TestSupport\TransportCleanupActivator.cs" />
     <Compile Include="ServiceBus\TimeoutRunner.cs" />

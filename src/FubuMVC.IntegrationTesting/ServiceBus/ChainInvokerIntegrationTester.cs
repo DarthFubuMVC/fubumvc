@@ -17,12 +17,6 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
     [TestFixture, Explicit("Too flakey on CI")]
     public class ChainInvokerIntegrationTester
     {
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            MessageHistory.StartListening();
-        }
-
         [Test]
         public void invoking_a_chain_will_execute_completely_with_cascading_messages()
         {
