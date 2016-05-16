@@ -1,9 +1,10 @@
 ﻿using System.Globalization;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Localization
 {
-    public class LocalizationSettings : IFeatureSettings
+    public class LocalizationSettings : IFeatureSettings, DescribesItself
     {
         public LocalizationSettings()
         {
@@ -22,6 +23,13 @@ namespace FubuMVC.Core.Localization
             {
                 registry.Services.ReplaceService(DefaultCulture);
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription = "Localization Configuration";
+            description.Properties[nameof(DefaultCulture)] = DefaultCulture.ToString();
+            description.Properties[nameof(Enabled)] = Enabled.ToString();
         }
     }
 }

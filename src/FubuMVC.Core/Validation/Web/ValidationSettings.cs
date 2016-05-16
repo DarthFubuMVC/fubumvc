@@ -34,8 +34,8 @@ namespace FubuMVC.Core.Validation.Web
         }
 
         public HttpStatusCode StatusCode { get; private set; }
-        public RemoteRuleExpression Remotes { get { return new RemoteRuleExpression(_remoteFilters); } }
-        public IEnumerable<IRemoteRuleFilter> Filters { get { return _remoteFilters; } }
+        public RemoteRuleExpression Remotes => new RemoteRuleExpression(_remoteFilters);
+        public IEnumerable<IRemoteRuleFilter> Filters => _remoteFilters;
 
         public Func<BehaviorChain, bool> ExcludeFormActivation { get; set; } = chain => false;
 

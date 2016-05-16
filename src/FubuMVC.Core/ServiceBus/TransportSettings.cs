@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -26,7 +27,7 @@ namespace FubuMVC.Core.ServiceBus
         AllInMemory
     }
 
-    public class TransportSettings : IFeatureSettings
+    public class TransportSettings : IFeatureSettings, DescribesItself
     {
         public readonly IList<ISagaStorage> SagaStorageProviders;
         public readonly IList<Type> SettingTypes = new List<Type>();
@@ -42,7 +43,18 @@ namespace FubuMVC.Core.ServiceBus
             InMemoryTransport = InMemoryTransportMode.Disabled;
         }
 
-        
+        public void Describe(Description description)
+        {
+            description.Properties[nameof(Enabled)] = Enabled.ToString();
+            description.Properties["Debugging Tracing Enabled"] = DebugEnabled.ToString();
+            description.Properties[nameof(DelayMessagePolling)] = $"{DelayMessagePolling} ms";
+            description.Properties[nameof(ListenerCleanupPolling)] = $"{ListenerCleanupPolling} ms";
+            description.Properties[nameof(SubscriptionRefreshPolling)] = $"{SubscriptionRefreshPolling} ms";
+
+            description.Properties[nameof(InMemoryTransport)] = InMemoryTransport.ToString();
+        }
+
+
         public bool Enabled { get; set; }
 
         public InMemoryTransportMode InMemoryTransport { get; set; }
@@ -128,6 +140,8 @@ namespace FubuMVC.Core.ServiceBus
                 registry.AlterSettings<T>(x => InMemory.InMemoryTransport.AllChannelsAreInMemory(typeof(T), x));
             }
         }
+
+
     }
 
     

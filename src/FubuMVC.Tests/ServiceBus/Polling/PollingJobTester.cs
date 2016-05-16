@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         }
     }
 
-    public class PollingJobSettings
+    public class PollingJobSettings : DescribesItself
     {
         public PollingJobSettings()
         {
@@ -69,5 +69,9 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         }
 
         public double Polling { get; set; }
+        public void Describe(Description description)
+        {
+            description.Properties[nameof(Polling)] = $"{Polling} ms";
+        }
     }
 }

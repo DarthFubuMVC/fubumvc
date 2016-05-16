@@ -1,11 +1,23 @@
 ﻿using System;
 using FubuCore;
+using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.ServiceBus.Monitoring
 {
-    public class HealthMonitoringSettings
+    public class HealthMonitoringSettings : DescribesItself
     {
         private bool _initial = true;
+
+        public void Describe(Description description)
+        {
+            description.Properties[nameof(MinSeconds)] = MinSeconds.ToString();
+            description.Properties[nameof(MaxSeconds)] = MaxSeconds.ToString();
+            description.Properties[nameof(TakeOwnershipMessageTimeout)] = TakeOwnershipMessageTimeout.ToString();
+            description.Properties[nameof(HealthCheckMessageTimeout)] = HealthCheckMessageTimeout.ToString();
+            description.Properties[nameof(DeactivationMessageTimeout)] = DeactivationMessageTimeout.ToString();
+            description.Properties[nameof(TaskAvailabilityCheckTimeout)] = TaskAvailabilityCheckTimeout.ToString();
+            description.Properties[nameof(TaskActivationTimeout)] = TaskActivationTimeout.ToString();
+        }
 
         public int Seed
         {

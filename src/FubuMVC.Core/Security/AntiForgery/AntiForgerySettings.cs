@@ -1,10 +1,11 @@
 ﻿using System;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Security.AntiForgery
 {
-    public class AntiForgerySettings : IFeatureSettings
+    public class AntiForgerySettings : IFeatureSettings, DescribesItself
     {
         public bool Enabled { get; set; }
 
@@ -20,6 +21,13 @@ namespace FubuMVC.Core.Security.AntiForgery
 
             registry.Services.IncludeRegistry<AntiForgeryServiceRegistry>();
             registry.Policies.Local.Add<AntiForgeryPolicy>();
+        }
+
+        public void Describe(Description description)
+        {
+            description.Properties[nameof(Enabled)] = Enabled.ToString();
+            description.Properties[nameof(Path)] = Path;
+            description.Properties[nameof(Domain)] = Domain;
         }
     }
 }

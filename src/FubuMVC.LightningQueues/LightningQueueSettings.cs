@@ -1,8 +1,10 @@
 ﻿using System;
+using FubuCore.Descriptions;
+using HtmlTags;
 
 namespace FubuMVC.LightningQueues
 {
-    public class LightningQueueSettings
+    public class LightningQueueSettings : DescribesItself
     {
         public LightningQueueSettings()
         {
@@ -16,6 +18,20 @@ namespace FubuMVC.LightningQueues
             NumberOfReceivedMessageIdsToKeep = 10000;
             OldestMessageInOutgoingHistory = TimeSpan.FromDays(1.0);
             OldestMessageInProcessedHistory = TimeSpan.FromDays(1.0);
+        }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription = "Lightning Queues Configuration";
+
+            description.Properties[nameof(DefaultPort)] = DefaultPort.ToString();
+            description.Properties[nameof(PurgeQueuesPolling)] = PurgeQueuesPolling.ToString();
+            description.Properties[nameof(EnableOutgoingMessageHistory)] = EnableOutgoingMessageHistory.ToString();
+            description.Properties[nameof(EnableProcessedMessageHistory)] = EnableProcessedMessageHistory.ToString();
+            description.Properties[nameof(NumberOfMessagesToKeepInOutgoingHistory)] = NumberOfMessagesToKeepInOutgoingHistory.ToString();
+            description.Properties[nameof(NumberOfReceivedMessageIdsToKeep)] = NumberOfReceivedMessageIdsToKeep.ToString();
+            description.Properties[nameof(OldestMessageInOutgoingHistory)] = OldestMessageInOutgoingHistory.ToString();
+            description.Properties[nameof(OldestMessageInProcessedHistory)] = OldestMessageInProcessedHistory.ToString();
         }
 
         public bool Disabled { get; set; }
@@ -44,5 +60,6 @@ namespace FubuMVC.LightningQueues
         public TimeSpan OldestMessageInOutgoingHistory { get; set; }
 
         public TimeSpan OldestMessageInProcessedHistory { get; set; }
+
     }
 }

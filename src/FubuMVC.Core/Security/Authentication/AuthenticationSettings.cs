@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -11,10 +12,9 @@ using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core.Security.Authentication
 {
-    public class AuthenticationSettings : IFeatureSettings
+    public class AuthenticationSettings : IFeatureSettings, DescribesItself
     {
         private Func<RoutedChain, bool> _exclusions = c => false;
-        private readonly AuthenticationChain _strategies;
 
         public AuthenticationSettings()
         {
@@ -25,7 +25,23 @@ namespace FubuMVC.Core.Security.Authentication
             CooloffPeriodInMinutes = 60;
             MembershipEnabled = MembershipStatus.Enabled;
 
-            _strategies = new AuthenticationChain();
+            Strategies = new AuthenticationChain();
+        }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription = "Authentication Configuration for the Running Application";
+            description.Properties[nameof(Enabled)] = Enabled.ToString();
+            description.Properties[nameof(ExcludeDiagnostics)] = ExcludeDiagnostics.ToString();
+            description.Properties[nameof(ExpireInMinutes)] = ExpireInMinutes.ToString();
+            description.Properties[nameof(SlidingExpiration)] = SlidingExpiration.ToString();
+            description.Properties[nameof(MaximumNumberOfFailedAttempts)] = MaximumNumberOfFailedAttempts.ToString();
+            description.Properties[nameof(MembershipEnabled)] = MembershipEnabled.ToString();
+            description.Properties[nameof(NeverExpires)] = NeverExpires.ToString();
+
+            description.AddChild("Saml2", Saml2);
+
+            description.AddList("Strategies", Strategies);
         }
 
         public Saml Saml2 { get; set; } = new Saml();
@@ -40,10 +56,7 @@ namespace FubuMVC.Core.Security.Authentication
         ///     Register and orders the IAuthenticationStrategy's applied to this
         ///     FubuMVC application
         /// </summary>
-        public AuthenticationChain Strategies
-        {
-            get { return _strategies; }
-        }
+        public AuthenticationChain Strategies { get; }
 
         public Func<RoutedChain, bool> ExcludeChains
         {
@@ -133,7 +146,7 @@ namespace FubuMVC.Core.Security.Authentication
 
         }
 
-        public class Saml
+        public class Saml : DescribesItself
         {
             public Saml()
             {
@@ -147,7 +160,17 @@ namespace FubuMVC.Core.Security.Authentication
             public bool EnforceConditionalTimeSpan { get; set; }
 
             public bool Enabled { get; set; }
+            public void Describe(Description description)
+            {
+                description.ShortDescription = "Saml2 Configuration";
+                description.Properties[nameof(Enabled)] = Enabled.ToString();
+                description.Properties[nameof(RequireCertificate)] = RequireCertificate.ToString();
+                description.Properties[nameof(RequireSignature)] = RequireSignature.ToString();
+                description.Properties[nameof(EnforceConditionalTimeSpan)] = EnforceConditionalTimeSpan.ToString();
+            }
         }
+
+
     }
 
 
