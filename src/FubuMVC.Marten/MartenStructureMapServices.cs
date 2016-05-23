@@ -21,7 +21,7 @@ namespace FubuMVC.Marten
                 return session;
             });
 
-            For<IDocumentSession>().Use(c => c.GetInstance<ISessionBoundary>().Session());
+            For<IDocumentSession>().UseIfNone(c => c.GetInstance<ISessionBoundary>().Session());
             For<ISessionBoundary>().Use<SessionBoundary>();
             For<ITransaction>().Use<MartenTransaction>();
 
