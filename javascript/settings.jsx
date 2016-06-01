@@ -3,6 +3,10 @@
 var React = FubuDiagnostics.React;
 var Router = require('react-router');
 
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+
 var SettingsTable = React.createClass({
 	getInitialState: function(){
 		return {
@@ -24,7 +28,7 @@ var SettingsTable = React.createClass({
 		}
 
 		var rows = this.state.settings.map(function(s, i){
-			var url = "#settings/setting-details/" + encodeURIComponent(s.type);
+			var url = "#settings/setting-details/" + replaceAll(encodeURIComponent(s.type), '.', '_');
 			
 			return (
 				<tr>
