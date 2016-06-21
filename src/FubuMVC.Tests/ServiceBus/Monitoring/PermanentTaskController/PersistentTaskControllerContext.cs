@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 
             _controller = new Lazy<PersistentTaskController>(() => {
 
-                var controller = new PersistentTaskController(theGraph, theLogger, this, sources);
+                var controller = new PersistentTaskController(theGraph, theLogger, this, sources.ToArray());
 
                 sources.SelectMany(x => x.FakeTasks()).Select(x => x.Subject)
                     .Each(subject => controller.FindAgent(subject));

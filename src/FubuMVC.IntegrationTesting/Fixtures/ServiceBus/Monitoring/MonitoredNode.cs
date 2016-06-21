@@ -63,10 +63,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
             return _sources[uri.Scheme][uri];
         }
 
-        public string Id
-        {
-            get { return _nodeId; }
-        }
+        public string Id => _nodeId;
 
         public void Startup(bool monitoringEnabled, ISubscriptionPersistence persistence)
         {

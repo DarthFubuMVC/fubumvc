@@ -10,52 +10,40 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
         private readonly Uri _subject;
         private readonly ITransportPeer[] _peers;
         private int _index;
-        private readonly TaskCompletionSource<ITransportPeer> _completion;
 
         public OrderedAssignment(Uri subject, IEnumerable<ITransportPeer> peers)
         {
             _subject = subject;
             _peers = peers.ToArray();
             _index = 0;
-
-            _completion = new TaskCompletionSource<ITransportPeer>(TaskCreationOptions.AttachedToParent);
         }
 
-        public Task<ITransportPeer> SelectOwner()
+        public async Task<ITransportPeer> SelectOwner()
         {
-            tryToSelect();
-
-            return _completion.Task;
+            return await tryToSelect().ConfigureAwait(false);
         }
 
-        private Task tryToSelect()
+        private async Task<ITransportPeer> tryToSelect()
         {
             var transportPeer = _peers[_index++];
-            return transportPeer.TakeOwnership(_subject).ContinueWith(t => {
-                if (shouldContinue(t))
+
+            try
+            {
+                var status = await transportPeer.TakeOwnership(_subject).ConfigureAwait(false);
+
+                if (status == OwnershipStatus.AlreadyOwned || status == OwnershipStatus.OwnershipActivated)
                 {
-                    tryToSelect();
+                    return transportPeer;
                 }
-                else if (t.Result == OwnershipStatus.AlreadyOwned || t.Result == OwnershipStatus.OwnershipActivated)
-                {
-                    _completion.SetResult(transportPeer);
-                }
-                else
-                {
-                    _completion.SetResult(null);
-                }
-            });
-        }
+            }
+            catch (Exception)
+            {
+                // TODO -- maybe log this one?
+            }
 
-        private bool shouldContinue(Task<OwnershipStatus> task)
-        {
-            if (_index >= _peers.Length) return false;
+            if (_index >= _peers.Length) return null;
 
-            if (task.IsFaulted) return true;
-
-            if (task.Result == OwnershipStatus.OwnershipActivated || task.Result == OwnershipStatus.AlreadyOwned) return false;
-
-            return true;
+            return await tryToSelect().ConfigureAwait(false);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 {
     public class FakePersistentTask : IPersistentTask
     {
-        private IEnumerable<string> _preferredNodes = new string[0];
         public Exception ActivationException = null;
         public Exception AssertAvailableException = null;
         public Exception DeactivateException = null;
@@ -30,11 +29,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
             ActivationException = AssertAvailableException = null;
         }
 
-        public IEnumerable<string> PreferredNodes
-        {
-            get { return _preferredNodes; }
-            set { _preferredNodes = value; }
-        }
+        public IEnumerable<string> PreferredNodes { get; set; } = new string[0];
 
         public Uri Subject { get; private set; }
 
@@ -72,7 +67,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 
         public Task<ITransportPeer> SelectOwner(IEnumerable<ITransportPeer> peers)
         {
-            var ordered = _preferredNodes.Select(x => peers.FirstOrDefault(_ => _.NodeId == x))
+            var ordered = PreferredNodes.Select(x => peers.FirstOrDefault(_ => _.NodeId == x))
                 .Where(x => x != null);
 
             StoryTellerAssert.Fail(!ordered.Any(), "No preferred nodes established for this test node");

@@ -8,9 +8,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 {
     public class TaskHealthAssignmentPlanner
     {
-        private readonly IEnumerable<Uri> _permanentTasks;
         private readonly IList<ITransportPeer> _availablePeers = new List<ITransportPeer>();
-        private readonly IList<ITransportPeer> _unavailablePeers = new List<ITransportPeer>();
 
         private readonly Cache<Uri, TaskAssignmentStatus> _status
             = new Cache<Uri, TaskAssignmentStatus>(x => new TaskAssignmentStatus(x));
@@ -19,8 +17,11 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public TaskHealthAssignmentPlanner(IEnumerable<Uri> permanentTasks)
         {
-            _permanentTasks = permanentTasks;
-            _permanentTasks.Each(x => _status.FillDefault(x));
+            foreach (var task in permanentTasks)
+            {
+                _status.FillDefault(task);
+            }
+
         }
 
         public void Add(ITransportPeer peer, TaskHealthResponse response)
@@ -30,9 +31,6 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
             if (response.ResponseFailed)
             {
-                _unavailablePeers.Add(peer);
-
-
                 _removals[peer].AddRange(subjects);
             }
             else
@@ -80,22 +78,23 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             public IList<ITransportPeer> ValidOwners = new List<ITransportPeer>();
             public IList<ITransportPeer> InvalidOwners = new List<ITransportPeer>();
 
-            public IEnumerable<Task> ToTasks(IPersistentTasks tasks,
-                IEnumerable<ITransportPeer> availablePeers)
+            public IEnumerable<Task> ToTasks(IPersistentTasks tasks, IList<ITransportPeer> availablePeers)
             {
                 switch (ValidOwners.Count)
                 {
                     case 0:
                         yield return tasks.Reassign(Subject, availablePeers, InvalidOwners);
                         break;
+
                     case 1:
                         foreach (var transportPeer in InvalidOwners)
                         {
                             yield return transportPeer.Deactivate(Subject);
                         }
                         break;
+
                     default:
-                        yield return tasks.Reassign(Subject, availablePeers, InvalidOwners.Union(ValidOwners));
+                        yield return tasks.Reassign(Subject, availablePeers, InvalidOwners.Union(ValidOwners).ToList());
                         break;
                 }
             }

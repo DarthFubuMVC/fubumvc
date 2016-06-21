@@ -40,7 +40,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public override string ToString()
         {
-            return string.Format("Subject: {0}, Status: {1}", Subject, Status);
+            return $"Subject: {Subject}, Status: {Status}";
         }
     }
 }

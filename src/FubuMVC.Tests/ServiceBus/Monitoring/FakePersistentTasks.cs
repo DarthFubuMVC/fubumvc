@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             }
         }
 
-        public Task Reassign(Uri subject, IEnumerable<ITransportPeer> availablePeers, IEnumerable<ITransportPeer> deactivations)
+        public Task Reassign(Uri subject, IList<ITransportPeer> availablePeers, IList<ITransportPeer> deactivations)
         {
             throw new NotImplementedException();
         }

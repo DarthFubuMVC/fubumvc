@@ -58,7 +58,7 @@ namespace FubuMVC.IntegrationTesting
         {
             using (var runner = new StoryTeller.SpecRunner<TestSystem>())
             {
-                runner.Run("ServiceBus/Basics/Sending a message that results in replies");
+                runner.Run("ServiceBus/HealthMonitoring/Simple assignment of dormant tasks");
                 runner.OpenResultsInBrowser();
             }
         }

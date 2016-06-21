@@ -35,7 +35,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public override string ToString()
         {
-            return string.Format("Deactivate Task: {0}", Subject);
+            return $"Deactivate Task: {Subject}";
         }
     }
 }

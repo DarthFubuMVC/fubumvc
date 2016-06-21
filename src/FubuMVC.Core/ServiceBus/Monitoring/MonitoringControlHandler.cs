@@ -23,60 +23,50 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             _controller = controller;
         }
 
-        public Task<TaskHealthResponse> Handle(TaskHealthRequest request)
+        public async Task<TaskHealthResponse> Handle(TaskHealthRequest request)
         {
-            Debug.WriteLine("Received message {0} from {1}", request, _envelope.ReplyUri);
+            Debug.WriteLine($"Received message {request} from {_envelope.ReplyUri}");
 
-            return _controller.CheckStatusOfOwnedTasks().ContinueWith(t => {
-                if (t.IsFaulted)
-                {
-                    return TaskHealthResponse.ErrorFor(request.Subjects);
-                }
+            try
+            {
+                var response = await _controller.CheckStatusOfOwnedTasks().ConfigureAwait(false);
 
-                var response = t.Result;
                 response.AddMissingSubjects(request.Subjects);
 
-                Debug.WriteLine("Responding with {0} on node {1} from health request from {2}", response, _graph.NodeId, _envelope.ReplyUri);
+                Debug.WriteLine($"Responding with {response} on node {_graph.NodeId} from health request from {_envelope.ReplyUri}");
 
                 return response;
-            });
+            }
+            catch (Exception e)
+            {
+                return TaskHealthResponse.ErrorFor(request.Subjects);
+            }
         }
 
-        public Task<TaskDeactivationResponse> Handle(TaskDeactivation deactivation)
+        public async Task<TaskDeactivationResponse> Handle(TaskDeactivation deactivation)
         {
-            return
-                _controller.Deactivate(deactivation.Subject)
-                    .ContinueWith(
-                        t => new TaskDeactivationResponse
-                        {
-                            Subject = deactivation.Subject, 
-                            Success = t.Result
-                        });
+            var status = await _controller.Deactivate(deactivation.Subject).ConfigureAwait(false);
+
+            return new TaskDeactivationResponse {Subject = deactivation.Subject, Success = status};
         }
 
-        public Task<TakeOwnershipResponse> Handle(TakeOwnershipRequest request)
+        public async Task<TakeOwnershipResponse> Handle(TakeOwnershipRequest request)
         {
-            return _controller.TakeOwnership(request.Subject).ContinueWith(t => new TakeOwnershipResponse
+            var status = await _controller.TakeOwnership(request.Subject).ConfigureAwait(false);
+
+            var response = new TakeOwnershipResponse
             {
                 NodeId = _graph.NodeId,
-                Status = t.Result,
+                Status = status,
                 Subject = request.Subject
-            }).ContinueWith(t => {
-                _logger.InfoMessage(() => {
-                    var @event = new TakeOwnershipRequestReceived(request.Subject, _envelope.ReplyUri);
-                    if (t.Result != null) @event.Status = t.Result.Status;
+            };
 
-                    return @event;
-                });
-
-                return t.Result;
+            _logger.InfoMessage(() => new TakeOwnershipRequestReceived(request.Subject, _envelope.ReplyUri)
+            {
+                Status = response.Status
             });
-        }
-    }
 
-    public class TaskDeactivationResponse
-    {
-        public Uri Subject { get; set; }
-        public bool Success { get; set; }
+            return response;
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public override string ToString()
         {
-            return string.Format("Owner: {0}, Id: {1}", Owner, Id);
+            return $"Owner: {Owner}, Id: {Id}";
         }
     }
 }

@@ -9,26 +9,6 @@ using FubuMVC.Core.ServiceBus.Configuration;
 
 namespace FubuMVC.Core.ServiceBus.Monitoring
 {
-    public interface IPersistentTasks
-    {
-        IPersistentTask FindTask(Uri subject);
-        IPersistentTaskAgent FindAgent(Uri subject);
-        string NodeId { get; }
-
-        Task Reassign(Uri subject, IEnumerable<ITransportPeer> availablePeers, IEnumerable<ITransportPeer> deactivations);
-    }
-
-    public interface IPersistentTaskController
-    {
-        Task<HealthStatus> CheckStatus(Uri subject);
-        Task<bool> Deactivate(Uri subject);
-        Task EnsureTasksHaveOwnership();
-        Task<OwnershipStatus> TakeOwnership(Uri subject);
-        Task<TaskHealthResponse> CheckStatusOfOwnedTasks();
-        IEnumerable<Uri> ActiveTasks();
-        IEnumerable<Uri> PermanentTasks();
-    }
-
     public class PersistentTaskController : ITransportPeer, IPersistentTasks, IPersistentTaskController
     {
         private readonly ChannelGraph _graph;
@@ -45,8 +25,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
         private readonly Uri[] _permanentTasks;
 
 
-        public PersistentTaskController(ChannelGraph graph, ILogger logger, ITaskMonitoringSource factory,
-            IEnumerable<IPersistentTaskSource> sources)
+        public PersistentTaskController(ChannelGraph graph, ILogger logger, ITaskMonitoringSource factory, IList<IPersistentTaskSource> sources)
         {
             _graph = graph;
             _logger = logger;
@@ -55,29 +34,24 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
             _agents.OnMissing = uri => {
                 var persistentTask = FindTask(uri);
-                if (persistentTask == null) return null;
-
-                return _factory.BuildAgentFor(persistentTask);
+                return persistentTask == null ? null : _factory.BuildAgentFor(persistentTask);
             };
 
             _permanentTasks = sources.SelectMany(x => x.PermanentTasks()).ToArray();
         }
 
-        public Task<HealthStatus> CheckStatus(Uri subject)
+        public async Task<HealthStatus> CheckStatus(Uri subject)
         {
             var agent = _agents[subject];
 
-            if (agent == null)
-            {
-                return HealthStatus.Unknown.ToCompletionTask();
-            }
-
-            return checkStatus(agent);
+            return agent == null ? HealthStatus.Unknown : await checkStatus(agent).ConfigureAwait(false);
         }
 
-        private Task<HealthStatus> checkStatus(IPersistentTaskAgent agent)
+        private static async Task<HealthStatus> checkStatus(IPersistentTaskAgent agent)
         {
-            return agent.IsActive ? agent.AssertAvailable() : HealthStatus.Inactive.ToCompletionTask();
+            return agent.IsActive 
+                ? await agent.AssertAvailable().ConfigureAwait(false) 
+                : HealthStatus.Inactive;
         }
 
 
@@ -86,9 +60,8 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             if (!_sources.Has(subject.Scheme)) return null;
 
             var source = _sources[subject.Scheme];
-            if (source == null) return null;
 
-            return source.CreateTask(subject);
+            return source?.CreateTask(subject);
         }
 
         public IPersistentTaskAgent FindAgent(Uri subject)
@@ -96,38 +69,43 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             return _agents[subject];
         }
 
-        public Task<bool> Deactivate(Uri subject)
+        public async Task<bool> Deactivate(Uri subject)
         {
             var agent = _agents[subject];
             if (agent == null)
             {
                 _logger.Info("Task '{0}' is not recognized by this node".ToFormat(subject));
 
-                return false.ToCompletionTask();
+                return false;
             }
 
-            return agent.Deactivate();
+            return await agent.Deactivate().ConfigureAwait(false);
         }
 
 
-        public Task EnsureTasksHaveOwnership()
+        public async Task EnsureTasksHaveOwnership()
         {
-            var healthChecks = allPeers().Select(x => x.CheckStatusOfOwnedTasks().ContinueWith(_ => {
-                return new {Peer = x, Response = _.Result};
-            }));
+            var healthChecks = allPeers().Select(async x =>
+            {
+                var status = await x.CheckStatusOfOwnedTasks().ConfigureAwait(false);
+                return new { Peer = x, Response = status };
+            });
 
-            return Task.WhenAll(healthChecks).ContinueWith(checks => {
-                var planner = new TaskHealthAssignmentPlanner(_permanentTasks);
-                checks.Result.Each(_ => planner.Add(_.Peer, _.Response));
+            var checks = await Task.WhenAll(healthChecks).ConfigureAwait(false);
 
-                var corrections = planner.ToCorrectionTasks(this);
+            var planner = new TaskHealthAssignmentPlanner(_permanentTasks);
 
-                return Task.WhenAll(corrections).ContinueWith(_ => {
+            foreach (var check in checks)
+            {
+                planner.Add(check.Peer, check.Response);
+            }
 
-                    _logger.Info(() => "Finished running task health monitoring on node " + NodeId);
 
-                }, TaskContinuationOptions.AttachedToParent);
-            }, TaskContinuationOptions.AttachedToParent);
+            var corrections = planner.ToCorrectionTasks(this);
+
+            await Task.WhenAll(corrections).ConfigureAwait(false);
+
+            _logger.Info(() => "Finished running task health monitoring on node " + NodeId);
         }
 
 
@@ -140,42 +118,49 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             }
         }
 
-        public Task<OwnershipStatus> TakeOwnership(Uri subject)
+        public async Task<OwnershipStatus> TakeOwnership(Uri subject)
         {
             _logger.InfoMessage(() => new TryingToAssignOwnership(subject, NodeId));
 
             var agent = _agents[subject];
             if (agent == null)
             {
-                return OwnershipStatus.UnknownSubject.ToCompletionTask();
+                return OwnershipStatus.UnknownSubject;
             }
 
             if (agent.IsActive)
             {
-                return OwnershipStatus.AlreadyOwned.ToCompletionTask();
+                return OwnershipStatus.AlreadyOwned;
             }
 
 
-            return agent.Activate();
+            return await agent.Activate().ConfigureAwait(false);
         }
 
-        public Task<TaskHealthResponse> CheckStatusOfOwnedTasks()
+        public async Task<TaskHealthResponse> CheckStatusOfOwnedTasks()
         {
-            var subjects = CurrentlyOwnedSubjects();
+            var subjects = CurrentlyOwnedSubjects().ToArray();
 
             if (!subjects.Any())
             {
-                return TaskHealthResponse.Empty().ToCompletionTask();
+                return TaskHealthResponse.Empty();
             }
 
             var checks = subjects
-                .Select(subject => CheckStatus(subject).ContinueWith(t => new PersistentTaskStatus(subject, t.Result)))
+                .Select(async subject =>
+                {
+                    var status = await CheckStatus(subject).ConfigureAwait(false);
+                    
+                    return new PersistentTaskStatus(subject, status);
+                })
                 .ToArray();
 
-            return Task.Factory.ContinueWhenAll(checks, tasks => new TaskHealthResponse
+            var statusList = await Task.WhenAll(checks).ConfigureAwait(false);
+
+            return new TaskHealthResponse
             {
-                Tasks = tasks.Select(x => x.Result).ToArray()
-            });
+                Tasks = statusList.ToArray()
+            };
         }
 
         public void RemoveOwnershipFromNode(IEnumerable<Uri> subjects)
@@ -200,50 +185,38 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
                 _factory.LocallyOwnedTasksAccordingToPersistence().Union(activeTasks).ToArray();
         }
 
-        public string NodeId
+        public string NodeId => _graph.NodeId;
+
+        public async Task Reassign(Uri subject, IList<ITransportPeer> availablePeers, IList<ITransportPeer> deactivations)
         {
-            get { return _graph.NodeId; }
+            await Task.WhenAll(deactivations.Select(x => x.Deactivate(subject))).ConfigureAwait(false);
+
+            _logger.InfoMessage(() => new ReassigningTask(subject, deactivations));
+
+            var agent = _agents[subject];
+            if (agent == null)
+            {
+                _logger.InfoMessage(() => new UnknownTask(subject, "Trying to reassign a persistent task"));
+                return;
+            }
+
+            try
+            {
+                var owner = await agent.AssignOwner(availablePeers).ConfigureAwait(false);
+                if (owner == null)
+                {
+                    _logger.InfoMessage(() => new UnableToAssignOwnership(subject));
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error(subject, "Failed while trying to assign ownership", e);
+            }
         }
 
-        public Task Reassign(Uri subject, IEnumerable<ITransportPeer> availablePeers, IEnumerable<ITransportPeer> deactivations)
-        {
-            deactivations = deactivations.ToArray();
-            return Task.WhenAll(deactivations.Select(x => x.Deactivate(subject)))
-                .ContinueWith(_ => {
-                    _logger.InfoMessage(() => new ReassigningTask(subject, deactivations));
-
-                    var agent = _agents[subject];
-                    if (agent == null)
-                    {
-                        _logger.InfoMessage(() => new UnknownTask(subject, "Trying to reassign a persistent task"));
-                        return true.ToCompletionTask();
-                    }
-                    else
-                    {
-                        return agent.AssignOwner(availablePeers).ContinueWith(t => {
-                            if (t.IsCompleted && t.Result == null)
-                            {
-                                _logger.InfoMessage(() => new UnableToAssignOwnership(subject));
-                            }
-
-                            if (t.IsFaulted)
-                            {
-                                _logger.Error(subject, "Failed while trying to assign ownership", t.Exception);
-                            }
-                        });
-                    }
-                }, TaskContinuationOptions.AttachedToParent);
-        }
-
-        string ITransportPeer.MachineName
-        {
-            get { return System.Environment.MachineName; }
-        }
+        string ITransportPeer.MachineName => System.Environment.MachineName;
 
         // TODO -- think this should be explicitly set later
-        public Uri ControlChannel
-        {
-            get { return _graph.ReplyUriList().FirstOrDefault(); }
-        }
+        public Uri ControlChannel => _graph.ReplyUriList().FirstOrDefault();
     }
 }

@@ -35,7 +35,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public override string ToString()
         {
-            return string.Format("TakeOwnershipRequest for subject: {0}", Subject);
+            return $"TakeOwnershipRequest for subject: {Subject}";
         }
     }
 }

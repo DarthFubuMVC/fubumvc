@@ -18,13 +18,7 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs
             _controller = controller;
         }
 
-        public string Protocol
-        {
-            get
-            {
-                return Uri.Scheme;
-            }
-        }
+        public string Protocol => Uri.Scheme;
 
         public IEnumerable<Uri> PermanentTasks()
         {
@@ -38,13 +32,7 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs
             return this;
         }
 
-        public Uri Subject
-        {
-            get
-            {
-                return Uri;
-            }
-        }
+        public Uri Subject => Uri;
 
         public void AssertAvailable()
         {
@@ -61,13 +49,7 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs
             _controller.Deactivate();
         }
 
-        public bool IsActive
-        {
-            get
-            {
-                return _controller.IsActive();
-            }
-        }
+        public bool IsActive => _controller.IsActive();
 
         public Task<ITransportPeer> SelectOwner(IEnumerable<ITransportPeer> peers)
         {

@@ -28,7 +28,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public override string ToString()
         {
-            return string.Format("TaskHealthRequest: {0}", Subjects.Select(x => x.ToString()).Join(", "));
+            return $"TaskHealthRequest: {Subjects.Select(x => x.ToString()).Join(", ")}";
         }
     }
 }

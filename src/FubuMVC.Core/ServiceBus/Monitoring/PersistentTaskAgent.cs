@@ -35,10 +35,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             _repository = repository;
         }
 
-        public Uri Subject
-        {
-            get { return _task.Subject; }
-        }
+        public Uri Subject => _task.Subject;
 
         public Task<HealthStatus> AssertAvailable()
         {
@@ -68,7 +65,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
                         return HealthStatus.Timedout;
 
                     default:
-                        throw new ArgumentOutOfRangeException("status", "Status " + status + " should not be possible here");
+                        throw new ArgumentOutOfRangeException($"status", "Status " + status + " should not be possible here");
                 }
             }, TaskCreationOptions.AttachedToParent);
         }
@@ -76,7 +73,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
         public Task<OwnershipStatus> Activate()
         {
             return Task.Factory.StartNew(
-                () => activate(),
+                activate,
                 TaskCreationOptions.AttachedToParent
                 );
         }
@@ -109,7 +106,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
         public Task<bool> Deactivate()
         {
             return Task.Factory.StartNew(
-                () => deactivate(),
+                deactivate,
                 TaskCreationOptions.AttachedToParent);
         }
 
