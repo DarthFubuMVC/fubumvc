@@ -70,7 +70,7 @@ NUGET
       Selenium.WebDriver (>= 2.48.0)
     Shouldly (2.5.0)
     Spark (1.7.5.0)
-    Storyteller (3.0.0.325-rc)
+    Storyteller (3.0.0.341-rc)
     System.Collections (4.0.10) - framework: dnxcore50
       System.Diagnostics.Debug (>= 4.0.0) - framework: dnxcore50
       System.Resources.ResourceManager (>= 4.0.0) - framework: dnxcore50
