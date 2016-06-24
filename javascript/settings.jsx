@@ -28,7 +28,7 @@ var SettingsTable = React.createClass({
 		}
 
 		var rows = this.state.settings.map(function(s, i){
-			var url = "#settings/setting-details/" + replaceAll(encodeURIComponent(s.type), '.', '_');
+			var url = "#settings/setting-details/" + replaceAll(encodeURIComponent(s.type), '\\.', '_');
 			
 			return (
 				<tr>
