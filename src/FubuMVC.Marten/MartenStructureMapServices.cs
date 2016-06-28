@@ -12,8 +12,8 @@ namespace FubuMVC.Marten
     {
         public MartenStructureMapServices()
         {
-            ForSingletonOf<IDocumentStore>().Use<DocumentStore>();
-            For<IQuerySession>().Use("Build a QuerySession with logging", c =>
+            ForSingletonOf<IDocumentStore>().UseIfNone<DocumentStore>();
+            For<IQuerySession>().UseIfNone("Build a QuerySession with logging", c =>
             {
                 var session = c.GetInstance<IDocumentStore>().QuerySession();
                 session.Logger = c.GetInstance<IMartenSessionLogger>();
@@ -22,12 +22,12 @@ namespace FubuMVC.Marten
             });
 
             For<IDocumentSession>().UseIfNone(c => c.GetInstance<ISessionBoundary>().Session());
-            For<ISessionBoundary>().Use<SessionBoundary>();
-            For<ITransaction>().Use<MartenTransaction>();
+            For<ISessionBoundary>().UseIfNone<SessionBoundary>();
+            For<ITransaction>().UseIfNone<MartenTransaction>();
 
 
-            ForSingletonOf<IPersistenceReset>().Use<MartenPersistenceReset>();
-            ForSingletonOf<ICompleteReset>().Use<CompleteReset>();
+            ForSingletonOf<IPersistenceReset>().UseIfNone<MartenPersistenceReset>();
+            ForSingletonOf<ICompleteReset>().UseIfNone<CompleteReset>();
             For<IInitialState>().UseIfNone<NulloInitialState>();
             For<IMartenSessionLogger>().UseIfNone<NulloMartenLogger>();
         }
