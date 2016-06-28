@@ -16,12 +16,10 @@ namespace FubuMVC.Core.ServiceBus.Polling
         private readonly TSettings _settings;
         private readonly ITimer _timer;
         private readonly Expression<Func<TSettings, double>> _intervalSource;
-        private readonly ScheduledExecution _scheduledExecution;
         private readonly PollingJobLatch _latch;
         private readonly Func<TSettings, double> _intervalFunc; 
         private readonly IList<TaskCompletionSource<object>> _waiters = new List<TaskCompletionSource<object>>(); 
         private readonly object _waiterLock = new object();
-        private readonly PollingJobChain _chain;
 
         public PollingJob(IServiceBus bus, IPollingJobLogger logger, TSettings settings,
             PollingJobChain chain, PollingJobLatch latch)
@@ -31,22 +29,16 @@ namespace FubuMVC.Core.ServiceBus.Polling
             _settings = settings;
             _timer = new DefaultTimer();
             _intervalSource = (Expression<Func<TSettings, double>>)chain.IntervalSource;
-            _scheduledExecution = chain.ScheduledExecution;
+            ScheduledExecution = chain.ScheduledExecution;
             _latch = latch;
 
             _intervalFunc = _intervalSource.Compile();
-            _chain = chain;
+            Chain = chain;
         }
 
-        public PollingJobChain Chain
-        {
-            get { return _chain; }
-        }
+        public PollingJobChain Chain { get; }
 
-        public ScheduledExecution ScheduledExecution
-        {
-            get { return _scheduledExecution; }
-        }
+        public ScheduledExecution ScheduledExecution { get; }
 
         public Task WaitForJobToExecute()
         {
@@ -64,13 +56,10 @@ namespace FubuMVC.Core.ServiceBus.Polling
             typeof(TJob).ForAttribute<DescriptionAttribute>(att => description.ShortDescription = att.Description);
             description.Properties["Interval"] = Interval + " ms";
             description.Properties["Config"] = _intervalSource.ToString();
-            description.Properties["Scheduled Execution"] = _scheduledExecution.ToString();
+            description.Properties["Scheduled Execution"] = ScheduledExecution.ToString();
         }
 
-        public double Interval
-        {
-            get { return _intervalFunc(_settings); }
-        }
+        public double Interval => _intervalFunc(_settings);
 
         public bool IsRunning()
         {
@@ -79,12 +68,13 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
         public void Start()
         {
-            if (_scheduledExecution == ScheduledExecution.RunImmediately)
+            if (ScheduledExecution == ScheduledExecution.RunImmediately)
             {
                 RunNow();
             }
 
             _timer.Start(RunNow, Interval);
+            
         }
 
         public void RunNow()
@@ -129,13 +119,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
             _timer.Stop();
         }
 
-        public Type JobType
-        {
-            get
-            {
-                return typeof (TJob);
-            }
-        }
+        public Type JobType => typeof (TJob);
 
         public void Dispose()
         {

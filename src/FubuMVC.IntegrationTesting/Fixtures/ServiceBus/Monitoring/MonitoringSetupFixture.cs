@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using StoryTeller;
 using StoryTeller.Grammars.Tables;
 
@@ -16,11 +19,17 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
         public override void SetUp()
         {
             _nodes = Context.State.Retrieve<MonitoredNodeGroup>();
+
+            // Really important to do this!
+            MonitoredNode.SubscriptionPersistence.ClearAll();
         }
 
         public override void TearDown()
         {
             _nodes.Startup();
+
+            var nodes = MonitoredNode.SubscriptionPersistence.AllNodes().Select(x => x.ToString()).Join(", ");
+            Debug.WriteLine($"The active transport nodes are {nodes}");
         }
 
         [FormatAs("The Health Monitoring job is enabled in all nodes")]

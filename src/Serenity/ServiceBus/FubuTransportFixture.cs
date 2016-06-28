@@ -6,7 +6,7 @@ namespace Serenity.ServiceBus
 {
     public abstract class FubuTransportActFixture : Fixture
     {
-        public int TimeoutInMilliseconds = 10000;
+        public int TimeoutInMilliseconds = 3000;
 
         public sealed override void SetUp()
         {

@@ -1,4 +1,4 @@
-<Spec id="cb1b865b-20ad-4c20-93f6-c07d76eedaf7" maxRetries="0" tags="" lifecycle="Regression" name="Assign on order of preference when some nodes are down" lastUpdated="Tuesday, September 22, 2015" expirationPeriod="0">
+<Spec id="cb1b865b-20ad-4c20-93f6-c07d76eedaf7" maxRetries="0" tags="" lifecycle="Acceptance" name="Assign on order of preference when some nodes are down" lastUpdated="Tuesday, September 22, 2015" expirationPeriod="0">
   <Monitoring id="176d5820-dd98-48a8-83c3-d28cd7120bbe">
     <Context>
       <MonitoringSetup id="0c61fa53-8bb8-48e7-b06f-86ce3ba0301d">

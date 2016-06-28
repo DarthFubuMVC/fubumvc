@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore.Util;
@@ -26,7 +27,6 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public void Add(ITransportPeer peer, TaskHealthResponse response)
         {
-
             var subjects = response.AllSubjects().ToArray();
 
             if (response.ResponseFailed)
@@ -35,6 +35,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             }
             else
             {
+                Debug.WriteLine("Detected an available peer: " + peer.NodeId);
                 _availablePeers.Add(peer);
 
                 response.Tasks.Each(x => _status[x.Subject].ReadPeerStatus(peer, x.Status));
@@ -64,53 +65,6 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
                     () => {
                         _removals.Each((node, subjects) => node.RemoveOwnershipFromNode(subjects));
                     });
-        }
-
-        public class TaskAssignmentStatus
-        {
-            public Uri Subject { get; private set; }
-
-            public TaskAssignmentStatus(Uri subject)
-            {
-                Subject = subject;
-            }
-
-            public IList<ITransportPeer> ValidOwners = new List<ITransportPeer>();
-            public IList<ITransportPeer> InvalidOwners = new List<ITransportPeer>();
-
-            public IEnumerable<Task> ToTasks(IPersistentTasks tasks, IList<ITransportPeer> availablePeers)
-            {
-                switch (ValidOwners.Count)
-                {
-                    case 0:
-                        yield return tasks.Reassign(Subject, availablePeers, InvalidOwners);
-                        break;
-
-                    case 1:
-                        foreach (var transportPeer in InvalidOwners)
-                        {
-                            yield return transportPeer.Deactivate(Subject);
-                        }
-                        break;
-
-                    default:
-                        yield return tasks.Reassign(Subject, availablePeers, InvalidOwners.Union(ValidOwners).ToList());
-                        break;
-                }
-            }
-
-
-            public void ReadPeerStatus(ITransportPeer peer, HealthStatus status)
-            {
-                if (status == HealthStatus.Active)
-                {
-                    ValidOwners.Add(peer);
-                }
-                else
-                {
-                    InvalidOwners.Add(peer);
-                }
-            }
         }
     }
 }

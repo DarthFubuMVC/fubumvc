@@ -39,6 +39,11 @@ namespace FubuMVC.Core.ServiceBus.Polling
             return _jobs[typeof(T)];
         }
 
+        public bool HasJob<T>()
+        {
+            return _jobs.Has(typeof(T));
+        }
+
         public PollingJobChain AddJob<TJob, TSettings>(Expression<Func<TSettings, double>> intervalSource)
             where TJob : IJob
         {

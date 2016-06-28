@@ -14,6 +14,15 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
 
+        public void ClearAll()
+        {
+            _lock.Write(() =>
+            {
+                _subscriptions.ClearAll();
+                _nodes.Clear();
+            });
+        }
+
         public IEnumerable<Subscription> LoadSubscriptions(string name, SubscriptionRole role)
         {
             return _lock.Read(() => {
@@ -55,7 +64,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
                 {
                     if (node.Id.IsEmpty())
                     {
-                        throw new ArgumentException("An Id string is required", "node");
+                        throw new ArgumentException("An Id string is required", nameof(node));
                     }
 
                     _nodes.Fill(node);
@@ -70,9 +79,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
 
         public IEnumerable<Subscription> AllSubscriptions()
         {
-            return _lock.Read(() => {
-                return _subscriptions.ToArray();
-            });
+            return _lock.Read(() => _subscriptions.ToArray());
         }
 
         public TransportNode LoadNode(string nodeId)

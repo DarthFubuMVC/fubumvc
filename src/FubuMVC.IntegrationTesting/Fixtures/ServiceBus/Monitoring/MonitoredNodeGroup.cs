@@ -4,16 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Subscriptions;
+using Serenity.ServiceBus;
+using StoryTeller;
 
 namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 {
     public class MonitoredNodeGroup : IDisposable
     {
         private readonly Cache<string, MonitoredNode> _nodes = new Cache<string, MonitoredNode>();
-        private readonly InMemorySubscriptionPersistence _persistence = new InMemorySubscriptionPersistence();
-
         private readonly System.Collections.Generic.IList<Action<MonitoredNode>> _configurations =
             new System.Collections.Generic.List<Action<MonitoredNode>>();
 
@@ -53,7 +54,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
             _nodes.Each(node =>
             {
                 _configurations.Each(x => x(node));
-                node.Startup(MonitoringEnabled, _persistence);
+                node.Startup(MonitoringEnabled);
             });
         }
 
@@ -65,7 +66,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
         public void SetTaskState(Uri subject, string node, string state)
         {
             var task = _nodes[node].TaskFor(subject);
-            task.SetState(state, _persistence, node);
+            task.SetState(state, MonitoredNode.SubscriptionPersistence, node);
         }
 
         public System.Collections.Generic.IEnumerable<TaskState> AssignedTasks()
@@ -76,7 +77,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
         public System.Collections.Generic.IEnumerable<TaskState> PersistedTasks()
         {
             return
-                _persistence.AllNodes()
+                MonitoredNode.SubscriptionPersistence.AllNodes()
                     .SelectMany(
                         node => { return node.OwnedTasks.Select(x => new TaskState {Node = node.Id, Task = x}); })
                     .Where(x => x.Task.Scheme != "scheduled");
@@ -90,7 +91,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
                     {
                         return
                             Task.Delay(MonitoredNode.Random.Next(25, 200))
-                                .ContinueWith(t => { return x.WaitForHealthCheck(); })
+                                .ContinueWith(t => x.WaitForHealthCheck())
                                 .Unwrap();
                     });
 
@@ -105,12 +106,24 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 
         public System.Collections.Generic.IEnumerable<TransportNode> GetPersistedNodes()
         {
-            return _persistence.NodesForGroup("Monitoring");
+            return MonitoredNode.SubscriptionPersistence.NodesForGroup("Monitoring");
         }
 
         public void WaitForHealthChecksOn(string node)
         {
-            _nodes[node].WaitForHealthCheck().Wait(15.Seconds());
+            _nodes[node].WaitForHealthCheck().Wait(10.Seconds());
+        }
+
+        public void AddLogs(ISpecContext context)
+        {
+            _nodes.Each(node =>
+            {
+                var session = node.Runtime.Get<IMessagingSession>();
+
+                var provider = new MessageContextualInfoProvider(session) {Title = node.Id, ShortTitle = node.Id};
+
+                context.Reporting.Log(node.Id, provider.ToHtml(), node.Id);
+            });
         }
     }
 

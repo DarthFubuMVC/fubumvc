@@ -90,10 +90,13 @@ namespace FubuMVC.Core.Registration
 
                 jobs.AddJob(PollingJobChain.For<DelayedEnvelopeProcessor, TransportSettings>(x => x.DelayMessagePolling));
                 jobs.AddJob(PollingJobChain.For<ExpiringListenerCleanup, TransportSettings>(x => x.ListenerCleanupPolling));
-                jobs.AddJob(PollingJobChain.For<HealthMonitorPollingJob, HealthMonitoringSettings>(x => x.Interval));
+
+                if (!jobs.HasJob<HealthMonitorPollingJob>())
+                {
+                    jobs.AddJob(PollingJobChain.For<HealthMonitorPollingJob, HealthMonitoringSettings>(x => x.Interval));
+                }
+                
                 jobs.AddJob(PollingJobChain.For<SubscriptionRefreshJob, TransportSettings>(x => x.SubscriptionRefreshPolling));
-
-
             }
         }
 

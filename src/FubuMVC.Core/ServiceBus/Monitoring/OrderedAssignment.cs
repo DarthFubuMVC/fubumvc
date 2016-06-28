@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,6 +21,8 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public async Task<ITransportPeer> SelectOwner()
         {
+            Debug.WriteLine($"Trying to assign a new task owner for {_subject} with available peers {_peers.Select(x => x.NodeId).Join(", ")}");
+
             return await tryToSelect().ConfigureAwait(false);
         }
 

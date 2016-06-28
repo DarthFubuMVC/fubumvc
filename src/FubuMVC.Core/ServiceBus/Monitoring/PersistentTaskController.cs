@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
@@ -89,12 +90,12 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             {
                 var status = await x.CheckStatusOfOwnedTasks().ConfigureAwait(false);
                 return new { Peer = x, Response = status };
-            });
+            }).ToArray();
 
             var checks = await Task.WhenAll(healthChecks).ConfigureAwait(false);
 
-            var planner = new TaskHealthAssignmentPlanner(_permanentTasks);
 
+            var planner = new TaskHealthAssignmentPlanner(_permanentTasks);
             foreach (var check in checks)
             {
                 planner.Add(check.Peer, check.Response);
@@ -189,6 +190,8 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public async Task Reassign(Uri subject, IList<ITransportPeer> availablePeers, IList<ITransportPeer> deactivations)
         {
+            Debug.WriteLine($"Reassigning task {subject}, available peers {availablePeers.Select(x => x.NodeId).Join(", ")}");
+
             await Task.WhenAll(deactivations.Select(x => x.Deactivate(subject))).ConfigureAwait(false);
 
             _logger.InfoMessage(() => new ReassigningTask(subject, deactivations));

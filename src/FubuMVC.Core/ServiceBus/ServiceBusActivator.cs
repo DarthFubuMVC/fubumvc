@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.Diagnostics.Packaging;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
@@ -13,15 +14,16 @@ namespace FubuMVC.Core.ServiceBus
         private readonly IScheduledJobController _scheduledJobs;
         private readonly PollingJobActivator _pollingJobs;
         private readonly TransportSettings _settings;
+        private readonly ChannelGraph _graph;
 
-        public ServiceBusActivator(TransportActivator transports, SubscriptionActivator subscriptions,
-            IScheduledJobController scheduledJobs, PollingJobActivator pollingJobs, TransportSettings settings)
+        public ServiceBusActivator(TransportActivator transports, SubscriptionActivator subscriptions, IScheduledJobController scheduledJobs, PollingJobActivator pollingJobs, TransportSettings settings, ChannelGraph graph)
         {
             _transports = transports;
             _subscriptions = subscriptions;
             _scheduledJobs = scheduledJobs;
             _pollingJobs = pollingJobs;
             _settings = settings;
+            _graph = graph;
         }
 
         public void Activate(IActivationLog log, IPerfTimer timer)

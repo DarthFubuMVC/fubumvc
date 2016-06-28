@@ -151,6 +151,11 @@ task :storyteller => [:compile] do
 	sh "packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm --build #{COMPILE_TARGET}"
 end
 
+desc "Run the storyteller specifications for health monitoring"
+task :servicebus => [:compile] do
+	sh "packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm --build #{COMPILE_TARGET} -w ServiceBus"
+end
+
 desc "Run the storyteller specifications"
 task :open_st => [:compile] do
 	sh "packages/Storyteller/tools/st.exe open src/FubuMVC.IntegrationTesting"

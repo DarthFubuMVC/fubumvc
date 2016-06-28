@@ -77,13 +77,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
         }
         
         // TODO -- make this an explictly configure thing some day
-        public Uri ControlChannel
-        {
-            get
-            {
-                return _addresses.FirstOrDefault();
-            }
-        }
+        public Uri ControlChannel => _addresses.FirstOrDefault();
 
         protected bool Equals(TransportNode other)
         {
@@ -101,6 +95,11 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
         public override int GetHashCode()
         {
             return (Id != null ? Id.GetHashCode() : 0);
+        }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}, MachineName: {MachineName}, NodeName: {NodeName}";
         }
     }
 }

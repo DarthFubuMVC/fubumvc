@@ -33,7 +33,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
                 response.AddMissingSubjects(request.Subjects);
 
-                Debug.WriteLine($"Responding with {response} on node {_graph.NodeId} from health request from {_envelope.ReplyUri}");
+                Debug.WriteLine($"Responding from node {_graph.NodeId} with {response} from health request from {_envelope.ReplyUri}");
 
                 return response;
             }

@@ -30,6 +30,8 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
         {
             var messages = _nodes.LoggedEvents().ToArray();
             var table = new TableTag();
+
+            table.AddClasses("table", "table-striped");
             table.AddHeaderRow(_ =>
             {
                 _.Header("Node");
@@ -51,6 +53,8 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 
 
             Context.Reporting.Log("Monitored Node Group", table.ToString());
+
+            _nodes.AddLogs(Context);
 
             _nodes.Dispose();
         }

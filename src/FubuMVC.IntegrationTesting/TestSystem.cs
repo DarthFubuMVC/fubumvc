@@ -1,21 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using FubuCore;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Basic;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.RavenDb.Reset;
 using Serenity;
 using ServiceNode;
-using Shouldly;
 using StoryTeller;
-using StoryTeller.Engine;
-using StoryTeller.Model.Lists;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting
@@ -54,15 +47,6 @@ namespace FubuMVC.IntegrationTesting
 
     public class TestSystem : SerenitySystem<WebsiteRegistry>
     {
-        public static void TryIt()
-        {
-            using (var runner = new StoryTeller.SpecRunner<TestSystem>())
-            {
-                runner.Run("ServiceBus/HealthMonitoring/Simple assignment of dormant tasks");
-                runner.OpenResultsInBrowser();
-            }
-        }
-
         public TestSystem()
         {
             AddRemoteSubSystem("ServiceNode", x =>
@@ -70,6 +54,15 @@ namespace FubuMVC.IntegrationTesting
                 x.UseParallelServiceDirectory("ServiceNode");
                 x.Setup.ShadowCopyFiles = false.ToString();
             });
+        }
+
+        public static void TryIt()
+        {
+            using (var runner = new SpecRunner<TestSystem>())
+            {
+                runner.Run("ServiceBus/HealthMonitoring/A running task goes down and gets reassigned");
+                runner.OpenResultsInBrowser();
+            }
         }
 
         protected override void beforeEach(IContainer scope)
