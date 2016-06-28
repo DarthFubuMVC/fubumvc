@@ -46,10 +46,7 @@ namespace FubuMVC.Core.Http.Compression
 
         public class PassthroughEncoding : IHttpContentEncoding
         {
-            public ContentEncoding MatchingEncoding
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public ContentEncoding MatchingEncoding => ContentEncoding.None;
 
             public Stream Encode(Stream content)
             {
