@@ -52,8 +52,5 @@ nuget Selenium.WebDriver
 nuget Selenium.WebDriverBackedSelenium
 nuget TopShelf
 
-source http://nuget.org/api/v2
-source https://www.myget.org/F/aspnetvnext/api/v2
-source https://www.myget.org/F/lightning-queues
-nuget LightningQueues 0.2.0-dnx-27
-nuget LightningQueues.Storage.LMDB 0.2.0-dnx-27
+
+
