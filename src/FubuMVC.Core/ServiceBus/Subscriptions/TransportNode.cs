@@ -20,6 +20,8 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
 
             Addresses = graph.ReplyUriList().ToArray();
 
+            ControlChannel = graph.ControlChannel?.Uri ?? Addresses.FirstOrDefault();
+
             if (!Addresses.Any())
             {
                 throw new InvalidOperationException("At least one reply channel is required");
@@ -76,8 +78,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
             }
         }
         
-        // TODO -- make this an explictly configure thing some day
-        public Uri ControlChannel => _addresses.FirstOrDefault();
+        public Uri ControlChannel { get; set; }
 
         protected bool Equals(TransportNode other)
         {

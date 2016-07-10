@@ -227,6 +227,7 @@
     <Compile Include="ServerSentEvents\SimpleEventQueueTester.cs" />
     <Compile Include="ServerSentEvents\TopicChannelCacheTester.cs" />
     <Compile Include="ServerSentEvents\TopicFamilyTester.cs" />
+    <Compile Include="ServiceBus\can_establish_a_control_queue.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobChainTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\CompositeContinuationConfigurationTester.cs" />
     <Compile Include="TestSupport\GenericVoidMethod.cs" />

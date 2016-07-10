@@ -13,6 +13,42 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
     public class TransportNodeTester
     {
         [Test]
+        public void use_the_explicit_control_queue_if_it_exists()
+        {
+            var graph = new ChannelGraph
+            {
+                NodeId = "Foo@Bar"
+
+            };
+
+            graph.AddReplyChannel(InMemoryChannel.Protocol, "memory://localhost/replies".ToUri());
+
+            graph.ControlChannel = new ChannelNode {Uri = "memory://1".ToUri()};
+
+            var node = new TransportNode(graph);
+
+            node.ControlChannel.ShouldBe("memory://1".ToUri());
+        }
+
+        [Test]
+        public void fallback_to_the_first_incoming_channel_for_control_queue_if_no_explicit_control_queue_exists()
+        {
+            var graph = new ChannelGraph
+            {
+                NodeId = "Foo@Bar"
+
+            };
+
+            graph.AddReplyChannel(InMemoryChannel.Protocol, "memory://localhost/replies".ToUri());
+
+            //graph.ControlChannel = new ChannelNode { Uri = "memory://1".ToUri() };
+
+            var node = new TransportNode(graph);
+
+            node.ControlChannel.ShouldBe("memory://localhost/replies".ToUri());
+        }
+
+        [Test]
         public void build_with_channel_graph_sets_the_id_to_the_node_id()
         {
             var graph = new ChannelGraph

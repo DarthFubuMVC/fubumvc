@@ -7,6 +7,7 @@ using FubuCore;
 using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuCore.Util;
+using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 
@@ -36,7 +37,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             {
                 if (_nodeId.IsEmpty())
                 {
-                    return this.Name + "@" + System.Environment.MachineName;
+                    return Name + "@" + System.Environment.MachineName;
                 }
 
                 return _nodeId;
@@ -51,14 +52,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         /// <summary>
         /// Used to identify the instance of the running FT node
         /// </summary>
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-            }
-        }
+        public string Name { get; set; }
 
         /// <summary>
         /// The default content type to use for serialization if none is specified at
@@ -66,10 +60,9 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         /// </summary>
         public string DefaultContentType { get; set; }
 
-        public bool HasChannels
-        {
-            get { return _channels.Any(); }
-        }
+        public bool HasChannels => _channels.Any();
+
+        public ChannelNode ControlChannel { get; set; }
 
         public ChannelNode ChannelFor<T>(Expression<Func<T, Uri>> property)
         {
@@ -150,7 +143,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         }
 
         private bool _wasDisposed;
-        private string _name;
 
         public void Dispose()
         {

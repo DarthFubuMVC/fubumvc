@@ -49,7 +49,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
             var envelope = new Envelope
             {
                 Message = new SubscriptionsChanged(),
-                Destination = node.Addresses.FirstOrDefault()
+                Destination = node.ControlChannel
             };
 
             _sender.Send(envelope);

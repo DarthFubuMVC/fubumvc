@@ -25,7 +25,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
             _serviceBus = serviceBus;
             _logger = logger;
 
-            if (!_node.Addresses.Any())
+            if (_node.ControlChannel == null && !_node.Addresses.Any())
             {
                 throw new ArgumentOutOfRangeException(nameof(node), "The TransportNode must have at least one reply Uri");
             }
@@ -116,7 +116,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public string MachineName => _node.MachineName;
 
-        public Uri ControlChannel => _node.Addresses.FirstOrDefault();
+        public Uri ControlChannel => _node.ControlChannel;
 
         public async Task<bool> Deactivate(Uri subject)
         {

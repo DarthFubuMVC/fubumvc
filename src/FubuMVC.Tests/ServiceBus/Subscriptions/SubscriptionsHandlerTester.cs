@@ -59,7 +59,8 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
 
             thePeer = new TransportNode
             {
-                Addresses = new Uri[] {"memory://replies".ToUri()}
+                Addresses = new Uri[] {"memory://replies".ToUri()},
+                ControlChannel = "memory://1".ToUri()
             };
 
             ClassUnderTest.SendSubscriptionChangedToPeer(thePeer);
@@ -70,7 +71,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         {
             var envelope = theSender.Sent.Single();
             envelope.Message.ShouldBeOfType<SubscriptionsChanged>();
-            envelope.Destination.ShouldBe(thePeer.Addresses.FirstOrDefault());
+            envelope.Destination.ShouldBe(thePeer.ControlChannel);
         }
     }
 

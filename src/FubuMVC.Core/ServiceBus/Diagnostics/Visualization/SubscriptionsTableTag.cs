@@ -84,7 +84,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
                 row.Cell(transportNode.Id.ToString());
                 row.Cell(transportNode.MachineName);
                 row.Cell(transportNode.NodeName);
-                row.Cell(transportNode.Addresses.Select(x => x.ToString()).Join(", "));
+                row.Cell(transportNode.ControlChannel.ToString());
             });
         }
     }

@@ -76,6 +76,19 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 }
             }
 
+            public ChannelExpression UseAsControlChannel()
+            {
+                _parent.AlterSettings<ChannelGraph>(graph =>
+                {
+                    var node = graph.ChannelFor(_accessor);
+                    graph.ControlChannel = node;
+
+                    node.Incoming = true;
+                });
+
+                return this;
+            }
+
             /// <summary>
             /// Add an IEnvelopeModifier that will apply to only this channel
             /// </summary>

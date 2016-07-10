@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             };
 
             theServiceBus.ExpectMessage(request)
-            .AtDestination(theNode.Addresses.FirstOrDefault())
+            .AtDestination(theNode.ControlChannel)
             .Throws(new DivideByZeroException());
 
             var task = thePeer.TakeOwnership(theSubject);
@@ -104,7 +104,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             };
 
             theServiceBus.ExpectMessage(request)
-            .AtDestination(theNode.Addresses.FirstOrDefault())
+            .AtDestination(theNode.ControlChannel)
             .Returns(new TakeOwnershipResponse
             {
                 Status = OwnershipStatus.UnknownSubject
@@ -143,7 +143,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             };
 
             theServiceBus.ExpectMessage(request)
-            .AtDestination(theNode.Addresses.FirstOrDefault())
+            .AtDestination(theNode.ControlChannel)
             .Returns(new TakeOwnershipResponse
             {
                 Status = OwnershipStatus.OwnershipActivated
@@ -175,7 +175,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             };
 
             theServiceBus.ExpectMessage(request)
-            .AtDestination(theNode.Addresses.FirstOrDefault())
+            .AtDestination(theNode.ControlChannel)
             .Returns(new TakeOwnershipResponse
             {
                 Status = OwnershipStatus.AlreadyOwned
@@ -205,7 +205,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             theNode.AddOwnership(theSubject);
 
             theServiceBus.ExpectMessage(new TaskDeactivation(theSubject))
-                .AtDestination(theNode.Addresses[0])
+                .AtDestination(theNode.ControlChannel)
                 .Returns(new TaskDeactivationResponse
                 {
                     Subject = theSubject,
@@ -241,7 +241,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             theNode.AddOwnership(theSubject);
 
             theServiceBus.ExpectMessage(new TaskDeactivation(theSubject))
-                .AtDestination(theNode.Addresses[0])
+                .AtDestination(theNode.ControlChannel)
                 .Throws(new DivideByZeroException());
 
 
@@ -291,7 +291,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
 
 
             theServiceBus.ExpectMessage(new TaskHealthRequest{Subjects = subjects})
-                .AtDestination(theNode.Addresses.First())
+                .AtDestination(theNode.ControlChannel)
                 .Returns(theResponse);
 
             theReturnedTask = thePeer.CheckStatusOfOwnedTasks();
@@ -330,7 +330,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
 
 
             theServiceBus.ExpectMessage(new TaskHealthRequest { Subjects = subjects })
-                .AtDestination(theNode.Addresses.First())
+                .AtDestination(theNode.ControlChannel)
                 .Returns(theResponse);
 
             theReturnedTask = thePeer.CheckStatusOfOwnedTasks();
@@ -374,7 +374,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
 
 
             theServiceBus.ExpectMessage(new TaskHealthRequest { Subjects = subjects })
-                .AtDestination(theNode.Addresses.First())
+                .AtDestination(theNode.ControlChannel)
                 .Returns(theResponse);
 
             theReturnedTask = thePeer.CheckStatusOfOwnedTasks();
