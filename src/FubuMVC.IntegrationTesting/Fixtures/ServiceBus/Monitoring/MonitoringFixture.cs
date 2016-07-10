@@ -107,7 +107,10 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 
         public IGrammar TheTaskAssignmentsShouldBe()
         {
-            return VerifySetOf(() => _nodes.AssignedTasks())
+            return VerifySetOf(() =>
+            {
+                return _nodes.AssignedTasks();
+            })
                 .Titled("The task assignments should be")
                 .MatchOn(x => x.Task, x => x.Node);
         }

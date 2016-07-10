@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using FubuCore;
 using FubuMVC.Core.ServiceBus.Polling;
 
 namespace FubuMVC.Core.ServiceBus.Monitoring
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public void Execute(CancellationToken cancellation)
         {
-            _controller.EnsureTasksHaveOwnership();
+            _controller.EnsureTasksHaveOwnership().Wait(2.Minutes());
         }
     }
 }

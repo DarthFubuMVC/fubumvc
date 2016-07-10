@@ -144,5 +144,10 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
                 return false;
             }
         }
+
+        public override string ToString()
+        {
+            return $"Remote TransportPeer: {NodeId}";
+        }
     }
 }

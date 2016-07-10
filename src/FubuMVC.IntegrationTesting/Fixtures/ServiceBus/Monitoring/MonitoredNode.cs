@@ -43,11 +43,13 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 
             ServiceBus.EnableInMemoryTransport(incoming);
 
+            ScheduledJob.ActivatedOnStartup(false);
+
             Services.AddService<ILogListener>(listener);
 
             AlterSettings<HealthMonitoringSettings>(_ =>
             {
-                _.TakeOwnershipMessageTimeout = 3.Seconds();
+                _.TakeOwnershipMessageTimeout = 10.Seconds();
                 _.HealthCheckMessageTimeout = 1.Seconds();
                 _.DeactivationMessageTimeout = 3.Seconds();
                 _.TaskAvailabilityCheckTimeout = 5.Seconds();

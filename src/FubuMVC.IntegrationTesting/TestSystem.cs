@@ -60,7 +60,10 @@ namespace FubuMVC.IntegrationTesting
         {
             using (var runner = new SpecRunner<TestSystem>())
             {
-                runner.Run("ServiceBus/HealthMonitoring/A running task goes down and gets reassigned");
+                //runner.Run("ServiceBus/HealthMonitoring/A running task goes down and gets reassigned");
+                runner.Run("ServiceBus/HealthMonitoring/Assign on order of preference when some nodes are down");
+                //runner.Run("ServiceBus/HealthMonitoring/Assign on order or preference when some nodes timeout on activation");
+                //runner.Run("ServiceBus/HealthMonitoring/A running task times out on health checks and gets reassigned");
                 runner.OpenResultsInBrowser();
             }
         }

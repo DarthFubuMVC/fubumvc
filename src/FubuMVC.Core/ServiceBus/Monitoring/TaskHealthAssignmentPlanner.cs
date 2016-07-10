@@ -31,6 +31,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
             if (response.ResponseFailed)
             {
+                Debug.WriteLine("Failed to detect available peer: " + peer.NodeId);
                 _removals[peer].AddRange(subjects);
             }
             else

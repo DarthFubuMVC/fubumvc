@@ -39,8 +39,9 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
                     return transportPeer;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Debug.WriteLine(e);
                 // TODO -- maybe log this one?
             }
 

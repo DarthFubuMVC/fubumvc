@@ -22,6 +22,10 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
         private readonly ConcurrentCache<Uri, IPersistentTaskAgent> _agents =
             new ConcurrentCache<Uri, IPersistentTaskAgent>();
 
+        public override string ToString()
+        {
+            return $"PersistentTaskController: {NodeId}";
+        }
 
         private readonly Uri[] _permanentTasks;
 
@@ -86,7 +90,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
         public async Task EnsureTasksHaveOwnership()
         {
-            var healthChecks = allPeers().Select(async x =>
+            var healthChecks = AllPeers().Select(async x =>
             {
                 var status = await x.CheckStatusOfOwnedTasks().ConfigureAwait(false);
                 return new { Peer = x, Response = status };
@@ -110,7 +114,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
         }
 
 
-        private IEnumerable<ITransportPeer> allPeers()
+        public IEnumerable<ITransportPeer> AllPeers()
         {
             yield return this;
             foreach (var peer in _factory.BuildPeers())

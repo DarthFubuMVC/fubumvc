@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ using StoryTeller;
 
 namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 {
-    public class MonitoredNodeGroup : IDisposable
+    public class MonitoredNodeGroup : IEnumerable<MonitoredNode>, IDisposable
     {
         private readonly Cache<string, MonitoredNode> _nodes = new Cache<string, MonitoredNode>();
         private readonly System.Collections.Generic.IList<Action<MonitoredNode>> _configurations =
@@ -111,7 +112,7 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 
         public void WaitForHealthChecksOn(string node)
         {
-            _nodes[node].WaitForHealthCheck().Wait(10.Seconds());
+            _nodes[node].WaitForHealthCheck().Wait(120.Seconds());
         }
 
         public void AddLogs(ISpecContext context)
@@ -124,6 +125,16 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 
                 context.Reporting.Log(node.Id, provider.ToHtml(), node.Id);
             });
+        }
+
+        public IEnumerator<MonitoredNode> GetEnumerator()
+        {
+            return _nodes.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 

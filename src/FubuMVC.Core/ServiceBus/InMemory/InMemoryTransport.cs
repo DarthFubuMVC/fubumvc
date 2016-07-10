@@ -7,6 +7,7 @@ using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.ServiceBus.Scheduling;
 
 namespace FubuMVC.Core.ServiceBus.InMemory
 {
@@ -69,7 +70,8 @@ namespace FubuMVC.Core.ServiceBus.InMemory
             var replyNode = new ChannelNode
             {
                 Uri = uri,
-                Incoming = true
+                Incoming = true,
+                Scheduler = new ThreadScheduler(3)
             };
 
             replyNode.Key = replyNode.Key ?? "{0}:{1}".ToFormat(Protocol, "replies");
