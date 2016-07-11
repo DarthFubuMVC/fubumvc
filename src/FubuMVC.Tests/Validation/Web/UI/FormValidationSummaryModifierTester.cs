@@ -3,6 +3,7 @@ using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.UI.Forms;
 using FubuMVC.Core.Validation.Web;
@@ -42,7 +43,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
 
             theRequest.ReplaceTag(theForm);
 
-            MockFor<IPartialInvoker>().Stub(x => x.Invoke<ValidationSummary>()).Return(theValidationSummary);
+            MockFor<IPartialInvoker>().Stub(x => x.Invoke<ValidationSummary>()).Return(theValidationSummary.ToCompletionTask());
         }
 
         [Test]

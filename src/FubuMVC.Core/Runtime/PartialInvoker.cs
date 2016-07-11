@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
@@ -28,18 +29,18 @@ namespace FubuMVC.Core.Runtime
             _resolver = resolver;
         }
 
-        public string Invoke<T>(string categoryOrHttpMethod = null) where T : class
+        public async Task<string> Invoke<T>(string categoryOrHttpMethod = null) where T : class
         {
             var output = string.Empty;
             var input = _request.Get<T>();
             if (_authorization.IsAuthorized(input, categoryOrHttpMethod))
             {
-                output = invokeWrapped(typeof(T), categoryOrHttpMethod);
+                output = await invokeWrapped(typeof(T), categoryOrHttpMethod).ConfigureAwait(false);
             }
             return output;
         }
 
-        public string InvokeObject(object model, bool withModelBinding = false, string categoryOrHttpMethod = null)
+        public async Task<string> InvokeObject(object model, bool withModelBinding = false, string categoryOrHttpMethod = null)
         {
             var output = string.Empty;
             if (_authorization.IsAuthorized(model))
@@ -50,12 +51,12 @@ namespace FubuMVC.Core.Runtime
                     _setterBinder.BindProperties(requestType, model);
                 }
                 _request.Set(requestType, model);
-                output = invokeWrapped(requestType, categoryOrHttpMethod);
+                output = await invokeWrapped(requestType, categoryOrHttpMethod).ConfigureAwait(false);
             }
             return output;
         }
 
-        public string InvokeAsHtml(object model)
+        public Task<string> InvokeAsHtml(object model)
         {
             var current = _request.Get<CurrentMimeType>();
             _request.Set(new CurrentMimeType(MimeType.HttpFormMimetype, MimeType.Html.Value));
@@ -70,7 +71,7 @@ namespace FubuMVC.Core.Runtime
             }
         }
 
-        public object InvokeFast(BehaviorChain chain, object input = null)
+        public async Task<object> InvokeFast(BehaviorChain chain, object input = null)
         {
             _request.Set(OutputPartialBehavior.None);
             if (input != null)
@@ -81,7 +82,7 @@ namespace FubuMVC.Core.Runtime
             try
             {
                 var partial = _factory.BuildPartial(chain);
-                partial.InvokePartial();
+                await partial.InvokePartial().ConfigureAwait(false);
 
                 // TODO -- how to detect authorization failures here?
                 var resourceType = chain.ResourceType();
@@ -93,11 +94,13 @@ namespace FubuMVC.Core.Runtime
             }
         }
 
-        private string invokeWrapped(Type requestType, string categoryOrHttpMethod = null)
+        private async Task<string> invokeWrapped(Type requestType, string categoryOrHttpMethod = null)
         {
             var chain = _resolver.FindUniqueByType(requestType, category: categoryOrHttpMethod ?? Categories.VIEW);
             var partial = _factory.BuildPartial(chain);
-            var output = _writer.Record(() => partial.InvokePartial());
+
+            var output = await _writer.Record(() => partial.InvokePartial()).ConfigureAwait(false);
+
             output.Headers().Each(x => _writer.AppendHeader(x.Name, x.Value));
             return output.GetText();
         }

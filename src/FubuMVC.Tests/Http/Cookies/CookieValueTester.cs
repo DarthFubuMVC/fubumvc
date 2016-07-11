@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using FubuCore.Dates;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http.Cookies;
@@ -104,7 +105,7 @@ namespace FubuMVC.Tests.Http.Cookies
             throw new NotImplementedException();
         }
 
-        public IRecordedOutput Record(Action action)
+        public Task<IRecordedOutput> Record(Func<Task> inner)
         {
             throw new NotImplementedException();
         }

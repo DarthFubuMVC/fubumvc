@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuCore;
 
 namespace Shouldly
 {
@@ -18,7 +19,15 @@ namespace Shouldly
             }
             catch (Exception e)
             {
-                exception = e.ShouldBeOfType<T>();
+                if (e is AggregateException)
+                {
+                    exception =
+                        e.As<AggregateException>().Flatten().InnerExceptions.FirstOrDefault().ShouldBeOfType<T>();
+                }
+                else
+                {
+                    exception = e.ShouldBeOfType<T>();
+                }
             }
 
             if (exception == null)

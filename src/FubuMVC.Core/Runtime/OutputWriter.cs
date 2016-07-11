@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.Caching;
@@ -32,15 +33,9 @@ namespace FubuMVC.Core.Runtime
             normalWriting();
         }
 
-        public virtual IHttpResponse Response
-        {
-            get { return _response; }
-        }
+        public virtual IHttpResponse Response => _response;
 
-        IOutputState CurrentState
-        {
-            get { return _outputStates.Peek(); }
-        }
+        IOutputState CurrentState => _outputStates.Peek();
 
         private void normalWriting()
         {
@@ -59,7 +54,7 @@ namespace FubuMVC.Core.Runtime
             CurrentState.WriteFile(contentType, localFilePath, displayName);
         }
 
-        public virtual IRecordedOutput Record(Action action)
+        public virtual async Task<IRecordedOutput> Record(Func<Task> inner)
         {
             _logger.DebugMessage(() => new StartedRecordingOutput());
 
@@ -68,7 +63,7 @@ namespace FubuMVC.Core.Runtime
 
             try
             {
-                action();
+                await inner().ConfigureAwait(false);
             }
             finally
             {

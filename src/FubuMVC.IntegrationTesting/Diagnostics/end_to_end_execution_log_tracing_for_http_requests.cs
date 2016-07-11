@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
@@ -114,7 +115,7 @@ namespace FubuMVC.IntegrationTesting.Diagnostics
             return request.Name;
         }
 
-        public string get_with_partial()
+        public Task<string> get_with_partial()
         {
             return _invoker.InvokeAsHtml(new Request1 {Name = "Tamba Hali"});
         }

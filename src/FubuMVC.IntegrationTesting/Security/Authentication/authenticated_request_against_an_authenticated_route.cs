@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication.Cookies;
@@ -117,7 +118,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
                 throw new NotImplementedException();
             }
 
-            public IRecordedOutput Record(Action action)
+            public Task<IRecordedOutput> Record(Func<Task> inner)
             {
                 throw new NotImplementedException();
             }

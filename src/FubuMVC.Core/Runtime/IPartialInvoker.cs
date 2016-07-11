@@ -1,13 +1,14 @@
-﻿using FubuMVC.Core.Registration.Nodes;
+﻿using System.Threading.Tasks;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Runtime
 {
     public interface IPartialInvoker
     {
-        string Invoke<T>(string categoryOrHttpMethod = null) where T : class;
-        string InvokeObject(object model, bool withModelBinding = false, string categoryOrHttpMethod = null);
+        Task<string> Invoke<T>(string categoryOrHttpMethod = null) where T : class;
+        Task<string> InvokeObject(object model, bool withModelBinding = false, string categoryOrHttpMethod = null);
 
-        string InvokeAsHtml(object model);
+        Task<string> InvokeAsHtml(object model);
 
         /// <summary>
         /// Invokes a partial request with the conneg output disabled for
@@ -15,6 +16,6 @@ namespace FubuMVC.Core.Runtime
         /// </summary>
         /// <param name="chain"></param>
         /// <param name="input"></param>
-        object InvokeFast(BehaviorChain chain, object input = null);
+        Task<object> InvokeFast(BehaviorChain chain, object input = null);
     }
 }

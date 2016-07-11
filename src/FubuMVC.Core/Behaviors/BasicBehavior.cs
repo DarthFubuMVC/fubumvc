@@ -12,21 +12,16 @@ namespace FubuMVC.Core.Behaviors
         {
             _partialBehavior = partialBehavior;
 
-            if (InsideBehavior == null)
-            {
-                _innerInvoke = () => Task.CompletedTask;
-            }
-            else
-            {
-                _innerInvoke = () => InsideBehavior.Invoke();
-            }
+
         }
 
         public IActionBehavior InsideBehavior { get; set; }
 
         public Task Invoke()
         {
-            return invoke(_innerInvoke);
+            return InsideBehavior == null 
+                ? invoke(() => Task.CompletedTask) 
+                : invoke(() => InsideBehavior.Invoke());
         }
 
         private async Task invoke(Func<Task> inner)

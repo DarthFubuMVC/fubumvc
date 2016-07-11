@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Validation.Web.UI
 				return;
 			}
 
-            var summary = request.Services.GetInstance<IPartialInvoker>().Invoke<ValidationSummary>();
+            var summary = request.Services.GetInstance<IPartialInvoker>().Invoke<ValidationSummary>().GetAwaiter().GetResult();
             request.CurrentTag.InsertFirst(new LiteralTag(summary));
         }
     }

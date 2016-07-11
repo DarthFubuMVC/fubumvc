@@ -13,14 +13,14 @@ namespace FubuMVC.Core.View
         public static IHtmlString PartialFor(this IFubuPage page, object input, bool withModelBinding = false, string categoryOrHttpMethod = null)
         {
 
-            return new HtmlString(page.Get<IPartialInvoker>().InvokeAsHtml(input));
+            return new HtmlString(page.Get<IPartialInvoker>().InvokeAsHtml(input).GetAwaiter().GetResult());
         }
 
         public static IHtmlString Partial<TInputModel>(this IFubuPage page, TInputModel model, bool withModelBinding = false, string categoryOrHttpMethod = null) where TInputModel : class
         {
             if (typeof(TInputModel) == typeof(object))
             {
-                return new HtmlString(page.Get<IPartialInvoker>().InvokeAsHtml(model));
+                return new HtmlString(page.Get<IPartialInvoker>().InvokeAsHtml(model).GetAwaiter().GetResult());
             }
 
 
@@ -30,7 +30,7 @@ namespace FubuMVC.Core.View
 
         public static string InvokePartial<TInputModel>(IFubuPage page, string prefix, string categoryOrHttpMethod = null) where TInputModel : class
         {
-            return page.Get<IPartialInvoker>().Invoke<TInputModel>(categoryOrHttpMethod);
+            return page.Get<IPartialInvoker>().Invoke<TInputModel>(categoryOrHttpMethod).GetAwaiter().GetResult();
         }
     }
 }

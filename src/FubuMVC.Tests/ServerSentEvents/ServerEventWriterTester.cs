@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
@@ -110,13 +111,7 @@ namespace FubuMVC.Tests.ServerSentEvents
     {
         private readonly StringWriter _writer = new StringWriter();
 
-        public string Text
-        {
-            get
-            {
-                return _writer.ToString();
-            }
-        }
+        public string Text => _writer.ToString();
 
         public void Write(string renderedOutput)
         {
@@ -162,7 +157,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             throw new NotImplementedException();
         }
 
-        public IRecordedOutput Record(Action action)
+        public Task<IRecordedOutput> Record(Func<Task> inner)
         {
             throw new NotImplementedException();
         }

@@ -723,7 +723,6 @@
     <Compile Include="View\AuthorizedLinkExpressionsTester.cs" />
     <Compile Include="View\FubuPageExtensionsTester.cs" />
     <Compile Include="View\HtmlTagExtensionsTester.cs" />
-    <Compile Include="View\PartialInvokerTester.cs" />
     <Compile Include="UrlAliasAttributeTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />

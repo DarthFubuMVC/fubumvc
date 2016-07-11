@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using FubuCore.Util;
 using FubuMVC.Core.Caching;
@@ -38,12 +39,11 @@ namespace FubuMVC.Core.Runtime
 
         public string ContentType { get; set; }
 
-        public IRecordedOutput Record(Action action)
+        public Task<IRecordedOutput> Record(Func<Task> inner)
         {
-            throw new NotImplementedException("isn't really built");
-            //action();
-            //return new RecordedOutput(null);
+            throw new NotImplementedException();
         }
+
 
         public void Replay(IRecordedOutput output)
         {
