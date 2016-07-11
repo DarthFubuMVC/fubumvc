@@ -340,12 +340,6 @@
     <Compile Include="Security\Authorization\AuthorizationByServiceTester.cs" />
     <Compile Include="Security\Authorization\AuthorizationCheckPolicyTester.cs" />
     <Compile Include="Security\Authorization\SecuritySettingsTester.cs" />
-    <Compile Include="ServiceBus\Async\AsyncChainExecutionContinuationTester.cs" />
-    <Compile Include="ServiceBus\Async\AsyncHandlerInvokerTester.cs" />
-    <Compile Include="ServiceBus\Async\AsyncHandlingConventionTester.cs" />
-    <Compile Include="ServiceBus\Async\AsynchHandlingTester.cs" />
-    <Compile Include="ServiceBus\Async\FullAsyncHandlingIntegrationTester.cs" />
-    <Compile Include="ServiceBus\Async\when_invoking_with_cascading_messages.cs" />
     <Compile Include="ServiceBus\Configuration\ByTaskSchedulerMakerTester.cs" />
     <Compile Include="ServiceBus\Configuration\ChannelGraphTester.cs" />
     <Compile Include="ServiceBus\Configuration\ChannelGraph_can_read_thread_and_task_counts_from_config.cs" />
@@ -374,7 +368,6 @@
     <Compile Include="ServiceBus\envelope_handlers_are_registered_in_the_right_order.cs" />
     <Compile Include="ServiceBus\ErrorHandling\CompositeContinuation_integration_testing.cs" />
     <Compile Include="ServiceBus\ErrorHandling\DelayedRetryContinuationTester.cs" />
-    <Compile Include="ServiceBus\ErrorHandling\ErrorHandlerBehavior_attachment_to_the_handler_chains.cs" />
     <Compile Include="ServiceBus\ErrorHandling\ErrorHandlerTester.cs" />
     <Compile Include="ServiceBus\ErrorHandling\ErrorHandling_services_have_descriptions_for_diagnostics.cs" />
     <Compile Include="ServiceBus\ErrorHandling\ErrorReportTester.cs" />

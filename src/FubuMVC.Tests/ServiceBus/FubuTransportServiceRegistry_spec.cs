@@ -1,8 +1,6 @@
 ﻿using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
-using FubuMVC.Core.ServiceBus.Async;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -30,7 +28,6 @@ namespace FubuMVC.Tests.ServiceBus
                 var c = runtime.Get<IContainer>();
 
 
-
                 c.DefaultSingletonIs<ISubscriptionCache, SubscriptionCache>();
                 c.DefaultSingletonIs<ISagaStateCacheFactory, SagaStateCacheFactory>();
                 c.DefaultSingletonIs<IEventAggregator, EventAggregator>();
@@ -43,31 +40,13 @@ namespace FubuMVC.Tests.ServiceBus
                 c.DefaultRegistrationIs<IHandlerPipeline, HandlerPipeline>();
                 c.DefaultRegistrationIs<IMessageExecutor, MessageExecutor>();
                 c.DefaultRegistrationIs<IOutgoingSender, OutgoingSender>();
-                c.DefaultRegistrationIs<IAsyncHandling, AsyncHandling>();
                 c.DefaultRegistrationIs<ISubscriptionRepository, SubscriptionRepository>();
-
 
 
                 c.ShouldHaveRegistration<IActivator, ServiceBusActivator>();
                 c.ShouldHaveRegistration<ILogListener, EventAggregationListener>();
 
                 c.ShouldNotHaveRegistration<IActivator, TransportCleanupActivator>();
-
-            }
-        }
-
-        
-
-
-        [Test]
-        public void use_synchronous_event_aggregator_if_in_testing_mode()
-        {
-            using (var runtime = FubuRuntime.BasicBus(x => x.Mode = "testing"))
-            {
-                var c = runtime.Get<IContainer>();
-
-                c.DefaultSingletonIs<IEventAggregator, SynchronousEventAggregator>();
-
             }
         }
 
@@ -75,7 +54,6 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void service_registrations_when_mode_is_testing()
         {
-
             using (var runtime = FubuRuntime.BasicBus(x => x.Mode = "testing"))
             {
                 var c = runtime.Get<IContainer>();
@@ -86,11 +64,9 @@ namespace FubuMVC.Tests.ServiceBus
         }
 
 
-
         [Test]
         public void service_registrations_when_not_in_testing_mode()
         {
-
             using (var runtime = FubuRuntime.BasicBus())
             {
                 var c = runtime.Get<IContainer>();
@@ -105,7 +81,6 @@ namespace FubuMVC.Tests.ServiceBus
         {
             using (var runtime = FubuRuntime.Basic(_ =>
             {
-
                 _.Mode = "testing";
                 _.ServiceBus.Configure(x =>
                 {
@@ -123,7 +98,6 @@ namespace FubuMVC.Tests.ServiceBus
         {
             using (var runtime = FubuRuntime.Basic(_ =>
             {
-
                 _.Mode = "testing";
                 _.ServiceBus.Configure(x =>
                 {
@@ -137,5 +111,15 @@ namespace FubuMVC.Tests.ServiceBus
         }
 
 
+        [Test]
+        public void use_synchronous_event_aggregator_if_in_testing_mode()
+        {
+            using (var runtime = FubuRuntime.BasicBus(x => x.Mode = "testing"))
+            {
+                var c = runtime.Get<IContainer>();
+
+                c.DefaultSingletonIs<IEventAggregator, SynchronousEventAggregator>();
+            }
+        }
     }
 }

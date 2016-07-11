@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
@@ -42,26 +41,6 @@ namespace FubuMVC.Tests.ServiceBus.Registration.Nodes
             var objectDef = handler.As<IContainerModel>().ToInstance();
 
             objectDef.ReturnedType.ShouldBe(typeof (SimpleHandlerInvoker<ITargetHandler, Input>));
-        }
-
-        [Test]
-        public void choose_handler_type_for_call_that_returns_Task()
-        {
-            var handler = HandlerCall.For<TaskHandler>(x => x.Go(null));
-
-            var objectDef = handler.As<IContainerModel>().ToInstance();
-
-            objectDef.ReturnedType.ShouldBe(typeof (AsyncHandlerInvoker<TaskHandler, Message>));
-        }
-
-        [Test]
-        public void choose_handler_type_for_call_that_returns_Task_of_T()
-        {
-            var handler = HandlerCall.For<TaskHandler>(x => x.Other(null));
-
-            var objectDef = handler.As<IContainerModel>().ToInstance();
-
-            objectDef.ReturnedType.ShouldBe(typeof (CascadingAsyncHandlerInvoker<TaskHandler, Message, Message1>));
         }
 
 

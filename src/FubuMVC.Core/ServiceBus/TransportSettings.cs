@@ -5,7 +5,6 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -92,7 +91,6 @@ namespace FubuMVC.Core.ServiceBus
             registry.Services.IncludeRegistry(new FubuTransportServiceRegistry(registry.Mode));
             registry.Services.IncludeRegistry<PollingServicesRegistry>();
             registry.Policies.Global.Add<StatefulSagaConvention>();
-            registry.Policies.Global.Add<AsyncHandlingConvention>();
 
             // Just forcing it to get spun up.
             registry.AlterSettings<ChannelGraph>(x => {});

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 
@@ -57,26 +56,13 @@ namespace FubuMVC.Core.ServiceBus.Registration.Nodes
             return new HandlerCall(HandlerType, Method);
         }
 
-        public override BehaviorCategory Category
-        {
-            get { return BehaviorCategory.Call; }
-        }
+        public override BehaviorCategory Category => BehaviorCategory.Call;
 
         protected override Type determineHandlerType()
         {
             Type messageType = Method.GetParameters().First().ParameterType;
 
-            if (HasOutput && Method.ReturnType == typeof (Task))
-            {
-                return typeof (AsyncHandlerInvoker<,>)
-                    .MakeGenericType(HandlerType, messageType);
-            }
 
-            if (HasOutput && Method.ReturnType.Closes(typeof(Task<>)))
-            {
-                return typeof (CascadingAsyncHandlerInvoker<,,>)
-                    .MakeGenericType(HandlerType, messageType, Method.ReturnType.GetGenericArguments().First());
-            }
 
             if (HasOutput && HasInput)
             {

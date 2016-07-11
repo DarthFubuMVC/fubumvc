@@ -1,5 +1,4 @@
 ﻿using System;
-using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime;
@@ -131,12 +130,6 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                       .Return(theChain);
 
             theContinuation = ClassUnderTest.Handle(theEnvelope);
-        }
-
-        [Test]
-        public void the_continuation_should_be_async()
-        {
-            theContinuation.ShouldBeOfType<AsyncChainExecutionContinuation>();
         }
 
 

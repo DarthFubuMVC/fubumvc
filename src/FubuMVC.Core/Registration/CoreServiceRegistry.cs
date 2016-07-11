@@ -23,7 +23,6 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Aggregation;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.SessionState;
-using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 
@@ -36,8 +35,6 @@ namespace FubuMVC.Core.Registration
     {
         public CoreServiceRegistry(string mode)
         {
-            SetServiceIfNone<IAsyncHandling, AsyncHandling>();
-
             AddService<IDeactivator, MiddlewareDeactivator>();
 
             SetServiceIfNone<IAggregator, Aggregator>();
