@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Registration
 
             var chain = graph.ChainFor<AjaxController>(x => x.get_async());
 
-            chain.FirstCall().Next.Next.ShouldBeOfType<OutputNode>();
+            chain.FirstCall().Next.ShouldBeOfType<OutputNode>();
         }
 
         [Test]
