@@ -97,7 +97,7 @@ namespace FubuMVC.Core.Runtime
         {
             var chain = _resolver.FindUniqueByType(requestType, category: categoryOrHttpMethod ?? Categories.VIEW);
             var partial = _factory.BuildPartial(chain);
-            var output = _writer.Record(partial.InvokePartial);
+            var output = _writer.Record(() => partial.InvokePartial());
             output.Headers().Each(x => _writer.AppendHeader(x.Name, x.Value));
             return output.GetText();
         }

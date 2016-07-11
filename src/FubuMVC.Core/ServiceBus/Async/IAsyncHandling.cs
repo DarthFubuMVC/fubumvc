@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.ServiceBus.Async
 {
+    [Obsolete("This needs to go away. Will be completely unnecessary")]
     public interface IAsyncHandling
     {
         void Push(Task task);

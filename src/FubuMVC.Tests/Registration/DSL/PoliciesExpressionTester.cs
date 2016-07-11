@@ -8,6 +8,7 @@ using FubuMVC.Tests.Registration.Conventions;
 using Shouldly;
 using NUnit.Framework;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Tests.Registration.DSL
 {
@@ -118,12 +119,12 @@ namespace FubuMVC.Tests.Registration.DSL
 
     public class OPWrapper1 : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
@@ -131,12 +132,12 @@ namespace FubuMVC.Tests.Registration.DSL
 
     public class OPWrapper2 : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
@@ -144,12 +145,12 @@ namespace FubuMVC.Tests.Registration.DSL
 
     public class OPWrapper3 : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }

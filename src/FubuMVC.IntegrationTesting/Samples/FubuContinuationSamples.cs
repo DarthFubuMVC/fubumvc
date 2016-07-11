@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
@@ -320,15 +321,17 @@ namespace FubuMVC.IntegrationTesting.Samples
     // SAMPLE: continuation-up-the-stack
     public class TransactionalBehavior : WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
             using (var tx = start())
             {
                 // Call the inner behavior, which itself may
                 // be executing a FubuContinuation.TransferTo()
-                action();
+                func();
                 tx.Commit();
             }
+
+            return Task.CompletedTask;
         }
 
         private Transaction start()

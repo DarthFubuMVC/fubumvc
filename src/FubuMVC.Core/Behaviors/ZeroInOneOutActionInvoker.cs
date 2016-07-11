@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
@@ -17,11 +18,11 @@ namespace FubuMVC.Core.Behaviors
             _action = action;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             TOutput output = _action(_controller);
             _request.Set(output);
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
     }
 }

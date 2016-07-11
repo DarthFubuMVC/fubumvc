@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
@@ -18,15 +19,15 @@ namespace FubuMVC.Core.Security.AntiForgery
             _outputWriter = outputWriter;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             if (_validator.Validate(_salt))
             {
-                return DoNext.Continue;
+                return Task.FromResult(DoNext.Continue);
             }
 
             _outputWriter.WriteResponseCode(HttpStatusCode.InternalServerError);
-            return DoNext.Stop;
+            return Task.FromResult(DoNext.Stop);
         }
     }
 }

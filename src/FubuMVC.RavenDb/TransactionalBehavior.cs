@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
@@ -19,13 +20,14 @@ namespace FubuMVC.RavenDb
             _httpRequest = httpRequest;
         }
 
-        protected override void invoke(Action action)
+        protected override async Task invoke(Func<Task> func)
         {
-            action();
-            _session.SaveChanges();
+            await func().ConfigureAwait(false);
+            await _session.SaveChanges().ConfigureAwait(false);
             _session.WithOpenSession(x =>
                 _logger.DebugMessage(() =>
                     TransactionalBehaviorRavenSessionUsageMessage.For(x, _httpRequest)));
         }
+
     }
 }

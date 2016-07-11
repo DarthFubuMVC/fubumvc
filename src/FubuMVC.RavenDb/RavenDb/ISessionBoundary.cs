@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Raven.Client;
 
 namespace FubuMVC.RavenDb.RavenDb
@@ -8,7 +9,7 @@ namespace FubuMVC.RavenDb.RavenDb
         IDocumentSession Session();
         IDocumentSession Session<T>() where T : RavenDbSettings;
         void WithOpenSession(Action<IDocumentSession> action);
-        void SaveChanges();
+        Task SaveChanges();
         void Start();
         void MakeReadOnly();
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Marten;
 
 namespace FubuMVC.Marten
@@ -19,21 +20,14 @@ namespace FubuMVC.Marten
             reset();
         }
 
-        private IEnumerable<IDocumentSession> openSessions()
-        {
-            if (_session != null && _session.IsValueCreated)
-            {
-                yield return _session.Value;
-            }
-        }
+
 
         public void Dispose()
         {
-            WithOpenSession(s =>
+            if (_session.IsValueCreated)
             {
-                s.Dispose();
-            });
-
+                _session.Value.Dispose();   
+            }
         }
 
         public IDocumentSession Session()
@@ -41,14 +35,14 @@ namespace FubuMVC.Marten
             return _session.Value;
         }
 
-        public void WithOpenSession(Action<IDocumentSession> action)
+        public Task SaveChanges()
         {
-            openSessions().Each(action);
-        }
+            if (_session.IsValueCreated)
+            {
+                return _session.Value.SaveChangesAsync();
+            }
 
-        public void SaveChanges()
-        {
-            WithOpenSession(s => s.SaveChanges());
+            return Task.CompletedTask;
         }
 
         public void Start()
@@ -59,7 +53,8 @@ namespace FubuMVC.Marten
 
         private void reset()
         {
-            WithOpenSession(s => s.Dispose());
+            Dispose();
+
             _session = new Lazy<IDocumentSession>(() =>
             {
                 var s = _store.OpenSession();

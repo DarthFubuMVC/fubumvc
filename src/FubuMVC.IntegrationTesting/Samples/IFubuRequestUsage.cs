@@ -1,6 +1,8 @@
-﻿using FubuMVC.Core;
+﻿using System.Threading.Tasks;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.ServiceBus;
 
 namespace FubuMVC.IntegrationTesting.Samples
 {
@@ -22,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             _request = request;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             // create the PrivateMessage object
             var message = createPrivateMessage();
@@ -32,7 +34,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             // could find it later
             _request.Set(message);
 
-            return DoNext.Continue;
+            return DoNext.Continue.ToCompletionTask();
         }
 
         private static PrivateMessage createPrivateMessage()
@@ -53,13 +55,13 @@ namespace FubuMVC.IntegrationTesting.Samples
             _writer = writer;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             // Extract the PrivateMessage to render.
             var message = _request.Get<PrivateMessage>();
             _writer.Write(MimeType.Text, message.Name);
 
-            return DoNext.Continue;
+            return DoNext.Continue.ToCompletionTask();
         }
     }
 

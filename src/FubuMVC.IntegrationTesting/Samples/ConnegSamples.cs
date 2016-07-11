@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
@@ -247,7 +248,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             _fubuRequest = fubuRequest;
         }
 
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
             // Just let the normal model binding do its thing here,
             // but "correct" anything that is missing
@@ -257,6 +258,8 @@ namespace FubuMVC.IntegrationTesting.Samples
             {
                 mimetype.AcceptTypes = new MimeTypeList("application/json");
             }
+
+            return Task.CompletedTask;
         }
     }
 

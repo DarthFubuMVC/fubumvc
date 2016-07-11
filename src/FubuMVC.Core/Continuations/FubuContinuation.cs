@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Net;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -13,20 +14,19 @@ namespace FubuMVC.Core.Continuations
     /// </summary>
     public class FubuContinuation
     {
-        private readonly Action<IContinuationDirector> _configure;
-        private readonly ContinuationType _type;
+        private readonly Func<IContinuationDirector, Task> _configure;
         private ActionCall _call;
         private object _destination;
         public HttpStatusCode? _statusCode;
         public string _categoryOrHttpMethod;
 
-        private FubuContinuation(ContinuationType type, Action<IContinuationDirector> configure)
+        private FubuContinuation(ContinuationType type, Func<IContinuationDirector, Task> configure)
         {
-            _type = type;
+            Type = type;
             _configure = configure;
         }
 
-        public ContinuationType Type { get { return _type; } }
+        public ContinuationType Type { get; }
 
         /// <summary>
         /// Only for testing
@@ -162,7 +162,7 @@ namespace FubuMVC.Core.Continuations
         public void AssertWasTransferedTo<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null)
         {
             ActionCall call = ActionCall.For(expression);
-            assertMatches(_type == ContinuationType.Transfer && callMatches(call) && _categoryOrHttpMethod == categoryOrHttpMethod);
+            assertMatches(Type == ContinuationType.Transfer && callMatches(call) && _categoryOrHttpMethod == categoryOrHttpMethod);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace FubuMVC.Core.Continuations
         {
             assertMatches(_categoryOrHttpMethod == categoryOrHttpMethod);
             assertMatches(_destination != null && typeof (T) == _destination.GetType());
-            assertMatches(_type == ContinuationType.Transfer && predicate((T) _destination));
+            assertMatches(Type == ContinuationType.Transfer && predicate((T) _destination));
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace FubuMVC.Core.Continuations
         {
             assertMatches(_categoryOrHttpMethod == categoryOrHttpMethod);
             assertMatches(_destination != null && typeof(T) == _destination.GetType());
-            assertMatches(_type == ContinuationType.Redirect && predicate((T)_destination));
+            assertMatches(Type == ContinuationType.Redirect && predicate((T)_destination));
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace FubuMVC.Core.Continuations
         {
             assertMatches(_categoryOrHttpMethod == categoryOrHttpMethod);
             ActionCall call = ActionCall.For(expression);
-            assertMatches(_type == ContinuationType.Redirect && callMatches(call));
+            assertMatches(Type == ContinuationType.Redirect && callMatches(call));
         }
 
         private bool callMatches(ActionCall call)
@@ -238,14 +238,14 @@ namespace FubuMVC.Core.Continuations
         /// </summary>
         public void AssertWasContinuedToNextBehavior()
         {
-            assertMatches(_type == ContinuationType.NextBehavior);
+            assertMatches(Type == ContinuationType.NextBehavior);
         }
 
         private void assertMatches(bool matches)
         {
             if (matches) return;
 
-            string message = "Assertion Failed!\nContinuation Type:  " + _type;
+            string message = "Assertion Failed!\nContinuation Type:  " + Type;
             if (_destination != null)
             {
                 message += "\n  destination model: " + _destination;
@@ -273,9 +273,9 @@ namespace FubuMVC.Core.Continuations
         /// Called internally by FubuMVC to process this FubuContinuation
         /// </summary>
         /// <param name="director"></param>
-        public void Process(IContinuationDirector director)
+        public Task Process(IContinuationDirector director)
         {
-            _configure(director);
+            return _configure(director);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace FubuMVC.Core.Continuations
         /// <param name="httpStatusCode"></param>
         public void AssertWasEndedWithStatusCode(HttpStatusCode httpStatusCode)
         {
-            assertMatches(_type == ContinuationType.Stop && _statusCode.HasValue && _statusCode.Value == httpStatusCode);
+            assertMatches(Type == ContinuationType.Stop && _statusCode.HasValue && _statusCode.Value == httpStatusCode);
         }
     }
 }

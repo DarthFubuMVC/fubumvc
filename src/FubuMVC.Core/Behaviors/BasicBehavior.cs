@@ -1,56 +1,71 @@
 using System;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Behaviors
 {
-    public enum PartialBehavior
-    {
-        Ignored,
-        Executes
-    }
-
     public abstract class BasicBehavior : IActionBehavior
     {
         private readonly PartialBehavior _partialBehavior;
-        private Action _innerInvoke;
+        private readonly Func<Task> _innerInvoke;
 
         protected BasicBehavior(PartialBehavior partialBehavior)
         {
             _partialBehavior = partialBehavior;
-            _innerInvoke = () => { if (InsideBehavior != null) InsideBehavior.Invoke(); };
+
+            if (InsideBehavior == null)
+            {
+                _innerInvoke = () => Task.CompletedTask;
+            }
+            else
+            {
+                _innerInvoke = () => InsideBehavior.Invoke();
+            }
         }
 
         public IActionBehavior InsideBehavior { get; set; }
 
-        public void Invoke()
+        public Task Invoke()
         {
-            if (performInvoke() == DoNext.Continue && InsideBehavior != null)
-            {
-                _innerInvoke();
-            }
-
-            afterInsideBehavior();
+            return invoke(_innerInvoke);
         }
 
-        public void InvokePartial()
+        private async Task invoke(Func<Task> inner)
         {
+            var doNext = await performInvoke().ConfigureAwait(false);
+            if (doNext == DoNext.Continue)
+            {
+                await inner().ConfigureAwait(false);
+            }
+
+            await afterInsideBehavior().ConfigureAwait(false);
+        }
+
+        public async Task InvokePartial()
+        {
+            Func<Task> inner = () => Task.CompletedTask;
+            if (InsideBehavior != null)
+            {
+                inner = InsideBehavior.InvokePartial;
+            }
+
             if (_partialBehavior == PartialBehavior.Executes)
             {
-                _innerInvoke = () => { if (InsideBehavior != null) InsideBehavior.InvokePartial(); };
-                Invoke();
+                await invoke(inner).ConfigureAwait(false);
             }
-            else if (InsideBehavior != null)
+            else
             {
-                InsideBehavior.InvokePartial();
+                await inner().ConfigureAwait(false);
             }
         }
 
-        protected virtual DoNext performInvoke()
+        protected virtual Task<DoNext> performInvoke()
         {
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
 
-        protected virtual void afterInsideBehavior()
+        protected virtual Task afterInsideBehavior()
         {
+            return Task.CompletedTask;
         }
     }
 }

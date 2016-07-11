@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Routes;
@@ -114,12 +115,12 @@ namespace FubuMVC.Tests.Registration
 
     public class WrappingBehavior : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
@@ -127,12 +128,12 @@ namespace FubuMVC.Tests.Registration
 
     public class WrappingBehavior2 : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }

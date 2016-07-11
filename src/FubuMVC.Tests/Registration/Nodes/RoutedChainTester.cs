@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
@@ -44,12 +45,12 @@ namespace FubuMVC.Tests.Registration.Nodes
 
     public class FakeAuthBehavior : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }

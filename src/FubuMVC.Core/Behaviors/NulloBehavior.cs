@@ -1,13 +1,17 @@
+using System.Threading.Tasks;
+
 namespace FubuMVC.Core.Behaviors
 {
     public class NulloBehavior : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
+            return Task.CompletedTask;
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
+            return Task.CompletedTask;
         }
     }
 }

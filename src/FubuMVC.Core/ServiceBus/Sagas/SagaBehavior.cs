@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
@@ -20,17 +21,17 @@ namespace FubuMVC.Core.ServiceBus.Sagas
             _handler = handler;
         }
 
-        protected override void invoke(Action action)
+        protected override async Task invoke(Func<Task> func)
         {
             var message = _request.Find<TMessage>().FirstOrDefault();
             if (message == null)
             {
-                throw new Exception(String.Format("Message of type {0} is required.", typeof(TMessage)));
+                throw new Exception($"Message of type {typeof(TMessage)} is required.");
             }
 
             _handler.State = _repository.Find(message);
 
-            action();
+            await func().ConfigureAwait(false);
 
             if (_handler.State == null) return;
 

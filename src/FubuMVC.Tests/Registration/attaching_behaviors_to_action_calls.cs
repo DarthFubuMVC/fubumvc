@@ -6,6 +6,7 @@ using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -64,7 +65,7 @@ namespace FubuMVC.Tests.Registration
         {
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             throw new NotImplementedException();
         }

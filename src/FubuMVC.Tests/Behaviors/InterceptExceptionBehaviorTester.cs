@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -44,7 +45,7 @@ namespace FubuMVC.Tests.Behaviors
 		{
 			var interceptExceptionBehavior = new TestInterceptExceptionBehavior<ArgumentException>();
 
-            Exception<FubuAssertionException>.ShouldBeThrownBy(interceptExceptionBehavior.Invoke);
+            Exception<FubuAssertionException>.ShouldBeThrownBy(() => interceptExceptionBehavior.Invoke());
 		}
 
 		[Test]
@@ -69,7 +70,7 @@ namespace FubuMVC.Tests.Behaviors
 			};
 			cut.SetShouldHandle(false);
 
-			Exception<ArgumentException>.ShouldBeThrownBy(cut.Invoke);
+			Exception<ArgumentException>.ShouldBeThrownBy(() => cut.Invoke());
 
 			cut.HandledException.ShouldBeNull();
 		}
@@ -83,7 +84,7 @@ namespace FubuMVC.Tests.Behaviors
 			};
 			cut.SetShouldHandle(false);
 
-			Exception<WebException>.ShouldBeThrownBy(cut.Invoke);
+			Exception<WebException>.ShouldBeThrownBy(() => cut.Invoke());
 
 			cut.HandledException.ShouldBeNull();
 		}
@@ -116,12 +117,12 @@ namespace FubuMVC.Tests.Behaviors
 	public class ThrowingBehavior<T> : IActionBehavior
 		where T : Exception, new()
 	{
-		public void Invoke()
+		public Task Invoke()
 		{
 			throw new T();
 		}
 
-		public void InvokePartial()
+		public Task InvokePartial()
 		{
 			throw new T();
 		}
@@ -131,14 +132,16 @@ namespace FubuMVC.Tests.Behaviors
 	{
 		public bool Invoked { get; set; }
 
-		public void Invoke()
+		public Task Invoke()
 		{
 			Invoked = true;
+		    return Task.CompletedTask;
 		}
 
-		public void InvokePartial()
+		public Task InvokePartial()
 		{
 			Invoked = true;
-		}
+            return Task.CompletedTask;
+        }
 	}
 }

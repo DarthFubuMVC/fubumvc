@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.UI
             MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
 
             MockFor<IOutputWriter>()
-                .Expect(x => x.Record(theAction.InvokePartial))
+                .Expect(x => x.Record(() => theAction.InvokePartial()))
                 .WhenCalled(r => theAction.InvokePartial())
                 .Return(MockFor<IRecordedOutput>());
 
@@ -162,7 +162,7 @@ namespace FubuMVC.Tests.UI
             MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
 
             MockFor<IOutputWriter>()
-                .Expect(x => x.Record(theAction.InvokePartial))
+                .Expect(x => x.Record(() => theAction.InvokePartial()))
                 .WhenCalled(r => theAction.InvokePartial())
                 .Return(MockFor<IRecordedOutput>());
 
@@ -235,7 +235,7 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void should_not_record_on_the_outputwriter()
         {
-            MockFor<IOutputWriter>().AssertWasNotCalled(x => x.Record(theAction.InvokePartial));
+            MockFor<IOutputWriter>().AssertWasNotCalled(x => x.Record(() => theAction.InvokePartial()));
         }
 
         [Test]
@@ -286,7 +286,7 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void should_not_record_on_the_outputwriter()
         {
-            MockFor<IOutputWriter>().AssertWasNotCalled(x => x.Record(theAction.InvokePartial));
+            MockFor<IOutputWriter>().AssertWasNotCalled(x => x.Record(() => theAction.InvokePartial()));
         }
 
         [Test]
@@ -325,7 +325,7 @@ namespace FubuMVC.Tests.UI
             MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
 
             MockFor<IOutputWriter>()
-                .Expect(x => x.Record(theAction.InvokePartial))
+                .Expect(x => x.Record(() => theAction.InvokePartial()))
                 .WhenCalled(r => theAction.InvokePartial())
                 .Return(MockFor<IRecordedOutput>());
 

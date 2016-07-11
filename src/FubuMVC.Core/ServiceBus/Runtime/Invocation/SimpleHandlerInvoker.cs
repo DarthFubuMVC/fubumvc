@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
@@ -20,11 +21,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _action = action;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             var input = _request.Find<TInput>().Single();
             _action(_controller, input);
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
     }
 }

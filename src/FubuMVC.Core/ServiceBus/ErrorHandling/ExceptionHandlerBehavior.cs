@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
@@ -12,7 +13,6 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
     public class ExceptionHandlerBehavior : IActionBehavior
     {
         private readonly IActionBehavior _behavior;
-        private readonly HandlerChain _chain;
         private readonly Envelope _envelope;
         private readonly IInvocationContext _context;
         private readonly ILogger _logger;
@@ -21,22 +21,22 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
         public ExceptionHandlerBehavior(IActionBehavior behavior, HandlerChain chain, Envelope envelope, IInvocationContext context, ILogger logger, IFubuRequest request)
         {
             _behavior = behavior;
-            _chain = chain;
+            Chain = chain;
             _envelope = envelope;
             _context = context;
             _logger = logger;
             _request = request;
         }
 
-        public void Invoke()
+        public async Task Invoke()
         {
             try
             {
-                _behavior.Invoke();
+                await _behavior.Invoke().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                var message = _request.Get(_chain.InputType());
+                var message = _request.Get(Chain.InputType());
 
                 if (message == null)
                 {
@@ -53,7 +53,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
 
         public IContinuation DetermineContinuation(Exception ex)
         {
-            if (_envelope.Attempts >= _chain.MaximumAttempts)
+            if (_envelope.Attempts >= Chain.MaximumAttempts)
             {
                 return new MoveToErrorQueue(ex);
             }
@@ -71,17 +71,14 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
                 return exceptions.FirstValue(tryToDetermineContinuation);
             }
             
-            return _chain.ErrorHandlers.FirstValue(x => x.DetermineContinuation(_envelope, ex));
+            return Chain.ErrorHandlers.FirstValue(x => x.DetermineContinuation(_envelope, ex));
         }
 
-        public HandlerChain Chain
-        {
-            get { return _chain; }
-        }
+        public HandlerChain Chain { get; }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
-            _behavior.InvokePartial();
+            return _behavior.InvokePartial();
         }
     }
 }

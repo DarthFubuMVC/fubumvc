@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 
 namespace FubuMVC.Tests.StructureMap.Internals
@@ -87,12 +88,12 @@ namespace FubuMVC.Tests.StructureMap.Internals
 
         #region IActionBehavior Members
 
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
@@ -106,12 +107,12 @@ namespace FubuMVC.Tests.StructureMap.Internals
 
         #region IActionBehavior Members
 
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
@@ -52,7 +53,7 @@ namespace FubuMVC.IntegrationTesting.Ajax
             _request = request;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             var input = _request.Get<CharacterInput>();
             if (input.Race == "Ogre" && input.CharacterClass == "Paladin")
@@ -61,10 +62,10 @@ namespace FubuMVC.IntegrationTesting.Ajax
                 continuation.Errors.Add(new AjaxError {field = "Character", message = "Ogres cannot be Paladins!"});
                 _request.Set(continuation);
 
-                return DoNext.Stop;
+                return Task.FromResult(DoNext.Stop);
             }
 
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
     }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Instrumentation;
@@ -42,12 +43,14 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
 
         public class SimpleBehavior : IActionBehavior
         {
-            public void Invoke()
+            public Task Invoke()
             {
+                return Task.CompletedTask;
             }
 
-            public void InvokePartial()
+            public Task InvokePartial()
             {
+                return Task.CompletedTask;
             }
         }
 

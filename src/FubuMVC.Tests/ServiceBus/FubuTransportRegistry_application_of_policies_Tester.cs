@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
@@ -163,33 +164,33 @@ namespace FubuMVC.Tests.ServiceBus
 
     public class GreenWrapper : WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
-            action();
+            return func();
         }
     }
 
     public class BlueWrapper : WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
-            action();
+            return func();
         }
     }
 
     public class RedWrapper : WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
-            action();
+            return func();
         }
     }
 
     public class FakeBehavior4 : WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
-            action();
+            return func();
         }
     }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Behaviors
 {
@@ -8,8 +9,8 @@ namespace FubuMVC.Core.Behaviors
     // SAMPLE: IActionBehavior
     public interface IActionBehavior
     {
-        void Invoke();
-        void InvokePartial();
+        Task Invoke();
+        Task InvokePartial();
     }
     // ENDSAMPLE
 }

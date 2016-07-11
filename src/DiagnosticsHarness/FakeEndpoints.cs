@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
@@ -60,12 +61,12 @@ namespace DiagnosticsHarness
     {
         private static readonly Random random = new Random();
 
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
             var ms = random.NextDouble() * 1000;
             Thread.Sleep(TimeSpan.FromMilliseconds(ms));
 
-            action();
+            return func();
         }
     }
 

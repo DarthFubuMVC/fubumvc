@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration.Nodes;
@@ -40,12 +41,12 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
 
         public class SimpleBehavior : IActionBehavior
         {
-            public void Invoke()
+            public Task Invoke()
             {
                 throw new NotImplementedException();
             }
 
-            public void InvokePartial()
+            public Task InvokePartial()
             {
                 throw new NotImplementedException();
             }

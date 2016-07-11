@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Endpoints;
 using FubuMVC.Core.Registration.Nodes;
@@ -158,12 +159,12 @@ namespace FubuMVC.Tests.Diagnostics.Routes
 
         public class SimpleWrapper : IActionBehavior
         {
-            public void Invoke()
+            public Task Invoke()
             {
                 throw new NotImplementedException();
             }
 
-            public void InvokePartial()
+            public Task InvokePartial()
             {
                 throw new NotImplementedException();
             }
@@ -171,12 +172,12 @@ namespace FubuMVC.Tests.Diagnostics.Routes
 
         public class AnotherWrapper : IActionBehavior
         {
-            public void Invoke()
+            public Task Invoke()
             {
                 throw new NotImplementedException();
             }
 
-            public void InvokePartial()
+            public Task InvokePartial()
             {
                 throw new NotImplementedException();
             }

@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using StructureMap;
@@ -20,11 +22,11 @@ namespace FubuMVC.Core.StructureMap
             _behaviorId = behaviorId;
         }
 
-        public void Invoke()
+        public Task Invoke()
         {
             var behavior = StartInnerBehavior();
 
-            behavior.Invoke();
+            return behavior.Invoke();
         }
 
         public IActionBehavior StartInnerBehavior()
@@ -35,7 +37,7 @@ namespace FubuMVC.Core.StructureMap
             return behavior;
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             // This should never be called
             throw new NotSupportedException();

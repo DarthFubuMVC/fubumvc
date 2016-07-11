@@ -85,12 +85,12 @@ namespace FubuMVC.Tests.Registration
 
         public class StubBehavior : IActionBehavior
         {
-            public void Invoke()
+            public Task Invoke()
             {
                 throw new NotImplementedException();
             }
 
-            public void InvokePartial()
+            public Task InvokePartial()
             {
                 throw new NotImplementedException();
             }
@@ -301,12 +301,12 @@ namespace FubuMVC.Tests.Registration
 
     public class FakeBehavior : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
