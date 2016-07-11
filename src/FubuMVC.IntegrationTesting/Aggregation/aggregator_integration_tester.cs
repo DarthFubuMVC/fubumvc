@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Runtime.Aggregation;
@@ -141,7 +142,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 {
                     query = new AggregationEndpoint.Query1 {Name = "Justin Houston"},
                     type = typeof (AggregationEndpoint.Query1).GetMessageName()
-                });
+                }).GetAwaiter().GetResult();
 
                 response.request.ShouldBe("query-1");
                 response.type.ShouldBe("resource-1");
@@ -165,7 +166,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 query.AddQuery(new AggregationEndpoint.Input2());
                 query.Resource<AggregationEndpoint.Resource4>();
 
-                var aggregatedResponse = aggregator.QueryAggregate(query);
+                var aggregatedResponse = aggregator.QueryAggregate(query).GetAwaiter().GetResult();
 
                 aggregatedResponse.responses[0].result.ShouldBeOfType<AggregationEndpoint.Resource1>()
                     .Name.ShouldBe("Jeremy Maclin");
@@ -357,12 +358,12 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             return new Resource4();
         }
 
-        public AggregationResponse post_aggregated_query(AggregatedQuery query)
+        public Task<AggregationResponse> post_aggregated_query(AggregatedQuery query)
         {
             return _aggregator.QueryAggregate(query);
         }
 
-        public string[] get_aggregation()
+        public async Task<string[]> get_aggregation()
         {
             // The call to IAggregator.Fetch() will return an array
             // of objects. My assumption now is that you'd do this in
@@ -371,7 +372,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             // render it to the view with a page helper there.
             // This is so common now that I think we put a json variable
             // helper into FubuMVC.Core.
-            return _aggregator.Fetch(_ =>
+            return (await _aggregator.Fetch(_ =>
             {
                 // By an input query
                 _.Query(new Query1 {Name = "Jeremy Maclin"});
@@ -384,7 +385,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
 
                 // By action method
                 _.Action<AggregationEndpoint>(x => x.get_fourth_resource());
-            })
+            }).ConfigureAwait(false))
                 .Select(x => x.ToString())
                 .ToArray();
         }

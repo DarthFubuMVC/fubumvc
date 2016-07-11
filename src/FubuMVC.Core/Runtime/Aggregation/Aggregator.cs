@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Querying;
 
@@ -20,18 +21,24 @@ namespace FubuMVC.Core.Runtime.Aggregation
             _messageTypes = messageTypes;
         }
 
-        public AggregationResponse QueryAggregate(AggregatedQuery request)
+        public async Task<AggregationResponse> QueryAggregate(AggregatedQuery request)
         {
+            var responses = new ClientResponse[request.queries.Length];
+            for (int i = 0; i < request.queries.Length; i++)
+            {
+                responses[i] = await ExecuteQuery(request.queries[i]).ConfigureAwait(false);
+            }
+
             return new AggregationResponse
             {
-                responses = request.queries.Select(ExecuteQuery).ToArray()
+                responses = responses
             };
         }
 
-        public ClientResponse ExecuteQuery(ClientQuery query)
+        public async Task<ClientResponse> ExecuteQuery(ClientQuery query)
         {
             var chain = _messageTypes.FindChain(query.type);
-            var output = _invoker.InvokeFast(chain, query.query);
+            var output = await _invoker.InvokeFast(chain, query.query).ConfigureAwait(false);
 
             return new ClientResponse
             {
@@ -42,12 +49,12 @@ namespace FubuMVC.Core.Runtime.Aggregation
             };
         }
 
-        public IEnumerable<object> Fetch(AggregateRequest request)
+        public Task<IEnumerable<object>> Fetch(AggregateRequest request)
         {
             return request.Aggregate(this);
         }
 
-        public IEnumerable<object> Fetch(Action<AggregateRequest> configure)
+        public Task<IEnumerable<object>> Fetch(Action<AggregateRequest> configure)
         {
             var request = new AggregateRequest();
             configure(request);
@@ -55,19 +62,19 @@ namespace FubuMVC.Core.Runtime.Aggregation
             return Fetch(request);
         }
 
-        public object ForInputType(Type inputType)
+        public Task<object> ForInputType(Type inputType)
         {
             var chain = _resolver.FindUniqueByType(inputType);
             return _invoker.InvokeFast(chain, null);
         }
 
-        public object ForQuery<T>(T query)
+        public Task<object> ForQuery<T>(T query)
         {
             var chain = _resolver.FindUniqueByType(typeof (T));
             return _invoker.InvokeFast(chain, query);
         }
 
-        public object ForResource(Type resourceType)
+        public Task<object> ForResource(Type resourceType)
         {
             var chain =
                 _resolver.Find(new ChainSearch {Type = resourceType, TypeMode = TypeSearchMode.ResourceModelOnly});
@@ -75,7 +82,7 @@ namespace FubuMVC.Core.Runtime.Aggregation
             return _invoker.InvokeFast(chain, null);
         }
 
-        public object ForAction<T>(Expression<Func<T, object>> expression)
+        public Task<object> ForAction<T>(Expression<Func<T, object>> expression)
         {
             var chain = _resolver.Find(typeof (T), ReflectionHelper.GetMethod(expression));
             return _invoker.InvokeFast(chain, null);
