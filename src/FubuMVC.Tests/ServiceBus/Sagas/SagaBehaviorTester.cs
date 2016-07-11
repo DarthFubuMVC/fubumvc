@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Sagas;
@@ -75,7 +76,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             theHandlerHasNoStateAfterTheMessageIsProcessed();
             
 
-            ClassUnderTest.Invoke();
+            ClassUnderTest.Invoke().Wait();
         }
 
         [Test]
@@ -118,11 +119,13 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             theInnerBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.Inner = theInnerBehavior;
 
+            theInnerBehavior.Stub(x => x.Invoke()).Return(Task.CompletedTask);
+
             theRepository = MockFor<ISagaRepository<SagaState, Message1>>();
 
             theContextIs();
 
-            ClassUnderTest.Invoke();
+            ClassUnderTest.Invoke().Wait();
         }
 
         protected abstract void theContextIs();
