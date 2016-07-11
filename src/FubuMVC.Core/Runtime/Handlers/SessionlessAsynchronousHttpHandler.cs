@@ -28,20 +28,7 @@ namespace FubuMVC.Core.Runtime.Handlers
 
         public IAsyncResult BeginProcessRequest(System.Web.HttpContext context, AsyncCallback cb, object extraData)
         {
-            var taskCompletionSource = new TaskCompletionSource<object>();
-            var requestCompletion = new RequestCompletion();
-            requestCompletion.WhenCompleteDo(ex =>
-            {
-                if (ex != null)
-                {
-                    taskCompletionSource.SetException(ex);
-                }
-                taskCompletionSource.SetResult(null);
-                cb(taskCompletionSource.Task);
-            });
-            requestCompletion.Start(() => _invoker.Invoke(_arguments, _routeData, requestCompletion));
-
-            return taskCompletionSource.Task;
+            return _invoker.Invoke(_arguments, _routeData);
         }
 
         public void EndProcessRequest(IAsyncResult result)

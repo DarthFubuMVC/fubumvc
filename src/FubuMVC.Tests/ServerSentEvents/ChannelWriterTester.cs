@@ -193,32 +193,6 @@ namespace FubuMVC.Tests.ServerSentEvents
         }
 
         [Test]
-        public void request_is_faulted_when_writer_throws_exception()
-        {
-            var requestCompletion = new RequestCompletion();
-            AggregateException exception = null;
-            var waitHandle = new ManualResetEvent(false);
-            requestCompletion.WhenCompleteDo(ex =>
-            {
-                exception = ex as AggregateException;
-                waitHandle.Set();
-            });
-            var asyncCoordinator = new AsyncCoordinator(requestCompletion, Enumerable.Empty<IExceptionHandler>());
-            theWriter.WriterThrows = true;
-
-            var task = theChannelWriter.Write(theTopic);
-            theChannel.Write(q => q.Write(e1));
-
-            asyncCoordinator.Push(task);
-
-            waitHandle.WaitOne(TimeSpan.FromSeconds(1));
-            var exceptions = exception.Flatten().InnerExceptions;
-
-            exceptions.Count.ShouldBe(1);
-            exceptions[0].Message.ShouldBe(RecordingServerEventWriter.ExceptionMessage);
-        }
-
-        [Test]
         public void parent_task_is_faulted_when_channel_initializer_fails()
         {
             theInitializer = new FailingTestChannelInitializer();

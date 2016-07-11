@@ -41,7 +41,6 @@ namespace FubuMVC.Core.Registration
             AddService<IDeactivator, MiddlewareDeactivator>();
 
             SetServiceIfNone<IAggregator, Aggregator>();
-            SetServiceIfNone<IRequestCompletion, RequestCompletion>();
 
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
 
@@ -97,7 +96,6 @@ namespace FubuMVC.Core.Registration
             SetServiceIfNone<ISystemTime, SystemTime>();
 
             SetServiceIfNone<IExceptionHandlingObserver, ExceptionHandlingObserver>();
-            SetServiceIfNone<IAsyncCoordinator, AsyncCoordinator>();
 
             SetServiceIfNone<IPartialInvoker, PartialInvoker>();
 

@@ -35,14 +35,14 @@ namespace FubuMVC.Core.Http.Owin
             _routes.AddRange(routes);
         }
 
-        public Task Invoke(IDictionary<string, object> environment)
+        public async Task Invoke(IDictionary<string, object> environment)
         {
             var owinHttpContext = new OwinHttpContext(environment);
             var routeData = _routes.GetRouteData(owinHttpContext);
             if (routeData == null)
             {
                 write404(environment);
-                return Task.Factory.StartNew(() => { });
+                return;
             }
 
 
@@ -51,21 +51,14 @@ namespace FubuMVC.Core.Http.Owin
             var arguments = new OwinServiceArguments(routeData, environment);
             var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
 
-            var taskCompletionSource = new TaskCompletionSource<object>();
-            var requestCompletion = new RequestCompletion();
-            requestCompletion.WhenCompleteDo(ex =>
+            try
             {
-                if (ex != null)
-                {
-                    //This seems like OWIN should handle the .SetException(ex) with standard error screen formatting?
-                    write500(environment, ex);
-                }
-                taskCompletionSource.SetResult(null);
-            });
-            arguments.Set<IRequestCompletion>(requestCompletion);
-            requestCompletion.SafeStart(() => invoker.Invoke(arguments, routeData.Values, requestCompletion));
-
-            return taskCompletionSource.Task;
+                await invoker.Invoke(arguments, routeData.Values).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                write500(environment, e);
+            }
         }
 
         private void write404(IDictionary<string, object> environment)
