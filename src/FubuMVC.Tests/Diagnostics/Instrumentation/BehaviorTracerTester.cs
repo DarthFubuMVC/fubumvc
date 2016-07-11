@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
 
             Exception<DivideByZeroException>.ShouldBeThrownBy(() =>
             {
-                ClassUnderTest.Invoke();
+                ClassUnderTest.Invoke().Wait();
             });
 
             
