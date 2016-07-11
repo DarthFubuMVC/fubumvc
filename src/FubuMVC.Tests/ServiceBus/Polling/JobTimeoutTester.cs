@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
 
             var task = timeout.Execute(job);
 
-            Exception<AggregateException>.ShouldBeThrownBy(() => {
+            Exception<TimeoutException>.ShouldBeThrownBy(() => {
                 task.Wait();
             });
 
