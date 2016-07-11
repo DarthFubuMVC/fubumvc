@@ -93,10 +93,10 @@ namespace FubuMVC.Tests.ServiceBus.Async
 
     public class FooWrapper : WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override async Task invoke(Func<Task> func)
         {
             AsyncWatcher.Write("wrapper:start");
-            action();
+            await func().ConfigureAwait(false);
             AsyncWatcher.Write("wrapper:finish");
         }
     }

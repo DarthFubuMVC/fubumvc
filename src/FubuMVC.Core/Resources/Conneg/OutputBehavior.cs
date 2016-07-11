@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
@@ -27,15 +28,23 @@ namespace FubuMVC.Core.Resources.Conneg
 
 
 
-        public void Invoke()
+        public async Task Invoke()
         {
-            if (InsideBehavior != null) InsideBehavior.Invoke();
+            if (InsideBehavior != null)
+            {
+                await InsideBehavior.Invoke().ConfigureAwait(false);
+            }
+
+            // TODO -- make async
             Write();
         }
 
-        public void InvokePartial()
+        public async Task InvokePartial()
         {
-            if (InsideBehavior != null) InsideBehavior.InvokePartial();
+            if (InsideBehavior != null)
+            {
+                await InsideBehavior.InvokePartial().ConfigureAwait(false);
+            }
 
             if (shouldWriteInPartial())
             {

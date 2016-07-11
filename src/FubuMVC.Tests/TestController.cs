@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Web.UI;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
@@ -95,12 +96,12 @@ namespace FubuMVC.Tests
 
         #region IActionBehavior Members
 
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
@@ -114,12 +115,12 @@ namespace FubuMVC.Tests
 
         #region IActionBehavior Members
 
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }

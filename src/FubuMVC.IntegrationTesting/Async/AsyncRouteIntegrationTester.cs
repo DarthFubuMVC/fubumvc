@@ -67,14 +67,14 @@ namespace FubuMVC.IntegrationTesting.Async
     {
         public IActionBehavior Inner { get; set; }
 
-        public void Invoke()
+        public Task Invoke()
         {
-            //Don't call inner action
+            return Task.CompletedTask;
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
-            //Don't call inner action
+            return Task.CompletedTask;
         }
     }
 }

@@ -46,19 +46,10 @@ namespace FubuMVC.Core.Registration.Nodes
             Method = method;
         }
 
-        public bool IsAsync
-        {
-            get { return Method.ReturnType.CanBeCastTo<Task>(); }
-        }
+        public bool IsAsync => Method.ReturnType.CanBeCastTo<Task>();
 
-        public override string Description
-        {
-            get
-            {
-                return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(),
-                    HasOutput ? Method.ReturnType.Name : "void");
-            }
-        }
+        public override string Description => "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(),
+            HasOutput ? Method.ReturnType.Name : "void");
 
         private string getInputParameters()
         {
@@ -206,13 +197,6 @@ namespace FubuMVC.Core.Registration.Nodes
             if (outputType.CanBeCastTo<FubuContinuation>() || outputType.CanBeCastTo<IRedirectable>())
             {
                 AddAfter(new ContinuationNode());
-            }
-
-            if (IsAsync)
-            {
-                AddAfter(outputType == typeof (Task)
-                    ? new AsyncContinueWithNode()
-                    : new AsyncContinueWithNode(outputType));
             }
         }
 

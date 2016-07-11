@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Runtime;
@@ -23,19 +24,13 @@ namespace FubuMVC.Core.Security.Authorization
             _settings = settings;
         }
 
-        public IEnumerable<IAuthorizationPolicy> Policies
-        {
-            get
-            {
-                return _authorization.Policies;
-            }
-        }
+        public IEnumerable<IAuthorizationPolicy> Policies => _authorization.Policies;
 
-        protected override void invoke(Action action)
+        protected override async Task invoke(Func<Task> func)
         {
             if (!_settings.AuthorizationEnabled)
             {
-                action();
+                await func().ConfigureAwait(false);
                 return;
             }
 
@@ -45,7 +40,7 @@ namespace FubuMVC.Core.Security.Authorization
             // chain (filters, controller actions, views, etc.)
             if (access == AuthorizationRight.Allow)
             {
-                action();
+                await func().ConfigureAwait(false);
             }
             else
             {

@@ -174,8 +174,16 @@ namespace FubuMVC.Tests.Routing
         {
             public ActionBehavior(Guid behaviorId) { BehaviorId = behaviorId; }
             public Guid BehaviorId { get; private set; }
-            public void Invoke() {}
-            public void InvokePartial() {}
+
+            public Task Invoke()
+            {
+                return Task.CompletedTask;
+            }
+
+            public Task InvokePartial()
+            {
+                return Task.CompletedTask;
+            }
         }
 
         /*

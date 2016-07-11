@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
@@ -21,16 +22,16 @@ namespace FubuMVC.Core.Runtime
 
         public IActionBehavior Inner { get; private set; }
 
-        public void Invoke()
+        public Task Invoke()
         {
             throw new InvalidOperationException("Not valid unless being used with partial invocation.");
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             _chainStack.Pop();
             _chainStack.Push(_targetChain);
-            Inner.InvokePartial();
+            return Inner.InvokePartial();
         }
     }
 }

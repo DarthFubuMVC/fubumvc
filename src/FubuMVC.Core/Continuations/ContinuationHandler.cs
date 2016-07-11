@@ -6,6 +6,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Continuations
 {
@@ -16,7 +17,6 @@ namespace FubuMVC.Core.Continuations
         private readonly IUrlRegistry _registry;
         private readonly IFubuRequest _request;
         private readonly IOutputWriter _writer;
-        private Action _invokeNext = () => { };
 
         public ContinuationHandler(IUrlRegistry registry, IOutputWriter writer, IFubuRequest request, IPartialFactory factory, IChainResolver resolver)
         {
@@ -29,71 +29,73 @@ namespace FubuMVC.Core.Continuations
 
         public IActionBehavior InsideBehavior { get; set; }
 
-        public void InvokeNextBehavior()
-        {
-            _invokeNext();
-        }
-
-        public void Invoke()
+        public async Task InvokeNextBehavior()
         {
             if (InsideBehavior != null)
             {
-                _invokeNext = () => InsideBehavior.Invoke();
+                await InsideBehavior.Invoke().ConfigureAwait(false);
             }
-
-            var continuation = FindContinuation();
-            continuation.Process(this);
         }
 
-        public void InvokePartial()
+        public async Task Invoke()
         {
-            if (InsideBehavior != null)
-            {
-                _invokeNext = () => InsideBehavior.InvokePartial();
-            }
-
             var continuation = FindContinuation();
-            continuation.Process(this);
+            await continuation.Process(this).ConfigureAwait(false);
         }
 
-        public void RedirectTo(object input, string categoryOrHttpMethod = null)
+        public Task InvokePartial()
+        {
+            var continuation = FindContinuation();
+            return continuation.Process(this);
+        }
+
+        public Task RedirectTo(object input, string categoryOrHttpMethod = null)
         {
             string url = input as string ?? _registry.UrlFor(input, categoryOrHttpMethod ?? "GET");
             _writer.RedirectToUrl(url);
+
+            // TODO -- use an async write method on the HTTP?
+            return Task.CompletedTask;
         }
 
-        public void RedirectToCall(ActionCall call, string categoryOrHttpMethod = null)
+        public Task RedirectToCall(ActionCall call, string categoryOrHttpMethod = null)
         {
             string url = _registry.UrlFor(call.HandlerType, call.Method, categoryOrHttpMethod ?? "GET");
             _writer.RedirectToUrl(url);
+
+            // TODO -- use an async write method on the HTTP?
+            return Task.CompletedTask;
         }
 
-        public void TransferTo(object input, string categoryOrHttpMethod = null)
+        public Task TransferTo(object input, string categoryOrHttpMethod = null)
         {
             if (input == null)
             {
-                throw new ArgumentNullException("input");
+                throw new ArgumentNullException(nameof(input));
             }
 
             _request.SetObject(input);
 
             var chain = _resolver.FindUnique(input, categoryOrHttpMethod);
 
-            IActionBehavior partial = _factory.BuildBehavior(chain);
-            partial.InvokePartial();
+            var partial = _factory.BuildBehavior(chain);
+            return partial.InvokePartial();
         }
 
-        public void TransferToCall(ActionCall call, string categoryOrHttpMethod = null)
+        public Task TransferToCall(ActionCall call, string categoryOrHttpMethod = null)
         {
             var chain = _resolver.Find(call.HandlerType, call.Method, categoryOrHttpMethod);
 
-            IActionBehavior partial = _factory.BuildBehavior(chain);
-            partial.InvokePartial();
+            var partial = _factory.BuildBehavior(chain);
+            return partial.InvokePartial();
         }
 
-        public void EndWithStatusCode(HttpStatusCode code)
+        public Task EndWithStatusCode(HttpStatusCode code)
         {
+            // TODO -- use async methods here?
             _writer.WriteResponseCode(code);
+
+            return Task.CompletedTask;
         }
 
 

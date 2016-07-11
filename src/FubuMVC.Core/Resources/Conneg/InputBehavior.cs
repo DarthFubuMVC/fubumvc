@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
@@ -20,10 +21,10 @@ namespace FubuMVC.Core.Resources.Conneg
         }
 
         // SAMPLE: input-behavior-mechanics
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             // Might already be there from a different way
-            if (_context.Models.Has<T>()) return DoNext.Continue;
+            if (_context.Models.Has<T>()) return Task.FromResult(DoNext.Continue);
 
             
             var contentType = _context.Request.GetHeader(HttpRequestHeader.ContentType).FirstOrDefault() ??
@@ -57,7 +58,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 // content-type of the request, this request fails
                 // with an HTTP 415 return code
                 failWithInvalidMimeType();
-                return DoNext.Stop;
+                return Task.FromResult(DoNext.Stop);
             }
 
             _context.Logger.DebugMessage(() => new ReaderChoice(contentType, reader));
@@ -66,7 +67,7 @@ namespace FubuMVC.Core.Resources.Conneg
             var target = reader.Read(contentType, _context);
             _context.Models.Set(target);
 
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
 
         // ENDSAMPLE

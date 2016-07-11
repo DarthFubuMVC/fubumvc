@@ -1,27 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
 using Marten;
 
 namespace FubuMVC.Marten
 {
     public class SessionBoundary : ISessionBoundary
     {
-        private readonly IDocumentStore _store;
-        private readonly IMartenSessionLogger _logger;
         private readonly object _lock = new object();
+        private readonly IMartenSessionLogger _logger;
+        private readonly IDocumentStore _store;
         private IDocumentSession _session;
 
         public SessionBoundary(IDocumentStore store, IMartenSessionLogger logger)
         {
             _store = store;
             _logger = logger;
-
         }
 
         public void Dispose()
         {
-
         }
 
         public IDocumentSession Session()
@@ -41,11 +37,12 @@ namespace FubuMVC.Marten
             return _session;
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            _session?.SaveChanges();
-
+            if (_session != null)
+            {
+                await _session.SaveChangesAsync().ConfigureAwait(false);
+            }
         }
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FubuCore;
 
 namespace FubuMVC.Core.Behaviors
@@ -8,20 +9,22 @@ namespace FubuMVC.Core.Behaviors
 	{
 		public IActionBehavior InsideBehavior { get; set; }
 
-		public void InvokePartial()
+		public async Task InvokePartial()
 		{
-			if (InsideBehavior != null)
-				InsideBehavior.InvokePartial();
+		    if (InsideBehavior != null)
+		    {
+		        await InsideBehavior.InvokePartial().ConfigureAwait(false);
+		    }
 		}
 
-		public void Invoke()
+		public async Task Invoke()
 		{
 			if (InsideBehavior == null)
 				throw new FubuAssertionException("When interception exceptions you must have an inside behavior. Otherwise, there would be nothing to intercept.");
 
 			try
 			{
-				InsideBehavior.Invoke();
+				await InsideBehavior.Invoke().ConfigureAwait(false);
 			}
 			catch (T exception)
 			{

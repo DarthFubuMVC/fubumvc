@@ -539,7 +539,6 @@
     <Compile Include="Runtime\SessionState\flashing_an_object.cs" />
     <Compile Include="Runtime\SessionState\retrieving_an_existing_item_from_flash.cs" />
     <Compile Include="Runtime\SessionState\retrieving_an_item_when_flash_is_empty.cs" />
-    <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\AlwaysTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
@@ -572,7 +571,6 @@
     <Compile Include="Resources\Conneg\OutputNodeTester.cs" />
     <Compile Include="Registration\ActionMethodFilterTester.cs" />
     <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
-    <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultConnegOutputIsAppliedToAnyEndpointWithoutAnyPriorOutputTester.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
     <Compile Include="Registration\Querying\ChainSearchTester.cs" />

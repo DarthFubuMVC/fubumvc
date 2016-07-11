@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
@@ -17,18 +18,18 @@ namespace FubuMVC.Core.Validation.Web
             _failure = failure;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             var input = _request.Get<T>();
             var notification = _filter.Validate(input);
 
             if (notification.IsValid())
             {
-                return DoNext.Continue;
+                return Task.FromResult(DoNext.Continue);
             }
 
             _failure.Handle(notification);
-            return DoNext.Stop;
+            return Task.FromResult(DoNext.Stop);
         }
     }
 }

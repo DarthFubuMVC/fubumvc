@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Behaviors
 {
@@ -6,22 +7,22 @@ namespace FubuMVC.Core.Behaviors
     {
         public IActionBehavior Inner { get; set; }
 
-        public void Invoke()
+        public async Task Invoke()
         {
             if (Inner != null)
             {
-                invoke(() => Inner.Invoke());
+                await invoke(() => Inner.Invoke()).ConfigureAwait(false);
             }
         }
 
-        public void InvokePartial()
+        public async Task InvokePartial()
         {
             if (Inner != null)
             {
-                invoke(() => Inner.InvokePartial());
+                await invoke(() => Inner.InvokePartial()).ConfigureAwait(false);
             }
         }
 
-        protected abstract void invoke(Action action);
+        protected abstract Task invoke(Func<Task> func);
     }
 }

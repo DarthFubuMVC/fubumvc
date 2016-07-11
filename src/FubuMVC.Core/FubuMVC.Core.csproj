@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -59,6 +59,7 @@
     <Compile Include="Attributes\CompressContentAttribute.cs" />
     <Compile Include="Attributes\ViewSubjectAttribute.cs" />
     <Compile Include="BehaviorChainExtensions.cs" />
+    <Compile Include="Behaviors\PartialBehavior.cs" />
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
     <Compile Include="Diagnostics\ClientSideViewWriter.cs" />
@@ -88,7 +89,10 @@
     <Compile Include="Diagnostics\Instrumentation\VerboseExecutionLogger.cs" />
     <Compile Include="Diagnostics\PerformanceFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\PollingJobFubuDiagnostics.cs" />
-    <Compile Include="Downloads\DownloadClasses.cs" />
+    <Compile Include="Downloads\DownloadFileModel.cs" />
+    <Compile Include="Downloads\DownloadFileBehavior.cs" />
+    <Compile Include="Downloads\DownloadFileConvention.cs" />
+    <Compile Include="Downloads\DownloadFileNode.cs" />
     <Compile Include="FubuModeExtensions.cs" />
     <Compile Include="Http\Compression\ApplyCompression.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />
@@ -585,7 +589,6 @@
     <Compile Include="Assets\StylesheetLinkTag.cs" />
     <Compile Include="ClientMessage.cs" />
     <Compile Include="Registration\BehaviorGraphBuilder.cs" />
-    <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Attributes\CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Registration\ConfigGraph.cs" />
@@ -1166,7 +1169,6 @@
     <Compile Include="Registration\ActionSource.cs" />
     <Compile Include="Registration\Nodes\IContainerModel.cs" />
     <Compile Include="Registration\Querying\ChainSearch.cs" />
-    <Compile Include="Registration\Nodes\AsyncContinueWithNode.cs" />
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
     <Compile Include="Runtime\AspNetPassthroughConverter.cs" />

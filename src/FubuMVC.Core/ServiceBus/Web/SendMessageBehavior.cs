@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FubuCore.Logging;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
@@ -21,7 +22,7 @@ namespace FubuMVC.Core.ServiceBus.Web
             _logger = logger;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             try
             {
@@ -40,7 +41,7 @@ namespace FubuMVC.Core.ServiceBus.Web
                 _logger.Error("Error trying to publish message of type " + typeof(T).FullName, e);
             }
 
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
 
         public Type ResourceType()

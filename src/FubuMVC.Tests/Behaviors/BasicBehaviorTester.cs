@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Tests.TestSupport;
@@ -152,15 +153,17 @@ namespace FubuMVC.Tests.Behaviors
             _after = after;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             _before.Do();
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
 
-        protected override void afterInsideBehavior()
+        protected override Task afterInsideBehavior()
         {
             _after.Do();
+
+            return Task.CompletedTask;
         }
     }
 }

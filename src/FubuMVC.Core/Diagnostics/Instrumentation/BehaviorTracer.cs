@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -15,13 +16,13 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             _log = log;
         }
 
-        protected override void invoke(Action action)
+        protected override async Task invoke(Func<Task> func)
         {
             _log.StartSubject(_node);
 
             try
             {
-                action();
+                await func().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

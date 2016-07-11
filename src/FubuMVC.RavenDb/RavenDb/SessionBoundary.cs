@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using FubuCore.Logging;
 using FubuCore.Util;
 using FubuMVC.RavenDb.RavenDb.Multiple;
@@ -70,9 +71,11 @@ namespace FubuMVC.RavenDb.RavenDb
             openSessions().Each(action);
         }
 
-        public void SaveChanges()
+        public Task SaveChanges()
         {
             WithOpenSession(s => s.SaveChanges());
+
+            return Task.CompletedTask;
         }
 
         public void Start()

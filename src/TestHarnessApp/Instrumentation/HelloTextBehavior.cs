@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core;
+﻿using System.Threading.Tasks;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
@@ -13,13 +14,13 @@ namespace TestHarnessApp.Instrumentation
             _request = request;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             var model = _request.Get<OtherInputModel>();
 
-            model.HelloText = string.Format("You said: {0}", model.HelloText);
+            model.HelloText = $"You said: {model.HelloText}";
 
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
     }
 }

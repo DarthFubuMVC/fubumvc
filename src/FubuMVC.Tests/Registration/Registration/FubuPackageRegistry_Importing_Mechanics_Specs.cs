@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
@@ -72,33 +73,33 @@ namespace FubuMVC.Tests.Registration.Registration
 
     public class LocalAppWrapper : FubuMVC.Core.Behaviors.WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
-            
+            return Task.CompletedTask;
         }
     }
 
     public class GlobalAppWrapper : FubuMVC.Core.Behaviors.WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 
     public class GlobalPakWrapper : FubuMVC.Core.Behaviors.WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 
     public class LocalPakWrapper : FubuMVC.Core.Behaviors.WrappingBehavior
     {
-        protected override void invoke(Action action)
+        protected override Task invoke(Func<Task> func)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 

@@ -6,6 +6,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.ServiceBus.Async
 {
+    [Obsolete("Kill this")]
     public class CascadingAsyncHandlerInvoker<THandler, TInput, TOutput> : BasicBehavior where TInput : class
     {
         private readonly IFubuRequest _request;
@@ -22,14 +23,14 @@ namespace FubuMVC.Core.ServiceBus.Async
             _asyncHandling = asyncHandling;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             var input = _request.Find<TInput>().Single();
             var output = _func(_handler, input);
 
             _asyncHandling.Push(output);
 
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
     }
 }

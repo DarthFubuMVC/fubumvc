@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
 using NUnit.Framework;
 using System.Linq;
+using System.Threading.Tasks;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration.Conventions
@@ -160,12 +161,12 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     public class FakeBehavior : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
@@ -214,12 +215,12 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     public class Wrapper1 : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
@@ -227,12 +228,12 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     public class Wrapper2 : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }
@@ -241,12 +242,12 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     public class Wrapper3 : IActionBehavior
     {
-        public void Invoke()
+        public Task Invoke()
         {
             throw new NotImplementedException();
         }
 
-        public void InvokePartial()
+        public Task InvokePartial()
         {
             throw new NotImplementedException();
         }

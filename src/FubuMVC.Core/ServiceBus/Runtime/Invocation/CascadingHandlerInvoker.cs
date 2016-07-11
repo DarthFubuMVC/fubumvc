@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
@@ -20,14 +21,14 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _messages = messages;
         }
 
-        protected override DoNext performInvoke()
+        protected override Task<DoNext> performInvoke()
         {
             var input = _request.Find<TInput>().Single();
             var output = _action(_handler, input);
 
             _messages.EnqueueCascading(output);
 
-            return DoNext.Continue;
+            return Task.FromResult(DoNext.Continue);
         }
     }
 }
