@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
@@ -92,7 +93,7 @@ namespace FubuMVC.IntegrationTesting.UI
                 _request = request;
             }
 
-            public string get_multiplepartialresult()
+            public Task<string> get_multiplepartialresult()
             {
                 return _invoker.Invoke<PartialInput>();
             }

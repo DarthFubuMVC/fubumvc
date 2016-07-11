@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core;
@@ -73,7 +74,7 @@ namespace FubuMVC.Tests
                 throw new NotImplementedException();
             }
 
-            public IRecordedOutput Record(Action action)
+            public Task<IRecordedOutput> Record(Func<Task> inner)
             {
                 throw new NotImplementedException();
             }

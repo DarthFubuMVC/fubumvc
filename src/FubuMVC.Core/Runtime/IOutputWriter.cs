@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using FubuMVC.Core.Caching;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
@@ -71,7 +72,7 @@ namespace FubuMVC.Core.Runtime
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        IRecordedOutput Record(Action action);
+        Task<IRecordedOutput> Record(Func<Task> inner);
 
         /// <summary>
         /// Replays all recorded output

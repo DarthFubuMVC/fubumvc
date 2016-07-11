@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Behaviors
 		{
 			var interceptExceptionBehavior = new TestInterceptExceptionBehavior<ArgumentException>();
 
-            Exception<FubuAssertionException>.ShouldBeThrownBy(() => interceptExceptionBehavior.Invoke());
+            Exception<FubuAssertionException>.ShouldBeThrownBy(() => interceptExceptionBehavior.Invoke().Wait());
 		}
 
 		[Test]
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.Behaviors
 			};
 			cut.SetShouldHandle(false);
 
-			Exception<ArgumentException>.ShouldBeThrownBy(() => cut.Invoke());
+			Exception<ArgumentException>.ShouldBeThrownBy(() => cut.Invoke().Wait());
 
 			cut.HandledException.ShouldBeNull();
 		}
@@ -82,9 +82,10 @@ namespace FubuMVC.Tests.Behaviors
 			{
 				InsideBehavior = new ThrowingBehavior<WebException>()
 			};
+
 			cut.SetShouldHandle(false);
 
-			Exception<WebException>.ShouldBeThrownBy(() => cut.Invoke());
+			Exception<WebException>.ShouldBeThrownBy(() => cut.Invoke().Wait());
 
 			cut.HandledException.ShouldBeNull();
 		}

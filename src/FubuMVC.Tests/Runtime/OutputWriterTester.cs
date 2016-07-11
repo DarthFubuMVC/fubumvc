@@ -13,6 +13,8 @@ using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;
+using System.Threading.Tasks;
+using FubuMVC.Core.ServiceBus;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Tests.Runtime
@@ -172,7 +174,8 @@ namespace FubuMVC.Tests.Runtime
             ClassUnderTest.Record(() =>
             {
                 ClassUnderTest.Write("some stuff");
-            });
+                return Task.CompletedTask;
+            }).Wait();
 
             logs.DebugMessages.Count().ShouldBe(3);
             logs.DebugMessages.First().ShouldBeOfType<StartedRecordingOutput>();
@@ -228,8 +231,11 @@ namespace FubuMVC.Tests.Runtime
                 theNestedOutput = ClassUnderTest.Record(() =>
                 {
                     ClassUnderTest.Write(theContentType, theNestedContent);
-                }).As<RecordedOutput>();
-            
+                    return Task.CompletedTask;
+                }).GetAwaiter().GetResult().As<RecordedOutput>();
+
+                return Task.CompletedTask;
+
             }).As<RecordedOutput>();
         }
 
@@ -268,10 +274,16 @@ namespace FubuMVC.Tests.Runtime
             ClassUnderTest.Record(() =>
             {
                 ClassUnderTest.WriteHtml("Monty");
-                var nested = ClassUnderTest.Record(() => ClassUnderTest.WriteHtml("Python"));
-                ClassUnderTest.WriteHtml(nested.GetText());
+                var nested = ClassUnderTest.Record(() =>
+                {
+                    ClassUnderTest.WriteHtml("Python");
+                    return Task.CompletedTask;
+                });
+                ClassUnderTest.WriteHtml(nested.GetAwaiter().GetResult().GetText());
 
-            }).GetText().ShouldBe("MontyPython");
+                return Task.CompletedTask;
+
+            }).GetAwaiter().GetResult().GetText().ShouldBe("MontyPython");
         }
     }
 

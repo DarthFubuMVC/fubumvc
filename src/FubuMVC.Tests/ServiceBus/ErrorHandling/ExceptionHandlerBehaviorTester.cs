@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
@@ -46,7 +47,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 
         private void theInnerBehaviorSucceeds()
         {
-            // just to make the tests prettier
+            MockFor<IActionBehavior>().Expect(x => x.Invoke()).Return(Task.CompletedTask);
         }
 
         private IContinuation theContinuationSetByTheErrorHandler()
@@ -61,7 +62,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         {
             theInnerBehaviorSucceeds();
 
-            ClassUnderTest.Invoke();
+            ClassUnderTest.Invoke().Wait();
 
             MockFor<IInvocationContext>().AssertWasNotCalled(x => x.Continuation = null, x => x.IgnoreArguments());
         }

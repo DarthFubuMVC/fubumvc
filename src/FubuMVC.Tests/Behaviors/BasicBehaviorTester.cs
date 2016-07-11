@@ -43,7 +43,10 @@ namespace FubuMVC.Tests.Behaviors
         protected override void beforeEach()
         {
             base.beforeEach();
-            ClassUnderTest.Invoke();
+
+            InnerBehavior.Stub(x => x.Invoke()).Return(Task.CompletedTask);
+
+            ClassUnderTest.Invoke().Wait();
         }
 
         [Test]
@@ -91,7 +94,10 @@ namespace FubuMVC.Tests.Behaviors
         protected override void beforeEach()
         {
             base.beforeEach();
-            ClassUnderTest.Invoke();
+
+            InnerBehavior.Stub(x => x.Invoke()).Return(Task.CompletedTask);
+
+            ClassUnderTest.Invoke().Wait();
         }
 
         [Test]
@@ -116,10 +122,10 @@ namespace FubuMVC.Tests.Behaviors
         {
             base.beforeEach();
 
-            
 
+            InnerBehavior.Stub(x => x.InvokePartial()).Return(Task.CompletedTask);
 
-            ClassUnderTest.InvokePartial();
+            ClassUnderTest.InvokePartial().Wait();
         }
 
         [Test]

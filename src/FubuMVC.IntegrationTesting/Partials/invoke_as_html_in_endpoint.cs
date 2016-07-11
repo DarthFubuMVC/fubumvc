@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -39,19 +40,19 @@ namespace FubuMVC.IntegrationTesting.Partials
             _invoker = invoker;
         }
 
-        public OutputModel get_inner_json_Name(InputModel model)
+        public async Task<OutputModel> get_inner_json_Name(InputModel model)
         {
             return new OutputModel
             {
-                Text = _invoker.InvokeObject(new PartialModel {Name = model.Name})
+                Text = await _invoker.InvokeObject(new PartialModel {Name = model.Name}).ConfigureAwait(false)
             };
         }
 
-        public OutputModel get_inner_html_Name(InputModel2 model)
+        public async Task<OutputModel> get_inner_html_Name(InputModel2 model)
         {
             return new OutputModel
             {
-                Text = _invoker.InvokeAsHtml(new PartialModel {Name = model.Name})
+                Text = await _invoker.InvokeAsHtml(new PartialModel {Name = model.Name}).ConfigureAwait(false)
             };
         }
 

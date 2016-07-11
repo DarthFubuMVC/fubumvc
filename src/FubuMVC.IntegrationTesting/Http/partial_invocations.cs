@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Cookies;
@@ -52,7 +53,7 @@ namespace FubuMVC.IntegrationTesting.Http
             _resolver = resolver;
         }
 
-        public string get_invokes_a_partial(NonPartialInput input)
+        public Task<string> get_invokes_a_partial(NonPartialInput input)
         {
             return _partialInvoker.InvokeObject(new PartialInput());
         }
