@@ -236,7 +236,7 @@ namespace FubuMVC.Tests.Runtime
 
                 return Task.CompletedTask;
 
-            }).As<RecordedOutput>();
+            }).GetAwaiter().GetResult().As<RecordedOutput>();
         }
 
         [Test]
