@@ -56,7 +56,6 @@ namespace FubuMVC.Tests
                 _.DefaultRegistrationIs<IAggregator, Aggregator>();
                 _.DefaultRegistrationIs<IFubuRequestContext, FubuRequestContext>();
                 _.DefaultRegistrationIs<IRequestData, FubuMvcRequestData>();
-                _.DefaultRegistrationIs<IAsyncCoordinator, AsyncCoordinator>();
                 _.DefaultRegistrationIs<IExceptionHandlingObserver, ExceptionHandlingObserver>();
                 _.DefaultRegistrationIs<ICookies, Cookies>();
                 _.DefaultRegistrationIs<IFlash, FlashProvider>();

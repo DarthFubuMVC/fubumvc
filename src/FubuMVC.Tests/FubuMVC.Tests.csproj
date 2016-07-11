@@ -288,14 +288,11 @@
     <Compile Include="Resources\Hypermedia\LinkSourceTester.cs" />
     <Compile Include="Resources\Hypermedia\LinksSourceTester.cs" />
     <Compile Include="Resources\PathBased\RouteRankingIntegratedTester.cs" />
-    <Compile Include="Runtime\AsyncCoordinatorTester.cs" />
     <Compile Include="Runtime\Conditionals\ConditionalServiceTester.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFilesSmokeTester.cs" />
     <Compile Include="Runtime\Files\FubuFileTester.cs" />
     <Compile Include="Runtime\PartialChainSwitcherTester.cs" />
-    <Compile Include="Runtime\RequestCompletionTester.cs" />
     <Compile Include="Runtime\SimpleSessionStateTester.cs" />
-    <Compile Include="Runtime\SynchronousCoordinator.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryBehaviorTester.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryServiceTester.cs" />
     <Compile Include="Security\AntiForgery\AntiForgerySettingsTester.cs" />

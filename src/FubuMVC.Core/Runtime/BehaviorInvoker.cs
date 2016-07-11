@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore.Binding;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
@@ -22,11 +23,10 @@ namespace FubuMVC.Core.Runtime
             _chain = chain;
         }
 
-        public void Invoke(TypeArguments arguments, IDictionary<string, object> routeValues, IRequestCompletion requestCompletion)
+        public async Task Invoke(TypeArguments arguments, IDictionary<string, object> routeValues)
         {
             var currentChain = new CurrentChain(_chain, routeValues);
             arguments.Set(typeof(ICurrentChain), currentChain);
-            arguments.Set(typeof(IRequestCompletion), requestCompletion);
 
             if (arguments.Has(typeof (IChainExecutionLog)))
             {
@@ -52,35 +52,16 @@ namespace FubuMVC.Core.Runtime
                 behavior = _factory.BuildBehavior(arguments, _chain.UniqueId);
             }
 
-            
-            requestCompletion.WhenCompleteDo(x =>
+            try
             {
-                if (x != null)
-                {
-                    try
-                    {
-                        _factory.Get<ILogger>().Error("Async chain failure", x);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                }
-
+                await behavior.Invoke().ConfigureAwait(false);
+            }
+            finally
+            {
                 var disposable = behavior as IDisposable;
                 disposable?.Dispose();
-            });
-
-            behavior.Invoke();
+            }
         }
 
-        public void Invoke(TypeArguments arguments)
-        {
-            var completion = new RequestCompletion();
-
-            completion.SafeStart(() => {
-                Invoke(arguments, new Dictionary<string, object>(), completion);
-            });
-        }
     }
 }

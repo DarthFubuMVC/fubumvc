@@ -44,14 +44,14 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void invoke_happy_path_calls_the_behavior()
         {
-            theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
+            theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasCalled(x => x.Invoke());
         }
 
         [Test]
         public void invoke_happy_path_will_put_the_current_chain_together()
         {
-            theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
+            theInvoker.Invoke(theArguments, theRouteData);
             theArguments.Get<ICurrentChain>().ShouldBeOfType<CurrentChain>()
                 .ResourceHash().ShouldBe(new CurrentChain(theChain, theRouteData).ResourceHash());
                 
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Runtime
         {
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
 
-            theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
+            theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasCalled(x => x.Invoke());
         }
 
@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.Runtime
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
 
-            theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
+            theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasCalled(x => x.Invoke());
         }
 
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Runtime
         {
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Stop));
 
-            theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
+            theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasNotCalled(x => x.Invoke());
         }
 
@@ -93,7 +93,7 @@ namespace FubuMVC.Tests.Runtime
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Stop));
 
-            theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
+            theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasNotCalled(x => x.Invoke());
         }
     }

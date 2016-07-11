@@ -54,25 +54,6 @@ namespace FubuMVC.Tests.Routing
             StandardRoutePolicy.DetermineInvoker(theFactory, chain).ShouldBeOfType<BehaviorInvoker>();
         }
 
-        [Test]
-        public void DetermineHandlerSource_for_synchronous_and_no_session()
-        {
-            var chain = BehaviorChain.For<Action2>(x => x.M1());
-            chain.IsAsynchronous().ShouldBeFalse();
-
-            StandardRoutePolicy.DetermineHandlerSource(SessionStateRequirement.DoesNotUseSessionState, chain)
-                .ShouldBeOfType<SessionlessSynchronousHttpHandlerSource>();
-        }
-
-        [Test]
-        public void DetermineHandlerSource_for_synchronous_with_session()
-        {
-            var chain = BehaviorChain.For<Action2>(x => x.M1());
-            chain.IsAsynchronous().ShouldBeFalse();
-
-            StandardRoutePolicy.DetermineHandlerSource(SessionStateRequirement.RequiresSessionState, chain)
-                .ShouldBeOfType<SynchronousHttpHandlerSource>();
-        }
 
         [Test]
         public void DetermineHandlerSource_for_asynch_and_sessionless()

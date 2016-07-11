@@ -68,16 +68,9 @@ namespace FubuMVC.Core.Registration.Routes
 
         public static IHttpHandlerSource DetermineHandlerSource(SessionStateRequirement sessionStateRequirement, BehaviorChain chain)
         {
-            if (chain.IsAsynchronous())
-            {
-                return sessionStateRequirement == SessionStateRequirement.RequiresSessionState
-                           ? (IHttpHandlerSource) new AsynchronousHttpHandlerSource()
-                           : new SessionlessAsynchronousHttpHandlerSource();
-            }
-
             return sessionStateRequirement == SessionStateRequirement.RequiresSessionState
-                       ? (IHttpHandlerSource)new SynchronousHttpHandlerSource()
-                       : new SessionlessSynchronousHttpHandlerSource();
+                       ? (IHttpHandlerSource)new AsynchronousHttpHandlerSource()
+                       : new SessionlessAsynchronousHttpHandlerSource();
         }
     }
 }
