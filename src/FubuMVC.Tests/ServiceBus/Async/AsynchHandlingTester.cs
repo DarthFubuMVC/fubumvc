@@ -42,40 +42,6 @@ namespace FubuMVC.Tests.ServiceBus.Async
             list.OrderBy(x => x).ShouldHaveTheSameElementsAs("A", "B", "C");
         }
 
-        [Test]
-        public void sad_path_wait_for_blows_up_with_the_aggregate_exception()
-        {
-            var handling = new AsyncHandling(ObjectMother.InvocationContext());
-            var list = new ConcurrentBag<string>();
-
-            var task1 = Task.Factory.StartNew(() => {
-                Thread.Sleep(100);
-                list.Add("A");
-            });
-
-            var task2 = Task.Factory.StartNew(() => {
-                Thread.Sleep(100);
-                list.Add("B");
-                throw new NotSupportedException();
-            });
-
-            var task3 = Task.Factory.StartNew(() => {
-                Thread.Sleep(100);
-                throw new NotImplementedException();
-            });
-
-            handling.Push(task1);
-            handling.Push(task2);
-            handling.Push(task3);
-
-            var inner =
-                Exception<AggregateException>.ShouldBeThrownBy(() => { handling.WaitForAll(); })
-                    .Flatten()
-                    .InnerExceptions;
-
-            inner.Any(x => x is NotSupportedException).ShouldBeTrue();
-            inner.Any(x => x is NotImplementedException).ShouldBeTrue();
-        }
 
         [Test]
         public void records_outgoing_on_the_invocation_context()
