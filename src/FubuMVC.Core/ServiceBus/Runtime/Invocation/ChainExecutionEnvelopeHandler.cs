@@ -1,5 +1,4 @@
 ﻿using System;
-using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 
@@ -24,9 +23,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
                     return null;
                 }
 
-                return chain.IsAsync
-                    ? new AsyncChainExecutionContinuation(() => ExecuteChain(envelope, chain))
-                    : ExecuteChain(envelope, chain);
+                return ExecuteChain(envelope, chain);
 
             }
             catch (EnvelopeDeserializationException ex)

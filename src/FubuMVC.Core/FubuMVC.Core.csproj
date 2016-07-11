@@ -264,14 +264,6 @@
     <Compile Include="ServerSentEvents\TopicChannel.cs" />
     <Compile Include="ServerSentEvents\TopicChannelCache.cs" />
     <Compile Include="ServerSentEvents\TopicFamily.cs" />
-    <Compile Include="ServiceBus\Async\AsyncChainExecutionContinuation.cs" />
-    <Compile Include="ServiceBus\Async\AsyncHandlerInvoker.cs" />
-    <Compile Include="ServiceBus\Async\AsyncHandling.cs" />
-    <Compile Include="ServiceBus\Async\AsyncHandlingBehavior.cs" />
-    <Compile Include="ServiceBus\Async\AsyncHandlingConvention.cs" />
-    <Compile Include="ServiceBus\Async\AsyncHandlingNode.cs" />
-    <Compile Include="ServiceBus\Async\CascadingAsyncHandlerInvoker.cs" />
-    <Compile Include="ServiceBus\Async\IAsyncHandling.cs" />
     <Compile Include="ServiceBus\Configuration\ByTaskScheduleMaker.cs" />
     <Compile Include="ServiceBus\Configuration\ByThreadScheduleMaker.cs" />
     <Compile Include="ServiceBus\Configuration\ChannelGraph.cs" />
