@@ -1,13 +1,14 @@
 using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Runtime.Aggregation
 {
     public interface IAggregatorSource
     {
-        object ForInputType(Type inputType);
-        object ForQuery<T>(T query);
-        object ForResource(Type resourceType);
-        object ForAction<T>(Expression<Func<T, object>> expression);
+        Task<object> ForInputType(Type inputType);
+        Task<object> ForQuery<T>(T query);
+        Task<object> ForResource(Type resourceType);
+        Task<object> ForAction<T>(Expression<Func<T, object>> expression);
     }
 }

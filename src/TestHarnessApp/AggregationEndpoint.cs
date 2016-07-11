@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Aggregation;
 
@@ -33,12 +34,12 @@ namespace TestHarnessApp
             return new Resource4();
         }
 
-        public AggregationResponse post_aggregated_query(AggregatedQuery query)
+        public Task<AggregationResponse> post_aggregated_query(AggregatedQuery query)
         {
             return _aggregator.QueryAggregate(query);
         }
 
-        public string[] get_aggregation()
+        public async Task<string[]> get_aggregation()
         {
             // The call to IAggregator.Fetch() will return an array
             // of objects. My assumption now is that you'd do this in
@@ -47,7 +48,7 @@ namespace TestHarnessApp
             // render it to the view with a page helper there.
             // This is so common now that I think we put a json variable
             // helper into FubuMVC.Core. 
-            return _aggregator.Fetch(_ =>
+            return (await _aggregator.Fetch(_ =>
             {
                 // By an input query
                 _.Query(new Query1 { Name = "Jeremy Maclin" });
@@ -60,7 +61,7 @@ namespace TestHarnessApp
 
                 // By action method
                 _.Action<AggregationEndpoint>(x => x.get_fourth_resource());
-            })
+            }).ConfigureAwait(false))
             .Select(x => x.ToString())
             .ToArray();
         }
