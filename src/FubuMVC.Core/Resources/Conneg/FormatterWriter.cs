@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
@@ -16,15 +17,12 @@ namespace FubuMVC.Core.Resources.Conneg
             _formatter = formatter;
         }
 
-        public void Write(string mimeType, IFubuRequestContext context, T resource)
+        public Task Write(string mimeType, IFubuRequestContext context, T resource)
         {
-            _formatter.Write(context, resource, mimeType);
+            return _formatter.Write(context, resource, mimeType);
         }
 
-        public IEnumerable<string> Mimetypes
-        {
-            get { return _formatter.MatchingMimetypes; }
-        }
+        public IEnumerable<string> Mimetypes => _formatter.MatchingMimetypes;
 
         public void Describe(Description description)
         {
@@ -34,9 +32,6 @@ namespace FubuMVC.Core.Resources.Conneg
             description.Children["Formatter"] = formatterDescription;
         }
 
-        public IFormatter Formatter
-        {
-            get { return _formatter; }
-        }
+        public IFormatter Formatter => _formatter;
     }
 }

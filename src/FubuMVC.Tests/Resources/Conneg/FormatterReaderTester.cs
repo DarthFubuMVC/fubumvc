@@ -1,6 +1,7 @@
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -34,9 +35,9 @@ namespace FubuMVC.Tests.Resources.Conneg
             var address = new Address();
 
             MockFor<IFormatter>().Stub(x => x.Read<Address>(theContext))
-                .Return(address);
+                .Return(address.ToCompletionTask());
 
-            ClassUnderTest.Read("anything", theContext).ShouldBeTheSameAs(address);
+            ClassUnderTest.Read("anything", theContext).GetAwaiter().GetResult().ShouldBeTheSameAs(address);
         }
 
 

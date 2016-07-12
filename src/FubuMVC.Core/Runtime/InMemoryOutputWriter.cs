@@ -26,15 +26,19 @@ namespace FubuMVC.Core.Runtime
         {
         }
 
-        public void Write(string contentType, string renderedOutput)
+        public Task Write(string contentType, string renderedOutput)
         {
             ContentType = contentType;
             _writer.WriteLine(renderedOutput);
+
+            return Task.CompletedTask;
         }
 
-        public void Write(string renderedOutput)
+        public Task Write(string renderedOutput)
         {
             _writer.WriteLine(renderedOutput);
+
+            return Task.CompletedTask;
         }
 
         public string ContentType { get; set; }
@@ -72,10 +76,10 @@ namespace FubuMVC.Core.Runtime
             get { return _headers; }
         }
 
-        public void Write(string contentType, Action<Stream> output)
+        public Task Write(string contentType, Func<Stream, Task> output)
         {
             ContentType = contentType;
-            output(_output);
+            return output(_output);
         }
 
         public void WriteResponseCode(HttpStatusCode status, string description = null)

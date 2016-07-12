@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI.WebControls;
 using FubuCore;
@@ -61,19 +62,15 @@ namespace FubuMVC.Spark.Rendering
 
         public HtmlString HTML(object value)
         {
-            return new HtmlString(value != null ? value.ToString() : null);
+            return new HtmlString(value?.ToString());
         }
 
-        public IFubuPage Page { 
-            get { return this; }
-        }
+        public IFubuPage Page => this;
 
 
         public void Render(IFubuRequestContext context)
         {
-            SiteResource = relative => {
-                return context.Request.ToFullUrl(relative);
-            };
+            SiteResource = relative => context.Request.ToFullUrl(relative);
 
             CacheService = context.Services.GetInstance<ICacheService>();
 
@@ -85,6 +82,8 @@ namespace FubuMVC.Spark.Rendering
                 RenderView(writer);
 
                 writer.Flush();
+
+                return Task.CompletedTask;
             });
         }
     }

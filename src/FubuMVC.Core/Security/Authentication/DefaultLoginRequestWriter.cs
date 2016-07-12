@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -43,9 +44,9 @@ namespace FubuMVC.Core.Security.Authentication
             return view;
         }
 
-        public void Write(string mimeType, IFubuRequestContext context, LoginRequest resource)
+        public Task Write(string mimeType, IFubuRequestContext context, LoginRequest resource)
         {
-            context.Writer.Write(mimeType, BuildView(context.Service<IUrlRegistry>(), context.Writer, resource).ToString());
+            return context.Writer.Write(mimeType, BuildView(context.Service<IUrlRegistry>(), context.Writer, resource).ToString());
         }
 
         public IEnumerable<string> Mimetypes

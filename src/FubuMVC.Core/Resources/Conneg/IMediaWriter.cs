@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
@@ -10,7 +11,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
     public interface IMediaWriter<T> : IMediaWriter
     {
-        void Write(string mimeType, IFubuRequestContext context, T resource);
+        Task Write(string mimeType, IFubuRequestContext context, T resource);
         
     }
 }

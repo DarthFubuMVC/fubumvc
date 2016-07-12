@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Diagnostics.Assets
             response.AppendHeader(HttpResponseHeaders.Expires, expiresKey);
              */
 
-            response.Write(stream => stream.Write(Contents(), 0, Contents().Length));
+            response.Write(stream => stream.WriteAsync(Contents(), 0, Contents().Length));
         }
 
 

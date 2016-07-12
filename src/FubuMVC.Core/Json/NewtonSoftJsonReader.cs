@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Json
@@ -15,14 +16,14 @@ namespace FubuMVC.Core.Json
             _serializer = serializer;
         }
 
-        public T Read<T>()
+        public async Task<T> Read<T>()
         {
-            string inputText = GetInputText();
+            string inputText = await GetInputText().ConfigureAwait(false);
             return _serializer.Deserialize<T>(inputText);
         }
 
         // Leave this here for testing
-        public virtual string GetInputText()
+        public virtual Task<string> GetInputText()
         {
             Encoding encoding = Encoding.UTF8;
             if (_request.HasHeader(HttpGeneralHeaders.ContentEncoding))
@@ -38,7 +39,7 @@ namespace FubuMVC.Core.Json
 
             var reader = new StreamReader(_request.Input, encoding);
 
-            return reader.ReadToEnd();
+            return reader.ReadToEndAsync();
         }
     }
 }

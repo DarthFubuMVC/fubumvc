@@ -1,19 +1,23 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using FubuCore;
 using FubuCore.Binding;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Json
 {
     [Description("Uses model binding against the parsed JSON. Use with caution")]
-    public class NewtonSoftBindingReader<T> : Core.Resources.Conneg.IReader<T>
+    public class NewtonSoftBindingReader<T> : IReader<T>
     {
-        public T Read(string mimeType, IFubuRequestContext context)
+        public async Task<T> Read(string mimeType, IFubuRequestContext context)
         {
-            var json = context.Services.GetInstance<NewtonSoftJsonReader>().GetInputText();
+            var json = await context.Services.GetInstance<NewtonSoftJsonReader>().GetInputText().ConfigureAwait(false);
             var values = new JObjectValues(json);
 
-            return (T)context.Services.GetInstance<IObjectResolver>().BindModel(typeof(T), values).Value;
+            var value = context.Services.GetInstance<IObjectResolver>().BindModel(typeof(T), values).Value.As<T>();
+            return value;
         }
 
         public IEnumerable<string> Mimetypes

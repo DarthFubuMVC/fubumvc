@@ -1,25 +1,27 @@
 using System.Net;
+using System.Threading.Tasks;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Runtime
 {
     public static class OutputWriterExtensions
     {
-        public static void WriteHtml(this IOutputWriter writer, string content)
+        public static Task WriteHtml(this IOutputWriter writer, string content)
         {
-            writer.Write(MimeType.Html.ToString(), content);
+            return writer.Write(MimeType.Html.ToString(), content);
         }
 
-        public static void WriteHtml(this IOutputWriter writer, object content)
+        public static Task WriteHtml(this IOutputWriter writer, object content)
         {
-            writer.Write(MimeType.Html.ToString(), content == null ? string.Empty : content.ToString());
+            return writer.Write(MimeType.Html.ToString(), content?.ToString() ?? string.Empty);
         }
 
-        public static void Write(this IOutputWriter writer, MimeType mimeType, string contents)
+        public static Task Write(this IOutputWriter writer, MimeType mimeType, string contents)
         {
-            writer.Write(mimeType.Value, contents);
+            return writer.Write(mimeType.Value, contents);
         }
 
+        // TODO -- this probably needs to be async
         public static void WriteFile(this IOutputWriter writer, MimeType contentType, string localFilePath, string displayName)
         {
             writer.WriteFile(contentType.Value, localFilePath, displayName);

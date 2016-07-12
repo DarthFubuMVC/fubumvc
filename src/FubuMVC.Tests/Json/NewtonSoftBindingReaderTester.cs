@@ -1,6 +1,6 @@
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Json;
 using Shouldly;
 using NUnit.Framework;
@@ -70,6 +70,11 @@ namespace FubuMVC.Tests.Json
 
     public class JsonTarget
     {
+        public JsonTarget()
+        {
+            Debug.WriteLine("making a new one");
+        }
+
         public string Name { get; set;}
         public int Age { get; set; }
 

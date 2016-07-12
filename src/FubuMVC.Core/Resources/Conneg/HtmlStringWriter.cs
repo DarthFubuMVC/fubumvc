@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime;
 
@@ -6,9 +7,9 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class HtmlStringWriter<T> : IMediaWriter<T>, DescribesItself
     {
-        public void Write(string mimeType, IFubuRequestContext context, T resource)
+        public Task Write(string mimeType, IFubuRequestContext context, T resource)
         {
-            context.Writer.WriteHtml(resource.ToString());
+            return context.Writer.WriteHtml(resource.ToString());
         }
 
         public IEnumerable<string> Mimetypes

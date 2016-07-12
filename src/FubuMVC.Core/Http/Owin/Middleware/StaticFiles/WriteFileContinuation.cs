@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Threading.Tasks;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime.Files;
 
@@ -15,7 +16,7 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
             _settings = settings;
         }
 
-        public override void Write(IHttpResponse response)
+        public override Task Write(IHttpResponse response)
         {
             response.WriteFile(_file.Path);
 
@@ -24,16 +25,15 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
             _settings.Headers.Each((key, source) => response.AppendHeader(key, source()));
 
             response.WriteResponseCode(HttpStatusCode.OK);
+
+            return Task.CompletedTask;
         }
 
-        public IFubuFile File
-        {
-            get { return _file; }
-        }
+        public IFubuFile File => _file;
 
         public override string ToString()
         {
-            return string.Format("Write file: {0}", _file);
+            return $"Write file: {_file}";
         }
 
         protected bool Equals(WriteFileContinuation other)

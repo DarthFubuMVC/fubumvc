@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.ServiceBus;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Conneg
@@ -81,17 +83,17 @@ namespace FubuMVC.IntegrationTesting.Conneg
             get { yield return "some/input"; }
         }
 
-        public SomeInput Read(string mimeType, IFubuRequestContext context)
+        public Task<SomeInput> Read(string mimeType, IFubuRequestContext context)
         {
-            return new SomeInput {Name = context.Request.GetSingleHeader("x-name")};
+            return new SomeInput {Name = context.Request.GetSingleHeader("x-name")}.ToCompletionTask();
         }
     }
 
     public class SomeWriter : IMediaWriter<SomeResource>
     {
-        public void Write(string mimeType, IFubuRequestContext context, SomeResource resource)
+        public Task Write(string mimeType, IFubuRequestContext context, SomeResource resource)
         {
-            context.Writer.Write(mimeType, "The name is " + resource.Name);
+            return context.Writer.Write(mimeType, "The name is " + resource.Name);
         }
 
         public IEnumerable<string> Mimetypes

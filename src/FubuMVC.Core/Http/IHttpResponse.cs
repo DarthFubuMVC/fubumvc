@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http.Compression;
@@ -25,6 +26,7 @@ namespace FubuMVC.Core.Http
         /// Write the contents of the file location out into the output stream
         /// </summary>
         /// <param name="file"></param>
+        // TODO -- make this be async someday
         void WriteFile(string file);
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace FubuMVC.Core.Http
         /// for each request.  Many Bothans died to bring you this functionality.
         /// </summary>
         /// <param name="content"></param>
-        void Write(string content);
+        Task Write(string content);
 
         /// <summary>
         /// Writes a 302 redirect response and body to the http output
@@ -87,7 +89,7 @@ namespace FubuMVC.Core.Http
         /// Write directly to the output stream
         /// </summary>
         /// <param name="output"></param>
-        void Write(Action<Stream> output);
+        Task Write(Func<Stream, Task> output);
 
         /// <summary>
         /// Force the output to write to the http output.  Do NOT use this unless you know exactly what the ramifications are, and
@@ -116,7 +118,7 @@ namespace FubuMVC.Core.Http
             throw new NotImplementedException();
         }
 
-        public void Write(string content)
+        public Task Write(string content)
         {
             throw new NotImplementedException();
         }
@@ -149,13 +151,14 @@ namespace FubuMVC.Core.Http
             throw new NotImplementedException();
         }
 
-        public void Write(Action<Stream> output)
+        public async Task Write(Func<Stream, Task> output)
         {
             var stream = new MemoryStream();
-            output(stream);
+            await output(stream).ConfigureAwait(false);
 
             stream.Position = 0;
             _writer.WriteLine(stream.ReadAllText());
+
         }
 
         public void Flush()

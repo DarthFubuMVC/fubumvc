@@ -78,7 +78,8 @@ namespace FubuMVC.Core.Http.Owin
                 AppendHeader(HttpResponseHeaders.ContentLength, fileInfo.Length.ToString(CultureInfo.InvariantCulture));
                 using (var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    Write(stream => fileStream.CopyTo(stream));
+                    // TODO -- SMELLY AS ALL HELL
+                    Write(stream => fileStream.CopyToAsync(stream)).GetAwaiter().GetResult();
                 }
             }
 
@@ -114,11 +115,11 @@ namespace FubuMVC.Core.Http.Owin
             }
         }
 
-        public void Write(string content)
+        public Task Write(string content)
         {
             var writer = new StreamWriter(_output){AutoFlush = true};
 
-            writer.Write(content);
+            return writer.WriteAsync(content);
         }
 
         public void Redirect(string url)
@@ -128,13 +129,10 @@ namespace FubuMVC.Core.Http.Owin
                 url = url.TrimStart('~');
             }
 
-            // TODO: This is a hack, better way to accomplish this?
             _environment[OwinConstants.ResponseStatusCodeKey] = HttpStatusCode.Redirect;
             AppendHeader("Location", url);
             Write(
-                string.Format(
-                    "<html><head><title>302 Found</title></head><body><h1>Found</h1><p>The document has moved <a href='{0}'>here</a>.</p></body></html>",
-                    url));
+                $"<html><head><title>302 Found</title></head><body><h1>Found</h1><p>The document has moved <a href='{url}'>here</a>.</p></body></html>");
         }
 
         public void WriteResponseCode(HttpStatusCode status, string description = null)
@@ -196,9 +194,9 @@ namespace FubuMVC.Core.Http.Owin
             // TODO -- Come back to this one. The integration tests can't be done until we do
         }
 
-        public void Write(Action<Stream> output)
+        public Task Write(Func<Stream, Task> output)
         {
-            output(_output);
+            return output(_output);
         }
 
         public void Flush()
@@ -309,7 +307,7 @@ namespace FubuMVC.Core.Http.Owin
         {
             _stream.Position = 0;
             var serializer = new XmlSerializer(typeof (T));
-            return serializer.Deserialize(_stream) as T;
+            return serializer.Deserialize(new XmlTextReader(new StringReader(_stream.ReadAllText()))) as T;
         }
 
         public T ReadAsJson<T>()

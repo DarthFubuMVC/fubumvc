@@ -6,18 +6,18 @@ namespace FubuMVC.Core.Http.Owin.Middleware
 {
     public class MiddlewareContinuation
     {
-        public static MiddlewareContinuation Continue(Action action = null)
+        public static MiddlewareContinuation Continue(Func<Task> action = null)
         {
             return new MiddlewareContinuation {DoNext = DoNext.Continue, Action = action};
         }
 
-        public static MiddlewareContinuation StopHere(Action action = null)
+        public static MiddlewareContinuation StopHere(Func<Task> action = null)
         {
             return new MiddlewareContinuation { DoNext = DoNext.Stop, Action = action };
         }
 
         public DoNext DoNext;
-        public Action Action;
+        public Func<Task> Action;
 
         public void AssertOnlyContinuesToTheInner()
         {
@@ -32,29 +32,18 @@ namespace FubuMVC.Core.Http.Owin.Middleware
             }
         }
 
-        public Task ToTask(IDictionary<string, object> environment, Func<IDictionary<string, object>, Task> inner)
+        public async Task ToTask(IDictionary<string, object> environment, Func<IDictionary<string, object>, Task> inner)
         {
-            if (DoNext == DoNext.Continue)
+            if (Action != null)
             {
-                if (Action != null)
-                {
-                    Action();
-                }
-
-                return inner(environment);
+                await Action.Invoke().ConfigureAwait(false);
             }
 
-            Action = Action ?? (() => { });
-
-            return Task.Factory.StartNew(Action);
+            if (DoNext == DoNext.Continue)
+            {
+                await inner(environment).ConfigureAwait(false);
+            }
         }
 
-        // TODO -- this might be useful later
-        private static Task completedTask()
-        {
-            var tcs = new TaskCompletionSource<object>();
-            tcs.SetResult(null);
-            return tcs.Task;
-        }
     }
 }

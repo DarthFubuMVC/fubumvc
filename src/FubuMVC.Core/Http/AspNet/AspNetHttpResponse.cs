@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http.Compression;
@@ -35,9 +36,10 @@ namespace FubuMVC.Core.Http.AspNet
             _response.ContentType = contentType;
         }
 
-        public void Write(string content)
+        public Task Write(string content)
         {
-            _response.Write(content);
+            var writer = new StreamWriter(_response.OutputStream);
+            return writer.WriteAsync(content);
         }
 
         public void Redirect(string url)
@@ -84,9 +86,9 @@ namespace FubuMVC.Core.Http.AspNet
             _response.Filter = encoding.Encode(_response.Filter);
         }
 
-        public void Write(Action<Stream> output)
+        public Task Write(Func<Stream, Task> output)
         {
-            output(_response.OutputStream);
+            return output(_response.OutputStream);
         }
 
         public void Flush()

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 
@@ -13,9 +14,10 @@ namespace FubuMVC.Core.Caching
             _contentType = contentType;
         }
 
-        public void Replay(IHttpResponse response)
+        public Task Replay(IHttpResponse response)
         {
             response.WriteContentType(_contentType);
+            return Task.CompletedTask;
         }
 
         public bool Equals(SetContentType other)

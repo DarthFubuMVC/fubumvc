@@ -83,10 +83,10 @@ namespace FubuMVC.IntegrationTesting.Partials
 
     public class PartialModelWriter : IMediaWriter<PartialModel>
     {
-        public void Write(string mimeType, IFubuRequestContext context, PartialModel resource)
+        public Task Write(string mimeType, IFubuRequestContext context, PartialModel resource)
         {
             var html = new DivTag().Text(resource.Name).ToString();
-            context.Writer.Write(MimeType.Html.Value, html);
+            return context.Writer.Write(MimeType.Html.Value, html);
         }
 
         public IEnumerable<string> Mimetypes

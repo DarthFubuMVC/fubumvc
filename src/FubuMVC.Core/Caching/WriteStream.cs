@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
@@ -16,14 +17,14 @@ namespace FubuMVC.Core.Caching
             _stream = stream;
         }
 
-        public void Replay(IHttpResponse response)
+        public Task Replay(IHttpResponse response)
         {
-            response.Write(stream =>
+            return response.Write(stream =>
             {
                 lock (_locker)
                 {
                     _stream.Position = 0;
-                    _stream.CopyTo(stream);
+                    return _stream.CopyToAsync(stream);
                 }
             });
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Conventions;
@@ -102,13 +103,13 @@ namespace FubuMVC.Core.Diagnostics
 
 
         
-        public void Write(string mimeType, IFubuRequestContext context, T resource)
+        public Task Write(string mimeType, IFubuRequestContext context, T resource)
         {
             var stringWriter = new StringWriter();
             var writer = new JsonTextWriter(stringWriter);
             _serializer.Serialize(writer, resource);
 
-            context.Writer.Write(mimeType, stringWriter.ToString());
+            return context.Writer.Write(mimeType, stringWriter.ToString());
         }
         
     }

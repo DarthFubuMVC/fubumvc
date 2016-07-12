@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 
@@ -14,9 +15,9 @@ namespace FubuMVC.Core.Caching
             _text = text;
         }
 
-        public void Replay(IHttpResponse response)
+        public Task Replay(IHttpResponse response)
         {
-            response.Write(_text);
+            return response.Write(_text);
         }
 
         public void WriteText(StringWriter writer)

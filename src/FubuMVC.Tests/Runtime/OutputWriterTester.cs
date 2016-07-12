@@ -99,11 +99,14 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void write_by_stream_delegates_to_the_http_writer_in_normal_mode()
         {
-            Action<Stream> action = stream => { };
-            ClassUnderTest.Write("text/json", action);
+            Func<Stream, Task> action = stream => Task.CompletedTask;
+
+            theHttpResponse.Stub(x => x.Write(action)).Return(Task.CompletedTask);
+
+            ClassUnderTest.Write("text/json",  action).GetAwaiter().GetResult();
 
             theHttpResponse.AssertWasCalled(x => x.WriteContentType("text/json"));
-            theHttpResponse.AssertWasCalled(x => x.Write(action));
+            theHttpResponse.AssertWasCalled(x => x.Write((Func<Stream, Task>) action));
         }
 
         [Test]
@@ -194,7 +197,11 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void write_stream_logs()
         {
-            ClassUnderTest.Write("text/xml", stream => { });
+            Func<Stream, Task> action = stream => Task.CompletedTask;
+
+            theHttpResponse.Stub(x => x.Write(action)).Return(Task.CompletedTask);
+            
+            ClassUnderTest.Write("text/xml", action).GetAwaiter().GetResult();
 
             logs.DebugMessages.Single().ShouldBe(new WriteToStreamReport("text/xml"));
         }

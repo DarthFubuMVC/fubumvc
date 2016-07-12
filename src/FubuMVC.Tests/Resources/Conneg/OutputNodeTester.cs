@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
@@ -30,7 +31,7 @@ namespace FubuMVC.Tests.Resources.Conneg
         }
 
         public IEnumerable<string> Mimetypes { get; private set; }
-        public void Write(string mimeType, IFubuRequestContext context, string resource)
+        public Task Write(string mimeType, IFubuRequestContext context, string resource)
         {
             throw new NotImplementedException();
         }
@@ -145,7 +146,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
     public class FooWriter<T> : IMediaWriter<T>
     {
-        public void Write(string mimeType, IFubuRequestContext context, T resource)
+        public Task Write(string mimeType, IFubuRequestContext context, T resource)
         {
             throw new System.NotImplementedException();
         }
@@ -155,7 +156,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
     public class SpecialWriter : IMediaWriter<Address>
     {
-        public void Write(string mimeType, IFubuRequestContext context, Address resource)
+        public Task Write(string mimeType, IFubuRequestContext context, Address resource)
         {
             throw new System.NotImplementedException();
         }

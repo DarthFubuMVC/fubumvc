@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -21,13 +23,13 @@ namespace FubuMVC.Core.Json
             }
         }
 
-        public AggregatedQuery Read(string mimeType, IFubuRequestContext context)
+        public async Task<AggregatedQuery> Read(string mimeType, IFubuRequestContext context)
         {
             var messageTypes = context.Service<IClientMessageCache>();
             var serializer = context.Service<NewtonSoftJsonSerializer>().InnerSerializer();
 
-            var json = context.Request.Input.ReadAllText();
-
+            var reader = new StreamReader(context.Request.Input);
+            var json = await reader.ReadToEndAsync().ConfigureAwait(false);
 
             return Read(serializer, messageTypes, json);
         }

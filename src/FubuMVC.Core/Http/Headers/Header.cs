@@ -5,6 +5,7 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Http.Headers
 {
@@ -35,9 +36,10 @@ namespace FubuMVC.Core.Http.Headers
             writer.AppendHeader(Name, Value);
         }
 
-        public void Replay(IHttpResponse response)
+        public Task Replay(IHttpResponse response)
         {
             response.AppendHeader(Name, Value);
+            return Task.CompletedTask;
         }
 
 
