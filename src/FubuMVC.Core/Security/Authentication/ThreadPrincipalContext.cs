@@ -6,11 +6,14 @@ namespace FubuMVC.Core.Security.Authentication
 {
     public class ThreadPrincipalContext : IPrincipalContext
     {
+        private IPrincipal _principal;
+
         public IPrincipal Current
         {
-            get { return Thread.CurrentPrincipal; }
+            get { return _principal; }
             set
             {
+                _principal = value;
                 Thread.CurrentPrincipal = value;
                 if (HttpContext.Current != null)
                 {
