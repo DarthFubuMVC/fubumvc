@@ -59,6 +59,7 @@
     <Compile Include="Attributes\CompressContentAttribute.cs" />
     <Compile Include="Attributes\ViewSubjectAttribute.cs" />
     <Compile Include="BehaviorChainExtensions.cs" />
+    <Compile Include="Behaviors\ActionInvoker.cs" />
     <Compile Include="Behaviors\PartialBehavior.cs" />
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
@@ -440,7 +441,6 @@
     <Compile Include="ServiceBus\Runtime\Invocation\Batching\BatchConsumer.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\Batching\BatchMessage.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\Batching\IBatchMessage.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\CascadingHandlerInvoker.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainExecutionEnvelopeHandler.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainExecutionWatcher.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainFailureContinuation.cs" />
@@ -464,7 +464,6 @@
     <Compile Include="ServiceBus\Runtime\Invocation\NoSubscriberHandler.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ResponseEnvelopeHandler.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\SimpleEnvelopeHandler.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\SimpleHandlerInvoker.cs" />
     <Compile Include="ServiceBus\Runtime\IReceiver.cs" />
     <Compile Include="ServiceBus\Runtime\ITransport.cs" />
     <Compile Include="ServiceBus\Runtime\Receiver.cs" />
@@ -1261,9 +1260,6 @@
     <Compile Include="DoNext.cs" />
     <Compile Include="Behaviors\IActionBehavior.cs" />
     <Compile Include="Behaviors\NulloBehavior.cs" />
-    <Compile Include="Behaviors\OneInOneOutActionInvoker.cs" />
-    <Compile Include="Behaviors\OneInZeroOutActionInvoker.cs" />
-    <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
     <Compile Include="Registration\Conventions\IUrlPolicy.cs" />
     <Compile Include="Registration\DSL\TypeMethodPolicy.cs" />
     <Compile Include="Registration\IActionSource.cs" />

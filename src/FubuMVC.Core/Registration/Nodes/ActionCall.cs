@@ -23,18 +23,18 @@ namespace FubuMVC.Core.Registration.Nodes
         {
         }
 
-        public override BehaviorCategory Category { get { return BehaviorCategory.Call; } }
+        public override BehaviorCategory Category => BehaviorCategory.Call;
 
 
         public static ActionCall For<T>(Expression<Action<T>> expression)
         {
-            MethodInfo method = ReflectionHelper.GetMethod(expression);
+            var method = ReflectionHelper.GetMethod(expression);
             return new ActionCall(typeof (T), method);
         }
 
         public static ActionCall For<T>(Expression<Func<T, object>> expression)
         {
-            MethodInfo method = ReflectionHelper.GetMethod(expression);
+            var method = ReflectionHelper.GetMethod(expression);
             return new ActionCall(typeof(T), method);
         }
 
@@ -86,7 +86,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public override string ToString()
         {
-            return string.Format("Call {0}", Description);
+            return $"Call {Description}";
         }
 
         public bool Equals(ActionCall other)
@@ -108,8 +108,8 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             unchecked
             {
-                return ((HandlerType != null ? HandlerType.FullName.GetHashCode() : 0)*397) ^
-                       (Method != null ? Method.Name.GetHashCode() : 0);
+                return ((HandlerType?.FullName.GetHashCode() ?? 0)*397) ^
+                       (Method?.Name.GetHashCode() ?? 0);
             }
         }
 
@@ -142,12 +142,10 @@ namespace FubuMVC.Core.Registration.Nodes
                     IsPartialOnly = true
                 };
             }
-            else
-            {
-                var route = urlPolicies.BuildRoute(this);
 
-                return new RoutedChain(route, InputType(), ResourceType());
-            }
+            var route = urlPolicies.BuildRoute(this);
+
+            return new RoutedChain(route, InputType(), ResourceType());
         }
     }
 }

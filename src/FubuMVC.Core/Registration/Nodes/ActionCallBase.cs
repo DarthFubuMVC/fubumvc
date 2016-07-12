@@ -67,12 +67,11 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             Validate();
 
-            var instance = new ConfiguredInstance(determineHandlerType());
-            var lambda = HasOutput
-                ? FuncBuilder.ToFunc(HandlerType, Method)
-                : FuncBuilder.ToAction(HandlerType, Method);
+            var invocationType = typeof(ActionInvocation<>).MakeGenericType(HandlerType);
+            var invocation = Activator.CreateInstance(invocationType, Method);
 
-            instance.Dependencies.Add(lambda.GetType(), lambda);
+            var instance = new ConfiguredInstance(typeof(ActionInvoker<>), HandlerType);
+            instance.Dependencies.Add(invocationType, invocation);
 
 
             return instance;
@@ -101,38 +100,6 @@ namespace FubuMVC.Core.Registration.Nodes
                     "The type of the input parameter of action '{0}' is a value type (struct). An action must either have no input parameters, or it must have one that is a reference type (class).",
                     Description);
             }
-        }
-
-        protected virtual Type determineHandlerType()
-        {
-            if (HasOutput && HasInput)
-            {
-                return typeof (OneInOneOutActionInvoker<,,>)
-                    .MakeGenericType(
-                        HandlerType,
-                        Method.GetParameters().First().ParameterType,
-                        Method.ReturnType);
-            }
-
-            if (HasOutput && !HasInput && OutputType() != typeof (Task))
-            {
-                return typeof (ZeroInOneOutActionInvoker<,>)
-                    .MakeGenericType(
-                        HandlerType,
-                        Method.ReturnType);
-            }
-
-            if (!HasOutput && HasInput)
-            {
-                return typeof (OneInZeroOutActionInvoker<,>)
-                    .MakeGenericType(
-                        HandlerType,
-                        Method.GetParameters().First().ParameterType);
-            }
-
-            throw new FubuException(1005,
-                "The action '{0}' is invalid. Only methods that support the '1 in 1 out', '1 in 0 out', and '0 in 1 out' patterns are valid here",
-                Description);
         }
 
 

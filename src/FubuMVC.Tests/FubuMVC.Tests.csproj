@@ -440,7 +440,6 @@
     <Compile Include="ServiceBus\Runtime\EnvelopeTester.cs" />
     <Compile Include="ServiceBus\Runtime\generic_handlers_are_called_for_messages_that_match.cs" />
     <Compile Include="ServiceBus\Runtime\Headers\Headers_testing.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\CascadingHandlerInvokerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainExecutionEnvelopeHandlerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainFailureContinuationTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainInvokerTester.cs" />
@@ -455,7 +454,6 @@
     <Compile Include="ServiceBus\Runtime\Invocation\NoSubscriberHandlerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ResponseEnvelopeHandlerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\sending_a_message_with_no_consumer.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\SimpleHandlerInvokerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\simplest_possible_invocation.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\StubServiceFactory.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\WhenInvokingWithNoHandlerForMessageType.cs" />
@@ -715,7 +713,6 @@
     <Compile Include="View\HtmlTagExtensionsTester.cs" />
     <Compile Include="UrlAliasAttributeTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
-    <Compile Include="Behaviors\ActionInvokersTester.cs" />
     <Compile Include="Behaviors\BehaviorTestContext.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
     <Compile Include="Continuations\FubuContinuationTester.cs" />

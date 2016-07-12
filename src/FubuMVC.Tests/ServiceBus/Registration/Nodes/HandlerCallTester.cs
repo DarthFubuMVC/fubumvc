@@ -23,26 +23,6 @@ namespace FubuMVC.Tests.ServiceBus.Registration.Nodes
             HandlerCall.IsCandidate(method).ShouldBeFalse();
         }
 
-        [Test]
-        public void choose_handler_type_for_one_in_one_out()
-        {
-            var handler = HandlerCall.For<ITargetHandler>(x => x.OneInOneOut(null));
-
-            var objectDef = handler.As<IContainerModel>().ToInstance();
-
-            objectDef.ReturnedType.ShouldBe(typeof (CascadingHandlerInvoker<ITargetHandler, Input, Output>));
-        }
-
-        [Test]
-        public void choose_handler_type_for_one_in_zero_out()
-        {
-            var handler = HandlerCall.For<ITargetHandler>(x => x.OneInZeroOut(null));
-
-            var objectDef = handler.As<IContainerModel>().ToInstance();
-
-            objectDef.ReturnedType.ShouldBe(typeof (SimpleHandlerInvoker<ITargetHandler, Input>));
-        }
-
 
         [Test]
         public void throws_chunks_if_you_try_to_use_a_method_with_no_inputs()
