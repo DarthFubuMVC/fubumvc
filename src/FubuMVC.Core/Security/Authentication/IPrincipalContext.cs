@@ -9,4 +9,6 @@ namespace FubuMVC.Core.Security.Authentication
             get; set;
         }
     }
+
+
 }
