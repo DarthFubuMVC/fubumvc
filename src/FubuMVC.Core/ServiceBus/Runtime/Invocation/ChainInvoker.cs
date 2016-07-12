@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.Registration.Querying;
@@ -48,7 +49,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         }
 
 
-        public IInvocationContext ExecuteChain(Envelope envelope, HandlerChain chain)
+        public async Task<IInvocationContext> ExecuteChain(Envelope envelope, HandlerChain chain)
         {
             if (envelope.Log != null)
             {
@@ -63,16 +64,13 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 
                 try
                 {
-                    behavior.Invoke();
+                    await behavior.Invoke().ConfigureAwait(false);
                 }
                 finally
                 {
-                    (behavior as IDisposable).CallIfNotNull(x => x.SafeDispose());
+                    (behavior as IDisposable)?.SafeDispose();
 
-                    if (envelope.Log != null)
-                    {
-                        envelope.Log.FinishSubject();
-                    }
+                    envelope.Log?.FinishSubject();
                 }
 
                 return context;

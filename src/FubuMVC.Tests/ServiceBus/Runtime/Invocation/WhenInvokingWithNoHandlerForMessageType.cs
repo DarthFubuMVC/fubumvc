@@ -1,7 +1,9 @@
-﻿using FubuMVC.Core;
+﻿using System.Threading.Tasks;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
+using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
@@ -25,13 +27,16 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                 x.Handlers.Include<TwoHandler>();
                 x.Handlers.Include<ThreeHandler>();
                 x.Handlers.Include<FourHandler>();
+
             }))
             {
                 Services.Inject(runtime.Behaviors);
 
+                MockFor<IEnvelopeHandler>().Stub(x => x.Handle(null)).IgnoreArguments().Return(Task.FromResult<IContinuation>(null));
+
                 var envelope = ObjectMother.Envelope();
                 envelope.Message = new Message1();
-                ClassUnderTest.Invoke(envelope, new TestEnvelopeContext()); // we don't have a handler for this type
+                ClassUnderTest.Invoke(envelope, new TestEnvelopeContext()).GetAwaiter().GetResult(); // we don't have a handler for this type
 
                 envelope.Callback.AssertWasCalled(x => x.MoveToErrors(
                     new ErrorReport(envelope, new NoHandlerException(typeof(Message1)))));

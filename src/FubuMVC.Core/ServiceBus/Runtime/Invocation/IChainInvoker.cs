@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using System.Threading.Tasks;
+using FubuMVC.Core.ServiceBus.Configuration;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
@@ -6,7 +7,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
     {
         void Invoke(Envelope envelope);
         void InvokeNow<T>(T message);
-        IInvocationContext ExecuteChain(Envelope envelope, HandlerChain chain);
+        Task<IInvocationContext> ExecuteChain(Envelope envelope, HandlerChain chain);
         HandlerChain FindChain(Envelope envelope);
     }
 }

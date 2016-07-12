@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -86,17 +87,19 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
         public IList<object> Responses = new List<object>(); 
 
 
-        public void Invoke(Envelope envelope, IEnvelopeContext context)
+        public Task Invoke(Envelope envelope, IEnvelopeContext context)
         {
             Invoked.Add(envelope);
+
+            return Task.CompletedTask;
         }
 
-        public void Receive(Envelope envelope)
+        public Task Receive(Envelope envelope)
         {
-            Invoke(envelope, null);
+            return Invoke(envelope, null);
         }
 
-        public void InvokeNow(Envelope envelope)
+        public Task InvokeNow(Envelope envelope)
         {
             throw new NotImplementedException();
         }
