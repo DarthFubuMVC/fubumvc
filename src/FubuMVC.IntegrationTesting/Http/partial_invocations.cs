@@ -70,7 +70,7 @@ namespace FubuMVC.IntegrationTesting.Http
             _request.Set(input);
 
             var chain = _resolver.FindUniqueByType(typeof (FastInput));
-            var output = _partialInvoker.InvokeFast(chain, input).As<FastOutput>();
+            var output = _partialInvoker.InvokeFast(chain, input).GetAwaiter().GetResult().As<FastOutput>();
 
             return "The name was " + output.Name;
         }

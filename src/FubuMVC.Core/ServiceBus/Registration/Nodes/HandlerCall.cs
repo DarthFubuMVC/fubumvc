@@ -5,14 +5,22 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Registration.Nodes
 {
     public class HandlerCall : ActionCallBase, IMayHaveInputType
     {
+        public static Task CascadeAsync<T>(Task<T> task, IInvocationContext context)
+        {
+            return task.ContinueWith(t => context.EnqueueCascading(t.Result), TaskContinuationOptions.NotOnFaulted);
+        }
+
         public static bool IsCandidate(MethodInfo method)
         {
             if (method.DeclaringType.Equals(typeof(object))) return false;
@@ -58,33 +66,15 @@ namespace FubuMVC.Core.ServiceBus.Registration.Nodes
 
         public override BehaviorCategory Category => BehaviorCategory.Call;
 
-        protected override Type determineHandlerType()
+        protected override IConfiguredInstance buildInstance()
         {
-            Type messageType = Method.GetParameters().First().ParameterType;
+            var invocationType = typeof(HandlerInvocation<>).MakeGenericType(HandlerType);
+            var invocation = Activator.CreateInstance(invocationType, Method);
 
+            var instance = new ConfiguredInstance(typeof(HandlerInvoker<>), HandlerType);
+            instance.Dependencies.Add(invocationType, invocation);
 
-
-            if (HasOutput && HasInput)
-            {
-                return typeof (CascadingHandlerInvoker<,,>)
-                    .MakeGenericType(
-                        HandlerType,
-                        messageType,
-                        Method.ReturnType);
-            }
-
-            if (!HasOutput && HasInput)
-            {
-                return typeof (SimpleHandlerInvoker<,>)
-                    .MakeGenericType(
-                        HandlerType,
-                        messageType);
-            }
-
-            throw new FubuException(1005,
-                                    "The action '{0}' is invalid. Only methods that support the '1 in 1 out' or '1 in 0 out' patterns are valid as FubuMVC message handlers",
-                                    Description);
-
+            return instance;
         }
 
         public bool CouldHandleOtherMessageType(Type inputType)
@@ -129,5 +119,96 @@ namespace FubuMVC.Core.ServiceBus.Registration.Nodes
         }
 
 
+    }
+
+    public class HandlerInvocation<THandler>
+    {
+        private static MethodInfo FubuRequestFind = typeof(IFubuRequest).GetMethod(nameof(IFubuRequest.Find));
+
+        private static MethodInfo CascadeAsync = typeof(HandlerCall).GetMethod(nameof(HandlerCall.CascadeAsync),
+            BindingFlags.Public | BindingFlags.Static);
+
+        private static MethodInfo EnqueueCascading =
+            typeof(IInvocationContext).GetMethod(nameof(IInvocationContext.EnqueueCascading));
+
+        private static MethodInfo FirstOrDefault =
+            typeof(Enumerable)
+                .GetMethods().FirstOrDefault(x => x.Name == nameof(Enumerable.FirstOrDefault) && x.GetParameters().Length == 1);
+
+        private readonly Func<THandler, IFubuRequest, IInvocationContext, Task> _action;
+
+
+
+        public HandlerInvocation(MethodInfo method)
+        {
+            var request = Expression.Parameter(typeof(IFubuRequest), "request");
+            var context = Expression.Parameter(typeof(IInvocationContext), "context");
+            var handler = Expression.Parameter(typeof(THandler), "handler");
+
+            var inputs = method.GetParameters().Select(param => buildExpressionForParameter(request, param));
+
+            Expression body = Expression.Call(handler, method, inputs);
+
+            if (method.ReturnType != typeof(Task) && method.ReturnType.CanBeCastTo<Task>())
+            {
+                var outputType = method.ReturnType.GetGenericArguments().Single();
+                var cascade = CascadeAsync.MakeGenericMethod(outputType);
+                body = Expression.Call(null, cascade, body, context);
+            }
+            else if (method.ReturnType != typeof(void) && method.ReturnType != typeof(Task))
+            {
+                body = Expression.Call(context, EnqueueCascading, body);
+            }
+
+            if (!body.Type.CanBeCastTo<Task>())
+            {
+                var returnStatement = Expression.Constant(Task.CompletedTask);
+                body = Expression.Block(body, returnStatement);
+            }
+
+            var lambda = Expression
+                .Lambda<Func<THandler, IFubuRequest, IInvocationContext, Task>>(body, handler, request, context);
+
+            _action = lambda.Compile();
+        }
+
+        private Expression buildExpressionForParameter(ParameterExpression request, ParameterInfo parameter)
+        {
+            var method = FubuRequestFind.MakeGenericMethod(parameter.ParameterType);
+
+            var inner =  Expression.Call(request, method);
+
+            var firstMethod = FirstOrDefault.MakeGenericMethod(parameter.ParameterType);
+
+            return Expression.Call(null, firstMethod, inner);
+        }
+
+        public Task Invoke(THandler handler, IFubuRequest request, IInvocationContext context)
+        {
+            return _action(handler, request, context);
+        }
+    }
+
+    public class HandlerInvoker<THandler> : BasicBehavior
+    {
+        private readonly IFubuRequest _request;
+        private readonly THandler _handler;
+        private readonly IInvocationContext _context;
+        private readonly HandlerInvocation<THandler> _invocation;
+
+        public HandlerInvoker(IFubuRequest request, THandler handler, IInvocationContext context, HandlerInvocation<THandler> invocation) : base(PartialBehavior.Executes)
+        {
+            _request = request;
+            _handler = handler;
+            _context = context;
+            _invocation = invocation;
+        }
+
+        protected override async Task<DoNext> performInvoke()
+        {
+            await _invocation.Invoke(_handler, _request, _context).ConfigureAwait(false);
+
+            return DoNext.Continue;
+        }
     }
 }

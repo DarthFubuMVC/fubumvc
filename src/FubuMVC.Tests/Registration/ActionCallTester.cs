@@ -60,13 +60,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void can_get_the_behavior_type()
-        {
-            ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null))
-                .BehaviorType.ShouldBe(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Model2>));
-        }
-
-        [Test]
         public void enrich_puts_the_new_chain_node_directly_behind_the_call()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
@@ -150,23 +143,6 @@ namespace FubuMVC.Tests.Registration
             action.ToRouteDefinition().ShouldBeOfType<RouteDefinition>().Input.ShouldBeNull();
         }
 
-        [Test]
-        public void to_object_def_throws_when_has_no_return_and_no_input()
-        {
-            action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
-            Exception<FubuException>.ShouldBeThrownBy(
-                () => action.As<IContainerModel>().ToInstance())
-                .ErrorCode.ShouldBe(1005);
-        }
-
-        [Test]
-        public void to_object_def_throws_when_has_task_with_no_result_and_no_input()
-        {
-            action = ActionCall.For<ControllerTarget>(x => x.ZeroInTaskNoResultOut());
-            Exception<FubuException>.ShouldBeThrownBy(
-                () => action.As<IContainerModel>().ToInstance())
-                .ErrorCode.ShouldBe(1005);
-        }
     }
 
     [TestFixture]
