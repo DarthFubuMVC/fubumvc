@@ -92,7 +92,6 @@ namespace FubuMVC.Core.Continuations
 
         public Task EndWithStatusCode(HttpStatusCode code)
         {
-            // TODO -- use async methods here?
             _writer.WriteResponseCode(code);
 
             return Task.CompletedTask;
