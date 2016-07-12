@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
@@ -21,21 +22,18 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _handlers.AddRange(handlers);
         }
 
-        public IList<IEnvelopeHandler> Handlers
-        {
-            get { return _handlers; }
-        }
+        public IList<IEnvelopeHandler> Handlers => _handlers;
 
         // virtual for testing as usual
-        public virtual IContinuation FindContinuation(Envelope envelope, IEnvelopeContext context)
+        public virtual async Task<IContinuation> FindContinuation(Envelope envelope, IEnvelopeContext context)
         {
             foreach (var handler in _handlers)
             {
-                var continuation = handler.Handle(envelope);
+                var continuation = await handler.Handle(envelope).ConfigureAwait(false);
                 if (continuation != null)
                 {
                     context.DebugMessage(() => new EnvelopeContinuationChosen
-                    {
+                    {   
                         ContinuationType = continuation.GetType(),
                         HandlerType = handler.GetType(),
                         Envelope = envelope.ToToken()
@@ -56,14 +54,14 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             return new MoveToErrorQueue(new NoHandlerException(envelope.Message.GetType()));
         }
 
-        public virtual void Invoke(Envelope envelope, IEnvelopeContext context)
+        public virtual async Task Invoke(Envelope envelope, IEnvelopeContext context)
         {
             envelope.Attempts++; // needs to be done here.
             IContinuation continuation = null;
 
             try
             {
-                continuation = FindContinuation(envelope, context);
+                continuation = await FindContinuation(envelope, context).ConfigureAwait(false);
                 continuation.Execute(envelope, context);
             }
             catch (EnvelopeDeserializationException ex)
@@ -90,23 +88,25 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             }
         }
 
-        public void Receive(Envelope envelope)
+        public async Task Receive(Envelope envelope)
         {
             envelope.UseSerializer(_serializer);
             using (var context = _lifecycle.StartNew(this, envelope))
             {
                 context.InfoMessage(() => new EnvelopeReceived { Envelope = envelope.ToToken() });
-                Invoke(envelope, context);
+
+                // TODO -- this needs to change in all likelihood
+                await Invoke(envelope, context).ConfigureAwait(false);
             }
 
 
         }
 
-        public void InvokeNow(Envelope envelope)
+        public async Task InvokeNow(Envelope envelope)
         {
             using (var context = _lifecycle.StartNew(this, envelope))
             {
-                Invoke(envelope, context);
+                await Invoke(envelope, context).ConfigureAwait(false);
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void should_not_return_any_continuation()
         {
-            ClassUnderTest.Handle(theEnvelope).ShouldBeNull();
+            ClassUnderTest.Handle(theEnvelope).GetAwaiter().GetResult().ShouldBeNull();
         }
     }
 
@@ -55,12 +55,12 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void if_the_chain_invocation_succeeds_and_there_is_no_explicit_continuation_use_successful_continuation()
         {
             theInvoker.Expect(x => x.ExecuteChain(theEnvelope, theChain))
-                      .Return(MockFor<IInvocationContext>());
+                      .Return(MockFor<IInvocationContext>().ToCompletionTask());
 
             MockFor<IInvocationContext>().Stub(x => x.Continuation).Return(null);
 
 
-            ClassUnderTest.Handle(theEnvelope)
+            ClassUnderTest.Handle(theEnvelope).GetAwaiter().GetResult()
                           .ShouldBeOfType<ChainSuccessContinuation>()
                           .Context.ShouldBeTheSameAs(MockFor<IInvocationContext>());
 
@@ -70,13 +70,13 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void if_the_chain_invocation_succeeds_and_there_is_an_explicit_continuation()
         {
             theInvoker.Expect(x => x.ExecuteChain(theEnvelope, theChain))
-                      .Return(MockFor<IInvocationContext>());
+                      .Return(MockFor<IInvocationContext>().ToCompletionTask());
 
             var explicitContinuation = MockRepository.GenerateMock<IContinuation>();
             MockFor<IInvocationContext>().Stub(x => x.Continuation).Return(explicitContinuation);
 
 
-            ClassUnderTest.Handle(theEnvelope)
+            ClassUnderTest.Handle(theEnvelope).GetAwaiter().GetResult()
                           .ShouldBeTheSameAs(explicitContinuation);
         }
 
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theInvoker.Expect(x => x.ExecuteChain(theEnvelope, theChain))
                       .Throw(exception);
 
-            ClassUnderTest.Handle(theEnvelope)
+            ClassUnderTest.Handle(theEnvelope).GetAwaiter().GetResult()
                           .ShouldBeOfType<ChainFailureContinuation>()
                           .Exception.ShouldBeTheSameAs(exception);
 
@@ -102,37 +102,10 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theInvoker.Expect(x => x.ExecuteChain(theEnvelope, theChain))
                 .Throw(exception);
 
-            ClassUnderTest.Handle(theEnvelope)
+            ClassUnderTest.Handle(theEnvelope).GetAwaiter().GetResult()
                 .ShouldBeOfType<DeserializationFailureContinuation>()
                 .Exception.ShouldBeTheSameAs(exception);
         }
-    }
-
-
-
-    [TestFixture]
-    public class determining_the_continuation_for_an_async_chain : InteractionContext<ChainExecutionEnvelopeHandler>
-    {
-        private Envelope theEnvelope;
-        private IChainInvoker theInvoker;
-        private HandlerChain theChain;
-        private IContinuation theContinuation;
-
-        protected override void beforeEach()
-        {
-            theEnvelope = ObjectMother.Envelope();
-            theInvoker = MockFor<IChainInvoker>();
-            theChain = new HandlerChain();
-            theChain.AddToEnd(HandlerCall.For<TaskHandler>(x => x.AsyncHandle(null)));
-            theChain.IsAsync.ShouldBeTrue();
-
-            theInvoker.Stub(x => x.FindChain(theEnvelope))
-                      .Return(theChain);
-
-            theContinuation = ClassUnderTest.Handle(theEnvelope);
-        }
-
-
     }
 
 
@@ -156,7 +129,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void returns_a_deserialization_failure_continuation()
         {
-            ClassUnderTest.Handle(theEnvelope)
+            ClassUnderTest.Handle(theEnvelope).GetAwaiter().GetResult()
                 .ShouldBeOfType<DeserializationFailureContinuation>()
                 .Exception.ShouldBeTheSameAs(theException);
         }

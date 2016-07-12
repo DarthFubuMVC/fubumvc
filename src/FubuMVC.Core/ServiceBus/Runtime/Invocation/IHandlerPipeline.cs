@@ -1,11 +1,12 @@
-﻿using FubuCore.Logging;
+﻿using System.Threading.Tasks;
+using FubuCore.Logging;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
     public interface IHandlerPipeline
     {
-        void Invoke(Envelope envelope, IEnvelopeContext context);
-        void Receive(Envelope envelope);
-        void InvokeNow(Envelope envelope);
+        Task Invoke(Envelope envelope, IEnvelopeContext context);
+        Task Receive(Envelope envelope);
+        Task InvokeNow(Envelope envelope);
     }
 }

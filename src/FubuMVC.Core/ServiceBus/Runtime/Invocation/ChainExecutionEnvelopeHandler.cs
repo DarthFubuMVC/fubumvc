@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 
@@ -13,7 +14,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _invoker = invoker;
         }
 
-        public IContinuation Handle(Envelope envelope)
+        public async Task<IContinuation> Handle(Envelope envelope)
         {
             try
             {
@@ -23,7 +24,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
                     return null;
                 }
 
-                return ExecuteChain(envelope, chain);
+                return await ExecuteChain(envelope, chain).ConfigureAwait(false);
 
             }
             catch (EnvelopeDeserializationException ex)
@@ -32,11 +33,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             }
         }
 
-        public IContinuation ExecuteChain(Envelope envelope, HandlerChain chain)
+        public async Task<IContinuation> ExecuteChain(Envelope envelope, HandlerChain chain)
         {
             try
             {
-                var context = _invoker.ExecuteChain(envelope, chain);
+                var context = await _invoker.ExecuteChain(envelope, chain).ConfigureAwait(false);
                 return context.Continuation ?? new ChainSuccessContinuation(context);
             }
             catch (EnvelopeDeserializationException ex)

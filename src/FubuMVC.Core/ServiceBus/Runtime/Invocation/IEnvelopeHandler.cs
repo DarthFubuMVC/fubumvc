@@ -1,7 +1,9 @@
-﻿namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
+﻿using System.Threading.Tasks;
+
+namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
     public interface IEnvelopeHandler
     {
-        IContinuation Handle(Envelope envelope);
+        Task<IContinuation> Handle(Envelope envelope);
     }
 }
