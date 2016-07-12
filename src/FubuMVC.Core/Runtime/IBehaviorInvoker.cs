@@ -7,6 +7,6 @@ namespace FubuMVC.Core.Runtime
 {
     public interface IBehaviorInvoker
     {
-        void Invoke(TypeArguments arguments, IDictionary<string, object> routeValues);
+        Task Invoke(TypeArguments arguments, IDictionary<string, object> routeValues);
     }
 }
