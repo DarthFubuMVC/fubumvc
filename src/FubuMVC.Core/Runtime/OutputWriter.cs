@@ -93,18 +93,18 @@ namespace FubuMVC.Core.Runtime
             CurrentState.Flush();
         }
 
-        public virtual void Write(string contentType, string renderedOutput)
+        public virtual Task Write(string contentType, string renderedOutput)
         {
             _logger.DebugMessage(() => new OutputReport(contentType, renderedOutput));
 
-            CurrentState.Write(contentType, renderedOutput);
+            return CurrentState.Write(contentType, renderedOutput);
         }
 
-        public void Write(string renderedOutput)
+        public Task Write(string renderedOutput)
         {
             _logger.DebugMessage(() => new OutputReport(renderedOutput));
 
-            CurrentState.Write(renderedOutput);
+            return CurrentState.Write(renderedOutput);
         }
 
         public virtual void RedirectToUrl(string url)
@@ -129,11 +129,11 @@ namespace FubuMVC.Core.Runtime
             CurrentState.AppendHeader(key, value);
         }
 
-        public void Write(string contentType, Action<Stream> output)
+        public Task Write(string contentType, Func<Stream, Task> output)
         {
             _logger.DebugMessage(() => new WriteToStreamReport(contentType));
             
-            CurrentState.Write(contentType, output);
+            return CurrentState.Write(contentType, output);
         }
 
         public void WriteResponseCode(HttpStatusCode status, string description = null)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime;
 using FubuCore;
@@ -8,10 +9,10 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class ModelBindingReader<T> : IReader<T>, DescribesItself where T : class
     {
-        public T Read(string mimeType, IFubuRequestContext context)
+        public Task<T> Read(string mimeType, IFubuRequestContext context)
         {
             context.Models.Clear(typeof(T));
-            return context.Models.Get<T>();
+            return Task.FromResult(context.Models.Get<T>());
         }
 
         public IEnumerable<string> Mimetypes
@@ -29,12 +30,6 @@ namespace FubuMVC.Core.Resources.Conneg
             description.ShortDescription = "Read {0} by model binding against the request data".ToFormat(typeof(T).Name);
         }
 
-        public Type ModelType
-        {
-            get
-            {
-                return typeof (T);
-            }
-        }
+        public Type ModelType => typeof (T);
     }
 }

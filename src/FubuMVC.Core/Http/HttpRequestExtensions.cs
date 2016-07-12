@@ -240,17 +240,6 @@ namespace FubuMVC.Core.Http
         }
 
         /// <summary>
-        /// Helper function to read the response body as a string with the default content encoding
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static string InputText(this IHttpRequest data)
-        {
-            var reader = new StreamReader(data.Input);
-            return reader.ReadToEnd();
-        }
-
-        /// <summary>
         /// Checks whether or not there is any data in the request body
         /// </summary>
         /// <param name="data"></param>

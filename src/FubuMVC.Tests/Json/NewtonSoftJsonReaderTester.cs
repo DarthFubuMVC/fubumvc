@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.Json;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
 using NUnit.Framework;
@@ -17,7 +18,7 @@ namespace FubuMVC.Tests.Json
 			theJson = "{something}";
 
 			Services.PartialMockTheClassUnderTest();
-			ClassUnderTest.Stub(x => x.GetInputText()).Return(theJson);
+			ClassUnderTest.Stub(x => x.GetInputText()).Return(theJson.ToCompletionTask());
 
 			theTarget = new ParentType { Name = "Blah", Child = new ComplexType { Value = "123", Key = "x"}};
 
@@ -27,7 +28,7 @@ namespace FubuMVC.Tests.Json
 		[Test]
 		public void just_delegates_to_the_json_serializer()
 		{
-			ClassUnderTest.Read<ParentType>().ShouldBe(theTarget);
+			ClassUnderTest.Read<ParentType>().GetAwaiter().GetResult().ShouldBe(theTarget);
 		}
 	}
 }

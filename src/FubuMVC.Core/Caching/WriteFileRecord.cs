@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
@@ -40,9 +41,12 @@ namespace FubuMVC.Core.Caching
         {
         }
 
-        public void Replay(IHttpResponse response)
+        public Task Replay(IHttpResponse response)
         {
             _writes.Each(x => x(response));
+
+
+            return Task.CompletedTask;
         }
 
         public void Describe(Description description)

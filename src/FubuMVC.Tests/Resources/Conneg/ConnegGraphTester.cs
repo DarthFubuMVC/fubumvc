@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
@@ -65,7 +66,7 @@ namespace FubuMVC.Tests.Resources.Conneg
     public class Input1Reader1 : IReader<Input1>
     {
         public IEnumerable<string> Mimetypes { get; private set; }
-        public Input1 Read(string mimeType, IFubuRequestContext context)
+        public Task<Input1> Read(string mimeType, IFubuRequestContext context)
         {
             throw new System.NotImplementedException();
         }
@@ -77,7 +78,7 @@ namespace FubuMVC.Tests.Resources.Conneg
     public class Input2Reader : IReader<Input2>
     {
         public IEnumerable<string> Mimetypes { get; private set; }
-        public Input2 Read(string mimeType, IFubuRequestContext context)
+        public Task<Input2> Read(string mimeType, IFubuRequestContext context)
         {
             throw new System.NotImplementedException();
         }

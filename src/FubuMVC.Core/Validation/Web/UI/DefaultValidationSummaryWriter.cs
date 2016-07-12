@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
@@ -18,9 +19,9 @@ namespace FubuMVC.Core.Validation.Web.UI
                 .Style("display", "none");
         }
 
-        public void Write(string mimeType, IFubuRequestContext context, ValidationSummary resource)
+        public Task Write(string mimeType, IFubuRequestContext context, ValidationSummary resource)
         {
-            context.Writer.WriteHtml(BuildSummary());
+            return context.Writer.WriteHtml(BuildSummary());
         }
 
         public IEnumerable<string> Mimetypes

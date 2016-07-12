@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
@@ -351,7 +352,7 @@ namespace FubuMVC.Core.Projections
             }
         }
 
-        void IMediaWriter<T>.Write(string mimeType, IFubuRequestContext request, T resource)
+        Task IMediaWriter<T>.Write(string mimeType, IFubuRequestContext request, T resource)
         {
             var node = new DictionaryMediaNode();
             var context = new ProjectionContext<T>(request.Services, new SimpleValues<T>(resource));
@@ -359,7 +360,7 @@ namespace FubuMVC.Core.Projections
             write(context, node);
 
             var serializer = request.Services.GetInstance<IJsonSerializer>();
-            request.Writer.Write(mimeType, serializer.Serialize(node.Values, false));
+            return request.Writer.Write(mimeType, serializer.Serialize(node.Values, false));
         }
 
         public virtual IEnumerable<string> Mimetypes

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
@@ -17,16 +18,16 @@ namespace FubuMVC.Core.Runtime
             _fileSystem = fileSystem;
         }
 
-        public void Write(string contentType, string renderedOutput)
+        public Task Write(string contentType, string renderedOutput)
         {
             _response.WriteContentType(contentType);
-            _response.Write(renderedOutput);
+            return _response.Write(renderedOutput);
         }
 
-        public void Write(string contentType, Action<Stream> action)
+        public Task Write(string contentType, Func<Stream, Task> action)
         {
             _response.WriteContentType(contentType);
-            _response.Write(action);
+            return _response.Write((Func<Stream, Task>) action);
         }
 
         public void AppendHeader(string header, string value)
@@ -45,9 +46,9 @@ namespace FubuMVC.Core.Runtime
             _response.Flush();
         }
 
-        public void Write(string renderedOutput)
+        public Task Write(string renderedOutput)
         {
-            _response.Write(renderedOutput);
+            return _response.Write(renderedOutput);
         }
     }
 }

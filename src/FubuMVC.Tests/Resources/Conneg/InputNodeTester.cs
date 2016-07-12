@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
@@ -100,7 +101,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             get { throw new NotImplementedException(); }
         }
 
-        public InputTarget Read(string mimeType, IFubuRequestContext context)
+        public Task<InputTarget> Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }
@@ -123,7 +124,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             get { throw new NotImplementedException(); }
         }
 
-        public T Read(string mimeType, IFubuRequestContext context)
+        public Task<T> Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }
@@ -141,7 +142,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
     public class FancyReader<T> : IReader<T>
     {
-        public T Read(string mimeType, IFubuRequestContext context)
+        public Task<T> Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }
@@ -164,7 +165,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             get { yield return "fake/address"; }
         }
 
-        public Address Read(string mimeType, IFubuRequestContext context)
+        public Task<Address> Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -47,7 +48,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     public class FooWriter : IMediaWriter<Foo>
     {
-        public void Write(string mimeType, IFubuRequestContext context, Foo resource)
+        public Task Write(string mimeType, IFubuRequestContext context, Foo resource)
         {
             throw new NotImplementedException();
         }

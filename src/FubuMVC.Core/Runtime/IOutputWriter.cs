@@ -26,13 +26,13 @@ namespace FubuMVC.Core.Runtime
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="renderedOutput"></param>
-        void Write(string contentType, string renderedOutput);
+        Task Write(string contentType, string renderedOutput);
 
         /// <summary>
         /// Writes string content to the response body
         /// </summary>
         /// <param name="renderedOutput"></param>
-        void Write(string renderedOutput);
+        Task Write(string renderedOutput);
 
         /// <summary>
         /// Writes a 302 redirect to the url to the request 
@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Runtime
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="output"></param>
-        void Write(string contentType, Action<Stream> output);
+        Task Write(string contentType, Func<Stream, Task> output);
 
         /// <summary>
         /// Writes a response code back to the response

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using FubuCore;
+using System.Threading.Tasks;
 using FubuCore.Binding;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime;
@@ -18,19 +18,16 @@ namespace FubuMVC.Core.Resources.Conneg
             _formatter = formatter;
         }
 
-        public T Read(string mimeType, IFubuRequestContext context)
+        public async Task<T> Read(string mimeType, IFubuRequestContext context)
         {
-            var model = _formatter.Read<T>(context);
+            var model = await _formatter.Read<T>(context).ConfigureAwait(false);
 
             context.Services.GetInstance<IBindingContext>().BindProperties(model);
 
             return model;
         }
 
-        public IEnumerable<string> Mimetypes
-        {
-            get { return _formatter.MatchingMimetypes; }
-        }
+        public IEnumerable<string> Mimetypes => _formatter.MatchingMimetypes;
 
         public void Describe(Description description)
         {
@@ -40,10 +37,6 @@ namespace FubuMVC.Core.Resources.Conneg
             description.Children["Formatter"] = formatter;
         }
 
-        public IFormatter Formatter
-        {
-            get { return _formatter; }
-        }
-
+        public IFormatter Formatter => _formatter;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
@@ -25,17 +26,16 @@ namespace FubuMVC.Core.View
             _view = view;
         }
 
-        public IViewToken View
-        {
-            get { return _view; }
-        }
+        public IViewToken View => _view;
 
-        public void Write(string mimeType, IFubuRequestContext context, T resource)
+        public Task Write(string mimeType, IFubuRequestContext context, T resource)
         {
             var view = BuildView(context);
             view.Page.ServiceLocator = context.Services;
             view.Page.As<IFubuPage<T>>().Model = resource;
             view.Render(context);
+
+            return Task.CompletedTask;
         }
 
 

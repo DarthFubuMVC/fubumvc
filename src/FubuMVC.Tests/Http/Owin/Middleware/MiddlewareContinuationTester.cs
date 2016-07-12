@@ -38,31 +38,28 @@ namespace FubuMVC.Tests.Http.Owin.Middleware
         {
             var wasCalled = false;
 
-            var task = MiddlewareContinuation.StopHere(() => wasCalled = true)
+            var task = MiddlewareContinuation.StopHere(() => {
+                wasCalled = true;
+                return Task.CompletedTask;
+            })
                 .ToTask(theEnvironment, theInner);
-            task.ShouldNotBeTheSameAs(theInnerTask);
 
             task.Wait();
 
             wasCalled.ShouldBeTrue();
         }
 
-        [Test]
-        public void no_action_and_continue()
-        {
-            MiddlewareContinuation.Continue()
-                .ToTask(theEnvironment, theInner)
-                .ShouldBeTheSameAs(theInnerTask);
-        }
 
         [Test]
         public void an_action_and_continue()
         {
             var wasCalled = false;
 
-            var task = MiddlewareContinuation.Continue(() => wasCalled = true)
-                .ToTask(theEnvironment, theInner)
-                .ShouldBeTheSameAs(theInnerTask);
+            MiddlewareContinuation.Continue(() => {
+                wasCalled = true;
+                return Task.CompletedTask;
+            })
+                .ToTask(theEnvironment, theInner).GetAwaiter().GetResult();
 
             wasCalled.ShouldBeTrue();
         }

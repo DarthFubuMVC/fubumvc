@@ -101,7 +101,7 @@ namespace FubuMVC.IntegrationTesting.Http
 
     public class FastOutputWriter : IMediaWriter<FastOutput>
     {
-        public void Write(string mimeType, IFubuRequestContext context, FastOutput resource)
+        public Task Write(string mimeType, IFubuRequestContext context, FastOutput resource)
         {
             throw new NotImplementedException("I should not be called");
         }

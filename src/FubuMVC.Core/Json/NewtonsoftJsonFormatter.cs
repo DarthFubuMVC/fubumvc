@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using FubuCore;
+using System.IO;
+using System.Threading.Tasks;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 
@@ -9,10 +10,10 @@ namespace FubuMVC.Core.Json
     [Description("Json serialization with Newtonsoft.Json")]
     public class NewtonsoftJsonFormatter : IFormatter
     {
-        public virtual void Write<T>(IFubuRequestContext context, T target, string mimeType)
+        public virtual Task Write<T>(IFubuRequestContext context, T target, string mimeType)
         {
             var text = serializeData(context, target);
-            context.Writer.Write(mimeType, text);
+            return context.Writer.Write(mimeType, text);
         }
 
         protected static string serializeData<T>(IFubuRequestContext context, T target)
@@ -22,10 +23,14 @@ namespace FubuMVC.Core.Json
             return text;
         }
 
-        public T Read<T>(IFubuRequestContext context)
+        public async Task<T> Read<T>(IFubuRequestContext context)
         {
             var serializer = context.Services.GetInstance<IJsonSerializer>();
-            return serializer.Deserialize<T>(context.Request.Input.ReadAllText());
+
+            var reader = new StreamReader(context.Request.Input);
+            var json = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+            return serializer.Deserialize<T>(json);
         }
 
         public IEnumerable<string> MatchingMimetypes

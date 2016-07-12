@@ -1,11 +1,12 @@
 using System.IO;
+using System.Threading.Tasks;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Caching
 {
     public interface IRecordedHttpOutput
     {
-        void Replay(IHttpResponse response);
+        Task Replay(IHttpResponse response);
     }
 
     public interface IRecordedTextOutput

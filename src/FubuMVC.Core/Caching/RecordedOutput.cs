@@ -6,6 +6,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Caching
 {
@@ -29,18 +30,22 @@ namespace FubuMVC.Core.Caching
             get { return _outputs; }
         }
 
-        public void Write(string contentType, string renderedOutput)
+        public Task Write(string contentType, string renderedOutput)
         {
             output = new SetContentType(contentType);
             output = new WriteTextOutput(renderedOutput);
+
+            return Task.CompletedTask;
         }
 
-        public void Write(string renderedOutput)
+        public Task Write(string renderedOutput)
         {
             output = new WriteTextOutput(renderedOutput);
+
+            return Task.CompletedTask;
         }
 
-        public void Write(string contentType, Action<Stream> action)
+        public Task Write(string contentType, Func<Stream, Task> action)
         {
             output = new SetContentType(contentType);
 
@@ -48,6 +53,8 @@ namespace FubuMVC.Core.Caching
             action(stream);
 
             output = new WriteStream(stream);
+
+            return Task.CompletedTask;
         }
 
         public void AppendHeader(string header, string value)

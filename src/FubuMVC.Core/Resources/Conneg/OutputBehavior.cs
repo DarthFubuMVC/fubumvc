@@ -35,8 +35,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 await InsideBehavior.Invoke().ConfigureAwait(false);
             }
 
-            // TODO -- make async
-            Write();
+            await Write().ConfigureAwait(false);
         }
 
         public async Task InvokePartial()
@@ -48,7 +47,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
             if (shouldWriteInPartial())
             {
-                Write();
+                await Write().ConfigureAwait(false);
             }
         }
 
@@ -60,7 +59,7 @@ namespace FubuMVC.Core.Resources.Conneg
         }
 
         // SAMPLE: output-behavior-mechanics
-        public virtual void Write()
+        public virtual async Task Write()
         {
             // If the resource is NOT found, return 
             // invoke the 404 handler
@@ -78,14 +77,14 @@ namespace FubuMVC.Core.Resources.Conneg
             // the mimetypes of the current request
             var mimeTypes = _context.Models.Get<CurrentMimeType>();
 
-            WriteResource(mimeTypes, resource);
+            await WriteResource(mimeTypes, resource).ConfigureAwait(false);
 
             // Write any output headers exposed by the IHaveHeaders
             // interface on the resource type
             WriteHeaders();
         }
 
-        public void WriteResource(CurrentMimeType mimeTypes, T resource)
+        public Task WriteResource(CurrentMimeType mimeTypes, T resource)
         {
             // Select the appropriate media writer
             // based on the mimetype and other runtime
@@ -96,23 +95,20 @@ namespace FubuMVC.Core.Resources.Conneg
             {
                 // If no matching media can be found, write HTTP 406
                 _context.Writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
-                _context.Writer.Write(MimeType.Text, "406:  Not acceptable");
+                return _context.Writer.Write(MimeType.Text, "406:  Not acceptable");
             }
             else
             {
                 _context.Logger.DebugMessage(() => new WriterChoice(media.MimeType, media.Writer));
 
                 // Write the media based on a matching media type
-                media.Writer.Write(media.MimeType, _context, resource);
+                return media.Writer.Write(media.MimeType, _context, resource);
             }
         }
 
         // ENDSAMPLE
 
-        public IEnumerable<IMediaWriter<T>> Media
-        {
-            get { return _media.Media<T>(); }
-        }
+        public IEnumerable<IMediaWriter<T>> Media => _media.Media<T>();
 
         public void WriteHeaders()
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
@@ -11,6 +12,6 @@ namespace FubuMVC.Core.Resources.Conneg
 
     public interface IReader<T> : IReader
     {
-        T Read(string mimeType, IFubuRequestContext context);
+        Task<T> Read(string mimeType, IFubuRequestContext context);
     }
 }

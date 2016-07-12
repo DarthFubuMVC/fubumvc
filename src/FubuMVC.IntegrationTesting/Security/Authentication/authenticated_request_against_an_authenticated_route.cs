@@ -83,12 +83,12 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
                 throw new NotImplementedException();
             }
 
-            public void Write(string contentType, string renderedOutput)
+            public Task Write(string contentType, string renderedOutput)
             {
                 throw new NotImplementedException();
             }
 
-            public void Write(string renderedOutput)
+            public Task Write(string renderedOutput)
             {
                 throw new NotImplementedException();
             }
@@ -108,7 +108,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
                 throw new NotImplementedException();
             }
 
-            public void Write(string contentType, Action<Stream> output)
+            public Task Write(string contentType, Func<Stream, Task> output)
             {
                 throw new NotImplementedException();
             }

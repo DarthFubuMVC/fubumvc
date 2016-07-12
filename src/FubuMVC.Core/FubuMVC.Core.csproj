@@ -995,7 +995,6 @@
     <Compile Include="Runtime\Aggregation\IClientMessageCache.cs" />
     <Compile Include="Runtime\AjaxAwareJsonSerializer.cs" />
     <Compile Include="Runtime\Conditionals\IConditionalService.cs" />
-    <Compile Include="Runtime\DataContractJsonSerializer.cs" />
     <Compile Include="Runtime\ExceptionHandlingObserver.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFiles.cs" />
     <Compile Include="Runtime\Files\FubuFile.cs" />

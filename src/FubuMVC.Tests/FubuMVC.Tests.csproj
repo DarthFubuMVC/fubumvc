@@ -552,7 +552,6 @@
     <Compile Include="Resources\Conneg\InputNodeTester.cs" />
     <Compile Include="Resources\Conneg\InputOutputNodePlacementIntegrationTester.cs" />
     <Compile Include="Resources\Conneg\OutputNodeIntegratedTester.cs" />
-    <Compile Include="Resources\Conneg\ModelBindingReaderTester.cs" />
     <Compile Include="Resources\Conneg\StringWriterTester.cs" />
     <Compile Include="Resources\Conneg\HtmlStringWriterTester.cs" />
     <Compile Include="Resources\Conneg\OutputBehaviorTester.cs" />

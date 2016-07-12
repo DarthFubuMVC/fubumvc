@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
@@ -78,7 +79,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
     public class FancyWriter<T> : IMediaWriter<T>
     {
-        public void Write(string mimeType, IFubuRequestContext context, T resource)
+        public Task Write(string mimeType, IFubuRequestContext context, T resource)
         {
             throw new NotImplementedException();
         }
@@ -91,7 +92,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
     public class FakeAddressWriter : IMediaWriter<Address>
     {
-        public void Write(string mimeType, IFubuRequestContext context, Address resource)
+        public Task Write(string mimeType, IFubuRequestContext context, Address resource)
         {
             throw new NotImplementedException();
         }

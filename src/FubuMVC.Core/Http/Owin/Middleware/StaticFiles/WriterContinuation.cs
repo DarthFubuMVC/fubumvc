@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
 {
@@ -6,16 +7,16 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
     {
         protected WriterContinuation(IHttpResponse response, DoNext doNext)
         {
-            if (response == null) throw new ArgumentNullException("response");
+            if (response == null) throw new ArgumentNullException(nameof(response));
 
             DoNext = doNext;
 
-            Action = () => {
-                Write(response);
+            Action = async () => {
+                await Write(response).ConfigureAwait(false);
                 response.Flush();
             };
         }
 
-        public abstract void Write(IHttpResponse response);
+        public abstract Task Write(IHttpResponse response);
     }
 }

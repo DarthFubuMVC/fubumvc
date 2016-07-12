@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
 {
@@ -14,20 +15,15 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
             _reason = reason;
         }
 
-        public override void Write(IHttpResponse response)
+        public override Task Write(IHttpResponse response)
         {
             response.WriteResponseCode(_status, _reason);
+            return Task.CompletedTask;
         }
 
-        public HttpStatusCode Status
-        {
-            get { return _status; }
-        }
+        public HttpStatusCode Status => _status;
 
-        public string Reason
-        {
-            get { return _reason; }
-        }
+        public string Reason => _reason;
 
         protected bool Equals(WriteStatusCodeContinuation other)
         {

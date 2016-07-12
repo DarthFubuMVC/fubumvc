@@ -11,6 +11,7 @@ using Rhino.Mocks;
 using Shouldly;
 using FubuCore.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FubuMVC.Tests.Caching
 {
@@ -99,7 +100,12 @@ namespace FubuMVC.Tests.Caching
             var document = new XmlDocument();
             document.WithRoot("root");
 
-            theRecordedOutput.Write("text/xml", document.Save);
+            theRecordedOutput.Write("text/xml", stream =>
+            {
+                document.Save(stream);
+                return Task.CompletedTask;
+            });
+
             theRecordedOutput.Outputs.First().ShouldBe(new SetContentType("text/xml"));
 
             var writeStream = theRecordedOutput.Outputs.Last().ShouldBeOfType<WriteStream>();
@@ -175,7 +181,7 @@ namespace FubuMVC.Tests.Caching
 
             var recordingWriter = new RecordingHttpResponse();
 
-            writeStream.Replay(recordingWriter);
+            writeStream.Replay(recordingWriter).GetAwaiter().GetResult();
 
             recordingWriter.AllText().Trim().ShouldBe("Hello!");
         }

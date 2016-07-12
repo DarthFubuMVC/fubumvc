@@ -44,32 +44,13 @@ namespace FubuMVC.Tests.Runtime.Formatters
 
             theRequest.Body.XmlInputIs(xmlInput);
 
-            var xmlOutput = theFormatter.Read<XmlFormatterModel>(context);
+            var xmlOutput = theFormatter.Read<XmlFormatterModel>(context).GetAwaiter().GetResult();
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);
 
             xmlOutput.FirstName.ShouldBe(xmlInput.FirstName);
             xmlOutput.LastName.ShouldBe(xmlInput.LastName);
         }
 
-        [Test]
-        public void write_value()
-        {
-            var xmlInput = new XmlFormatterModel()
-            {
-                FirstName = "Jeremy",
-                LastName = "Miller"
-            };
-
-            theFormatter.Write(context, xmlInput, "text/xml");
-
-            theRequest.Body.ReplaceBody(writer.OutputStream());
-
-            var xmlOutput = theFormatter.Read<XmlFormatterModel>(context);
-            xmlOutput.ShouldNotBeTheSameAs(xmlInput);
-
-            xmlOutput.FirstName.ShouldBe(xmlInput.FirstName);
-            xmlOutput.LastName.ShouldBe(xmlInput.LastName);
-        }
     }
 
     public class XmlFormatterModel

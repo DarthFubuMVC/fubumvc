@@ -113,9 +113,11 @@ namespace FubuMVC.Tests.ServerSentEvents
 
         public string Text => _writer.ToString();
 
-        public void Write(string renderedOutput)
+        public Task Write(string renderedOutput)
         {
             _writer.Write(renderedOutput);
+
+            return Task.CompletedTask;
         }
 
         public void WriteFile(string contentType, string localFilePath, string displayName)
@@ -123,7 +125,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             throw new NotImplementedException();
         }
 
-        public void Write(string contentType, string renderedOutput)
+        public Task Write(string contentType, string renderedOutput)
         {
             throw new NotImplementedException();
         }
@@ -147,7 +149,7 @@ namespace FubuMVC.Tests.ServerSentEvents
         {
         }
 
-        public void Write(string contentType, Action<Stream> output)
+        public Task Write(string contentType, Func<Stream, Task> output)
         {
             throw new NotImplementedException();
         }

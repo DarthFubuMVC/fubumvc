@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
+using FubuMVC.Core.ServiceBus;
 
 namespace FubuMVC.IntegrationTesting.Samples
 {
@@ -43,13 +44,13 @@ namespace FubuMVC.IntegrationTesting.Samples
             get { yield return "special/format"; }
         }
 
-        public InputMessage Read(string mimeType, IFubuRequestContext context)
+        public Task<InputMessage> Read(string mimeType, IFubuRequestContext context)
         {
             // read the body of the http request from IHttpRequest
             // read header information and route information from
             // IHttpRequest
 
-            return new InputMessage();
+            return new InputMessage().ToCompletionTask();
         }
     }
 
@@ -78,26 +79,30 @@ namespace FubuMVC.IntegrationTesting.Samples
         // This signature is necessary because we are assuming
         // that some Writer's will be able to produce representations
         // for multiple mimetype's
-        public void Write(string mimeType, IFubuRequestContext context, SomeResource resource)
+        public Task Write(string mimeType, IFubuRequestContext context, SomeResource resource)
         {
             if (mimeType == "special/format")
             {
-                writeSpecial(resource);
+                return writeSpecial(resource);
             }
             else
             {
-                writeJson(resource);
+                return writeJson(resource);
             }
         }
 
-        private void writeJson(SomeResource resource)
+        private Task writeJson(SomeResource resource)
         {
             // use the IOutputWriter to output the resource
+
+            return Task.CompletedTask;
         }
 
-        private void writeSpecial(SomeResource resource)
+        private Task writeSpecial(SomeResource resource)
         {
             _writer.Write("special/format", resource.ToString());
+
+            return Task.CompletedTask;
         }
 
         public IEnumerable<string> Mimetypes
