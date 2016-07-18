@@ -1,7 +1,5 @@
-﻿using FubuCore;
-using FubuCore.Logging;
+﻿using FubuCore.Logging;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -23,7 +21,7 @@ namespace FubuMVC.Core.ServiceBus
             var eventAggregatorDef =mode.InTesting()
                 ? new SmartInstance<SynchronousEventAggregator>()
                 : (Instance)new SmartInstance<EventAggregator>();
-            
+
             eventAggregatorDef.SetLifecycleTo<SingletonLifecycle>();
             SetServiceIfNone(typeof(IEventAggregator), eventAggregatorDef);
 
@@ -35,7 +33,9 @@ namespace FubuMVC.Core.ServiceBus
 
             SetServiceIfNone<IChainInvoker, ChainInvoker>();
             SetServiceIfNone<IEnvelopeSender, EnvelopeSender>();
+
             AddService<IMessageSerializer, XmlMessageSerializer>();
+            AddService<IMessageSerializer, JsonMessageSerializer>();
 
             AddService<IActivator, ServiceBusActivator>();
 
@@ -69,7 +69,7 @@ namespace FubuMVC.Core.ServiceBus
             SetServiceIfNone<IMessageExecutor, MessageExecutor>();
             SetServiceIfNone<IOutgoingSender, OutgoingSender>();
 
-            
+
 
             subscriptions();
         }

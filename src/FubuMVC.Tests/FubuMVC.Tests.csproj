@@ -230,6 +230,7 @@
     <Compile Include="ServiceBus\can_establish_a_control_queue.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobChainTester.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\CompositeContinuationConfigurationTester.cs" />
+    <Compile Include="ServiceBus\Runtime\Serializers\JsonMessageSerializerTester.cs" />
     <Compile Include="TestSupport\GenericVoidMethod.cs" />
     <Compile Include="TestSupport\InteractionContext.cs" />
     <Compile Include="Json\ComplexType.cs" />
@@ -881,6 +882,9 @@
       <Private>True</Private>
       <Paket>True</Paket>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">

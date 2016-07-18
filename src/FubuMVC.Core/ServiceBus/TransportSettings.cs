@@ -16,6 +16,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration;
 using FubuMVC.Core.ServiceBus.Web;
+using Newtonsoft.Json;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus
@@ -41,6 +42,11 @@ namespace FubuMVC.Core.ServiceBus
             SubscriptionRefreshPolling = 60000;
             Enabled = false;
             InMemoryTransport = InMemoryTransportMode.Disabled;
+            JsonMessageSerializerSettings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
         }
 
         public void Describe(Description description)
@@ -50,10 +56,14 @@ namespace FubuMVC.Core.ServiceBus
             description.Properties[nameof(DelayMessagePolling)] = $"{DelayMessagePolling} ms";
             description.Properties[nameof(ListenerCleanupPolling)] = $"{ListenerCleanupPolling} ms";
             description.Properties[nameof(SubscriptionRefreshPolling)] = $"{SubscriptionRefreshPolling} ms";
-
             description.Properties[nameof(InMemoryTransport)] = InMemoryTransport.ToString();
-        }
 
+            var jsonSettings = new Description();
+            description.Children["Json Serializer Settings"] = jsonSettings;
+            jsonSettings.Properties[nameof(JsonMessageSerializerSettings.TypeNameHandling)] = JsonMessageSerializerSettings.TypeNameHandling.ToString();
+            jsonSettings.Properties[nameof(JsonMessageSerializerSettings.PreserveReferencesHandling)] = JsonMessageSerializerSettings.PreserveReferencesHandling.ToString();
+            jsonSettings.Properties[nameof(JsonMessageSerializerSettings.ReferenceLoopHandling)] = JsonMessageSerializerSettings.ReferenceLoopHandling.ToString();
+        }
 
         public bool Enabled { get; set; }
 
@@ -65,6 +75,8 @@ namespace FubuMVC.Core.ServiceBus
         public double DelayMessagePolling { get; set; }
         public double ListenerCleanupPolling { get; set; }
         public double SubscriptionRefreshPolling { get; set; }
+
+        public JsonSerializerSettings JsonMessageSerializerSettings { get; set; }
 
         void IFeatureSettings.Apply(FubuRegistry registry)
         {
