@@ -34,7 +34,7 @@ namespace FubuMVC.Core.ServiceBus
             SetServiceIfNone<IChainInvoker, ChainInvoker>();
             SetServiceIfNone<IEnvelopeSender, EnvelopeSender>();
 
-            AddService<IMessageSerializer, XmlMessageSerializer>();
+            For<IMessageSerializer>().Use<XmlMessageSerializer>();
             AddService<IMessageSerializer, JsonMessageSerializer>();
 
             AddService<IActivator, ServiceBusActivator>();
