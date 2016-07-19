@@ -335,6 +335,7 @@
     <Compile Include="ServiceBus\Runtime\Invocation\IEnvelopeLifecycle.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ProductionDiagnosticEnvelopeContext.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\VerboseDiagnosticEnvelopeContext.cs" />
+    <Compile Include="ServiceBus\Runtime\Serializers\JsonMessageSerializer.cs" />
     <Compile Include="ServiceBus\ServiceBusActivator.cs" />
     <Compile Include="ServiceBus\FubuTransportServiceRegistry.cs" />
     <Compile Include="ServiceBus\IFubuTransportActivator.cs" />
