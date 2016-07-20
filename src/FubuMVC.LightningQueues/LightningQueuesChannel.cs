@@ -33,7 +33,7 @@ namespace FubuMVC.LightningQueues
             _delayedMessages = delayedMessages;
         }
 
-        public Uri Address { get { return _address; } }
+        public Uri Address => _address;
 
         public ReceivingState Receive(IReceiver receiver)
         {

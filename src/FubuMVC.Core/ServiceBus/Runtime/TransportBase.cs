@@ -11,7 +11,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
 
         public void OpenChannels(ChannelGraph graph)
         {
-            var nodes = graph.NodesForProtocol(Protocol);
+            var nodes = graph.NodesForProtocol(Protocol).ToArray();
 
             if (Disabled(nodes)) return;
 

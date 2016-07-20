@@ -7,7 +7,6 @@ using FubuCore;
 using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuCore.Util;
-using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 
@@ -19,14 +18,28 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             new Cache<string, ChannelNode>(key => new ChannelNode {Key = key});
 
         private readonly Cache<string, Uri> _replyChannels =
-            new Cache<string, Uri>(
-                name => {
-                    throw new ArgumentOutOfRangeException("No known reply channel for protocol '{0}'".ToFormat(name));
-                });
+            new Cache<string, Uri>();
 
         public ChannelGraph()
         {
             DefaultContentType = new XmlMessageSerializer().ContentType;
+
+            _replyChannels.OnMissing = name =>
+            {
+                var all = _channels.Where(x => x.Protocol() == name).ToArray();
+                if (all.Any())
+                {
+                    var existing = all.Select(x => $"{x.Uri} Incoming = {x.Incoming}").Join(", ");
+                    throw new ArgumentOutOfRangeException($"No known reply channel for protocol '{name}', existing channels are {existing}");
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException($"No known channels for protocol '{name}'");
+                }
+
+
+                
+            };
         }
 
         private string _nodeId;
