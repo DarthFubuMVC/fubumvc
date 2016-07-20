@@ -23,6 +23,7 @@ nuget Shouldly ~> 2.5.0
 nuget Spark 1.7.5.0
 nuget structuremap 4.1.0.361
 nuget Storyteller 3.0.0.325-rc
+nuget System.Data.Common
 nuget System.Spatial 5.6.0.0
 nuget WindowsAzure.Storage 3.0.1.0
 
