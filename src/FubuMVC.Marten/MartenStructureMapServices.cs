@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuCore.Logging;
 using Marten;
+using Marten.Services;
 using Npgsql;
 using NpgsqlTypes;
 using StructureMap;
@@ -54,6 +55,11 @@ namespace FubuMVC.Marten
         {
             CommandCount++;
             _logger.InfoMessage(new CommandFailed(command, ex));
+        }
+
+        public void RecordSavedChanges(IDocumentSession session, IChangeSet commit)
+        {
+            
         }
 
         public int CommandCount { get; private set; }
