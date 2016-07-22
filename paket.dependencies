@@ -4,6 +4,8 @@ nuget Castle.Core 3.2.1
 nuget Fixie ~> 1.0.0.29
 nuget Fleck 0.10.0.26
 nuget LightningDB 0.9.3-rc1-45 prerelease
+nuget LightningQueues 0.2.0-rc2-35 prerelease
+nuget LightningQueues.Storage.LMDB 0.2.0-rc2-35 prerelease
 nuget Marten 1.0.0-alpha-625
 nuget Microsoft.AspNet.Razor 2.0.20715.0
 nuget Microsoft.Data.Edm 5.6.0

@@ -99,7 +99,7 @@ namespace FubuMVC.Core.Registration
                 var name = assembly.GetName().Name;
 
                 if (name != thisAssembly && name != fubuCore && name != "mscorlib" &&
-                    name != "FubuMVC.Katana" && name != "FubuMVC.NOWIN" && name != "Serenity" && name != "System.Core")
+                    name != "Serenity" && name != "System.Core")
                 {
                     callingAssembly = assembly;
                     break;

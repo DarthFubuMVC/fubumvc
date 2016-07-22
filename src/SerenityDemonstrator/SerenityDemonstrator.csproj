@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -53,10 +53,6 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
-      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
-      <Name>FubuMVC.Katana</Name>
     </ProjectReference>
     <ProjectReference Include="..\Serenity\Serenity.csproj">
       <Project>{900a0419-3579-4dae-85be-71a3e4b34239}</Project>

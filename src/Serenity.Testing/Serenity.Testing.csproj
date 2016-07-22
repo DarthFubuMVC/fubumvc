@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -88,10 +88,6 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
-      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
-      <Name>FubuMVC.Katana</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
       <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
