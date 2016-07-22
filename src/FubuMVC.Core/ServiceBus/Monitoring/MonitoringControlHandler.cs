@@ -37,7 +37,7 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
 
                 return response;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return TaskHealthResponse.ErrorFor(request.Subjects);
             }

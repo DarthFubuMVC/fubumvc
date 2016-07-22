@@ -57,20 +57,20 @@ namespace FubuMVC.Core.Validation
                 _services.Add(service);
             }
 
-            public void ValidationSource<T>(T source)
-                where T : IValidationSource
+            public void ValidationSource<TSource>(TSource source)
+                where TSource : IValidationSource
             {
                 _sources.Add(source);
             }
 
-            public void Rule<T>(T rule)
-                where T : IValidationRule
+            public void Rule<TRule>(TRule rule)
+                where TRule : IValidationRule
             {
                 _rules.Add(rule);
             }
 
-            public void FieldRule<T>(T rule)
-                where T : IFieldValidationRule
+            public void FieldRule<TRule>(TRule rule)
+                where TRule : IFieldValidationRule
             {
                 _fieldRules.Add(rule);
             }

@@ -30,9 +30,11 @@ namespace FubuMVC.Core.ServiceBus
                 HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionRequested())),
                 HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionsChanged())),
                 HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionsRemoved())),
+#pragma warning disable CS4014
                 HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TakeOwnershipRequest())),
                 HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskHealthRequest())),
                 HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskDeactivation()))
+#pragma warning restore CS4014
             };
 
 
