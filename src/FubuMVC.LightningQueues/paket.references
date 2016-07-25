@@ -1,9 +1,9 @@
 FubuCore
 HtmlTags
 LightningQueues
-ManagedEsent
 NLog
 Owin
-PowerThreading
 structuremap
 LightningQueues.Storage.LMDB
+System.Reactive
+System.Net.Sockets

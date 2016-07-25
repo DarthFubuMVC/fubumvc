@@ -3,9 +3,9 @@ source http://nuget.org/api/v2
 nuget Castle.Core 3.2.1
 nuget Fixie ~> 1.0.0.29
 nuget Fleck 0.10.0.26
-nuget LightningDB 0.9.3-rc1-45 prerelease
-nuget LightningQueues 0.2.0-rc2-35 prerelease
-nuget LightningQueues.Storage.LMDB 0.2.0-rc2-35 prerelease
+nuget LightningDB 0.9.4
+nuget LightningQueues 0.2.0-rc2-39 prerelease
+nuget LightningQueues.Storage.LMDB 0.2.0-rc2-39 prerelease
 nuget Marten 1.0.0-alpha-625
 nuget Microsoft.AspNet.Razor 2.0.20715.0
 nuget Microsoft.Data.Edm 5.6.0
@@ -27,6 +27,8 @@ nuget Spark 1.7.5.0
 nuget structuremap 4.1.0.361
 nuget Storyteller 3.0.0.325-rc
 nuget System.Data.Common
+nuget System.Net.Sockets
+nuget System.Reactive
 nuget System.Spatial 5.6.0.0
 nuget WindowsAzure.Storage 3.0.1.0
 
@@ -53,6 +55,4 @@ nuget Selenium.Support
 nuget Selenium.WebDriver
 nuget Selenium.WebDriverBackedSelenium
 nuget TopShelf
-
-
 
