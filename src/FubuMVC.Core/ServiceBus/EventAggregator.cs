@@ -1,25 +1,31 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Events;
 
 namespace FubuMVC.Core.ServiceBus
 {
-
     public class EventAggregator : IEventAggregator
     {
         private readonly Lazy<ILogger> _logger;
-        private readonly List<object> _listeners = new List<object>();
-        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+        private readonly ConcurrentDictionary<object, object> _listeners = new ConcurrentDictionary<object, object>();
 
         public EventAggregator(Func<ILogger> logger, IEnumerable<IListener> listeners)
         {
             _logger = new Lazy<ILogger>(logger);
-            _listeners.AddRange(listeners);
+            foreach (var listener in listeners)
+            {
+                addListener(listener);
+            }
+        }
+
+        private void addListener(object listener)
+        {
+            _listeners.AddOrUpdate(listener, listener, (a, b) => listener);
         }
 
         public virtual void SendMessage<T>(T message)
@@ -29,18 +35,24 @@ namespace FubuMVC.Core.ServiceBus
 
         protected void sendMessageToListeners<T>(T message)
         {
-            var listeners = _lock.Read(() => _listeners.OfType<IListener<T>>().ToArray());
-
-            listeners.Each(x => {
+            //Performance critical, keep this way
+            foreach (var kvp in _listeners)
+            {
+                var listener = kvp.Key as IListener<T>;
+                if (listener == null)
+                {
+                    continue;
+                }
                 try
                 {
-                    x.Handle(message);
+                    listener.Handle(message);
                 }
                 catch (Exception e)
                 {
-                    _logger.Value.Error("Failed while trying to process event {0} with listener {1}".ToFormat(message, x), e);
+                    _logger.Value.Error(
+                        "Failed while trying to process event {0} with listener {1}".ToFormat(message, listener), e);
                 }
-            });
+            }
         }
 
         public void SendMessage<T>() where T : new()
@@ -50,37 +62,52 @@ namespace FubuMVC.Core.ServiceBus
 
         public void AddListener(object listener)
         {
-            _lock.Write(() => _listeners.Fill(listener));
+            _listeners.AddOrUpdate(listener, listener, (a, b) => b);
         }
 
         public void RemoveListener(object listener)
         {
-            _lock.Write(() => _listeners.Remove(listener));
+            _listeners.TryRemove(listener, out listener);
         }
 
         public IEnumerable<object> Listeners
         {
-            get { return _lock.Read(() => _listeners.ToArray()); }
+            get { return _listeners.Select(x => x.Key).ToArray(); }
         }
 
         public void PruneExpiredListeners(DateTime currentTime)
         {
-            _lock.Write(() => _listeners.RemoveAll(o => o.IsExpired(currentTime)));
+            var items = new List<object>();
+            foreach (var listener in _listeners)
+            {
+                var key = listener.Key;
+                if (key.IsExpired(currentTime))
+                {
+                    items.Add(key);
+                }
+            }
+            foreach (var listener in items)
+            {
+                RemoveListener(listener);
+            }
         }
 
         public void AddListeners(params object[] listeners)
         {
-            _lock.Write(() => _listeners.Fill(listeners));
+            foreach (var listener in listeners)
+            {
+                addListener(listener);
+            }
         }
 
         public bool HasListener(object listener)
         {
-            return _lock.Read(() => _listeners.Contains(listener));
+            return _listeners.ContainsKey(listener);
         }
 
         public void RemoveAllListeners()
         {
-            _lock.Write(() => _listeners.Clear());
+            _listeners.Clear();
         }
     }
 }

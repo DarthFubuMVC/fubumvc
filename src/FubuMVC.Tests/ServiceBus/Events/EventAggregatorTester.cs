@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Events;
@@ -105,7 +106,9 @@ namespace FubuMVC.Tests.ServiceBus.Events
 
             events.AddListeners(listener1, listener2, listener3, this, listener4);
 
-            events.Listeners.ShouldHaveTheSameElementsAs(handler, listener1, listener2, listener3, this, listener4);
+            var listeners = events.Listeners.ToArray();
+            var intersection = listeners.Intersect(new object[] {handler, this, listener1, listener2, listener3, listener4}).ToArray();
+            listeners.Length.ShouldBe(intersection.Length);
         }
 
         [Test]
