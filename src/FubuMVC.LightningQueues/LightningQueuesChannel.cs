@@ -1,5 +1,8 @@
 using System;
+using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
@@ -36,8 +39,11 @@ namespace FubuMVC.LightningQueues
         {
             _disposable = _queueManager.Receive(_queueName).Subscribe(message =>
             {
-                receiver.Receive(message.Message.Data, new DictionaryHeaders(message.Message.Headers),
-                    new TransactionCallback(message.QueueContext, message.Message));
+                Task.Run(() =>
+                {
+                    receiver.Receive(message.Message.Data, new DictionaryHeaders(message.Message.Headers),
+                        new TransactionCallback(message.QueueContext, message.Message));
+                });
             });
 
             return ReceivingState.StopReceiving;
