@@ -40,8 +40,7 @@ namespace FubuMVC.LightningQueues.Testing
             _runtime = FubuRuntime.For<ErrorRegistry>(x =>
             {
                 x.Services.For<BusSettings>().Use(settings);
-            })
-            ;
+            });
 
 
             _runtime.Get<IPersistentQueues>().ClearAll();
@@ -53,6 +52,12 @@ namespace FubuMVC.LightningQueues.Testing
             message1 = new OneMessage();
 
             theServiceBus.Send(message1);
+        }
+
+        [TestFixtureTearDown]
+        public void TearDown()
+        {
+            _runtime.Dispose();
         }
 
         [Test]
