@@ -9,6 +9,7 @@ using FubuCore.Util;
 using LightningDB;
 using LightningQueues;
 using FubuCore.Logging;
+using LightningQueues.Storage;
 using LightningQueues.Storage.LMDB;
 
 namespace FubuMVC.LightningQueues
@@ -23,17 +24,31 @@ namespace FubuMVC.LightningQueues
         public PersistentQueues(ILogger logger)
         {
             _logger = logger;
-            _queueManagers = new Cache<int, Queue>(port => BuildQueue(new IPEndPoint(IPAddress.Any, port), QueuePath + "." + port));
+            _queueManagers = new Cache<int, Queue>();
         }
 
-        private Queue BuildQueue(IPEndPoint endpoint, string queuePath)
+        private Queue GetQueue(int port, bool persist, int mapSize = 1024*1024*100, int maxDatabases = 5)
         {
-            return new QueueConfiguration()
-                .ReceiveMessagesAt(endpoint)
-                .StoreWithLmdb(queuePath, new EnvironmentConfiguration {MaxDatabases = 5, MapSize = 1024*1024*100}) //TODO pull through settings
+            if (_queueManagers.Has(port))
+            {
+                return _queueManagers[port];
+            }
+            var queueConfiguration = new QueueConfiguration()
+                .ReceiveMessagesAt(new IPEndPoint(IPAddress.Any, port))
                 .ScheduleQueueWith(TaskPoolScheduler.Default)
-                .LogWith(new FubuLoggingAdapter(_logger))
-                .BuildQueue();
+                .LogWith(new FubuLoggingAdapter(_logger));
+
+            if (persist)
+            {
+                queueConfiguration.StoreWithLmdb(QueuePath + "." + port, new EnvironmentConfiguration {MaxDatabases = maxDatabases, MapSize = mapSize });
+            }
+            else
+            {
+                queueConfiguration.UseNoStorage();
+            }
+            var queue = queueConfiguration.BuildQueue();
+            _queueManagers.Fill(port, queue);
+            return queue;
         }
 
         public void Dispose()
@@ -48,16 +63,14 @@ namespace FubuMVC.LightningQueues
             _queueManagers.Each(x => x.Store.ClearAllStorage());
         }
 
-        public Queue ManagerFor(int port, bool incoming)
+        public Queue PersistentManagerFor(int port, int mapSize = 1024*1024*100, int maxDatabases = 5)
         {
-            if (incoming)
-            {
-                return _queueManagers[port];
-            }
+            return GetQueue(port, true, mapSize, maxDatabases);
+        }
 
-
-
-            return _queueManagers.Any() ? _queueManagers.First() : _queueManagers[port];
+        public Queue NonPersistentManagerFor(int port)
+        {
+            return GetQueue(port, false);
         }
 
         public Queue ManagerForReply()
@@ -73,7 +86,7 @@ namespace FubuMVC.LightningQueues
                 {
                     string[] queueNames = group.Select(x => x.QueueName).ToArray();
 
-                    var queueManager = _queueManagers[@group.Key];
+                    var queueManager = GetQueue(@group.Key, true);
                     queueNames.Each(x => queueManager.CreateQueue(x));
                     queueManager.CreateQueue(LightningQueuesTransport.ErrorQueueName);
                     queueManager.Start();
@@ -87,7 +100,7 @@ namespace FubuMVC.LightningQueues
 
         public void CreateQueue(LightningUri uri)
         {
-            _queueManagers[uri.Port].CreateQueue(uri.QueueName);
+            GetQueue(uri.Port, true).CreateQueue(uri.QueueName);
         }
     }
 

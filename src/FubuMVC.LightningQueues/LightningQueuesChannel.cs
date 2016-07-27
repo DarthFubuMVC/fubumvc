@@ -17,9 +17,15 @@ namespace FubuMVC.LightningQueues
         private readonly Queue _queueManager;
         private IDisposable _disposable;
 
-        public static LightningQueuesChannel Build(LightningUri uri, IPersistentQueues queues, bool incoming)
+        public static LightningQueuesChannel BuildPersistentChannel(LightningUri uri, IPersistentQueues queues, int mapSize, int maxDatabases)
         {
-            var queueManager = queues.ManagerFor(uri.Port, incoming);
+            var queueManager = queues.PersistentManagerFor(uri.Port, mapSize, maxDatabases);
+            return new LightningQueuesChannel(uri.Address, uri.QueueName, queueManager);
+        }
+
+        public static LightningQueuesChannel BuildNoPersistenceChannel(LightningUri uri, IPersistentQueues queues)
+        {
+            var queueManager = queues.NonPersistentManagerFor(uri.Port);
             return new LightningQueuesChannel(uri.Address, uri.QueueName, queueManager);
         }
 

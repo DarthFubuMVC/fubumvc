@@ -1,4 +1,5 @@
-﻿using FubuCore.Descriptions;
+﻿using System.Collections.Generic;
+using FubuCore.Descriptions;
 
 namespace FubuMVC.LightningQueues
 {
@@ -9,6 +10,7 @@ namespace FubuMVC.LightningQueues
             DefaultPort = 2020;
             MaxDatabases = 5;
             MapSize = 1024*1024*100;
+            NoPersistenceForPorts = new List<int>();
         }
 
         public void Describe(Description description)
@@ -18,6 +20,7 @@ namespace FubuMVC.LightningQueues
             description.Properties[nameof(DefaultPort)] = DefaultPort.ToString();
             description.Properties[nameof(MaxDatabases)] = MaxDatabases.ToString();
             description.Properties[nameof(MapSize)] = MapSize.ToString();
+            description.Properties[nameof(NoPersistenceForPorts)] = string.Join(";", NoPersistenceForPorts);
         }
 
         public bool Disabled { get; set; }
@@ -39,5 +42,10 @@ namespace FubuMVC.LightningQueues
         /// The maximum map size in bytes for the underlying lmdb storage, default is 100 MB in bytes
         /// </summary>
         public int MapSize { get; set; }
+
+        /// <summary>
+        /// The ports that will not require persistence to disk
+        /// </summary>
+        public IList<int> NoPersistenceForPorts { get; set; }
     }
 }

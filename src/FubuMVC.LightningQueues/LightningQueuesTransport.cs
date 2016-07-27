@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -94,7 +93,17 @@ namespace FubuMVC.LightningQueues
 
         protected override IChannel buildChannel(ChannelNode channelNode)
         {
-            return LightningQueuesChannel.Build(new LightningUri(channelNode.Uri), _queues, channelNode.Incoming);
+            var uri = new LightningUri(channelNode.Uri);
+            if (isPersistentChannel(uri))
+            {
+                return LightningQueuesChannel.BuildPersistentChannel(uri, _queues, _settings.MapSize, _settings.MaxDatabases);
+            }
+            return LightningQueuesChannel.BuildNoPersistenceChannel(uri, _queues);
+        }
+
+        private bool isPersistentChannel(LightningUri uri)
+        {
+            return !_settings.NoPersistenceForPorts.Contains(uri.Port);
         }
 
         protected override void seedQueues(IEnumerable<ChannelNode> channels)
