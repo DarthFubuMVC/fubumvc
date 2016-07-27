@@ -47,6 +47,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="FubuLoggingAdapter.cs" />
     <Compile Include="IPersistentQueues.cs" />
     <Compile Include="LightningQueuesChannel.cs" />
     <Compile Include="LightningQueueSettings.cs" />

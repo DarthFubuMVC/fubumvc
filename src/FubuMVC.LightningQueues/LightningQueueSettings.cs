@@ -1,6 +1,4 @@
-﻿using System;
-using FubuCore.Descriptions;
-using HtmlTags;
+﻿using FubuCore.Descriptions;
 
 namespace FubuMVC.LightningQueues
 {
@@ -9,15 +7,8 @@ namespace FubuMVC.LightningQueues
         public LightningQueueSettings()
         {
             DefaultPort = 2020;
-            PurgeQueuesPolling = TimeSpan.FromMinutes(3).TotalMilliseconds;
-
-            EnableOutgoingMessageHistory = true;
-            EnableProcessedMessageHistory = true;
-            NumberOfMessagesToKeepInOutgoingHistory = 100;
-            NumberOfMessagesToKeepInProcessedHistory = 100;
-            NumberOfReceivedMessageIdsToKeep = 10000;
-            OldestMessageInOutgoingHistory = TimeSpan.FromDays(1.0);
-            OldestMessageInProcessedHistory = TimeSpan.FromDays(1.0);
+            MaxDatabases = 5;
+            MapSize = 1024*1024*100;
         }
 
         public void Describe(Description description)
@@ -25,13 +16,8 @@ namespace FubuMVC.LightningQueues
             description.ShortDescription = "Lightning Queues Configuration";
 
             description.Properties[nameof(DefaultPort)] = DefaultPort.ToString();
-            description.Properties[nameof(PurgeQueuesPolling)] = PurgeQueuesPolling.ToString();
-            description.Properties[nameof(EnableOutgoingMessageHistory)] = EnableOutgoingMessageHistory.ToString();
-            description.Properties[nameof(EnableProcessedMessageHistory)] = EnableProcessedMessageHistory.ToString();
-            description.Properties[nameof(NumberOfMessagesToKeepInOutgoingHistory)] = NumberOfMessagesToKeepInOutgoingHistory.ToString();
-            description.Properties[nameof(NumberOfReceivedMessageIdsToKeep)] = NumberOfReceivedMessageIdsToKeep.ToString();
-            description.Properties[nameof(OldestMessageInOutgoingHistory)] = OldestMessageInOutgoingHistory.ToString();
-            description.Properties[nameof(OldestMessageInProcessedHistory)] = OldestMessageInProcessedHistory.ToString();
+            description.Properties[nameof(MaxDatabases)] = MaxDatabases.ToString();
+            description.Properties[nameof(MapSize)] = MapSize.ToString();
         }
 
         public bool Disabled { get; set; }
@@ -44,22 +30,14 @@ namespace FubuMVC.LightningQueues
         /// </summary>
         public bool DisableIfNoChannels { get; set; }
 
-        public double PurgeQueuesPolling { get; set; }
+        /// <summary>
+        /// The number of databases (queues) allowed for the lmdb storage, default is 5
+        /// </summary>
+        public int MaxDatabases { get; set; }
 
-        //Settings to control retention of historical messages
-        public bool EnableOutgoingMessageHistory { get; set; }
-
-        public bool EnableProcessedMessageHistory { get; set; }
-
-        public int NumberOfMessagesToKeepInOutgoingHistory { get; set; }
-
-        public int NumberOfMessagesToKeepInProcessedHistory { get; set; }
-
-        public int NumberOfReceivedMessageIdsToKeep { get; set; }
-
-        public TimeSpan OldestMessageInOutgoingHistory { get; set; }
-
-        public TimeSpan OldestMessageInProcessedHistory { get; set; }
-
+        /// <summary>
+        /// The maximum map size in bytes for the underlying lmdb storage, default is 100 MB in bytes
+        /// </summary>
+        public int MapSize { get; set; }
     }
 }

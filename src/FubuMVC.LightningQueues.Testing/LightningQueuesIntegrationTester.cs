@@ -30,7 +30,7 @@ namespace FubuMVC.LightningQueues.Testing
             node.Incoming = true;
 
             var delayedCache = new DelayedMessageCache<MessageId>();
-            queues = new PersistentQueues();
+            queues = new PersistentQueues(new RecordingLogger());
             queues.ClearAll();
             transport = new LightningQueuesTransport(queues, new LightningQueueSettings());
 

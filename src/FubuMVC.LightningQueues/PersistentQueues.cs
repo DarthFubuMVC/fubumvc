@@ -5,53 +5,24 @@ using System.Linq;
 using System.Net;
 using System.Reactive.Concurrency;
 using System.Runtime.Serialization;
-using FubuCore;
 using FubuCore.Util;
 using LightningDB;
 using LightningQueues;
-using LightningQueues.Logging;
+using FubuCore.Logging;
 using LightningQueues.Storage.LMDB;
 
 namespace FubuMVC.LightningQueues
 {
-
-    public class ConsoleLogger : ILogger
-    {
-        public void Debug(string message)
-        {
-            System.Diagnostics.Debug.WriteLine(message);
-        }
-
-        public void DebugFormat(string message, params object[] args)
-        {
-            System.Diagnostics.Debug.WriteLine(message.ToFormat(args));
-        }
-
-        public void DebugFormat(string message, object arg1, object arg2)
-        {
-            System.Diagnostics.Debug.WriteLine(string.Format(message, arg1, arg2));
-        }
-
-        public void DebugFormat(string message, object arg1)
-        {
-            System.Diagnostics.Debug.WriteLine(string.Format(message, arg1));
-        }
-
-        public void Error(string message, Exception exception)
-        {
-            System.Diagnostics.Debug.WriteLine(message);
-            System.Diagnostics.Debug.WriteLine(exception);
-        }
-    }
-
     public class PersistentQueues : IPersistentQueues
     {
+        private readonly ILogger _logger;
         public string QueuePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fubutransportationqueues");
 
         private readonly Cache<int, Queue> _queueManagers;
 
-        public PersistentQueues()
+        public PersistentQueues(ILogger logger)
         {
+            _logger = logger;
             _queueManagers = new Cache<int, Queue>(port => BuildQueue(new IPEndPoint(IPAddress.Any, port), QueuePath + "." + port));
         }
 
@@ -61,7 +32,7 @@ namespace FubuMVC.LightningQueues
                 .ReceiveMessagesAt(endpoint)
                 .StoreWithLmdb(queuePath, new EnvironmentConfiguration {MaxDatabases = 5, MapSize = 1024*1024*100}) //TODO pull through settings
                 .ScheduleQueueWith(TaskPoolScheduler.Default)
-                .LogWith(new ConsoleLogger()) //TODO integrate with fubu ILogger
+                .LogWith(new FubuLoggingAdapter(_logger))
                 .BuildQueue();
         }
 

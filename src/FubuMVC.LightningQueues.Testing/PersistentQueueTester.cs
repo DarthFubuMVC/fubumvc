@@ -11,7 +11,7 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void creates_queues_when_started()
         {
-            using (var queues = new PersistentQueues())
+            using (var queues = new PersistentQueues(new RecordingLogger()))
             {
                 queues.ClearAll();
                 queues.Start(new LightningUri[]
