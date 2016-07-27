@@ -7,6 +7,7 @@ using System.Reactive.Concurrency;
 using System.Runtime.Serialization;
 using FubuCore;
 using FubuCore.Util;
+using LightningDB;
 using LightningQueues;
 using LightningQueues.Logging;
 using LightningQueues.Storage.LMDB;
@@ -26,36 +27,20 @@ namespace FubuMVC.LightningQueues
             System.Diagnostics.Debug.WriteLine(message.ToFormat(args));
         }
 
-        public void Debug<TMessage>(TMessage message)
+        public void DebugFormat(string message, object arg1, object arg2)
         {
-            System.Diagnostics.Debug.WriteLine(message);
+            System.Diagnostics.Debug.WriteLine(string.Format(message, arg1, arg2));
         }
 
-        public void Info(string message)
+        public void DebugFormat(string message, object arg1)
         {
-            System.Diagnostics.Debug.WriteLine(message);
-        }
-
-        public void InfoFormat(string message, params object[] args)
-        {
-            System.Diagnostics.Debug.WriteLine(message.ToFormat(args));
-        }
-
-        public void Info<TMessage>(TMessage message)
-        {
-            System.Diagnostics.Debug.WriteLine(message);
+            System.Diagnostics.Debug.WriteLine(string.Format(message, arg1));
         }
 
         public void Error(string message, Exception exception)
         {
             System.Diagnostics.Debug.WriteLine(message);
             System.Diagnostics.Debug.WriteLine(exception);
-        }
-
-        public void ErrorFormat(string message, Exception ex, params object[] args)
-        {
-            System.Diagnostics.Debug.WriteLine(message.ToFormat(args));
-            System.Diagnostics.Debug.WriteLine(ex);
         }
     }
 
@@ -67,17 +52,16 @@ namespace FubuMVC.LightningQueues
 
         public PersistentQueues()
         {
-            _queueManagers = new Cache<int, Queue>(port => BuildQueue(new IPEndPoint(IPAddress.Any, port), QueuePath + "-" + port));
+            _queueManagers = new Cache<int, Queue>(port => BuildQueue(new IPEndPoint(IPAddress.Any, port), QueuePath + "." + port));
         }
 
         private Queue BuildQueue(IPEndPoint endpoint, string queuePath)
         {
             return new QueueConfiguration()
                 .ReceiveMessagesAt(endpoint)
-                .StoreWithLmdb(queuePath)
-                .LogWith(new NulloLogger()) //todo better logger for queues
+                .StoreWithLmdb(queuePath, new EnvironmentConfiguration {MaxDatabases = 5, MapSize = 1024*1024*100}) //TODO pull through settings
                 .ScheduleQueueWith(TaskPoolScheduler.Default)
-                .LogWith(new ConsoleLogger())
+                .LogWith(new ConsoleLogger()) //TODO integrate with fubu ILogger
                 .BuildQueue();
         }
 
