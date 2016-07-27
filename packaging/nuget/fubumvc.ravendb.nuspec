@@ -21,6 +21,6 @@
     </dependencies>
   </metadata>
   <files xmlns="">
-    <file src="..\..\src\FubuMVC.RavenDb\bin\release\FubuMVC.RavenDb.*" target="lib\net45" />
+    <file src="..\..\src\FubuMVC.RavenDb\bin\release\FubuMVC.RavenDb.*" target="lib\net46" />
   </files>
 </package>

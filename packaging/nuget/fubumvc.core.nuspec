@@ -15,13 +15,13 @@
       <dependency id="FubuCore" version="2.0" />
       <dependency id="HtmlTags" version="[2.1.0.183]" />
       <dependency id="structuremap" version="4.0.0.315" />
-	  <dependency id="Newtonsoft.Json" version="[4.5.9]" />
+	  <dependency id="Newtonsoft.Json" version="[9.0.1]" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" />
     </frameworkAssemblies>
   </metadata>
   <files xmlns="">
-    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net45" />
+    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net46" />
   </files>
 </package>

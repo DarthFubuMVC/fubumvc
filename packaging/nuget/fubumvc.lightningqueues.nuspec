@@ -13,11 +13,11 @@
     <tags>fubumvc service bus</tags>
     <dependencies>
       <dependency id="FubuMVC.Core" version="3.0" />
-      <dependency id="LightningQueues" version="0.1.0.25" />
+      <dependency id="LightningQueues" version="0.2.0" />
     </dependencies>
   </metadata>
   <files xmlns="">
-    <file src="..\..\src\FubuMVC.LightningQueues\bin\release\FubuMVC.LightningQueues.dll" target="lib\4.5" />
-    <file src="..\..\src\FubuMVC.LightningQueues\bin\release\FubuMVC.LightningQueues.pdb" target="lib\4.5" />
+    <file src="..\..\src\FubuMVC.LightningQueues\bin\release\FubuMVC.LightningQueues.dll" target="lib\net46" />
+    <file src="..\..\src\FubuMVC.LightningQueues\bin\release\FubuMVC.LightningQueues.pdb" target="lib\net46" />
   </files>
 </package>

@@ -17,6 +17,6 @@
     </dependencies>
   </metadata>
   <files xmlns="">
-    <file src="..\..\src\JasperService\bin\release\JasperService.*" target="lib\net45" />
+    <file src="..\..\src\JasperService\bin\release\JasperService.*" target="lib\net46" />
   </files>
 </package>

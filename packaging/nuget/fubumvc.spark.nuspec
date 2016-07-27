@@ -17,6 +17,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\src\FubuMVC.Spark\bin\release\FubuMVC.Spark.*" target="lib\net45" />
+    <file src="..\..\src\FubuMVC.Spark\bin\release\FubuMVC.Spark.*" target="lib\net46" />
   </files>
 </package>

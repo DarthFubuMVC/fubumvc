@@ -17,6 +17,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\src\FubuMVC.AspNet\bin\release\FubuMVC.AspNet.*" target="lib\net45" />
+    <file src="..\..\src\FubuMVC.AspNet\bin\release\FubuMVC.AspNet.*" target="lib\net46" />
   </files>
 </package>

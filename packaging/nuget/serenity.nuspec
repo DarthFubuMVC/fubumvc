@@ -23,6 +23,6 @@
     </dependencies>
   </metadata>
   <files xmlns="">
-    <file src="..\..\src\Serenity\bin\release\Serenity.*" target="lib\net45" />
+    <file src="..\..\src\Serenity\bin\release\Serenity.*" target="lib\net46" />
   </files>
 </package>
