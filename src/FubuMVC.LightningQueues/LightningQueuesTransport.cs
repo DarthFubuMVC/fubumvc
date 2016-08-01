@@ -102,6 +102,16 @@ namespace FubuMVC.LightningQueues
 
         protected override void seedQueues(IEnumerable<ChannelNode> channels)
         {
+            var groups = channels.GroupBy(x => x.Uri.Port).Where(x => x.Count() > 1);
+            foreach (var group in groups)
+            {
+                if (group.Select(x => x.Mode).Distinct().Count() > 1)
+                {
+                    throw new InvalidOperationException($"The LightningQueues listener for port {group.Key} has mixed channel modes. Either make the modes be the same or use a different port number");
+                }
+            }
+
+
             _queues.Start(channels.Where(x => x.Incoming).Select(x => new LightningUri(x.Uri)));
         }
 
