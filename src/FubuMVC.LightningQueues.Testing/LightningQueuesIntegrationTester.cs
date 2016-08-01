@@ -16,16 +16,12 @@ namespace FubuMVC.LightningQueues.Testing
     [TestFixture]
     public class LightningQueuesIntegrationTester
     {
-        [SetUp]
-        public void Setup()
-        {
-            SetupTransport("lq.tcp://localhost:2032/upstream");
-        }
-
-        private void SetupTransport(string uri)
+        private void SetupTransport(string uri, ChannelMode mode)
         {
             graph = new ChannelGraph();
             node = graph.ChannelFor<ChannelSettings>(x => x.Upstream);
+            node.Mode = mode;
+
             node.Uri = new Uri(uri);
             node.Incoming = true;
 
@@ -51,6 +47,8 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void registers_a_reply_queue_corrected_to_the_machine_name()
         {
+            SetupTransport("lq.tcp://localhost:2032/upstream", ChannelMode.DeliveryGuaranteed);
+
             var uri = graph.ReplyChannelFor(LightningUri.Protocol);
             uri.ShouldNotBeNull();
 
@@ -61,7 +59,7 @@ namespace FubuMVC.LightningQueues.Testing
         public void reply_uri_is_machine_specific_when_dns_address_is_used()
         {
             queues.Dispose();
-            SetupTransport("lq.tcp://www.foo.com:2032/upstream");
+            SetupTransport("lq.tcp://www.foo.com:2032/upstream", ChannelMode.DeliveryGuaranteed);
 
             var uri = graph.ReplyChannelFor(LightningUri.Protocol);
             uri.Host.ToUpperInvariant().ShouldBe(Environment.MachineName.ToUpperInvariant());
@@ -70,6 +68,34 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void send_a_message_and_get_it_back()
         {
+            SetupTransport("lq.tcp://localhost:2032/upstream", ChannelMode.DeliveryGuaranteed);
+
+            var envelope = new Envelope { Data = new byte[] { 1, 2, 3, 4, 5 } };
+            envelope.Headers["foo"] = "bar";
+
+            var receiver = new RecordingReceiver();
+
+            node.StartReceiving(receiver, new RecordingLogger());
+
+            node.Channel.As<LightningQueuesChannel>().Send(envelope.Data, envelope.Headers);
+            Wait.Until(() => receiver.Received.Any());
+
+            graph.Dispose();
+            queues.Dispose();
+
+            receiver.Received.Any().ShouldBeTrue();
+
+            var actual = receiver.Received.Single();
+            actual.Data.ShouldBe(envelope.Data);
+            actual.Headers["foo"].ShouldBe("bar");
+        }
+
+
+        [Test]
+        public void send_a_message_and_get_it_back_non_persistent()
+        {
+            SetupTransport("lq.tcp://localhost:2032/upstream", ChannelMode.DeliveryFastWithoutGuarantee);
+
             var envelope = new Envelope { Data = new byte[] { 1, 2, 3, 4, 5 } };
             envelope.Headers["foo"] = "bar";
 
