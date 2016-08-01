@@ -3,6 +3,7 @@ source http://nuget.org/api/v2
 nuget Castle.Core 3.2.1
 nuget Fixie ~> 1.0.0.29
 nuget Fleck 0.10.0.26
+nuget Jetbrains.Profiler.Kernel.Windows.Api 106.0.20160728.75739-eap10 eap
 nuget LightningDB 0.9.4
 nuget LightningQueues 0.2.0
 nuget LightningQueues.Storage.LMDB 0.2.0
@@ -55,4 +56,3 @@ nuget Selenium.Support
 nuget Selenium.WebDriver
 nuget Selenium.WebDriverBackedSelenium
 nuget TopShelf
-

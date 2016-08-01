@@ -25,6 +25,8 @@ NUGET
     Fleck (0.10.0.26)
     FubuCore (2.0.0.311)
     HtmlTags (2.1.0.183)
+    JetBrains.Profiler.Kernel.Windows.Api (106.0.20160728.75739-eap10)
+      Wave (6.0.0-eap10)
     LightningDB (0.9.4)
       System.Collections.Concurrent (>= 4.0.12) - framework: >= netstandard13
       System.IO.FileSystem (>= 4.0.1) - framework: >= netstandard13
@@ -1025,6 +1027,7 @@ NUGET
       System.Xml.ReaderWriter (>= 4.0.11) - framework: dnxcore50, netstandard10, >= netstandard13
       System.Xml.XmlDocument (>= 4.0.1) - framework: dnxcore50, >= netstandard13
     Topshelf (4.0.1)
+    Wave (6.0.0-eap10)
     WindowsAzure.Storage (3.0.1)
       Microsoft.Data.OData (>= 5.6)
       Microsoft.Data.Services.Client (>= 5.6)

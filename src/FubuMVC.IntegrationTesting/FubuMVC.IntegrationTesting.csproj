@@ -170,6 +170,7 @@
     <Compile Include="ServiceBus\Delayed_Processing_Job_Registration_Tester.cs" />
     <Compile Include="ServiceBus\end_to_end_diagnostics_specs.cs" />
     <Compile Include="ServiceBus\Messages.cs" />
+    <Compile Include="ServiceBus\PerformanceTester.cs" />
     <Compile Include="ServiceBus\Publishing\PublishingConfigurationIntegrationTester.cs" />
     <Compile Include="StaticFiles\reading_static_file_content_with_katana.cs" />
     <Compile Include="Routing\end_to_end_route_alias_tester.cs" />
@@ -2337,4 +2338,5 @@
       </ItemGroup>
     </When>
   </Choose>
+  <Import Project="..\..\packages\JetBrains.Profiler.Kernel.Windows.Api\build\JetBrains.Profiler.Kernel.Windows.Api.Targets" Condition="Exists('..\..\packages\JetBrains.Profiler.Kernel.Windows.Api\build\JetBrains.Profiler.Kernel.Windows.Api.Targets')" Label="Paket" />
 </Project>
