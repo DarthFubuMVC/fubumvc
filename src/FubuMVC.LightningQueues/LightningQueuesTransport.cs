@@ -12,7 +12,7 @@ namespace FubuMVC.LightningQueues
     public class LightningQueuesTransport : TransportBase, ITransport
     {
         private const string StaticLibraryName = "lmdb.dll";
-        private static bool _exported = false;
+        private static readonly bool _exported = false;
 
         static LightningQueuesTransport()
         {
@@ -94,17 +94,11 @@ namespace FubuMVC.LightningQueues
         protected override IChannel buildChannel(ChannelNode channelNode)
         {
             var uri = new LightningUri(channelNode.Uri);
-            if (isPersistentChannel(uri))
-            {
-                return LightningQueuesChannel.BuildPersistentChannel(uri, _queues, _settings.MapSize, _settings.MaxDatabases);
-            }
-            return LightningQueuesChannel.BuildNoPersistenceChannel(uri, _queues);
+            return channelNode.Mode == ChannelMode.DeliveryGuaranteed 
+                ? LightningQueuesChannel.BuildPersistentChannel(uri, _queues, _settings.MapSize, _settings.MaxDatabases) 
+                : LightningQueuesChannel.BuildNoPersistenceChannel(uri, _queues);
         }
 
-        private bool isPersistentChannel(LightningUri uri)
-        {
-            return !_settings.NoPersistenceForPorts.Contains(uri.Port);
-        }
 
         protected override void seedQueues(IEnumerable<ChannelNode> channels)
         {
