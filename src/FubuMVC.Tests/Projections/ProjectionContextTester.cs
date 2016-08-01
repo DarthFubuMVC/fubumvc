@@ -43,34 +43,7 @@ namespace FubuMVC.Tests.Projections
             ClassUnderTest.FormattedValueOf(x => x.Name).ShouldBe(theFormattedValue);
         }
 
-        [Test]
-        public void try_the_casting_logic()
-        {
-            var contextType = typeof (ProjectionContext<ProjectionModel>);
-            var valuesType = typeof (IValues<ProjectionModel>);
 
-            var cInfo = contextType.GetTypeInfo();
-            var vInfo = valuesType.GetTypeInfo();
-            vInfo.IsAssignableFrom(cInfo).ShouldBeFalse();
-
-
-//                    public PluginFamily Build(Type type)
-//        {
-//            if (!type.GetTypeInfo().IsGenericType) return null;
-//
-//            var basicType = type.GetGenericTypeDefinition();
-//            if (!_graph.Families.Has(basicType))
-//            {
-//
-//                return _graph.Families.ToArray().FirstOrDefault(x => type.GetTypeInfo().IsAssignableFrom(x.PluginType.GetTypeInfo()));
-//            }
-//
-//            var basicFamily = _graph.Families[basicType];
-//            var templatedParameterTypes = type.GetGenericArguments();
-//
-//            return basicFamily.CreateTemplatedClone(templatedParameterTypes.ToArray());
-//        }
-        }
 
         [Test]
         public void value_for_delegates_to_the_inner_values()
