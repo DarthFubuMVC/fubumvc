@@ -12,7 +12,6 @@ namespace FubuMVC.LightningQueues
     {
         public static string MaxAttemptsHeader = "max-delivery-attempts";
         public static string DeliverByHeader = "deliver-by";
-        private readonly Uri _address;
         private readonly string _queueName;
         private readonly Queue _queueManager;
         private IDisposable _disposable;
@@ -31,13 +30,13 @@ namespace FubuMVC.LightningQueues
 
         public LightningQueuesChannel(Uri address, string queueName, Queue queueManager)
         {
-            _address = address;
+            Address = address;
             _queueName = queueName;
             _queueManager = queueManager;
             _disposable = Disposable.Empty;
         }
 
-        public Uri Address => _address;
+        public Uri Address { get; }
 
         public ReceivingState Receive(IReceiver receiver)
         {
@@ -55,7 +54,7 @@ namespace FubuMVC.LightningQueues
 
         public void Send(byte[] data, IHeaders headers)
         {
-            _queueManager.Send(data, headers, _address, _queueName);
+            _queueManager.Send(data, headers, Address, _queueName);
         }
 
 

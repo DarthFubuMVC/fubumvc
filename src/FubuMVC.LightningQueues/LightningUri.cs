@@ -8,10 +8,6 @@ namespace FubuMVC.LightningQueues
     {
         public static readonly string Protocol = "lq.tcp";
 
-        private readonly Uri _address;
-        private readonly int _port;
-        private readonly string _queueName;
-
         public LightningUri(string uriString) : this(new Uri(uriString))
         {
             
@@ -21,34 +17,26 @@ namespace FubuMVC.LightningQueues
         {
             if (address.Scheme != Protocol)
             {
-                throw new ArgumentOutOfRangeException("{0} is the wrong protocol for a LightningQueue Uri.  Only {1} is accepted", address.Scheme, Protocol);
+                throw new ArgumentOutOfRangeException(
+                    $"{address.Scheme} is the wrong protocol for a LightningQueue Uri.  Only {Protocol} is accepted");
             }
 
-            _address = address.ToMachineUri();
-            _port = address.Port;
+            Address = address.ToMachineUri();
+            Port = address.Port;
 
-            _queueName = _address.Segments.Last();
+            QueueName = Address.Segments.Last();
         }
 
-        public Uri Address
-        {
-            get { return _address; }
-        }
+        public Uri Address { get; }
 
-        public int Port
-        {
-            get { return _port; }
-        }
+        public int Port { get; }
 
-        public string QueueName
-        {
-            get { return _queueName; }
-        }
+        public string QueueName { get; }
     }
 
     public static class UriExtensions
     {
-        private static HashSet<string> _locals = new HashSet<string>(new[]{"localhost", "127.0.0.1"}, StringComparer.OrdinalIgnoreCase);
+        private static readonly HashSet<string> _locals = new HashSet<string>(new[]{"localhost", "127.0.0.1"}, StringComparer.OrdinalIgnoreCase);
 
         public static LightningUri ToLightningUri(this Uri uri)
         {

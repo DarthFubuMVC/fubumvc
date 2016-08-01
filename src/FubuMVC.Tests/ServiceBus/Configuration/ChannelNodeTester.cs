@@ -22,6 +22,13 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
     public class ChannelNodeTester
     {
         [Test]
+        public void default_channel_mode_is_delivery_guaranteed()
+        {
+            var node = new ChannelNode();
+            node.Mode.ShouldBe(ChannelMode.DeliveryGuaranteed);
+        }
+
+        [Test]
         public void no_publishing_rules_is_always_false()
         {
             var node = new ChannelNode();

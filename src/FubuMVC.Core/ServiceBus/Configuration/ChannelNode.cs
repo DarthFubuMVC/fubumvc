@@ -14,6 +14,19 @@ using FubuMVC.Core.ServiceBus.Scheduling;
 
 namespace FubuMVC.Core.ServiceBus.Configuration
 {
+    public enum ChannelMode
+    {
+        /// <summary>
+        /// If supported by the transport, this opts into guaranteed delivery mechanics for this channel
+        /// </summary>
+        DeliveryGuaranteed,
+
+        /// <summary>
+        /// If supported by the transport, this opts into a faster "fire and forget" mechanism for sending and receiving messages. Use this option for control channels.
+        /// </summary>
+        DeliveryFastWithoutGuarantee
+    }
+
     public class ChannelNode : IDisposable
     {
         public Accessor SettingAddress
@@ -160,6 +173,8 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 _defaultContentType = value;
             }
         }
+
+        public ChannelMode Mode { get; set; } = ChannelMode.DeliveryGuaranteed;
     }
 
     
