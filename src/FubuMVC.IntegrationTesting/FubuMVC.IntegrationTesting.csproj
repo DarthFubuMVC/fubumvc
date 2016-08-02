@@ -277,6 +277,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lmdb.dll" />
     <Content Include="phantomjs.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -41,7 +41,10 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 
             Id = nodeId;
 
-            ServiceBus.EnableInMemoryTransport(incoming);
+            Channel(x => x.Incoming)
+                .DeliveryFastWithoutGuarantee()
+                .ReadIncoming()
+                .UseAsControlChannel();
 
             ScheduledJob.ActivatedOnStartup(false);
 

@@ -4,6 +4,6 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
 {
     public class MonitoringSettings
     {
-        public Uri Incoming { get; set; }
+        public Uri Incoming { get; set; } 
     }
 }

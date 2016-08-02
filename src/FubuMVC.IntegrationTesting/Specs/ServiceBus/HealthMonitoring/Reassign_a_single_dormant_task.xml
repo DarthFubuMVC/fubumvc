@@ -4,7 +4,7 @@
       <MonitoringSetup id="95524fd4-3e20-4425-9482-defa33cb413b">
         <TheNodesAre>
           <table id="f31799ce-12ee-4360-bb80-dfb1bb11a072">
-            <TheNodesAre-row id="Node1" incoming="memory://1" />
+            <TheNodesAre-row id="Node1" incoming="lq.tcp://localhost:1000/control" />
           </table>
         </TheNodesAre>
         <HealthMonitoringIsDisabled />

@@ -4,10 +4,10 @@
       <MonitoringSetup id="0f0b37d9-84a3-4680-92f7-e427bf1eea04">
         <TheNodesAre>
           <table id="3d33e097-9510-49c9-b77b-a1be5d2bf608">
-            <row id="Node1" incoming="memory://1" />
-            <row id="Node2" incoming="memory://2" />
-            <row id="Node3" incoming="memory://3" />
-            <row id="Node4" incoming="memory://4" />
+            <row id="Node1" incoming="lq.tcp://localhost:1000/control" />
+            <row id="Node2" incoming="lq.tcp://localhost:2000/control" />
+            <row id="Node3" incoming="lq.tcp://localhost:3000/control" />
+            <row id="Node4" incoming="lq.tcp://localhost:4000/control" />
           </table>
         </TheNodesAre>
         <HealthMonitoringIsDisabled />
@@ -24,10 +24,10 @@
     <AfterTheHealthChecksRunOnNode node="Node1" />
     <ThePersistedNodesShouldBe>
       <rows id="4ebd35c3-00f4-40a3-8bf2-bfe07db33aac">
-        <row Id="Node1" ControlChannel="memory://1" />
-        <row Id="Node2" ControlChannel="memory://2" />
-        <row Id="Node3" ControlChannel="memory://3" />
-        <row Id="Node4" ControlChannel="memory://4" />
+        <row Id="Node1" ControlChannel="lq.tcp://localhost:1000/control" />
+        <row Id="Node2" ControlChannel="lq.tcp://localhost:2000/control" />
+        <row Id="Node3" ControlChannel="lq.tcp://localhost:3000/control" />
+        <row Id="Node4" ControlChannel="lq.tcp://localhost:4000/control" />
       </rows>
     </ThePersistedNodesShouldBe>
     <TheTaskAssignmentsShouldBe>

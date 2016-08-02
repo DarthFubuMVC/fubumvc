@@ -117,7 +117,8 @@ namespace FubuMVC.LightningQueues
 
         protected override Uri getReplyUri(ChannelGraph graph)
         {
-            var channelNode = graph.FirstOrDefault(x => x.Protocol() == LightningUri.Protocol && x.Incoming);
+            var channelNode = graph.FirstOrDefault(x => x.Protocol() == LightningUri.Protocol && x.Incoming && x.Mode == ChannelMode.DeliveryGuaranteed)
+                ?? graph.FirstOrDefault(x => x.Protocol() == LightningUri.Protocol && x.Incoming && x.Mode == ChannelMode.DeliveryFastWithoutGuarantee);
             if (channelNode == null)
                 throw new InvalidOperationException("You must have at least one incoming Lightning Queue channel for accepting replies");
 

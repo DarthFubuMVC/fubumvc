@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using FubuCore;
@@ -79,6 +81,9 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
         {
             _lock.Write(() =>
             {
+                Debug.WriteLine("Track: " + track);
+
+
                 if (track.Status == MessageTrack.Sent)
                 {
                     _sent.Add(track);
@@ -100,6 +105,26 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
 
                 return true;
             });
+        }
+
+        public static void AssertFinished()
+        {
+            if (_outstanding.Any())
+            {
+                var writer = new StringWriter();
+
+                writer.WriteLine("There are outstanding messages that did not complete in time!");
+                writer.WriteLine("Outstanding message tracks:");
+                _outstanding.Each(x => writer.WriteLine(x));
+
+                writer.WriteLine();
+                writer.WriteLine("Sent");
+                _sent.Each(x => writer.WriteLine(x));
+
+                writer.WriteLine();
+                writer.WriteLine("Received");
+                _sent.Each(x => writer.WriteLine(x));
+            }
         }
 
         public static IEnumerable<MessageTrack> Received()

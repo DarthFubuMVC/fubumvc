@@ -18,12 +18,12 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Basic
         [ExposeAsTable("Send messages")]
         public void Send(string Key, [SelectionList("Channels")]string Node, [SelectionList("Messages")]string Message)
         {
-            var success = MessageHistory.WaitForWorkToFinish(() =>
+            MessageHistory.WaitForWorkToFinish(() =>
             {
                 Context.State.Retrieve<ServiceBusNodes>().Send(Key, Node, Message);
             });
 
-            StoryTellerAssert.Fail(!success, "MessageHistory tracking failed");
+            MessageHistory.AssertFinished();
         }
 
 

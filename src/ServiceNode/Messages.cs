@@ -9,7 +9,7 @@ namespace ServiceNode
 
         public override string ToString()
         {
-            return string.Format("Direction: {0}", Direction);
+            return $"Direction: {Direction}";
         }
     }
 
@@ -19,7 +19,7 @@ namespace ServiceNode
 
         public override string ToString()
         {
-            return string.Format("Color: {0}", Color);
+            return $"Color: {Color}";
         }
     }
 
@@ -29,7 +29,7 @@ namespace ServiceNode
 
         public override string ToString()
         {
-            return string.Format("State: {0}", State);
+            return $"State: {State}";
         }
     }
 
@@ -39,7 +39,7 @@ namespace ServiceNode
 
         public override string ToString()
         {
-            return string.Format("Team: {0}", Team);
+            return $"Team: {Team}";
         }
     }
 

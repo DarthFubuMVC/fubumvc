@@ -4,10 +4,10 @@
       <MonitoringSetup id="9b9d3724-5270-4768-a944-3a67701dd9bb">
         <TheNodesAre>
           <table id="80f5cc43-8a0d-4093-82b9-1d53412a855c">
-            <row id="Node1" incoming="memory://1" />
-            <row id="Node2" incoming="memory://2" />
-            <row id="Node3" incoming="memory://3" />
-            <row id="Node4" incoming="memory://4" />
+            <row id="Node1" incoming="lq.tcp://localhost:1000/control" />
+            <row id="Node2" incoming="lq.tcp://localhost:2000/control" />
+            <row id="Node3" incoming="lq.tcp://localhost:3000/control" />
+            <row id="Node4" incoming="lq.tcp://localhost:4000/control" />
           </table>
         </TheNodesAre>
         <HealthMonitoringIsDisabled />

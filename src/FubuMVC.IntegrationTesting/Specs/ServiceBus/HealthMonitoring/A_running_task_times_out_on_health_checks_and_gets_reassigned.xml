@@ -5,10 +5,10 @@
       <MonitoringSetup>
         <TheNodesAre isStep="True">
           <table>
-            <row isStep="True" id="Node1" incoming="memory://1" />
-            <row isStep="True" id="Node2" incoming="memory://2" />
-            <row isStep="True" id="Node3" incoming="memory://3" />
-            <row isStep="True" id="Node4" incoming="memory://4" />
+            <row isStep="True" id="Node1" incoming="lq.tcp://localhost:1000/control" />
+            <row isStep="True" id="Node2" incoming="lq.tcp://localhost:2000/control" />
+            <row isStep="True" id="Node3" incoming="lq.tcp://localhost:3000/control" />
+            <row isStep="True" id="Node4" incoming="lq.tcp://localhost:4000/control" />
           </table>
         </TheNodesAre>
         <HealthMonitoringIsDisabled isStep="True" />

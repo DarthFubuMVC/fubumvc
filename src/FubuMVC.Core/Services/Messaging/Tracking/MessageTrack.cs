@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
 
         private static void autodetermineId(object message, Type messageType, MessageTrack track)
         {
-            var property = messageType.GetProperties().FirstOrDefault(x => FubuCore.StringExtensions.EqualsIgnoreCase(x.Name, "Id"));
+            var property = messageType.GetProperties().FirstOrDefault(x => x.Name.EqualsIgnoreCase("Id"));
             if (property != null)
             {
                 var rawValue = property.GetValue(message, null);
@@ -65,6 +65,11 @@ namespace FubuMVC.Core.Services.Messaging.Tracking
         public string Description { get; set; }
 
         public string Status { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Type)}: {Type}, {nameof(Id)}: {Id}, {nameof(Description)}: {Description}, {nameof(Status)}: {Status}";
+        }
 
         protected bool Equals(MessageTrack other)
         {
