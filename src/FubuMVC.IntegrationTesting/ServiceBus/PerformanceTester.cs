@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Polling;
 
 namespace FubuMVC.IntegrationTesting.ServiceBus
 {
     public class PerformanceTester
     {
-        public static int Times = 2000;
+        public static int Times = 1000;
 
         public static void send_and_respond_roundtrip()
         {
@@ -22,7 +23,14 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
 
         private static async Task send_and_respond_roundtrip_helper()
         {
-            using (var runtime = FubuRuntime.For<PingerTransportRegistry>())
+            await perform_work<SingleEndpointTransportRegistry>(x => x.Send(new PingMessage()));
+        }
+
+        private static async Task perform_work<TRegistry>(Action<IServiceBus> actualWork) where TRegistry : FubuRegistry, new()
+        {
+            PongConsumer.Count = 0;
+            PongConsumer.ReceivedAll = new TaskCompletionSource<bool>();
+            using (var runtime = FubuRuntime.For<TRegistry>())
             {
                 var bus = runtime.Get<IServiceBus>();
                 var tasks = new List<Task>();
@@ -38,7 +46,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
                     }
                     var task = Task.Run(() =>
                     {
-                        bus.Send(new PingMessage());
+                        actualWork(bus);
                     });
                     tasks.Add(task);
                 }
@@ -51,13 +59,77 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
                 }
             }
         }
+
+        public static void send_and_respond_roundtrip_separate_endpoints()
+        {
+            var waitHandle = new ManualResetEvent(false);
+            send_and_respond_roundtrip_separate_endpoints_helper()
+                .ContinueWith(x => waitHandle.Set());
+            waitHandle.WaitOne();
+        }
+
+        private static async Task send_and_respond_roundtrip_separate_endpoints_helper()
+        {
+            using (FubuRuntime.For<PongerTransportRegistry>())
+            {
+                await perform_work<PingerTransportRegistry>(x => x.Send(new PingMessage()));
+            }
+        }
     }
 
-
-    public class PingerTransportRegistry : FubuTransportRegistry<PingerSettings>
+    public class PingerTransportRegistry : FubuTransportRegistry<PingPongSettings>
     {
         public PingerTransportRegistry()
         {
+            ServiceBus.HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
+            Channel(x => x.Pinger)
+                .AcceptsMessage<PongMessage>()
+                .ReadIncoming();
+
+            Handlers.DisableDefaultHandlerSource();
+            Handlers.Include<PongConsumer>();
+            Channel(x => x.Ponger)
+                .AcceptsMessage<PingMessage>();
+        }
+    }
+
+    public class PongerTransportRegistry : FubuTransportRegistry<PingPongSettings>
+    {
+        public PongerTransportRegistry()
+        {
+            ServiceBus.HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
+            Channel(x => x.Ponger)
+                .AcceptsMessage<PingMessage>()
+                .ReadIncoming();
+
+            Handlers.DisableDefaultHandlerSource();
+            Handlers.Include<PingConsumer>();
+            Channel(x => x.Pinger)
+                .AcceptsMessage<PongMessage>();
+        }
+    }
+
+    public class PingPongSettings
+    {
+        public PingPongSettings()
+        {
+            Pinger = new Uri("lq.tcp://localhost:2200/pinger");
+            Ponger = new Uri("lq.tcp://localhost:2201/ponger");
+        }
+
+        public Uri Pinger { get; set; }
+        public Uri Ponger { get; set; }
+    }
+
+
+    public class SingleEndpointTransportRegistry : FubuTransportRegistry<SingleEndpointSettings>
+    {
+        public SingleEndpointTransportRegistry()
+        {
+            ServiceBus.HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
+            Handlers.DisableDefaultHandlerSource();
+            Handlers.Include<PingConsumer>();
+            Handlers.Include<PongConsumer>();
             Channel(x => x.Pinger)
                 .AcceptsMessage<PingMessage>()
                 .AcceptsMessage<PongMessage>()
@@ -65,9 +137,9 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
         }
     }
 
-    public class PingerSettings
+    public class SingleEndpointSettings
     {
-        public PingerSettings()
+        public SingleEndpointSettings()
         {
             Pinger = new Uri("lq.tcp://localhost:2200/pinger");
         }
@@ -93,7 +165,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
 
     public class PongConsumer
     {
-        public static TaskCompletionSource<bool> ReceivedAll = new TaskCompletionSource<bool>();
+        public static TaskCompletionSource<bool> ReceivedAll;
         public static int Count;
 
         public void Consume(PongMessage message)
