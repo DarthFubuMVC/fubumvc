@@ -4,6 +4,7 @@ using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
@@ -35,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                 var graph = runtime.Behaviors;
 
 
-                var invoker = new ChainInvoker(null, graph, null, null, null);
+                var invoker = new ChainInvoker(null, new ChainResolutionCache(graph), null, null, null);
 
                 invoker.FindChain(new Envelope { Message = new OneMessage() })
                        .OfType<HandlerCall>().Single()

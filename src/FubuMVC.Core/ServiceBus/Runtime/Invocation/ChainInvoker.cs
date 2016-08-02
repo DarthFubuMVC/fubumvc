@@ -4,6 +4,7 @@ using FubuCore;
 using FubuCore.Dates;
 using FubuCore.Logging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
@@ -14,15 +15,15 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
     public class ChainInvoker : IChainInvoker
     {
         private readonly IServiceFactory _factory;
-        private readonly BehaviorGraph _graph;
+        private readonly IChainResolver _chainResolver;
         private readonly ILogger _logger;
         private readonly IOutgoingSender _sender;
         private readonly Func<IHandlerPipeline> _pipeline;
 
-        public ChainInvoker(IServiceFactory factory, BehaviorGraph graph, ILogger logger, IOutgoingSender sender, Func<IHandlerPipeline> pipeline)
+        public ChainInvoker(IServiceFactory factory, IChainResolver chainResolver, ILogger logger, IOutgoingSender sender, Func<IHandlerPipeline> pipeline)
         {
             _factory = factory;
-            _graph = graph;
+            _chainResolver = chainResolver;
             _logger = logger;
             _sender = sender;
             _pipeline = pipeline;
@@ -45,7 +46,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         public virtual HandlerChain FindChain(Envelope envelope)
         {
             var messageType = envelope.Message.GetType();
-            return _graph.ChainFor(messageType).As<HandlerChain>();
+            return _chainResolver.FindUniqueByType(messageType).As<HandlerChain>();
         }
 
 
