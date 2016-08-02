@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
@@ -70,6 +74,12 @@ namespace FubuMVC.IntegrationTesting
         {
             AddRemoteSubSystem("ServiceNode", x =>
             {
+                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                var profile = baseDirectory.Split(Path.PathSeparator).Last();
+
+                x.ServiceDirectory = baseDirectory.ParentDirectory().ParentDirectory().ParentDirectory()
+                    .AppendPath("ServiceNode", "bin", profile);
+
                 x.UseParallelServiceDirectory("ServiceNode");
                 x.Setup.ShadowCopyFiles = false.ToString();
             });
