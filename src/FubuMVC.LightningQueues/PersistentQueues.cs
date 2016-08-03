@@ -27,12 +27,22 @@ namespace FubuMVC.LightningQueues
             _queueManagers = new Cache<int, Queue>();
         }
 
-        private Queue GetQueue(int port, bool persist, int mapSize = 1024*1024*100, int maxDatabases = 5)
+        private Queue GetQueue(int port, bool persist, bool incoming, int mapSize = 1024*1024*100, int maxDatabases = 5)
         {
+            if (!incoming)
+            {
+                //Shouldn't create one here because it shouldn't be listening
+                return _queueManagers.First();
+            }
             if (_queueManagers.Has(port))
             {
                 return _queueManagers[port];
             }
+            return CreateQueue(port, persist, mapSize, maxDatabases);
+        }
+
+        private Queue CreateQueue(int port, bool persist, int mapSize = 1024*1024*100, int maxDatabases = 5)
+        {
             var queueConfiguration = new QueueConfiguration()
                 .ReceiveMessagesAt(new IPEndPoint(IPAddress.Any, port))
                 .ScheduleQueueWith(TaskPoolScheduler.Default)
@@ -40,7 +50,7 @@ namespace FubuMVC.LightningQueues
 
             if (persist)
             {
-                queueConfiguration.StoreWithLmdb(QueuePath + "." + port, new EnvironmentConfiguration {MaxDatabases = maxDatabases, MapSize = mapSize });
+                queueConfiguration.StoreWithLmdb(QueuePath + "." + port, new EnvironmentConfiguration { MaxDatabases = maxDatabases, MapSize = mapSize });
             }
             else
             {
@@ -63,14 +73,14 @@ namespace FubuMVC.LightningQueues
             _queueManagers.Each(x => x.Store.ClearAllStorage());
         }
 
-        public Queue PersistentManagerFor(int port, int mapSize = 1024*1024*100, int maxDatabases = 5)
+        public Queue PersistentManagerFor(int port, bool incoming, int mapSize = 1024*1024*100, int maxDatabases = 5)
         {
-            return GetQueue(port, true, mapSize, maxDatabases);
+            return GetQueue(port, true, incoming, mapSize, maxDatabases);
         }
 
-        public Queue NonPersistentManagerFor(int port)
+        public Queue NonPersistentManagerFor(int port, bool incoming)
         {
-            return GetQueue(port, false);
+            return GetQueue(port, false, incoming);
         }
 
         public Queue ManagerForReply()
@@ -86,7 +96,7 @@ namespace FubuMVC.LightningQueues
                 {
                     string[] queueNames = group.Select(x => x.QueueName).ToArray();
 
-                    var queueManager = GetQueue(@group.Key, true);
+                    var queueManager = GetQueue(@group.Key, true, true);
                     queueNames.Each(x => queueManager.CreateQueue(x));
                     queueManager.CreateQueue(LightningQueuesTransport.ErrorQueueName);
                     queueManager.Start();
@@ -100,7 +110,7 @@ namespace FubuMVC.LightningQueues
 
         public void CreateQueue(LightningUri uri)
         {
-            GetQueue(uri.Port, true).CreateQueue(uri.QueueName);
+            GetQueue(uri.Port, true, true).CreateQueue(uri.QueueName);
         }
     }
 

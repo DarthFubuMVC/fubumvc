@@ -95,8 +95,8 @@ namespace FubuMVC.LightningQueues
         {
             var uri = new LightningUri(channelNode.Uri);
             return channelNode.Mode == ChannelMode.DeliveryGuaranteed 
-                ? LightningQueuesChannel.BuildPersistentChannel(uri, _queues, _settings.MapSize, _settings.MaxDatabases) 
-                : LightningQueuesChannel.BuildNoPersistenceChannel(uri, _queues);
+                ? LightningQueuesChannel.BuildPersistentChannel(uri, _queues, _settings.MapSize, _settings.MaxDatabases, channelNode.Incoming) 
+                : LightningQueuesChannel.BuildNoPersistenceChannel(uri, _queues, channelNode.Incoming);
         }
 
 

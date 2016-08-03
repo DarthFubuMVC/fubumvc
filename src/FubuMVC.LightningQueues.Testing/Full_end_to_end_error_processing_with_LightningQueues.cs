@@ -47,7 +47,7 @@ namespace FubuMVC.LightningQueues.Testing
 
             theServiceBus = _runtime.Get<IServiceBus>();
 
-            _queueManager = _runtime.Get<IPersistentQueues>().PersistentManagerFor(lightningUri.Port);
+            _queueManager = _runtime.Get<IPersistentQueues>().PersistentManagerFor(lightningUri.Port, true);
 
             message1 = new OneMessage();
 

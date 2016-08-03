@@ -21,7 +21,7 @@ namespace FubuMVC.LightningQueues.Testing
                     new LightningUri("lq.tcp://localhost:2424/third_queue"),
                 });
 
-                queues.PersistentManagerFor(2424)
+                queues.PersistentManagerFor(2424, true)
                     .Queues.OrderBy(x => x).ShouldHaveTheSameElementsAs(LightningQueuesTransport.ErrorQueueName, "other_queue", "some_queue", "third_queue");
             }
         }
