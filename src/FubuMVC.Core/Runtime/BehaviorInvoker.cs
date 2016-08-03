@@ -6,6 +6,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -20,7 +21,7 @@ namespace FubuMVC.Core.Runtime
             _chain = chain;
         }
 
-        public void Invoke(ServiceArguments arguments, IDictionary<string, object> routeValues, IRequestCompletion requestCompletion)
+        public void Invoke(TypeArguments arguments, IDictionary<string, object> routeValues, IRequestCompletion requestCompletion)
         {
             var currentChain = new CurrentChain(_chain, routeValues);
             arguments.Set(typeof(ICurrentChain), currentChain);
@@ -54,16 +55,13 @@ namespace FubuMVC.Core.Runtime
             requestCompletion.WhenCompleteDo(x =>
             {
                 var disposable = behavior as IDisposable;
-                if (disposable != null)
-                {
-                    disposable.Dispose();
-                }
+                disposable?.Dispose();
             });
 
             behavior.Invoke();
         }
 
-        public void Invoke(ServiceArguments arguments)
+        public void Invoke(TypeArguments arguments)
         {
             var completion = new RequestCompletion();
 

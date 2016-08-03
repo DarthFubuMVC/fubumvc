@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
-using FubuCore.Binding;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Http.Owin
 {
-    public class OwinServiceArguments : ServiceArguments
+    public class OwinServiceArguments : TypeArguments
     {
         public OwinServiceArguments(RouteData routeData, IDictionary<string, object> environment)
         {
@@ -13,22 +13,22 @@ namespace FubuMVC.Core.Http.Owin
 
             var httpContextBase = new OwinHttpContext(environment);
 
-            With(environment);
+            Set(environment);
 
-            With<HttpContextBase>(httpContextBase);
+            Set<HttpContextBase>(httpContextBase);
 
-            With(routeData);
+            Set(routeData);
 
-            With<IHttpRequest>(httpRequest);
+            Set<IHttpRequest>(httpRequest);
 
-            With<IHttpResponse>(new OwinHttpResponse(environment));
+            Set<IHttpResponse>(new OwinHttpResponse(environment));
 
-            With(new OwinContext(environment));
+            Set(new OwinContext(environment));
 
             var log = environment.Log();
             if (log != null)
             {
-                With(log);
+                Set(log);
             }
         }
     }

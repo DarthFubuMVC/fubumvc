@@ -6,6 +6,7 @@ using FubuCore.Binding;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Http.Owin.Middleware
 {
@@ -34,13 +35,13 @@ namespace FubuMVC.Core.Http.Owin.Middleware
     public class MiddlewareNode<T> : MiddlewareNode, IDisposable where T : class, IOwinMiddleware
     {
         // TODO -- add other service arguments
-        public readonly ServiceArguments Arguments = new ServiceArguments();
+        public readonly TypeArguments Arguments = new TypeArguments();
         private T _middleware;
 
         // Tested through integration tests
         public override AppFunc BuildAppFunc(AppFunc inner, IServiceFactory factory)
         {
-            Arguments.With(inner);
+            Arguments.Set(inner);
             _middleware = factory.Build<T>(Arguments);
             
 

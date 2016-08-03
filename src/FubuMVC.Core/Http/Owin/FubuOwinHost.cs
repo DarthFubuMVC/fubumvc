@@ -62,7 +62,7 @@ namespace FubuMVC.Core.Http.Owin
                 }
                 taskCompletionSource.SetResult(null);
             });
-            arguments.With<IRequestCompletion>(requestCompletion);
+            arguments.Set<IRequestCompletion>(requestCompletion);
             requestCompletion.SafeStart(() => invoker.Invoke(arguments, routeData.Values, requestCompletion));
 
             return taskCompletionSource.Task;

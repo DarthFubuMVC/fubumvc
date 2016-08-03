@@ -5,6 +5,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using Shouldly;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
@@ -27,7 +28,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             throw new NotImplementedException();
         }
 
-        public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
+        public IActionBehavior BuildBehavior(TypeArguments arguments, Guid behaviorId)
         {
             Arguments = arguments.ShouldBeOfType<FubuMVC.Core.ServiceBus.Runtime.Invocation.InvocationContext>();
             _cascadingMessages.Each(x => Arguments.EnqueueCascading(x));
@@ -37,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             return _behavior;
         }
 
-        public T Build<T>(ServiceArguments arguments)
+        public T Build<T>(TypeArguments arguments)
         {
             throw new NotImplementedException();
         }

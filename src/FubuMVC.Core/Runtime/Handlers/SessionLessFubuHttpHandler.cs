@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.Web;
-using FubuCore.Binding;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Runtime.Handlers
 {
     public class SessionLessFubuHttpHandler : IHttpHandler
     {
         private readonly IBehaviorInvoker _invoker;
-        private readonly ServiceArguments _arguments;
+        private readonly TypeArguments _arguments;
         private readonly IDictionary<string, object> _routeData;
 
-        public SessionLessFubuHttpHandler(IBehaviorInvoker invoker, ServiceArguments arguments, IDictionary<string, object> routeData)
+        public SessionLessFubuHttpHandler(IBehaviorInvoker invoker, TypeArguments arguments, IDictionary<string, object> routeData)
         {
             _invoker = invoker;
             _arguments = arguments;
@@ -23,6 +23,6 @@ namespace FubuMVC.Core.Runtime.Handlers
             requestCompletion.Start(() => _invoker.Invoke(_arguments, _routeData, requestCompletion));
         }
 
-        public bool IsReusable { get { return false; } }
+        public bool IsReusable => false;
     }
 }

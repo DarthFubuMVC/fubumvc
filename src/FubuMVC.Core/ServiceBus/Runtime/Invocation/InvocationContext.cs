@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuCore.Binding;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
-    public class InvocationContext : ServiceArguments, IInvocationContext
+    public class InvocationContext : TypeArguments, IInvocationContext
     {
-        private static readonly IDictionary<string, object> _emptyDictionary = new Dictionary<string, object>(); 
+        private static readonly IDictionary<string, object> _emptyDictionary = new Dictionary<string, object>();
 
-        private readonly Envelope _envelope;
         private readonly IList<object> _messages = new List<object>();
 
         public InvocationContext(Envelope envelope, HandlerChain chain)
         {
-            if (envelope == null) throw new ArgumentNullException("envelope");
+            if (envelope == null) throw new ArgumentNullException(nameof(envelope));
 
             if (envelope.Log != null)
             {
@@ -27,20 +26,17 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             var currentChain = new CurrentChain(chain, _emptyDictionary);
             Set(typeof(ICurrentChain), currentChain);
             
-            _envelope = envelope;
+            Envelope = envelope;
             var inputType = envelope.Message.GetType();
             var request = new InMemoryFubuRequest();
-            request.Set(inputType, _envelope.Message);
+            request.Set(inputType, Envelope.Message);
             
             Set(typeof(IFubuRequest), request);
             Set(typeof(IInvocationContext), this);
             Set(typeof(Envelope), envelope);
         }
 
-        public Envelope Envelope
-        {
-            get { return _envelope; }
-        }
+        public Envelope Envelope { get; }
 
         public IContinuation Continuation { get; set; }
 
@@ -66,7 +62,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 
         protected bool Equals(InvocationContext other)
         {
-            return Equals(_envelope, other._envelope);
+            return Equals(Envelope, other.Envelope);
         }
 
         public override bool Equals(object obj)
@@ -79,7 +75,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 
         public override int GetHashCode()
         {
-            return (_envelope != null ? _envelope.GetHashCode() : 0);
+            return (Envelope != null ? Envelope.GetHashCode() : 0);
         }
     }
 }

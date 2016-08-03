@@ -1,6 +1,7 @@
 using FubuCore.Binding;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Http.Compression
 {
@@ -13,7 +14,7 @@ namespace FubuMVC.Core.Http.Compression
             _encoders = encoders;
         }
 
-        public DoNext Filter(ServiceArguments arguments)
+        public DoNext Filter(TypeArguments arguments)
         {
             if (arguments.Has(typeof (Latch))) return DoNext.Stop;
 

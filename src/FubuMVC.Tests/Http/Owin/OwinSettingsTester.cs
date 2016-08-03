@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Http.Owin
                 _.Mode = "development";
                 _.AlterSettings<OwinSettings>(x =>
                 {
-                    x.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                    x.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.Set(new InjectionOptions
                     {
                         Content = c => html
                     });

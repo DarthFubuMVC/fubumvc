@@ -10,6 +10,7 @@ using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -20,7 +21,7 @@ namespace FubuMVC.Tests.Runtime
         private BehaviorChain theChain;
         private BehaviorInvoker theInvoker;
         private IActionBehavior theBehavior;
-        private ServiceArguments theArguments;
+        private TypeArguments theArguments;
         private Dictionary<string, object> theRouteData;
 
         [SetUp]
@@ -31,7 +32,7 @@ namespace FubuMVC.Tests.Runtime
 
             theRouteData = new Dictionary<string, object>();
 
-            theArguments = new ServiceArguments();
+            theArguments = new TypeArguments();
             theBehavior = MockRepository.GenerateMock<IActionBehavior>();
 
             theFactory.Stub(x => x.BuildBehavior(theArguments, theChain.UniqueId))
@@ -106,7 +107,7 @@ namespace FubuMVC.Tests.Runtime
             _returnValue = returnValue;
         }
 
-        public DoNext Filter(ServiceArguments arguments)
+        public DoNext Filter(TypeArguments arguments)
         {
             return _returnValue;
         }

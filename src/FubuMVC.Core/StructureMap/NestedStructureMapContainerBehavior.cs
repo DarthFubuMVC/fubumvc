@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using StructureMap;
@@ -9,12 +8,12 @@ namespace FubuMVC.Core.StructureMap
 {
     public class NestedStructureMapContainerBehavior : IActionBehavior, IDisposable
     {
-        private readonly ServiceArguments _arguments;
+        private readonly TypeArguments _arguments;
         private readonly Guid _behaviorId;
         private readonly IContainer _container;
         private IContainer _nested;
 
-        public NestedStructureMapContainerBehavior(IContainer container, ServiceArguments arguments, Guid behaviorId)
+        public NestedStructureMapContainerBehavior(IContainer container, TypeArguments arguments, Guid behaviorId)
         {
             _container = container;
             _arguments = arguments;
@@ -30,8 +29,7 @@ namespace FubuMVC.Core.StructureMap
 
         public IActionBehavior StartInnerBehavior()
         {
-            _nested = _container.GetNestedContainer();
-            _nested.Configure(x => _arguments.EachService((type, value) => x.For(type).Use(value)));
+            _nested = _container.GetNestedContainer(_arguments);
 
             var behavior = _nested.GetInstance<IActionBehavior>(_behaviorId.ToString());
             return behavior;

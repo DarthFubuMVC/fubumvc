@@ -14,21 +14,26 @@ namespace FubuMVC.Core.StructureMap
 
         public StructureMapServiceFactory(IContainer container)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            if (container == null) throw new ArgumentNullException(nameof(container));
 
             _containers.Push(container);
         }
 
         public IContainer Container => _containers.Peek();
 
-        public virtual IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
+        public virtual IActionBehavior BuildBehavior(TypeArguments arguments, Guid behaviorId)
         {
             return new NestedStructureMapContainerBehavior(Container, arguments, behaviorId);
         }
 
-        public T Build<T>(ServiceArguments arguments)
+        public T Build<T>(TypeArguments arguments)
         {
-            var explicitArguments = arguments.ToExplicitArgs();
+            var explicitArguments = new ExplicitArguments();
+            foreach (var pair in arguments.Defaults)
+            {
+                explicitArguments.Set(pair.Key, pair.Value);
+            }
+
             return Container.GetInstance<T>(explicitArguments);
         }
 

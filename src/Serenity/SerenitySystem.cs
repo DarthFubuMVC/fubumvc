@@ -103,7 +103,7 @@ namespace Serenity
                     .ToString();
             Registry.AlterSettings<OwinSettings>(owin =>
             {
-                owin.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                owin.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.Set(new InjectionOptions
                 {
                     Content = c => text
                 });

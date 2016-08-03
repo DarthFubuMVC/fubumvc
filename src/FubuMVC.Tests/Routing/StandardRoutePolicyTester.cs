@@ -15,6 +15,7 @@ using FubuMVC.Core.Runtime.Handlers;
 using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Routing
 {
@@ -144,12 +145,12 @@ namespace FubuMVC.Tests.Routing
             private readonly IEnumerable<Guid> _behaviorIds;
             public ServiceFactory(IEnumerable<Guid> behaviorIds) { _behaviorIds = behaviorIds; }
 
-            public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
+            public IActionBehavior BuildBehavior(TypeArguments arguments, Guid behaviorId)
             {
                 return _behaviorIds.Contains(behaviorId) ? new ActionBehavior(behaviorId) : null;
             }
 
-            public T Build<T>(ServiceArguments arguments)
+            public T Build<T>(TypeArguments arguments)
             {
                 throw new NotImplementedException();
             }

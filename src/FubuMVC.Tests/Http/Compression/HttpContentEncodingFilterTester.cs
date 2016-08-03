@@ -8,6 +8,7 @@ using FubuMVC.Tests.TestSupport;
 using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Http.Compression
 {
@@ -16,11 +17,11 @@ namespace FubuMVC.Tests.Http.Compression
     {
         private IHttpContentEncoding theEncoding;
         private string theAcceptedEncoding;
-        private ServiceArguments theArguments;
+        private TypeArguments theArguments;
 
         protected override void beforeEach()
         {
-            theArguments = new ServiceArguments();
+            theArguments = new TypeArguments();
             theEncoding = MockFor<IHttpContentEncoding>();
             theAcceptedEncoding = "gzip, deflate, sdch";
 

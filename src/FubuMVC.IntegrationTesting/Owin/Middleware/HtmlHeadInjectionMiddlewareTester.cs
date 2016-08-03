@@ -16,7 +16,7 @@ namespace FubuMVC.IntegrationTesting.Owin.Middleware
             var registry = new FubuRegistry();
             registry.AlterSettings<OwinSettings>(x =>
             {
-                x.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                x.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.Set(new InjectionOptions
                 {
                     Content = e => new HtmlTag("script").Attr("foo", "bar").ToString()
                 });
