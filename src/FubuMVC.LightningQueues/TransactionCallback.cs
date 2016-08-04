@@ -1,5 +1,6 @@
 using System;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
+using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using LightningQueues;
 
@@ -56,5 +57,24 @@ namespace FubuMVC.LightningQueues
             _context.Enqueue(copy);
             MarkSuccessful();
         }
+
+        public void Send(Envelope envelope)
+        {
+            var uri = new LightningUri(envelope.Destination);
+
+            var message = new OutgoingMessage
+            {
+                Id = MessageId.GenerateRandom(),
+                Data = envelope.Data,
+                Headers = envelope.Headers.ToDictionary(),
+                SentAt = DateTime.UtcNow,
+                Destination = envelope.Destination,
+                Queue = uri.QueueName
+            };
+
+            _context.Enqueue(message);
+        }
+
+        public bool SupportsSend { get; } = true;
     }
 }

@@ -63,7 +63,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
                 var uri = envelope.Destination;
                 var destination = findDestination(uri);
 
-                return new ChannelNode[] { destination };
+                return new [] { destination };
             }
 
             var inputType = envelope.Message.GetType();

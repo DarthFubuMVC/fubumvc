@@ -123,6 +123,13 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
                 Message = _message
             });
         }
+
+        public void Send(Envelope envelope)
+        {
+            // nohting
+        }
+
+        public bool SupportsSend { get; } = false;
     }
 
     [Serializable]

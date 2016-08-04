@@ -129,6 +129,15 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         // virtual for testing of course
         public virtual IHeaders Send(Envelope envelope, IEnvelopeSerializer serializer, Uri replyUri = null)
         {
+            var clone = EnvelopeForSending(envelope, serializer, replyUri);
+
+            Channel.Send(clone.Data, clone.Headers);
+
+            return clone.Headers;
+        }
+
+        public Envelope EnvelopeForSending(Envelope envelope, IEnvelopeSerializer serializer, Uri replyUri)
+        {
             var clone = envelope.Clone();
 
             // Must be done in this order!
@@ -143,9 +152,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 clone.Headers[Envelope.ReplyUriKey] = replyUri.ToString();
             }
 
-            Channel.Send(clone.Data, clone.Headers);
-
-            return clone.Headers;
+            return clone;
         }
 
         private string _defaultContentType;

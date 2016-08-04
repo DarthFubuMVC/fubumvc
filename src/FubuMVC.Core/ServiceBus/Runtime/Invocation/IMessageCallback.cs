@@ -11,5 +11,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         void MoveToDelayedUntil(DateTime time);
         void MoveToErrors(ErrorReport report);
         void Requeue();
+        void Send(Envelope envelope);
+
+        bool SupportsSend { get; }
     }
 }

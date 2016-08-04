@@ -5,6 +5,7 @@ using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Logging;
+using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 
@@ -25,12 +26,9 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             _modifiers = modifiers;
         }
 
-        // virtual for testing
         public string Send(Envelope envelope)
         {
-            envelope.Headers[Envelope.MessageTypeKey] = envelope.Message.GetType().FullName;
-
-            _modifiers.Each(x => x.Modify(envelope));
+            prepareEnvelopeForSending(envelope);
 
             var channels = _router.FindDestinationChannels(envelope).ToArray();
 
@@ -52,6 +50,29 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             });
 
             return envelope.CorrelationId;
+        }
+
+        private void prepareEnvelopeForSending(Envelope envelope)
+        {
+            envelope.Headers[Envelope.MessageTypeKey] = envelope.Message.GetType().FullName;
+
+            _modifiers.Each(x => x.Modify(envelope));
+        }
+
+        public void Send(Envelope envelope, IMessageCallback callback)
+        {
+            prepareEnvelopeForSending(envelope);
+
+            var channels = _router.FindDestinationChannels(envelope).ToArray();
+
+            if (!channels.Any())
+            {
+                throw new Exception("No channels match this message ({0})".ToFormat(envelope));
+            }
+
+            channels
+                .Select(x => x.EnvelopeForSending(envelope, _serializer, envelope.ReplyUri))
+                .Each(callback.Send);
         }
 
         /*

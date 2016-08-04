@@ -137,5 +137,12 @@ namespace FubuMVC.Core.ServiceBus.InMemory
         {
             _parent.Enqueue(_token);
         }
+
+        public void Send(Envelope envelope)
+        {
+            // nothing
+        }
+
+        public bool SupportsSend { get; } = false;
     }
 }

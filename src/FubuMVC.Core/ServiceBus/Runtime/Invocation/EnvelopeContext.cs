@@ -9,32 +9,27 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
     public class EnvelopeContext : IEnvelopeContext
     {
-        private readonly ILogger _logger;
         private readonly ISystemTime _systemTime;
         private readonly IChainInvoker _invoker;
-        private readonly IOutgoingSender _outgoing;
         private readonly IHandlerPipeline _pipeline;
 
         public EnvelopeContext(ILogger logger, ISystemTime systemTime, IChainInvoker invoker, IOutgoingSender outgoing, IHandlerPipeline pipeline)
         {
-            _logger = logger;
+            this.logger = logger;
             _systemTime = systemTime;
             _invoker = invoker;
-            _outgoing = outgoing;
+            Outgoing = outgoing;
             _pipeline = pipeline;
         }
 
-        protected IOutgoingSender Outgoing
-        {
-            get { return _outgoing; }
-        }
+        protected IOutgoingSender Outgoing { get; }
 
         public void SendOutgoingMessages(Envelope original, IEnumerable<object> cascadingMessages)
         {
             var doNowActions = cascadingMessages.OfType<IImmediateContinuation>().SelectMany(x => x.Actions());
             var cascading = cascadingMessages.Where(x => !(x is IImmediateContinuation));
 
-            _outgoing.SendOutgoingMessages(original, cascading);
+            Outgoing.SendOutgoingMessages(original, cascading);
 
             doNowActions.Each(message => {
                 try
@@ -43,19 +38,16 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
                 }
                 catch (Exception e)
                 {
-                    _logger.Error("Failed while trying to invoke a cascading message:\n" + message.ToString(), e);
+                    logger.Error("Failed while trying to invoke a cascading message:\n" + message.ToString(), e);
                 }
             });
         }
 
-        protected ILogger logger
-        {
-            get { return _logger; }
-        }
+        protected ILogger logger { get; }
 
         public void SendFailureAcknowledgement(Envelope original, string message)
         {
-            _outgoing.SendFailureAcknowledgement(original, message);
+            Outgoing.SendFailureAcknowledgement(original, message);
         }
 
         public ISystemTime SystemTime
@@ -65,22 +57,22 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 
         public virtual void InfoMessage<T>(Func<T> func) where T : class, LogTopic
         {
-            _logger.InfoMessage(func);
+            logger.InfoMessage(func);
         }
 
         public virtual void DebugMessage<T>(Func<T> func) where T : class, LogTopic
         {
-            _logger.DebugMessage(func);
+            logger.DebugMessage(func);
         }
 
         public virtual void InfoMessage<T>(T message) where T : LogTopic
         {
-            _logger.InfoMessage(message);
+            logger.InfoMessage(message);
         }
 
         public virtual void Error(string correlationId, string message, Exception exception)
         {
-            _logger.Error(correlationId, message, exception);
+            logger.Error(correlationId, message, exception);
         }
 
         public void Retry(Envelope envelope)

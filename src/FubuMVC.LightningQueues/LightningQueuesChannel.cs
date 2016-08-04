@@ -123,7 +123,7 @@ namespace FubuMVC.LightningQueues
                 Id = MessageId.GenerateRandom(),
                 Data = data,
                 Headers = headers.ToDictionary(),
-                SentAt = DateTime.Now,
+                SentAt = DateTime.UtcNow,
                 Destination = address,
                 Queue = queueName,
             };
