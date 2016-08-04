@@ -59,7 +59,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             _modifiers.Each(x => x.Modify(envelope));
         }
 
-        public void Send(Envelope envelope, IMessageCallback callback)
+        public string Send(Envelope envelope, IMessageCallback callback)
         {
             prepareEnvelopeForSending(envelope);
 
@@ -73,6 +73,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             channels
                 .Select(x => x.EnvelopeForSending(envelope, _serializer, envelope.ReplyUri))
                 .Each(callback.Send);
+
+            return envelope.CorrelationId;
         }
 
         /*

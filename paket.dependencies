@@ -25,7 +25,7 @@ nuget RavenDB.Embedded 2.5.2750
 nuget RhinoMocks 3.6.1
 nuget Shouldly ~> 2.5.0
 nuget Spark 1.7.5.0
-nuget StructureMap 4.4.0-alpha-445
+nuget StructureMap 4.4.0-alpha-446
 nuget Storyteller 3.0.0.325-rc
 nuget System.Data.Common
 nuget System.Net.Sockets

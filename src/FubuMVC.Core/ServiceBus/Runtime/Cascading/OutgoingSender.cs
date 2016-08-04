@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using FubuCore;
 using FubuCore.Logging;
 
@@ -39,7 +40,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Cascading
                     {
                         CorrelationId = original.CorrelationId, 
                         Message = message
-                    }
+                    },
+                    Callback = original.Callback
                 };
 
                 Send(envelope);
@@ -50,7 +52,17 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Cascading
         {
             try
             {
-                _sender.Send(envelope);
+                if (envelope.Callback.SupportsSend)
+                {
+                    Debug.WriteLine("Using the new IMessageCallback.Send() for cascading messages");
+                    _sender.Send(envelope, envelope.Callback);
+                }
+                else
+                {
+                    _sender.Send(envelope);
+                }
+
+
             }
             catch (Exception e)
             {
@@ -77,6 +89,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Cascading
             var cascadingEnvelope = o is ISendMyself
                 ? o.As<ISendMyself>().CreateEnvelope(original)
                 : original.ForResponse(o);
+
+            cascadingEnvelope.Callback = original.Callback;
 
             Send(cascadingEnvelope);
         }

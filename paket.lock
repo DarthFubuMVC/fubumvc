@@ -257,7 +257,7 @@ NUGET
     Shouldly (2.5)
     Spark (1.7.5)
     Storyteller (3.0.0.325-rc)
-    StructureMap (4.4.0-alpha-445)
+    StructureMap (4.4.0-alpha-446)
       NETStandard.Library (>= 1.6) - framework: netstandard13, >= netstandard15
       System.Collections.Concurrent (>= 4.0.12) - framework: netstandard13, >= netstandard15
       System.Reflection.TypeExtensions (>= 4.1) - framework: netstandard13, >= netstandard15
