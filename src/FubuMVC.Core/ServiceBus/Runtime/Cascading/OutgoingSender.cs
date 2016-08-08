@@ -52,9 +52,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Cascading
         {
             try
             {
-                if (envelope.Callback.SupportsSend)
+                if (envelope.Callback != null && envelope.Callback.SupportsSend)
                 {
-                    Debug.WriteLine("Using the new IMessageCallback.Send() for cascading messages");
                     _sender.Send(envelope, envelope.Callback);
                 }
                 else

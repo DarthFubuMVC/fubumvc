@@ -72,7 +72,7 @@ namespace FubuMVC.LightningQueues
                 Queue = uri.QueueName
             };
 
-            _context.Enqueue(message);
+            _context.Send(message);
         }
 
         public bool SupportsSend { get; } = true;
