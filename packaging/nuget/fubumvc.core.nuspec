@@ -14,7 +14,7 @@
     <dependencies>
       <dependency id="FubuCore" version="2.0" />
       <dependency id="HtmlTags" version="[2.1.0.183]" />
-      <dependency id="structuremap" version="4.0.0.315" />
+      <dependency id="structuremap" version="4.4.0" />
 	  <dependency id="Newtonsoft.Json" version="[9.0.1]" />
     </dependencies>
     <frameworkAssemblies>
