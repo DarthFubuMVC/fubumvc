@@ -43,7 +43,7 @@ NUGET
       LightningQueues (>= 0.2.3) - framework: >= net46, >= netstandard13
       NETStandard.Library (>= 1.6) - framework: >= netstandard13
     ManagedEsent (1.9.4)
-    Marten (1.0.0-alpha-625)
+    Marten (1.0.0-alpha-644)
       Baseline (>= 1.1) - framework: >= netstandard13
       NETStandard.Library (>= 1.6) - framework: >= netstandard13
       Newtonsoft.Json (>= 9.0.1) - framework: >= netstandard13
@@ -257,7 +257,7 @@ NUGET
     Shouldly (2.5)
     Spark (1.7.5)
     Storyteller (3.0.0.325-rc)
-    StructureMap (4.4.0-alpha-446)
+    StructureMap (4.4)
       NETStandard.Library (>= 1.6) - framework: netstandard13, >= netstandard15
       System.Collections.Concurrent (>= 4.0.12) - framework: netstandard13, >= netstandard15
       System.Reflection.TypeExtensions (>= 4.1) - framework: netstandard13, >= netstandard15
