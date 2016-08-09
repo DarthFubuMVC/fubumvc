@@ -22,19 +22,31 @@ namespace FubuMVC.LightningQueues
                 {
 
 
+                    var shouldWrite = true;
                     var folder = Environment.Is64BitProcess ? "x64" : "x86";
                     var assembly = Assembly.GetExecutingAssembly();
+                    byte[] resourceAssemblyBytes;
 
                     string resourceName = $"FubuMVC.LightningQueues.{folder}.{StaticLibraryName}";
-                    var stream = assembly.GetManifestResourceStream(resourceName);
 
-                    var path = AppDomain.CurrentDomain.BaseDirectory.AppendPath(StaticLibraryName);
-                    using (var file = new FileStream(path, FileMode.Create))
+                    var stream = assembly.GetManifestResourceStream(resourceName);
+                    using (var memoryStream = new MemoryStream())
                     {
-                        stream.CopyTo(file);
+                        stream.CopyTo(memoryStream);
+                        resourceAssemblyBytes = memoryStream.GetBuffer();
                     }
 
-                    Console.WriteLine($"Successfully wrote resource {resourceName} to {path}");
+                    var path = AppDomain.CurrentDomain.BaseDirectory.AppendPath(StaticLibraryName);
+                    if (File.Exists(path))
+                    {
+                        var existingBytes = File.ReadAllBytes(path);
+                        shouldWrite = !resourceAssemblyBytes.SequenceEqual(existingBytes);
+                    }
+                    if (shouldWrite)
+                    {
+                        File.WriteAllBytes(path, resourceAssemblyBytes);
+                        Console.WriteLine($"Successfully wrote resource {resourceName} to {path}");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -44,9 +56,9 @@ namespace FubuMVC.LightningQueues
                 {
                     _exported = true;
                 }
-            } 
+            }
         }
-    
+
 
         public static readonly string ErrorQueueName = "errors";
 
@@ -94,8 +106,8 @@ namespace FubuMVC.LightningQueues
         protected override IChannel buildChannel(ChannelNode channelNode)
         {
             var uri = new LightningUri(channelNode.Uri);
-            return channelNode.Mode == ChannelMode.DeliveryGuaranteed 
-                ? LightningQueuesChannel.BuildPersistentChannel(uri, _queues, _settings.MapSize, _settings.MaxDatabases, channelNode.Incoming) 
+            return channelNode.Mode == ChannelMode.DeliveryGuaranteed
+                ? LightningQueuesChannel.BuildPersistentChannel(uri, _queues, _settings.MapSize, _settings.MaxDatabases, channelNode.Incoming)
                 : LightningQueuesChannel.BuildNoPersistenceChannel(uri, _queues, channelNode.Incoming);
         }
 
