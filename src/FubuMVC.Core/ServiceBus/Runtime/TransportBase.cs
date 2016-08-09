@@ -15,9 +15,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime
 
             if (Disabled(nodes)) return;
 
-            seedQueues(nodes);
-
             nodes.OrderByDescending(x => x.Incoming).Each(x => x.Channel = buildChannel(x));
+            seedQueues(nodes);
 
             graph.AddReplyChannel(Protocol, getReplyUri(graph));
         }
