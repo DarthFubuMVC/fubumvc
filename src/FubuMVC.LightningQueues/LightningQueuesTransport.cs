@@ -114,7 +114,7 @@ namespace FubuMVC.LightningQueues
 
         protected override void seedQueues(IEnumerable<ChannelNode> channels)
         {
-            var groups = channels.GroupBy(x => x.Uri.Port).Where(x => x.Count() > 1);
+            var groups = channels.Where(x => x.Incoming).GroupBy(x => x.Uri.Port).Where(x => x.Count() > 1);
             foreach (var group in groups)
             {
                 if (group.Select(x => x.Mode).Distinct().Count() > 1)
