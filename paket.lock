@@ -35,12 +35,12 @@ NUGET
       System.Runtime (>= 4.1) - framework: >= netstandard13
       System.Runtime.InteropServices (>= 4.1) - framework: >= netstandard13
       System.Threading (>= 4.0.11) - framework: >= netstandard13
-    LightningQueues (0.2.3)
+    LightningQueues (0.2.5)
       NETStandard.Library (>= 1.6) - framework: >= netstandard13
       System.Reactive (>= 3.0) - framework: >= net46, >= netstandard13
-    LightningQueues.Storage.LMDB (0.2.3)
+    LightningQueues.Storage.LMDB (0.2.5)
       LightningDB (>= 0.9.4) - framework: >= net46, >= netstandard13
-      LightningQueues (>= 0.2.3) - framework: >= net46, >= netstandard13
+      LightningQueues (>= 0.2.5) - framework: >= net46, >= netstandard13
       NETStandard.Library (>= 1.6) - framework: >= netstandard13
     ManagedEsent (1.9.4)
     Marten (1.0.0-alpha-644)

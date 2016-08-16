@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
-using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.Services;
-using LightningQueues.Model;
+using LightningQueues;
 
 namespace FubuMVC.LightningQueues.Diagnostics
 {
@@ -19,7 +15,8 @@ namespace FubuMVC.LightningQueues.Diagnostics
         private readonly IQueueMessageRetrieval _queueMessageRetrieval;
         private readonly IEnvelopeSerializer _serializer;
 
-        public LightningQueuesFubuDiagnostics(IPersistentQueues queues, IQueueMessageRetrieval queueMessageRetrieval, IEnvelopeSerializer serializer)
+        public LightningQueuesFubuDiagnostics(IPersistentQueues queues, IQueueMessageRetrieval queueMessageRetrieval,
+            IEnvelopeSerializer serializer)
         {
             _queues = queues;
             _queueMessageRetrieval = queueMessageRetrieval;
@@ -50,15 +47,14 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 var summary = new MessageSummary
                 {
                     id = msg.Id.ToString(),
-                    status = msg.Status.ToString(),
                     sentat = msg.SentAt.ToString(),
                     sourceinstanceid = msg.Id.SourceInstanceId.ToString(),
-                    headers = msg.Headers.ToDictionary()
+                    headers = msg.Headers
                 };
 
-                if (msg is PersistentMessageToSend)
+                if (msg is OutgoingMessage)
                 {
-                    summary.destination = msg.As<PersistentMessageToSend>().Endpoint.ToString();
+                    summary.destination = msg.As<OutgoingMessage>().Destination.ToString();
                 }
 
 
@@ -73,14 +69,9 @@ namespace FubuMVC.LightningQueues.Diagnostics
             };
         }
 
-        public QueueMessageVisualization get_message_Port_QueueName_SourceInstanceId_MessageId(
-            MessageInputModel input)
+        public QueueMessageVisualization get_message_Port_QueueName_SourceInstanceId_MessageId(MessageInputModel input)
         {
-            var messageId = new MessageId
-            {
-                MessageIdentifier = input.MessageId,
-                SourceInstanceId = input.SourceInstanceId
-            };
+            var messageId = MessageId.Parse($"{input.SourceInstanceId}/{input.MessageId}");
 
             var message = retrieveMessage(messageId, input.Port, input.QueueName);
 
@@ -89,27 +80,47 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 return new QueueMessageVisualization {NotFound = true};
             }
 
-            var envelope = message.ToEnvelope();
-            envelope.UseSerializer(_serializer);
-
-            // TODO -- show errors if in error queue
-
             var model = new QueueMessageVisualization
             {
                 MessageId = messageId,
                 QueueName = message.Queue,
-                SubQueueName = message.SubQueue,
-                Status = message.Status,
                 SentAt = message.SentAt,
-                Headers = message.Headers.ToDictionary(),
+                Headers = message.Headers,
                 Port = input.Port
-                
             };
-
             try
             {
-                // TODO -- gotta watch how big this monster would be
-                model.Payload = JsonSerialization.ToJson(envelope.Message, true);
+                object payload;
+                var envelope = message.ToEnvelope();
+                envelope.UseSerializer(_serializer);
+                if (input.QueueName == "errors")
+                {
+                    var errorReport = ErrorReport.Deserialize(message.Data);
+                    message = new Message
+                    {
+                        Data = errorReport.RawData,
+                        Headers = errorReport.Headers,
+                        Id = messageId,
+                        Queue = input.QueueName,
+                    };
+                    envelope = message.ToEnvelope();
+                    var originalMessage = _serializer.Deserialize(envelope);
+                    var errorSummary = new ErrorSummary
+                    {
+                        exceptiontype = errorReport.ExceptionType,
+                        exceptionmessage = errorReport.ExceptionMessage,
+                        exceptiontext = errorReport.ExceptionText,
+                        originalmessage = originalMessage
+                    };
+                    payload = errorSummary;
+                }
+                else
+                {
+                    payload = envelope.Message;
+                }
+
+
+                model.Payload = JsonSerialization.ToJson(payload, true);
             }
             catch (Exception)
             {
@@ -120,7 +131,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
         }
 
 
-        private PersistentMessage retrieveMessage(MessageId messageId, int port, string queueName)
+        private Message retrieveMessage(MessageId messageId, int port, string queueName)
         {
             var request = new QueueMessageRetrievalRequest
             {
@@ -137,18 +148,12 @@ namespace FubuMVC.LightningQueues.Diagnostics
         }
     }
 
-    public static class NameValueCollectionExtensions
+    public class ErrorSummary
     {
-        public static Dictionary<string, string> ToDictionary(this NameValueCollection collection)
-        {
-            var dict = new Dictionary<string, string>();
-            collection.AllKeys.Each(key =>
-            {
-                dict.Add(key, collection[key]);
-            });
-
-            return dict;
-        }
+        public string exceptiontype { get; set; }
+        public string exceptionmessage { get; set; }
+        public string exceptiontext { get; set; }
+        public object originalmessage { get; set; }
     }
 
     public class MessageSummary
@@ -159,7 +164,6 @@ namespace FubuMVC.LightningQueues.Diagnostics
         }
 
         public string id { get; set; }
-        public string status { get; set; }
         public string sentat { get; set; }
         public string sourceinstanceid { get; set; }
         public IDictionary<string, string> headers { get; set; }

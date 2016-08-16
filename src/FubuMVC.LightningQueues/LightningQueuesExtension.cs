@@ -1,6 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.LightningQueues.Diagnostics;
 
 namespace FubuMVC.LightningQueues
 {
@@ -17,7 +18,7 @@ namespace FubuMVC.LightningQueues
         public LightningQueuesServiceRegistry()
         {
             AddService<ITransport, LightningQueuesTransport>();
-            //AddService<IQueueMessageRetrieval, QueueMessageRetrieval>(); // For diagnostics
+            AddService<IQueueMessageRetrieval, QueueMessageRetrieval>(); // For diagnostics
             SetServiceIfNone<IPersistentQueues, PersistentQueues>().Singleton();
         }
     }

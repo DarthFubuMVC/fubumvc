@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         {
             envelope.Message = new Message1();
             report = new ErrorReport(envelope, exception);
-            
+
         }
 
         [Test]
@@ -30,7 +31,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         [Test]
         public void capture_the_headers()
         {
-            report.Headers.ShouldBe(envelope.Headers.ToNameValues());
+            report.Headers.ShouldBe(envelope.Headers.ToDictionary());
         }
 
         [Test]

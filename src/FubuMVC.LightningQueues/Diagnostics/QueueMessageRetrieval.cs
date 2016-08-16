@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using LightningQueues;
 
 namespace FubuMVC.LightningQueues.Diagnostics
@@ -15,26 +16,14 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 new QueueMessagesRetrievalStrategy
                 {
                     CanHandle = req => req.QueueName == "outgoing",
-                    Execute = (req, queue) => queue.GetMessagesCurrentlySending(),
-                    ExecuteForSingleMessage = (req, queue) => queue.GetMessageCurrentlySendingById(req.MessageId)
-                },
-                new QueueMessagesRetrievalStrategy
-                {
-                    CanHandle = req => req.QueueName == "outgoing_history",
-                    Execute = (req, queue) => queue.GetAllSentMessages(),
-                    ExecuteForSingleMessage = (req, queue) => queue.GetSentMessageById(req.MessageId)
-                },
-                new QueueMessagesRetrievalStrategy
-                {
-                    CanHandle = req => req.QueueName.EndsWith("_history"),
-                    Execute = (req, queue) => queue.GetAllProcessedMessages(req.QueueName.WithoutHistorySuffix()),
-                    ExecuteForSingleMessage = (req, queue) => queue.GetProcessedMessageById(req.QueueName.WithoutHistorySuffix(), req.MessageId)
+                    Execute = (req, queue) => queue.Store.PersistedOutgoingMessages().ToEnumerable().ToArray(),
+                    ExecuteForSingleMessage = (req, queue) => queue.Store.GetMessage("outgoing", req.MessageId)
                 },
                 new QueueMessagesRetrievalStrategy
                 {
                     CanHandle = _ => true,
-                    Execute = (req, queue) => queue.GetAllMessages(req.QueueName, null),
-                    ExecuteForSingleMessage = (req, queue) => queue.PeekById(req.QueueName, req.MessageId)
+                    Execute = (req, queue) => queue.Store.PersistedMessages(req.QueueName).ToEnumerable().ToArray(),
+                    ExecuteForSingleMessage = (req, queue) => queue.Store.GetMessage(req.QueueName, req.MessageId)
                 }
             };
 
@@ -43,21 +32,21 @@ namespace FubuMVC.LightningQueues.Diagnostics
             _queues = queues;
         }
 
-        public IEnumerable<PersistentMessage> GetAllMessagesInQueue(QueueMessageRetrievalRequest request)
+        public IEnumerable<Message> GetAllMessagesInQueue(QueueMessageRetrievalRequest request)
         {
             return MessageRetrievalStrategies
                 .First(x => x.CanHandle(request))
                 .Execute(request, GetQueueManager(request));
         }
 
-        public PersistentMessage GetSingleMessageInQueue(QueueMessageRetrievalRequest request)
+        public Message GetSingleMessageInQueue(QueueMessageRetrievalRequest request)
         {
             return MessageRetrievalStrategies
                 .First(x => x.CanHandle(request))
                 .ExecuteForSingleMessage(request, GetQueueManager(request));
         }
 
-        private IQueueManager GetQueueManager(QueueMessageRetrievalRequest request)
+        private Queue GetQueueManager(QueueMessageRetrievalRequest request)
         {
             return _queues.AllQueueManagers.Single(x => x.Endpoint.Port == request.Port);
         }
@@ -65,15 +54,15 @@ namespace FubuMVC.LightningQueues.Diagnostics
         private class QueueMessagesRetrievalStrategy
         {
             public Func<QueueMessageRetrievalRequest, bool> CanHandle { get; set; }
-            public Func<QueueMessageRetrievalRequest, IQueueManager, IEnumerable<PersistentMessage>> Execute { get; set; }
-            public Func<QueueMessageRetrievalRequest, IQueueManager, PersistentMessage> ExecuteForSingleMessage { get; set; }
+            public Func<QueueMessageRetrievalRequest, Queue, IEnumerable<Message>> Execute { get; set; }
+            public Func<QueueMessageRetrievalRequest, Queue, Message> ExecuteForSingleMessage { get; set; }
         }
     }
 
     public interface IQueueMessageRetrieval
     {
-        IEnumerable<PersistentMessage> GetAllMessagesInQueue(QueueMessageRetrievalRequest request);
-        PersistentMessage GetSingleMessageInQueue(QueueMessageRetrievalRequest request);
+        IEnumerable<Message> GetAllMessagesInQueue(QueueMessageRetrievalRequest request);
+        Message GetSingleMessageInQueue(QueueMessageRetrievalRequest request);
     }
 
     public class QueueMessageRetrievalRequest
@@ -81,13 +70,5 @@ namespace FubuMVC.LightningQueues.Diagnostics
         public int Port { get; set; }
         public string QueueName { get; set; }
         public MessageId MessageId { get; set; }
-    }
-
-    public static class QueueNameExtensions
-    {
-        public static string WithoutHistorySuffix(this string queueName)
-        {
-            return queueName.Replace("_history", string.Empty);
-        }
     }
 }

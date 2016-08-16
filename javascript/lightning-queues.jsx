@@ -16,23 +16,11 @@ var QueueManager = React.createClass({
 			);
 		});
 
-		var outgoingUrl = "#lq/messages/" + this.props.Port + "/outgoing";
-		var outgoingHistoryUrl = "#lq/messages/" + this.props.Port + "/outgoing_history";
-
 		return (
 		<div>
 		  <ul style={{float:'left'}}>
 		    <li>Storage Path: {this.props.Path}</li>
 		    <li>Port: {this.props.Port}</li>
-		    <li>Keep Outgoing History: {this.props.EnableOutgoingMessageHistory}</li>
-		    <li>Keep Processed History: {this.props.EnableProcessedMessageHistory}</li>
-		  </ul>
-		  <ul style={{float:'left', marginRight: '25px'}}>
-		    <li>Oldest Outgoing History: {this.props.OldestMessageInOutgoingHistory}</li>
-		    <li>Oldest Processed History: {this.props.OldestMessageInProcessedHistory}</li>
-		    <li>Max # in Outgoing History: {this.props.NumberOfMessagesToKeepInOutgoingHistory}</li>
-		    <li>Max # in Processed History: {this.props.NumberOfMessagesToKeepInProcessedHistory}</li>
-		    <li>Max # MessageIds to keep: {this.props.NumberOfMessagIdsToKeep}</li>
 		  </ul>
 		  <table className="table table-striped" style={{width: 'auto', marginLeft: '25px'}}>
 		  	<tr>
@@ -41,16 +29,6 @@ var QueueManager = React.createClass({
 		  		<th style={{textAlign: "right"}}>Number of Messages</th>
 		  	</tr>
 		  	{queueRows}
-			<tr>
-				<td><a href={outgoingUrl}>outgoing</a></td>
-				<td>{this.props.Port}</td>
-				<td style={{textAlign: "right"}}>n/a</td>
-			</tr>
-			<tr>
-				<td><a href={outgoingHistoryUrl}>outgoing_history</a></td>
-				<td>{this.props.Port}</td>
-				<td style={{textAlign: "right"}}>n/a</td>
-			</tr>
 		  </table>
 		  <hr></hr>
 		  </div>
@@ -121,7 +99,6 @@ var QueueDetails = React.createClass({
 				<tr>
 					<td><a href={url}>{msg.id}</a></td>
 					<td>{msg.headers['message-type']}</td>
-					<td>{msg.status}</td>
 					<td>{msg.sentat}</td>
 					<td>{msg.destination}</td>
 				</tr>
@@ -137,7 +114,6 @@ var QueueDetails = React.createClass({
 				<tr>
 					<th>Message Id</th>
 					<th>Type</th>
-					<th>Status</th>
 					<th>Sent At</th>
 					<th>Destination</th>
 				</tr>
@@ -192,8 +168,6 @@ var MessageDetails = React.createClass({
 
 				<br></br>
 				<h3>Queue: <a href={queueUrl}>{this.state.data.QueueName}</a></h3>
-				<h3>Sub Queue: {this.state.data.SubQueueName}</h3>
-				<h3>Status: {this.state.data.Status}</h3>
 				<h3>Sent At: {this.state.data.SentAt}</h3>
 				<br></br>
 

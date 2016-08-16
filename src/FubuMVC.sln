@@ -5,9 +5,18 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Build_Utilities", "__Build_Utilities", "{7AC4D197-535A-4686-8E21-18257B2ADB3A}"
 	ProjectSection(SolutionItems) = preProject
-		..\packaging\nuget\fubumvc.nuspec = ..\packaging\nuget\fubumvc.nuspec
-		..\InstallGems.bat = ..\InstallGems.bat
 		..\rakefile.rb = ..\rakefile.rb
+		..\packaging\nuget\fubumvc.aspnet.nuspec = ..\packaging\nuget\fubumvc.aspnet.nuspec
+		..\packaging\nuget\fubumvc.core.nuspec = ..\packaging\nuget\fubumvc.core.nuspec
+		..\packaging\nuget\fubumvc.lightningqueues.nuspec = ..\packaging\nuget\fubumvc.lightningqueues.nuspec
+		..\packaging\nuget\fubumvc.marten.nuspec = ..\packaging\nuget\fubumvc.marten.nuspec
+		..\packaging\nuget\fubumvc.ravendb.nuspec = ..\packaging\nuget\fubumvc.ravendb.nuspec
+		..\packaging\nuget\fubumvc.razor.nuspec = ..\packaging\nuget\fubumvc.razor.nuspec
+		..\packaging\nuget\fubumvc.spark.nuspec = ..\packaging\nuget\fubumvc.spark.nuspec
+		..\packaging\nuget\jasperservice.nuspec = ..\packaging\nuget\jasperservice.nuspec
+		..\packaging\nuget\serenity.nuspec = ..\packaging\nuget\serenity.nuspec
+		..\packaging\nuget\web.config.transform = ..\packaging\nuget\web.config.transform
+		..\paket.dependencies = ..\paket.dependencies
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewEngines", "ViewEngines", "{5600609A-D061-40E7-9CB2-92D3350EA31B}"

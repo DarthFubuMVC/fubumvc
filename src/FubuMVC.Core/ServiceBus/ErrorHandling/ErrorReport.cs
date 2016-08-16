@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.IO;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime;
@@ -14,7 +14,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
 
         public ErrorReport(Envelope envelope, Exception ex)
         {
-            Headers = envelope.Headers.ToNameValues();
+            Headers = envelope.Headers.ToDictionary();
             ExceptionText = ex.ToString();
             ExceptionMessage = ex.Message;
             ExceptionType = ex.GetType().FullName;
@@ -27,7 +27,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
 
         public byte[] RawData { get; set; }
 
-        public NameValueCollection Headers { get; set; }
+        public IDictionary<string, string> Headers { get; set; }
 
         public string Explanation { get; set; }
 
@@ -49,7 +49,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
                 return stream.ReadAllBytes();
             }
 
-            
+
         }
 
         public static ErrorReport Deserialize(byte[] data)

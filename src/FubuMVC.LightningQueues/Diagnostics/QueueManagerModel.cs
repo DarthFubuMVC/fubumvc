@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using LightningQueues;
+using LightningQueues.Storage.LMDB;
 
 namespace FubuMVC.LightningQueues.Diagnostics
 {
@@ -9,37 +10,18 @@ namespace FubuMVC.LightningQueues.Diagnostics
     {
         public QueueManagerModel(Queue queueManager)
         {
-            throw new NotImplementedException();
-            /*
-            EnableProcessedMessageHistory = queueManager.Configuration.EnableProcessedMessageHistory;
-            EnableOutgoingMessageHistory = queueManager.Configuration.EnableOutgoingMessageHistory;
-            Path = queueManager.Path;
+            var lmdbStore = queueManager.Store as LmdbMessageStore;
+            Path = lmdbStore == null ? "No path" : lmdbStore.Environment.Path;
             Port = queueManager.Endpoint.Port;
-            OldestMessageInOutgoingHistory = queueManager.Configuration.OldestMessageInOutgoingHistory.TotalMilliseconds;
-            OldestMessageInProcessedHistory =
-                queueManager.Configuration.OldestMessageInProcessedHistory.TotalMilliseconds;
-            NumberOfMessagesToKeepInOutgoingHistory = queueManager.Configuration.NumberOfMessagesToKeepInOutgoingHistory;
-            NumberOfMessagesToKeepInProcessedHistory =
-                queueManager.Configuration.NumberOfMessagesToKeepInProcessedHistory;
-            NumberOfMessagIdsToKeep = queueManager.Configuration.NumberOfReceivedMessageIdsToKeep;
             Queues = buildQueues(queueManager).ToArray();
-            */
         }
 
         public int Port { get; set; }
         public string Path { get; set; }
-        public bool EnableProcessedMessageHistory { get; set; }
-        public bool EnableOutgoingMessageHistory { get; set; }
-        public double OldestMessageInOutgoingHistory { get; set; }
-        public double OldestMessageInProcessedHistory { get; set; }
-        public int NumberOfMessagesToKeepInOutgoingHistory { get; set; }
-        public int NumberOfMessagesToKeepInProcessedHistory { get; set; }
-        public int NumberOfMessagIdsToKeep { get; set; }
         public QueueDto[] Queues { get; set; }
 
 
-        /*
-        private IEnumerable<QueueDto> buildQueues(IQueueManager queues)
+        private IEnumerable<QueueDto> buildQueues(Queue queues)
         {
             foreach (var queue in queues.Queues)
             {
@@ -47,10 +29,15 @@ namespace FubuMVC.LightningQueues.Diagnostics
                 {
                     Port = queues.Endpoint.Port,
                     QueueName = queue,
-                    NumberOfMessages = queues.GetNumberOfMessages(queue)
+                    NumberOfMessages = queues.Store.PersistedMessages(queue).ToEnumerable().Count()
                 };
             }
+            yield return new QueueDto
+            {
+                Port = queues.Endpoint.Port,
+                QueueName = "outgoing",
+                NumberOfMessages = queues.Store.PersistedOutgoingMessages().ToEnumerable().Count()
+            };
         }
-        */
     }
 }
