@@ -12,14 +12,15 @@ namespace FubuMVC.Core.Registration.Querying
 {
     public class ChainSearch
     {
-        public static ChainSearch ByUniqueInputType(Type modelType, string categoryOrHttpMethod = null)
+        public static ChainSearch ByUniqueInputType(Type modelType, string categoryOrHttpMethod = null, bool required = true)
         {
             return new ChainSearch
             {
                 Type = modelType,
                 TypeMode = TypeSearchMode.Any,
-                CategoryOrHttpMethod = categoryOrHttpMethod
-            }; 
+                CategoryOrHttpMethod = categoryOrHttpMethod,
+                Required = required
+            };
         }
 
         public static ChainSearch ForMethod(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null)
@@ -52,6 +53,7 @@ namespace FubuMVC.Core.Registration.Querying
         public CategorySearchMode CategoryMode = CategorySearchMode.Relaxed;
         public TypeSearchMode TypeMode = TypeSearchMode.Any;
         public string MethodName;
+        public bool Required = true;
 
         public override string ToString()
         {
@@ -150,7 +152,7 @@ namespace FubuMVC.Core.Registration.Querying
                 return chains.Where(x => x.MatchesCategoryOrHttpMethod(CategoryOrHttpMethod));
             }
 
-            
+
         }
     }
 }

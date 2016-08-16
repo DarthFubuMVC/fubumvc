@@ -1,14 +1,11 @@
-using System.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
-using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using Shouldly;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Registration.Querying
 {
@@ -25,6 +22,18 @@ namespace FubuMVC.Tests.Registration.Querying
         public void default_type_search_mode_should_be_any()
         {
             new ChainSearch().TypeMode.ShouldBe(TypeSearchMode.Any);
+        }
+
+        [Test]
+        public void search_can_be_optional()
+        {
+            ChainSearch.ByUniqueInputType(typeof(ChainSearch), required: false).Required.ShouldBeFalse();
+        }
+
+        [Test]
+        public void default_search_is_required()
+        {
+            ChainSearch.ByUniqueInputType(typeof(ChainSearch)).Required.ShouldBeTrue();
         }
 
         [Test]
@@ -456,7 +465,7 @@ namespace FubuMVC.Tests.Registration.Querying
                                   Type = typeof(SimpleInputModel)
                               };
 
- 
+
 
             chainSearch.FindCandidatesByType(theGraph).Single().Select(x => x.FirstCall().Description)
             .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");
@@ -489,12 +498,12 @@ namespace FubuMVC.Tests.Registration.Querying
             candidates.First().Select(x => x.FirstCall().Description)
                 .ShouldHaveTheSameElementsAs(
                 "OneController.Report() : SimpleOutputModel",
-                "OneController.Query(SimpleInputModel model) : SimpleOutputModel", 
+                "OneController.Query(SimpleInputModel model) : SimpleOutputModel",
                 "TwoController.Report() : SimpleOutputModel",
                 "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel"
-                
-                
-                
+
+
+
                 );
 
 
@@ -526,12 +535,12 @@ namespace FubuMVC.Tests.Registration.Querying
                 MethodName = "Query"
             }.FindCandidatesByType(theGraph).SelectMany(x => x);
 
-            
+
 
             candidates.Select(x => x.FirstCall().Description)
                 .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel");
 
- 
+
         }
 
 

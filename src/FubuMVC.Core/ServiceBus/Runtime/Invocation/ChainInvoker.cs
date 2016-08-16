@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using FubuCore;
-using FubuCore.Dates;
 using FubuCore.Logging;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -46,7 +44,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         public virtual HandlerChain FindChain(Envelope envelope)
         {
             var messageType = envelope.Message.GetType();
-            return _chainResolver.FindUniqueByType(messageType).As<HandlerChain>();
+            return _chainResolver.Find(ChainSearch.ByUniqueInputType(messageType, required: false)).As<HandlerChain>();
         }
 
 

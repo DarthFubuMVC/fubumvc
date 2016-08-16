@@ -42,6 +42,10 @@ namespace FubuMVC.Core.Registration.Querying
                 case 0:
                     return () =>
                     {
+                        if (!search.Required)
+                        {
+                            return null;
+                        }
                         throw new FubuException(2104, "No behavior chains are registered matching criteria:  " + search);
                     };
 
