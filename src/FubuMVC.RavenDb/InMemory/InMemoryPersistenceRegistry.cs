@@ -1,4 +1,5 @@
 ﻿using FubuCore.Dates;
+using FubuCore.Logging;
 using FubuMVC.RavenDb.MultiTenancy;
 using FubuMVC.RavenDb.Reset;
 using FubuMVC.RavenDb.Storage;
@@ -25,6 +26,7 @@ namespace FubuMVC.RavenDb.InMemory
 
             // Needs to be resolved from the parent
             ForSingletonOf<ICompleteReset>().Use<CompleteReset>();
+            For<ILogger>().UseIfNone<Logger>();
         }
     }
 
