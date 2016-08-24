@@ -72,6 +72,8 @@ namespace FubuMVC.LightningQueues
                 Queue = uri.QueueName
             };
 
+            message.TranslateHeaders();
+
             _context.Send(message);
         }
 

@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="HeaderTranslationTester.cs" />
     <Compile Include="throws_descriptive_message_if_a_single_port_has_mixed_modes.cs" />
+    <Compile Include="TransactionCallbackTester.cs" />
     <Compile Include="UriExtensionsTester.cs">
       <SubType>Code</SubType>
     </Compile>
