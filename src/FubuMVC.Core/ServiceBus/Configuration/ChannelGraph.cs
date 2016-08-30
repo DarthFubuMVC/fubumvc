@@ -26,10 +26,16 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 
             _replyChannels.OnMissing = name =>
             {
-                var all = _channels.Where(x => x.Protocol() == name).ToArray();
-                if (all.Any())
+                var channels = _channels.Where(x => x.Protocol() == name).ToArray();
+
+                var incoming = channels.FirstOrDefault(x => x.Incoming);
+
+
+                if (incoming != null) return incoming.Uri;
+
+                if (channels.Any())
                 {
-                    var existing = all.Select(x => $"{x.Uri} Incoming = {x.Incoming}").Join(", ");
+                    var existing = channels.Select(x => $"{x.Uri} Incoming = {x.Incoming}").Join(", ");
                     throw new ArgumentOutOfRangeException($"No known reply channel for protocol '{name}', existing channels are {existing}");
                 }
                 else
