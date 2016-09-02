@@ -4,9 +4,9 @@ nuget Castle.Core 3.2.1
 nuget Fixie ~> 1.0.0.29
 nuget Fleck 0.10.0.26
 nuget Jetbrains.Profiler.Kernel.Windows.Api 106.0.20160728.75739-eap10 eap
-nuget LightningDB 0.9.5
-nuget LightningQueues 0.2.8
-nuget LightningQueues.Storage.LMDB 0.2.8
+nuget LightningDB 0.9.6
+nuget LightningQueues 0.2.9
+nuget LightningQueues.Storage.LMDB 0.2.9
 nuget Marten 1.0.0-alpha-644
 nuget Microsoft.AspNet.Razor 2.0.20715.0
 nuget Microsoft.Data.Edm 5.6.0
