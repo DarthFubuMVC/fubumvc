@@ -13,7 +13,7 @@
     <tags>fubumvc service bus</tags>
     <dependencies>
       <dependency id="FubuMVC.Core" version="3.0" />
-      <dependency id="Marten" version="1.0.0-alpha-644" />
+      <dependency id="Marten" version="1.0.0-alpha-710" />
     </dependencies>
   </metadata>
   <files xmlns="">

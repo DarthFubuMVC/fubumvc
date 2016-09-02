@@ -7,7 +7,7 @@ nuget Jetbrains.Profiler.Kernel.Windows.Api 106.0.20160728.75739-eap10 eap
 nuget LightningDB 0.9.6
 nuget LightningQueues 0.2.9
 nuget LightningQueues.Storage.LMDB 0.2.9
-nuget Marten 1.0.0-alpha-644
+nuget Marten 1.0.0-alpha-710
 nuget Microsoft.AspNet.Razor 2.0.20715.0
 nuget Microsoft.Data.Edm 5.6.0
 nuget Microsoft.Net.Http 2.0.20710.0
