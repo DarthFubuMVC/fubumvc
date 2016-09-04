@@ -1,51 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 
 namespace FubuMVC.AspNet
 {
     public class AspNetDictionary : IDictionary<string, object>
     {
-        private readonly HttpContext _context;
-        private IDictionary<string, object> _contextInfo;
+        private static Dictionary<string, Func<HttpContext, object>> _sources = new Dictionary<string, Func<HttpContext, object>>();
 
-        private IDictionary<string, object> ContextInfo => _contextInfo
-                                                           ??
-                                                           (_contextInfo = PopulateFromContext());
-
-        private IDictionary<string, object> PopulateFromContext()
+        static AspNetDictionary()
         {
-            var dictionary = new Dictionary<string, object>();
-            var requestHeaders = new Dictionary<string, string[]>();
-
-            var originalRequestHeaders = _context.Request.Headers;
-            foreach (var key in originalRequestHeaders.AllKeys)
-            {
-                requestHeaders.Add(key, new[] {originalRequestHeaders[key]});
-            }
-            dictionary["owin.RequestHeaders"] = requestHeaders;
-
-            dictionary["owin.RequestMethod"] = _context.Request.HttpMethod;
-            dictionary["owin.RequestPath"] = _context.Request.Path;
-            dictionary["owin.RequestPathBase"] = _context.Request.ApplicationPath;
-            dictionary["owin.RequestScheme"] = _context.Request.Url.Scheme;
-            dictionary["owin.RequestQueryString"] = _context.Request.Url.Query;
-            var responseHeaders = new Dictionary<string, string[]>();
-            var originalResponseHeaders = _context.Response.Headers;
-            foreach (var key in originalResponseHeaders.AllKeys)
-            {
-                responseHeaders.Add(key, new [] {originalResponseHeaders[key]});
-            }
-            dictionary["owin.ResponseHeaders"] = responseHeaders;
-
-            dictionary["owin.ResponseStatusCode"] = _context.Response.StatusCode;
-            dictionary["owin.ResponseReasonPhrase"] = _context.Response.StatusDescription;
-            return dictionary;
-        }
-
-        public AspNetDictionary(HttpContext context)
-        {
-            _context = context;
+            _sources["owin.RequestHeaders"] = c => c.Request.Headers.AllKeys.ToDictionary(x => x, x => new []{c.Request.Headers[x]});
+            _sources["owin.RequestMethod"] = c => c.Request.HttpMethod;
+            _sources["owin.RequestPath"] = c => c.Request.Path;
+            _sources["owin.RequestPathBase"] = c => c.Request.ApplicationPath;
+            _sources["owin.RequestScheme"] = c => c.Request.Url.Scheme;
+            _sources["owin.RequestQueryString"] = c => c.Request.Url.Query;
+            _sources["owin.ResponseHeaders"] = c => c.Response.Headers.AllKeys.ToDictionary(x => x, x => new []{c.Response.Headers[x]});
+            _sources["owin.ResponseStatusCode"] = c => c.Response.StatusCode;
+            _sources["owin.ResponseReasonPhrase"] = c => c.Response.StatusDescription;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -82,9 +57,10 @@ namespace FubuMVC.AspNet
 
         public int Count { get; private set; }
         public bool IsReadOnly { get; private set; }
+
         public bool ContainsKey(string key)
         {
-            return ContextInfo.ContainsKey(key);
+            return _sources.ContainsKey(key);
         }
 
         public void Add(string key, object value)
@@ -104,7 +80,15 @@ namespace FubuMVC.AspNet
 
         public object this[string key]
         {
-            get { return ContextInfo[key]; }
+            get
+            {
+                Func<HttpContext, object> value;
+                if (_sources.TryGetValue(key, out value))
+                {
+                    return value(HttpContext.Current);
+                }
+                return null;
+            }
             set { }
         }
 
