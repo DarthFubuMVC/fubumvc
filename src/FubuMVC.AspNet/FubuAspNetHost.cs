@@ -67,7 +67,7 @@ namespace FubuMVC.AspNet
                     var log = HttpContext.Current.Items[AspNetServiceArguments.CHAIN_EXECUTION_LOG].As<ChainExecutionLog>();
                     log.MarkFinished();
 
-                    executionLogger.Record(log, new AspNetDictionary());
+                    executionLogger.Record(log, new AspNetDictionary(HttpContext.Current));
                 }
                 catch (Exception e)
                 {

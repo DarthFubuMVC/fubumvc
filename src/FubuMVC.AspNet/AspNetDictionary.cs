@@ -1,48 +1,51 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
-using FubuCore.Util;
-using FubuMVC.Core.ServiceBus.ErrorHandling;
 
 namespace FubuMVC.AspNet
 {
     public class AspNetDictionary : IDictionary<string, object>
     {
-        public static Cache<string, Func<HttpContext, object>> _sources = new Cache<string, Func<HttpContext, object>>(key => null);
+        private readonly HttpContext _context;
+        private IDictionary<string, object> _contextInfo;
 
-        static AspNetDictionary()
+        private IDictionary<string, object> ContextInfo => _contextInfo
+                                                           ??
+                                                           (_contextInfo = PopulateFromContext());
+
+        private IDictionary<string, object> PopulateFromContext()
         {
-            _sources["owin.RequestHeaders"] = c =>
+            var dictionary = new Dictionary<string, object>();
+            var requestHeaders = new Dictionary<string, string[]>();
+
+            var originalRequestHeaders = _context.Request.Headers;
+            foreach (var key in originalRequestHeaders.AllKeys)
             {
-                var dict = new Dictionary<string, string[]>();
+                requestHeaders.Add(key, new[] {originalRequestHeaders[key]});
+            }
+            dictionary["owin.RequestHeaders"] = requestHeaders;
 
-                c.Request.Headers.AllKeys.Each(key =>
-                {
-                    dict.Add(key, new string[]{c.Request.Headers[key]});
-                });
-
-                return dict;
-            };
-
-            _sources["owin.RequestMethod"] = c => c.Request.HttpMethod;
-            _sources["owin.RequestPath"] = c => c.Request.Path;
-            _sources["owin.RequestPathBase"] = c => c.Request.ApplicationPath;
-            _sources["owin.RequestScheme"] = c => c.Request.Url.Scheme;
-            _sources["owin.RequestQueryString"] = c => c.Request.Url.Query;
-            _sources["owin.ResponseHeaders"] = c =>
+            dictionary["owin.RequestMethod"] = _context.Request.HttpMethod;
+            dictionary["owin.RequestPath"] = _context.Request.Path;
+            dictionary["owin.RequestPathBase"] = _context.Request.ApplicationPath;
+            dictionary["owin.RequestScheme"] = _context.Request.Url.Scheme;
+            dictionary["owin.RequestQueryString"] = _context.Request.Url.Query;
+            var responseHeaders = new Dictionary<string, string[]>();
+            var originalResponseHeaders = _context.Response.Headers;
+            foreach (var key in originalResponseHeaders.AllKeys)
             {
-                var dict = new Dictionary<string, string[]>();
-                c.Response.Headers.AllKeys.Each(key =>
-                {
-                    dict.Add(key, new string[] { c.Response.Headers[key] });
-                });
+                responseHeaders.Add(key, new [] {originalResponseHeaders[key]});
+            }
+            dictionary["owin.ResponseHeaders"] = responseHeaders;
 
-                return dict;
-            };
+            dictionary["owin.ResponseStatusCode"] = _context.Response.StatusCode;
+            dictionary["owin.ResponseReasonPhrase"] = _context.Response.StatusDescription;
+            return dictionary;
+        }
 
-            _sources["owin.ResponseStatusCode"] = c => c.Response.StatusCode;
-            _sources["owin.ResponseReasonPhrase"] = c => c.Response.StatusDescription;
+        public AspNetDictionary(HttpContext context)
+        {
+            _context = context;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -52,60 +55,57 @@ namespace FubuMVC.AspNet
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            yield break;
         }
 
         public void Add(KeyValuePair<string, object> item)
         {
-            throw new NotImplementedException();
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
         }
 
         public bool Contains(KeyValuePair<string, object> item)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
         }
 
         public bool Remove(KeyValuePair<string, object> item)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public int Count { get; private set; }
         public bool IsReadOnly { get; private set; }
         public bool ContainsKey(string key)
         {
-            return _sources.Has(key);
+            return ContextInfo.ContainsKey(key);
         }
 
         public void Add(string key, object value)
         {
-            throw new NotImplementedException();
         }
 
         public bool Remove(string key)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool TryGetValue(string key, out object value)
         {
-            throw new NotImplementedException();
+            value = null;
+            return false;
         }
 
         public object this[string key]
         {
-            get { return _sources[key](HttpContext.Current); }
-            set { throw new NotImplementedException(); }
+            get { return ContextInfo[key]; }
+            set { }
         }
 
         public ICollection<string> Keys { get; private set; }
