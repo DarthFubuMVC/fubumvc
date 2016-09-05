@@ -41,7 +41,7 @@ namespace DiagnosticsHarness
 
             AlterSettings<StoreOptions>(_ =>
             {
-                _.Connection("Host=localhost;Username=postgres;Password=jasper;Database=marten_test");
+                _.Connection(Environment.GetEnvironmentVariable("marten-testing-database"));
             });
         }
     }

@@ -20,8 +20,6 @@ namespace FubuMVC.LightningQueues
             {
                 try
                 {
-
-
                     var shouldWrite = true;
                     var folder = Environment.Is64BitProcess ? "x64" : "x86";
                     var assembly = Assembly.GetExecutingAssembly();
@@ -36,7 +34,10 @@ namespace FubuMVC.LightningQueues
                         resourceAssemblyBytes = memoryStream.GetBuffer();
                     }
 
-                    var path = AppDomain.CurrentDomain.BaseDirectory.AppendPath(StaticLibraryName);
+                    //var path = Path.GetDirectoryName(typeof(LightningQueuesTransport).Assembly.CodeBase).AppendPath(StaticLibraryName).Replace(@"file:\", string.Empty);
+                    var path = Path.GetDirectoryName(new Uri(typeof(LightningQueuesTransport).Assembly.CodeBase).LocalPath)
+                        .AppendPath(StaticLibraryName);
+                    Console.WriteLine($"Checking to see if {path} exists");
                     if (File.Exists(path))
                     {
                         var existingBytes = File.ReadAllBytes(path);
