@@ -7,14 +7,15 @@
     "watch": "webpack -w"
   },
   "dependencies": {
-    "babel-core": "^5.8.23",
-    "babel-loader": "^5.3.2",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
     "jsx-loader": "^0.13.2",
-    "lodash": "^3.10.1",
-    "react": "^0.13.3",
-    "react-bootstrap": "^0.25.1",
-    "react-loader": "^1.4.0",
-    "react-router": "^0.13.3",
+    "lodash": "^4.15.0",
+    "react": "^15.3.1",
+    "react-bootstrap": "^0.30.3",
+    "react-dom": "^15.3.1",
+    "react-loader": "^2.4.0",
+    "react-router": "^2.7.0",
     "webpack": "^1.12.0"
   }
 }
