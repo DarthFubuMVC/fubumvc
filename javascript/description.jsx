@@ -1,19 +1,16 @@
-var React = require('react');
-var DescriptionBody = require('./description-body');
-
+import React from 'react'
+import DescriptionBody from './description-body'
 
 var Description = React.createClass({
-	render(){
+    render(){
+        return (
+            <div className="description">
+                <h4>{this.props.title}</h4>
+                <DescriptionBody {...this.props} />
 
-
-		return (
-			<div className="description">
-				<h4>{this.props.title}</h4>
-				<DescriptionBody {...this.props} />
-
-			</div>
-		);
-	}
+            </div>
+        );
+    }
 });
 
 module.exports = Description;

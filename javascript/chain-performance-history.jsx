@@ -1,38 +1,40 @@
-var React = require('react');
+import React from 'react'
 
 module.exports = React.createClass({
-	render(){
-		var rows = this.props.executions.map(x => {
-			var clazz = '';
-			if (x.warn){
-				clazz = 'warning';
-			}
+    render(){
+        var rows = this.props.executions.map(x => {
+            var clazz = '';
+            if (x.warn){
+                clazz = 'warning';
+            }
 
-			var exceptionText = '';
-			if (x.exceptions){
-				exceptionText = 'Exception(s)!';
-				clazz = 'danger';
-			}
+            var exceptionText = '';
+            if (x.exceptions){
+                exceptionText = 'Exception(s)!';
+                clazz = 'danger';
+            }
 
-			var url = "#/fubumvc/request-details/" + x.id;
+            var url = "#/fubumvc/request-details/" + x.id;
 
-			return (
-				<tr className={clazz}>
-					<td><a href={url}>{x.time}</a></td>
-					<td style={{textAlign: "right"}}>{x.execution_time}</td>
-				</tr>
+            return (
+                <tr key={x.id} className={clazz}>
+                    <td><a href={url}>{x.time}</a></td>
+                    <td style={{textAlign: "right"}}>{x.execution_time}</td>
+                </tr>
 
-			);
-		});
+            );
+        });
 
-		return (
-			<table className="table table-striped" style={{width: 'auto'}}>
-				<tr>
-					<th>Time</th>
-					<th style={{textAlign: "right"}}>Execution Time</th>
-				</tr>
-				{rows}
-			</table>
-		);
-	}
+        return (
+            <table className="table table-striped" style={{width: 'auto'}}>
+                <tbody>
+                <tr>
+                    <th>Time</th>
+                    <th style={{textAlign: "right"}}>Execution Time</th>
+                </tr>
+                {rows}
+                </tbody>
+            </table>
+        );
+    }
 });

@@ -19,7 +19,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.css$/, loader: "style!css" },
-      { test: /\.jsx$/, loader: 'jsx?harmony'},
+      { test: /\.jsx$/, loader: 'babel'},
       { test: /\.js$/, exclude: /(node_modules)|(-data\.js$)/, loader: "babel"}
     ]
   },

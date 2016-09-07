@@ -1,64 +1,50 @@
-/** @jsx React.DOM */
+import React from 'react'
+import ReactDOM from 'react-dom'
+import _ from 'lodash'
+import {Router, Route, IndexRoute, hashHistory} from 'react-router'
 
-var React = require('react');
-var _ = require('lodash');
-
-var Router = require('react-router'); // or var Router = ReactRouter; in browsers
-var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
-  Link=Router.Link, RouteHandler = Router.RouteHandler;
-
-var Header = require('./header');
-var Dashboard = require('./dashboard');
-var {Grid, Col, Row} = require('react-bootstrap');
+import Header from './header'
+import Dashboard from './dashboard'
+import {Grid, Row} from 'react-bootstrap'
 
 var count = 0;
 
 var App = React.createClass({
-  mixins: [Router.State],
 
-  getHandlerKey: function () {
-  	count++;
-
-  	return count;
+  getHandlerKey() {
+    count++;
+    return count;
   },
 
-	render: function(){
-		style = {
-			paddingLeft: '25px'
-		}
-	
-		return (
-			<Grid fluid={true}>
-				<Row>
-					<Header />
-				</Row>
-				<Row  style={style}>
-					<RouteHandler key={this.getHandlerKey()}/>
-				</Row>
-			</Grid>
-		);
-	}
+    render(){
+        var style = {
+            paddingLeft: '25px'
+        }
+
+        return (
+            <Grid fluid={true}>
+                <Row>
+                    <Header />
+                </Row>
+                <Row  style={style}>
+                    {React.cloneElement(this.props.children, { key: this.getHandlerKey() })}
+                </Row>
+            </Grid>
+        );
+    }
 });
 
-
-
-
-
-
 module.exports = {
-	start: function(){
-		var sectionRoutes = _.flatten(FubuDiagnostics.sections.map(section => section.toRoutes()));
+    start(){
+        var sectionRoutes = _.flatten(FubuDiagnostics.sections.map((section, i) => section.toRoutes(i)));
 
-		var routes = (
-		  <Route name="app" path="/" handler={App}>
-		    <DefaultRoute handler={Dashboard}/>
-		    {sectionRoutes}
-		  </Route>
-		);
-
-		Router.run(routes, function (Handler) {
-		  React.render(<Handler/>, document.body);
-		});
-	}
+        ReactDOM.render((
+            <Router key={"router"} history={hashHistory}>
+                <Route key={"rootroute"} name="app" path="/" component={App}>
+                    <IndexRoute key={"indexroute"} component={Dashboard} />
+                    {sectionRoutes}
+                </Route>
+            </Router>), document.getElementById('diagnostics'));
+    }
 }
 

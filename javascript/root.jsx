@@ -1,17 +1,8 @@
-/** @jsx React.DOM */
+import React from 'react'
+import _ from 'lodash'
+import $ from 'jquery'
 
-var React = require('react');
-var _ = require('lodash');
-var $ = require('jquery');
-
-var Router = require('react-router'); // or var Router = ReactRouter; in browsers
-var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
-  Link=Router.Link, RouteHandler = Router.RouteHandler;
-
-
-
-var FubuDiagnosticsSection = require('./fubu-diagnostics-section');
-
+import FubuDiagnosticsSection  from './fubu-diagnostics-section.jsx'
 
 _.assign(FubuDiagnostics, {
     cache: {},
@@ -72,19 +63,19 @@ _.assign(FubuDiagnostics, {
     sections: [],
 
     addSection: function(data){
-		var section = new FubuDiagnosticsSection(data);
-		this.sections.push(section);
+        var section = new FubuDiagnosticsSection(data);
+        this.sections.push(section);
 
-		return section;
-	},
+        return section;
+    },
 
-	section: function(key){
-		return _.find(this.sections, s => s.key == key);
-	},
+    section: function(key){
+        return _.find(this.sections, s => s.key == key);
+    },
 
-	TextScreen: require('./text-screen'),
-	HtmlScreen: require('./html-screen'),
-	React: React
+    TextScreen: require('./text-screen'),
+    HtmlScreen: require('./html-screen'),
+    React: React
 });
 
 
@@ -98,15 +89,15 @@ require('./message-table');
 require('./polling-jobs');
 
 
-FubuDiagnostics.addSection({    
+FubuDiagnostics.addSection({
     title: 'HTTP',
     description: 'Core Diagnostics for HTTP Requests and Handlers',
     key: 'fubumvc'
 }).add({
-	title: 'Model Binding',
-	description: 'All the configured model binding converters, property binders, and custom model binders',
-	key: 'model-binding',
-	component: require('./model-binding')
+    title: 'Model Binding',
+    description: 'All the configured model binding converters, property binders, and custom model binders',
+    key: 'model-binding',
+    component: require('./model-binding')
 });
 
 require('./endpoint-explorer');

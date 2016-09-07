@@ -48,13 +48,12 @@ namespace FubuMVC.Core.Diagnostics
 
             writeStyles(document);
 
+            var div = new HtmlTag("div");
+            div.Id("diagnostics");
             var foot = new HtmlTag("foot");
-            document.Body.Next = foot;
+            document.Body.Children.Add(div);
+            document.Body.Children.Add(foot);
             writeScripts(foot);
-
-
-
-
             return document;
         }
 
