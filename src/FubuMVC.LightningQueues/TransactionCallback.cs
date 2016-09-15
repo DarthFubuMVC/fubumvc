@@ -26,11 +26,13 @@ namespace FubuMVC.LightningQueues
         public void MarkFailed(Exception ex)
         {
             _context.ReceiveLater(DateTimeOffset.Now);
+            _context.CommitChanges();
         }
 
         public void MoveToDelayedUntil(DateTime time)
         {
-            _context.ReceiveLater(time - DateTime.Now);
+            _context.ReceiveLater(time.ToUniversalTime() - DateTime.UtcNow);
+            _context.CommitChanges();
         }
 
         public void MoveToErrors(ErrorReport report)
