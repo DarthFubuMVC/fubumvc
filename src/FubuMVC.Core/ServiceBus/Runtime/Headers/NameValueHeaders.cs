@@ -37,7 +37,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Headers
 
         public IDictionary<string, string> ToDictionary()
         {
-            return _inner.AllKeys.ToDictionary(key => key, key => _inner[key]);
+            return _inner.AllKeys.ToArray().ToDictionary(key => key, key => _inner[key]);
         }
 
         public bool Has(string key)

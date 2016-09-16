@@ -198,14 +198,16 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public void RecordHeaders(Envelope envelope)
         {
-            var headers = envelope.Headers.ToNameValues();
-            var dict = new Dictionary<string, object>();
-            headers.AllKeys.Each(key =>
+            try
             {
-                dict.Add(key, headers[key]);
-            });
+                var dict = envelope.Headers.ToDictionary();
 
-            _request.Add("headers", dict);
+                _request.Add("headers", dict);
+            }
+            catch (Exception)
+            {
+                // Nothing. Don't even think about letting a failure here cause any upstream harm
+            }
         }
 
         public void RecordBody(Envelope envelope)

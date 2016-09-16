@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Headers
 {
@@ -20,7 +21,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Headers
 
         public IDictionary<string, string> ToDictionary()
         {
-            return _inner;
+            return new Dictionary<string, string>(_inner);
         }
 
         public string this[string key]
