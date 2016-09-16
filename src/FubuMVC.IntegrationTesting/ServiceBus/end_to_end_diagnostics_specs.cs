@@ -88,7 +88,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
 
                 var log = history.RecentReports().Single(x => x.RootChain != null && x.RootChain.InputType() == typeof(TracedInput));
 
-                log.Request["headers"].ShouldBeOfType<Dictionary<string, object>>();
+                log.Request["headers"].ShouldBeOfType<Dictionary<string, string>>();
                 
                 log.Steps.Any().ShouldBeTrue();
                 log.Steps.Any(x => x.Log is StringMessage).ShouldBeTrue();
