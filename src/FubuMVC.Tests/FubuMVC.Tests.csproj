@@ -331,7 +331,6 @@
     <Compile Include="Security\Authentication\PassThroughAuthenticationFilterTester.cs" />
     <Compile Include="Security\Authentication\pass_through_authentication_for_a_partial.cs" />
     <Compile Include="Security\Authentication\register_membership_with_a_default_repository_if_none_exists.cs" />
-    <Compile Include="Security\Authentication\ThreadPrincipalContextTester.cs" />
     <Compile Include="Security\Authentication\Tickets\EncryptionTester.cs" />
     <Compile Include="Security\Authentication\Tickets\TicketAuthenticationSessionTester.cs" />
     <Compile Include="Security\Authentication\when_redirecting_an_unauthenticated_ajax_request.cs" />
