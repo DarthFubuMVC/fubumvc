@@ -41,15 +41,6 @@ namespace FubuMVC.Core.Security.Authentication.Membership
             }
         }
 
-        public static void SetCurrent(Action<UserInfo> configuration)
-        {
-            var user = new UserInfo();
-            configuration(user);
-
-            var principal = new FubuPrincipal(user);
-            new ThreadPrincipalContext().Current = principal;
-        }
-
         public bool IsInRole(string role)
         {
             return _isInRole(role);

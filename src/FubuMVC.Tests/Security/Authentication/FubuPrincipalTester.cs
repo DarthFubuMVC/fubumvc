@@ -28,32 +28,6 @@ namespace FubuMVC.Tests.Security.Authentication
             principal.Identity.Name.ShouldBe("something");
         }
 
-        [Test]
-        public void current_is_hooked_up()
-        {
-            var principal = new FubuPrincipal(new UserInfo
-            {
-                UserName = "something"
-            }, role => role == "A");
 
-            Thread.CurrentPrincipal = principal;
-
-            FubuPrincipal.Current.ShouldBeTheSameAs(principal);
-        }
-
-        [Test]
-        public void set_current()
-        {
-            FubuPrincipal.SetCurrent(user => {
-                user.UserName = "WreckItRalph";
-                user.AddRoles("A", "B");
-            });
-
-            FubuPrincipal.Current.Identity.Name.ShouldBe("WreckItRalph");
-
-            FubuPrincipal.Current.IsInRole("A").ShouldBeTrue();
-            FubuPrincipal.Current.IsInRole("B").ShouldBeTrue();
-            FubuPrincipal.Current.IsInRole("C").ShouldBeFalse();
-        }
     }
 }
