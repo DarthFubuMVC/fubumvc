@@ -13,8 +13,8 @@
     <tags>fubumvc service bus</tags>
     <dependencies>
       <dependency id="FubuMVC.Core" version="3.0" />
-      <dependency id="LightningQueues" version="0.2.9" />
-      <dependency id="LightningQueues.Storage.LMDB" version="0.2.9" />
+      <dependency id="LightningQueues" version="0.2.10" />
+      <dependency id="LightningQueues.Storage.LMDB" version="0.2.10" />
     </dependencies>
   </metadata>
   <files xmlns="">
