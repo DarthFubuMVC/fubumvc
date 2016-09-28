@@ -22,9 +22,9 @@ namespace FubuMVC.Core.ServiceBus.Runtime
 
         public void Receive(byte[] data, IHeaders headers, IMessageCallback callback)
         {
-            if (data == null) throw new ArgumentNullException("data");
-            if (headers == null) throw new ArgumentNullException("headers");
-            if (callback == null) throw new ArgumentNullException("callback");
+            if (data == null) throw new ArgumentNullException(nameof(data));
+            if (headers == null) throw new ArgumentNullException(nameof(headers));
+            if (callback == null) throw new ArgumentNullException(nameof(callback));
 
             var envelope = new Envelope(data, headers, callback)
             {
