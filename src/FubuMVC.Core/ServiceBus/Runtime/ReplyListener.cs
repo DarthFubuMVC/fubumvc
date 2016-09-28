@@ -32,10 +32,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             _completion.Task.ContinueWith(x => _events.RemoveListener(listener));
         }
 
-        public Task<T> Completion
-        {
-            get { return _completion.Task; }
-        }
+        public Task<T> Completion => _completion.Task;
 
         public void Handle(EnvelopeReceived message)
         {

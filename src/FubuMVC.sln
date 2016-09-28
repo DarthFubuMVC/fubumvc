@@ -1,11 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Build_Utilities", "__Build_Utilities", "{7AC4D197-535A-4686-8E21-18257B2ADB3A}"
 	ProjectSection(SolutionItems) = preProject
-		..\rakefile.rb = ..\rakefile.rb
 		..\packaging\nuget\fubumvc.aspnet.nuspec = ..\packaging\nuget\fubumvc.aspnet.nuspec
 		..\packaging\nuget\fubumvc.core.nuspec = ..\packaging\nuget\fubumvc.core.nuspec
 		..\packaging\nuget\fubumvc.lightningqueues.nuspec = ..\packaging\nuget\fubumvc.lightningqueues.nuspec
@@ -14,9 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Build_Utilities", "__Buil
 		..\packaging\nuget\fubumvc.razor.nuspec = ..\packaging\nuget\fubumvc.razor.nuspec
 		..\packaging\nuget\fubumvc.spark.nuspec = ..\packaging\nuget\fubumvc.spark.nuspec
 		..\packaging\nuget\jasperservice.nuspec = ..\packaging\nuget\jasperservice.nuspec
+		..\paket.dependencies = ..\paket.dependencies
+		..\rakefile.rb = ..\rakefile.rb
 		..\packaging\nuget\serenity.nuspec = ..\packaging\nuget\serenity.nuspec
 		..\packaging\nuget\web.config.transform = ..\packaging\nuget\web.config.transform
-		..\paket.dependencies = ..\paket.dependencies
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewEngines", "ViewEngines", "{5600609A-D061-40E7-9CB2-92D3350EA31B}"
@@ -78,6 +78,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Marten", "FubuMVC.Marten\FubuMVC.Marten.csproj", "{1431A58D-34DC-4EFB-9E3D-DC545D51BE6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Marten.Tests", "FubuMVC.Marten.Tests\FubuMVC.Marten.Tests.csproj", "{32C9310D-75D0-4616-9017-42BDC6C3EFDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{F94683D0-C598-48FB-898C-C9CC009EC241}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -473,6 +475,24 @@ Global
 		{32C9310D-75D0-4616-9017-42BDC6C3EFDA}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{32C9310D-75D0-4616-9017-42BDC6C3EFDA}.Retail|x86.ActiveCfg = Release|Any CPU
 		{32C9310D-75D0-4616-9017-42BDC6C3EFDA}.Retail|x86.Build.0 = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Debug|x86.Build.0 = Debug|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Release|x86.ActiveCfg = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Release|x86.Build.0 = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Retail|x86.ActiveCfg = Release|Any CPU
+		{F94683D0-C598-48FB-898C-C9CC009EC241}.Retail|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -29,15 +29,21 @@ namespace FubuMVC.LightningQueues
 
         private Queue GetQueue(int port, bool persist, bool incoming, int mapSize = 1024*1024*100, int maxDatabases = 5)
         {
-            if (!incoming)
-            {
-                //Shouldn't create one here because it shouldn't be listening
-                return _queueManagers.First();
-            }
+//            if (!incoming)
+//            {
+//                if (_queueManagers.Count == 0)
+//                {
+//                    return CreateQueue(port, persist, mapSize, maxDatabases);
+//                }
+//
+//                //Shouldn't create one here because it shouldn't be listening
+//                return _queueManagers.First();
+//            }
             if (_queueManagers.Has(port))
             {
                 return _queueManagers[port];
             }
+
             return CreateQueue(port, persist, mapSize, maxDatabases);
         }
 
