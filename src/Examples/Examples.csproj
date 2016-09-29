@@ -44,6 +44,7 @@
     <Compile Include="HelloWorld\Web\HomeEndpoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBus\CascadingMessages.cs" />
+    <Compile Include="ServiceBus\DelayedMessages.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
