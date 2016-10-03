@@ -56,6 +56,9 @@
       <Name>FubuMVC.LightningQueues</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ServiceBus" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="CopyRuntimeDependencies" AssemblyFile="..\..\.paket\paket.exe" />
   <Target Name="AfterBuild" Condition="Exists('..\..\.paket\paket.exe')">
