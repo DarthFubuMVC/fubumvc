@@ -45,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBus\CascadingMessages.cs" />
     <Compile Include="ServiceBus\DelayedMessages.cs" />
+    <Compile Include="ServiceBus\Publishing.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
@@ -55,9 +56,6 @@
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuMVC.LightningQueues</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ServiceBus" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="CopyRuntimeDependencies" AssemblyFile="..\..\.paket\paket.exe" />

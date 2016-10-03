@@ -1,10 +1,9 @@
 channels
-sending
-requestreply
-serialization
 handlers
-cascading
+sending
 delayed
+cascading
+serialization
 subscriptions
 lq
 diagnostics
