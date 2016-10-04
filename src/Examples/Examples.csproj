@@ -57,6 +57,7 @@
     <Compile Include="ServiceBus\Handlers.cs" />
     <Compile Include="ServiceBus\Publishing.cs" />
     <Compile Include="ServiceBus\Serializers.cs" />
+    <Compile Include="ServiceBus\Subscriptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
@@ -66,6 +67,14 @@
     <ProjectReference Include="..\FubuMVC.LightningQueues\FubuMVC.LightningQueues.csproj">
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuMVC.LightningQueues</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Marten\FubuMVC.Marten.csproj">
+      <Project>{1431A58D-34DC-4EFB-9E3D-DC545D51BE6A}</Project>
+      <Name>FubuMVC.Marten</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
+      <Project>{02441E35-668B-4713-9279-BD51948B95EB}</Project>
+      <Name>FubuMVC.RavenDb</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
