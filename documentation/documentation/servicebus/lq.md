@@ -1,6 +1,9 @@
 <!--Title:The LightningQueues Transport-->
 <!--Url:lq-->
 
+<div class="alert alert-info">The LightningQueues transport will be part of the default service bus Nuget in the "Jasper" timeframe, and
+Jasper may directly utilize LightningDB for default subscription persistence and delayed message processing.</div>
+
 <div class="alert alert-warning">
 Do note that only one process on a machine can listen to messages to a single port. If you try to run multiple LQ-connected applications
 on your local development system, just ensure that each application is listening to a different port.
