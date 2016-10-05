@@ -54,6 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBus\CascadingMessages.cs" />
     <Compile Include="ServiceBus\ConfiguringLQ.cs" />
+    <Compile Include="ServiceBus\ConsumingMessages.cs" />
     <Compile Include="ServiceBus\DelayedMessages.cs" />
     <Compile Include="ServiceBus\Handlers.cs" />
     <Compile Include="ServiceBus\Publishing.cs" />
