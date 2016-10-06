@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapping\UsingFubuRuntime.cs" />
     <Compile Include="HelloWorld\ServiceBus\PingPong.cs" />
     <Compile Include="HelloWorld\Web\HomeEndpoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
