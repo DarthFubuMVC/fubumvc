@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapping\UsingFubuRuntime.cs" />
+    <Compile Include="Configuration\ConfigurationSamples.cs" />
     <Compile Include="HelloWorld\ServiceBus\PingPong.cs" />
     <Compile Include="HelloWorld\Web\HomeEndpoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +80,9 @@
       <Project>{02441E35-668B-4713-9279-BD51948B95EB}</Project>
       <Name>FubuMVC.RavenDb</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuration\web.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="CopyRuntimeDependencies" AssemblyFile="..\..\.paket\paket.exe" />
