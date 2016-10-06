@@ -4,3 +4,9 @@
 but for now, being StructureMap-only allowed us to greatly simplify and shrink down FubuMVC's internals.</div>
 
 TODO(write something here)
+
+* how fubu builds up the container
+* configuring services
+* the usage of nested containers for scoping
+* SM and disposal
+* mention the Settings convention

@@ -1,5 +1,7 @@
 <!--Title:FubuMVC-->
 
+<[img:/content/images/logo.jpg;]>
+
 FubuMVC is a .Net framework for enabling teams to efficiently build server side systems. FubuMVC has support for:
 
 * <[linkto:documentation/http;title=HTTP services]>. Despite the poor choice of name, FubuMVC *is not* a traditional Model 2 MVC framework

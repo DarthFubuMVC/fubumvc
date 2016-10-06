@@ -8,3 +8,11 @@ posts from [Jeremy's blog](http://jeremydmiller.com):
 * [Reliable and “Debuggable” Automated Testing of Message Based Systems in a Crazy Async World](https://jeremydmiller.com/2016/05/17/reliable-and-debuggable-automated-testing-of-message-based-systems-in-a-crazy-async-world/)
 
 Also see <[linkto:documentation/serenity]> for more information about testing FubuMVC applications.
+
+
+
+TODO(more stuff!)
+
+* MessageHistory and how that's used in testing
+* Serenity integration for the service bus
+* Using Consume()
