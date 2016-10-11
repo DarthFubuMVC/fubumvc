@@ -53,10 +53,14 @@ that are marked with the `[FubuModule]` assembly
 portable areas. There's <b>no coupling</b> from the main application to the extension and FubuMVC's extensibility
 model shown here is far more powerful.</div>
 
+<div class="alert alert-info">Make sure the constructor function of your package registry is public.</div>
+
 FubuMVC has a built in mechanism to easily create vertical application slices using a built in form
 of `IFubuRegistryExtension` called `FubuPackageRegistry`. To build your own, just write a public
-subclass like this:
+subclass like this in your extension assembly:
 
-<[sample:FubuAppWithLoggingPolicy]>
+<[sample:MyExtensionRegistry]>
 
-<div class="alert alert-info">Make sure the constructor function of your package registry is public.</div>
+
+
+
