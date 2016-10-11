@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapping\UsingFubuRuntime.cs" />
     <Compile Include="Configuration\ConfigurationSamples.cs" />
+    <Compile Include="Extensibility\ExtensionExamples.cs" />
     <Compile Include="HelloWorld\ServiceBus\PingPong.cs" />
     <Compile Include="HelloWorld\Web\HomeEndpoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

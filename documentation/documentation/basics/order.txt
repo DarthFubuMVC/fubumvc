@@ -6,10 +6,6 @@ modularity
 services
 diagnostics
 policies
-servicebus
-tasks
-jobs
-http
-serenity
+attributes
 
 
