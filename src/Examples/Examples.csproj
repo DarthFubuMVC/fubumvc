@@ -62,6 +62,7 @@
     <Compile Include="ServiceBus\Publishing.cs" />
     <Compile Include="ServiceBus\Serializers.cs" />
     <Compile Include="ServiceBus\Subscriptions.cs" />
+    <Compile Include="StructureMap\StructureMapExamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
