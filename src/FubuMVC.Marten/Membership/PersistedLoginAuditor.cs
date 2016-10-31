@@ -1,4 +1,6 @@
-﻿using FubuCore.Dates;
+﻿using System;
+using FubuCore.Dates;
+using FubuCore.Logging;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using Marten;
@@ -8,12 +10,16 @@ namespace FubuMVC.Marten.Membership
     public class PersistedLoginAuditor : ILoginAuditor
     {
         private readonly ISystemTime _systemTime;
-        private readonly ITransaction _transaction;
+        private readonly IDocumentSession _session;
+        private readonly ILogger _logger;
+        private readonly LoginAuditPersistor _persistor;
 
-        public PersistedLoginAuditor(ISystemTime systemTime, ITransaction transaction)
+        public PersistedLoginAuditor(ISystemTime systemTime, IDocumentSession session, ILogger logger, LoginAuditPersistor persistor)
         {
             _systemTime = systemTime;
-            _transaction = transaction;
+            _session = session;
+            _logger = logger;
+            _persistor = persistor;
         }
 
         public void Audit(LoginRequest request)
@@ -35,8 +41,17 @@ namespace FubuMVC.Marten.Membership
                 Message = new LoginFailure {UserName = request.UserName},
                 Timestamp = _systemTime.UtcNow()
             };
+            try
+            {
 
-            _transaction.Execute<LoginAuditPersistor>(x => x.LogFailure(request, audit));
+                _persistor.LogFailure(request, audit);
+                _session.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Failed during login request auditing", e);
+            }
+
         }
 
 
@@ -48,13 +63,33 @@ namespace FubuMVC.Marten.Membership
                 Timestamp = _systemTime.UtcNow()
             };
 
-            _transaction.Execute<LoginAuditPersistor>(x => x.LogSuccess(request, audit));
+            try
+            {
+
+                _persistor.LogSuccess(request, audit);
+                _session.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Failed during login request auditing", e);
+            }
+
         }
 
 
         public void ApplyHistory(LoginRequest request)
         {
-            _transaction.Execute<LoginAuditPersistor>(x => x.ApplyHistory(request));
+            try
+            {
+
+                _persistor.ApplyHistory(request);
+                _session.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Failed during login request auditing", e);
+            }
+
         }
 
 
@@ -71,7 +106,17 @@ namespace FubuMVC.Marten.Membership
                 Timestamp = _systemTime.UtcNow()
             };
 
-            _transaction.Execute<IDocumentSession>(x => x.Store(audit));
+            try
+            {
+
+                _session.Store(audit);
+                _session.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Failed during login request auditing", e);
+            }
+
         }
     }
 }
