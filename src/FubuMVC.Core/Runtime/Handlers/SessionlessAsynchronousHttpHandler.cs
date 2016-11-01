@@ -33,12 +33,6 @@ namespace FubuMVC.Core.Runtime.Handlers
             var requestCompletion = new RequestCompletion();
             requestCompletion.WhenCompleteDo(ex =>
             {
-                if (ex != null)
-                {
-                    context.Response.StatusCode = 500;
-                    context.Response.Write("Internal Server Error");
-                }
-
                 taskCompletionSource.SetResult(null);
                 cb(taskCompletionSource.Task);
             });

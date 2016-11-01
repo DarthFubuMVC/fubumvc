@@ -59,7 +59,7 @@ namespace FubuMVC.Core.Runtime
                 {
                     try
                     {
-                        _factory.Get<ILogger>().Error("Async route failure at " + arguments.Get<IHttpRequest>().FullUrl(), x);
+                        _factory.Get<ILogger>().Error("Async chain failure", x);
                     }
                     catch (Exception e)
                     {
