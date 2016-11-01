@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using StructureMap.Pipeline;
@@ -34,11 +35,14 @@ namespace FubuMVC.Core.Runtime.Handlers
             {
                 if (ex != null)
                 {
-                    taskCompletionSource.SetException(ex);
+                    context.Response.StatusCode = 500;
+                    context.Response.Write("Internal Server Error");
                 }
+
                 taskCompletionSource.SetResult(null);
                 cb(taskCompletionSource.Task);
             });
+
             requestCompletion.Start(() => _invoker.Invoke(_arguments, _routeData, requestCompletion));
 
             return taskCompletionSource.Task;

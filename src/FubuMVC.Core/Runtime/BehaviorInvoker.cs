@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
+using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
@@ -54,6 +55,18 @@ namespace FubuMVC.Core.Runtime
             
             requestCompletion.WhenCompleteDo(x =>
             {
+                if (x != null)
+                {
+                    try
+                    {
+                        _factory.Get<ILogger>().Error("Async route failure at " + arguments.Get<IHttpRequest>().FullUrl(), x);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+
                 var disposable = behavior as IDisposable;
                 disposable?.Dispose();
             });
