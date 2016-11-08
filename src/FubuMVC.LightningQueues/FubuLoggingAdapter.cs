@@ -36,5 +36,25 @@ namespace FubuMVC.LightningQueues
         {
             _logger.Error(message, exception);
         }
+
+        public void Info(string message)
+        {
+            _logger.Info(message);
+        }
+
+        public void InfoFormat(string message, params object[] args)
+        {
+            _logger.Info(message, args);
+        }
+
+        public void InfoFormat(string message, object arg1, object arg2)
+        {
+            _logger.Info(message, arg1, arg2);
+        }
+
+        public void InfoFormat(string message, object arg1)
+        {
+            _logger.Info(message, arg1);
+        }
     }
 }
