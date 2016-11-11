@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Marten;
 
 namespace FubuMVC.Marten
@@ -8,65 +9,47 @@ namespace FubuMVC.Marten
     {
         private readonly IDocumentStore _store;
         private readonly IMartenSessionLogger _logger;
-
-        private Lazy<IDocumentSession> _session;
+        private readonly object _lock = new object();
+        private IDocumentSession _session;
 
         public SessionBoundary(IDocumentStore store, IMartenSessionLogger logger)
         {
             _store = store;
             _logger = logger;
 
-            reset();
-        }
-
-        private IEnumerable<IDocumentSession> openSessions()
-        {
-            if (_session != null && _session.IsValueCreated)
-            {
-                yield return _session.Value;
-            }
         }
 
         public void Dispose()
         {
-            WithOpenSession(s =>
+            lock (_lock)
             {
-                s.Dispose();
-            });
+                _session?.Dispose();
+            }
 
         }
 
         public IDocumentSession Session()
         {
-            return _session.Value;
-        }
+            if (_session == null)
+            {
+                lock (_lock)
+                {
+                    if (_session == null)
+                    {
+                        _session = _store.OpenSession();
+                        _session.Logger = _logger;
+                    }
+                }
+            }
 
-        public void WithOpenSession(Action<IDocumentSession> action)
-        {
-            openSessions().Each(action);
+            return _session;
         }
 
         public void SaveChanges()
         {
-            WithOpenSession(s => s.SaveChanges());
+            _session?.SaveChanges();
+
         }
 
-        public void Start()
-        {
-            reset();
-        }
-
-
-        private void reset()
-        {
-            WithOpenSession(s => s.Dispose());
-            _session = new Lazy<IDocumentSession>(() =>
-            {
-                var s = _store.OpenSession();
-                s.Logger = _logger;
-
-                return s;
-            });
-        }
     }
 }
