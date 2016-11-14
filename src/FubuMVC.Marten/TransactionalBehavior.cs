@@ -20,10 +20,18 @@ namespace FubuMVC.Marten
 
         protected override void invoke(Action action)
         {
-            action();
-            _session.SaveChanges();
+            try
+            {
+                action();
+                _session.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _session.Dispose();
+                _logger.Error("Failed to complete the Marten transaction", ex);
 
-            // TODO -- add in logging later
+                throw;
+            }
         }
     }
 }
