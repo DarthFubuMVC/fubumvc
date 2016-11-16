@@ -21,10 +21,6 @@ namespace FubuMVC.Marten
 
         public void Dispose()
         {
-            lock (_lock)
-            {
-                _session?.Dispose();
-            }
 
         }
 
