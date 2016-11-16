@@ -28,7 +28,6 @@ namespace FubuMVC.Marten
             catch (Exception ex)
             {
                 _session.Dispose();
-                _logger.Error("Failed to complete the Marten transaction", ex);
 
                 throw;
             }
