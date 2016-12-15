@@ -8,10 +8,8 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
-using FubuMVC.Razor;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views
@@ -21,16 +19,31 @@ namespace FubuMVC.IntegrationTesting.Views
         public static readonly string Folder = "Views" + Guid.NewGuid();
         public static readonly IFileSystem fileSystem = new FileSystem();
         public static readonly string Application = "Application";
+        private readonly string _applicationDirectory;
         private readonly string _directory;
         private readonly IList<ContentStream> _streams = new List<ContentStream>();
         private FubuRuntime _host;
-        private readonly string _applicationDirectory;
-        protected Scenario Scenario;
         private Lazy<ViewBag> _views;
+        protected Scenario Scenario;
 
         public ViewIntegrationContext()
         {
             _applicationDirectory = _directory = Folder.AppendPath(Application).ToFullPath();
+        }
+
+        protected IServiceLocator Services
+        {
+            get { return _host.Get<IServiceLocator>(); }
+        }
+
+        protected BehaviorGraph BehaviorGraph
+        {
+            get { return Services.GetInstance<BehaviorGraph>(); }
+        }
+
+        protected ViewBag Views
+        {
+            get { return _views.Value; }
         }
 
         [TestFixtureSetUp]
@@ -51,10 +64,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
             _host = registry.ToRuntime();
 
-            _views = new Lazy<ViewBag>(() =>
-            {
-                return _host.Get<ConnegSettings>().Views;
-            });
+            _views = new Lazy<ViewBag>(() => { return _host.Get<ConnegSettings>().Views; });
         }
 
         private FubuRegistry determineRegistry()
@@ -88,16 +98,6 @@ namespace FubuMVC.IntegrationTesting.Views
             Scenario.As<IDisposable>().Dispose();
         }
 
-        protected IServiceLocator Services
-        {
-            get { return _host.Get<IServiceLocator>(); }
-        }
-
-        protected BehaviorGraph BehaviorGraph
-        {
-            get { return Services.GetInstance<BehaviorGraph>(); }
-        }
-
         protected ContentStream File(string name)
         {
             var stream = new ContentStream(_directory, name, "");
@@ -107,30 +107,11 @@ namespace FubuMVC.IntegrationTesting.Views
             return stream;
         }
 
-        protected ContentStream RazorView(string name)
-        {
-            var stream = new ContentStream(_directory, name, ".cshtml");
-
-            _streams.Add(stream);
-
-            return stream;
-        }
-
-
-        protected ContentStream RazorView<T>(string name)
-        {
-            var stream = new ContentStream(_directory, name, ".cshtml");
-            stream.WriteLine("@model {0}", typeof (T).FullName);
-
-            _streams.Add(stream);
-
-            return stream;
-        }
 
         protected ContentStream SparkView<T>(string name)
         {
             var stream = new ContentStream(_directory, name, ".spark");
-            stream.WriteLine("<viewdata model=\"{0}\" />", typeof (T).FullName);
+            stream.WriteLine("<viewdata model=\"{0}\" />", typeof(T).FullName);
 
             _streams.Add(stream);
 
@@ -146,26 +127,9 @@ namespace FubuMVC.IntegrationTesting.Views
             return stream;
         }
 
-        protected ViewBag Views
-        {
-            get
-            {
-                return _views.Value;
-
-            }
-        }
-
-        protected RazorViewFacility RazorViews
-        {
-            get
-            {
-                return _host.Get<ViewEngineSettings>().Facilities.OfType<RazorViewFacility>().Single();
-            }
-        }
-
         protected ITemplateFile ViewForModel<T>()
         {
-            return Views.ViewsFor(typeof (T)).OfType<ITemplateFile>().FirstOrDefault();
+            return Views.ViewsFor(typeof(T)).OfType<ITemplateFile>().FirstOrDefault();
         }
     }
 
