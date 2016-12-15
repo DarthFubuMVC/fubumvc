@@ -5,14 +5,6 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.ServiceBus.ScheduledJobs;
-using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuMVC.RavenDb.RavenDb;
-using FubuMVC.RavenDb.ServiceBus;
-using Raven.Client;
-using StructureMap;
 
 namespace ScheduledJobHarness
 {
@@ -66,6 +58,12 @@ namespace ScheduledJobHarness
              * */
         }
 
+        public void Dispose()
+        {
+            _nodes.Each(x => x.SafeDispose());
+            //_runtime.Dispose();
+        }
+
         public IEnumerable<MonitoredNode> Nodes()
         {
             return _nodes;
@@ -92,12 +90,6 @@ namespace ScheduledJobHarness
             //_nodes.Each(node => node.Startup(_subscriptions, _schedules));
             //var jobs = _nodes.First.Jobs;
             //container.Configure(_ => _.For<ScheduledJobGraph>().Use(jobs));
-        }
-
-        public void Dispose()
-        {
-            _nodes.Each(x => x.SafeDispose());
-            //_runtime.Dispose();
         }
 
         public void ShutdownNode(string node)

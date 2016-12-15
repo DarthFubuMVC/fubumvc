@@ -7,7 +7,6 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuMVC.RavenDb.ServiceBus;
 using Raven.Client;
 
 namespace ScheduledJobHarness
@@ -53,8 +52,6 @@ namespace ScheduledJobHarness
             ServiceBus.EnableInMemoryTransport(incoming);
 
 
-            Services.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
-            Services.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
             Services.ReplaceService(store);
 
             Services.AddService<ILogListener, ScheduledJobListener>();

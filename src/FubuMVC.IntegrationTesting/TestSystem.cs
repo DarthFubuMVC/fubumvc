@@ -8,8 +8,6 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuMVC.RavenDb.Membership;
-using FubuMVC.RavenDb.Reset;
 using NUnit.Framework;
 using Serenity;
 using ServiceNode;
@@ -27,7 +25,6 @@ namespace FubuMVC.IntegrationTesting
 
             ServiceBus.HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
 
-            Import<PersistedMembership<User>>();
 
             Features.Authentication.Configure(_ =>
             {
@@ -111,7 +108,6 @@ namespace FubuMVC.IntegrationTesting
                 scope.GetInstance<NavigationDriver>().NavigateTo<LogoutRequest>();
             }
 
-            Runtime.Get<ICompleteReset>().ResetState();
         }
     }
 }

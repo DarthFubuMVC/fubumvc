@@ -92,11 +92,6 @@
     <Compile Include="Downloads\DownloadTestController.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
     <Compile Include="FixieConvention.cs" />
-    <Compile Include="Fixtures\LockedOutLogicFixture.cs" />
-    <Compile Include="Fixtures\LoginAuditingFixture.cs" />
-    <Compile Include="Fixtures\LoginScreenFixture.cs" />
-    <Compile Include="Fixtures\ModelFixture.cs" />
-    <Compile Include="Fixtures\OtherScreenFixture.cs" />
     <Compile Include="Fixtures\ServiceBus\Basic\ServiceBusActionFixture.cs" />
     <Compile Include="Fixtures\ServiceBus\Basic\ServiceBusNodeFixture.cs" />
     <Compile Include="Fixtures\ServiceBus\Basic\ServiceBusNodes.cs" />
@@ -235,10 +230,6 @@
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuMVC.LightningQueues</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
-      <Project>{02441e35-668b-4713-9279-bd51948b95eb}</Project>
-      <Name>FubuMVC.RavenDb</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Razor\FubuMVC.Razor.csproj">
       <Project>{a88246a6-2a7a-4964-902e-a5a7fdaaa9d4}</Project>
       <Name>FubuMVC.Razor</Name>
@@ -282,17 +273,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Serenity\App\errors.js" />
-    <Content Include="Specs\Authentication\Logins\Cannot access the home page after logging out.xml" />
-    <Content Include="Specs\Authentication\Logins\Expiration\Sliding_expiration_success_and_failure.xml" />
-    <Content Include="Specs\Authentication\Logins\Lockout_Logic.xml" />
-    <Content Include="Specs\Authentication\Logins\Log in successfully.xml" />
-    <Content Include="Specs\Authentication\Logins\Log in unsuccessfully.xml" />
-    <Content Include="Specs\Authentication\Logins\Logging out redirects to the login page.xml" />
-    <Content Include="Specs\Authentication\Logins\Login_successfully_to_a_different_page_than_home.xml" />
-    <Content Include="Specs\Authentication\Logins\No messages on the initial attempt at logging in.xml" />
-    <Content Include="Specs\Authentication\Logins\Remember me.xml" />
-    <Content Include="Specs\Authentication\Logins\The_user_is_no_longer_frozen_after_the_lockout_period_is_over.xml" />
-    <Content Include="Specs\Authentication\PersistedMembership\Audit_user_login_successes_and_failures.xml" />
     <Content Include="Specs\Content Negotiation\Default_Conneg_Rules.xml" />
     <Content Include="Specs\Diagnostics\Open_Core_Diagnostic_Pages.xml" />
     <Content Include="Specs\Diagnostics\Open_Service_Bus_Diagnostic_Pages.xml" />

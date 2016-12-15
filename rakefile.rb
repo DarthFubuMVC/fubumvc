@@ -79,7 +79,6 @@ end
 desc 'Run the integration tests'
 task :integration_test => [:compile] do
     sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.IntegrationTesting/bin/#{COMPILE_TARGET}/FubuMVC.IntegrationTesting.dll --NUnitXml results/IntegrationTestResult.xml"
-    sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.RavenDb.Tests/bin/#{COMPILE_TARGET}/FubuMVC.RavenDb.Tests.dll --NUnitXml results/RavenDbTestResult.xml"
     sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.LightningQueues.Testing/bin/#{COMPILE_TARGET}/FubuMVC.LightningQueues.Testing.dll --NUnitXml results/LQTestResult.xml"
 end
 
@@ -88,7 +87,6 @@ task :pack => [:compile] do
 	sh "nuget.exe pack packaging/nuget/fubumvc.aspnet.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.core.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.lightningqueues.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.ravendb.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.razor.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.spark.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
 	sh "nuget.exe pack packaging/nuget/fubumvc.marten.nuspec -VERSION #{build_number}-alpha -OutputDirectory artifacts"
@@ -104,7 +102,6 @@ task :publish => [:pack] do
 	sh "nuget.exe push artifacts/FubuMVC.Core.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/FubuMVC.AspNet.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/FubuMVC.LightningQueues.#{build_number}-alpha.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/FubuMVC.RavenDb.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/FubuMVC.Razor.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/FubuMVC.Spark.#{build_number}-alpha.nupkg #{NUGET_KEY} "
 	sh "nuget.exe push artifacts/FubuMVC.Marten.#{build_number}-alpha.nupkg #{NUGET_KEY} "
