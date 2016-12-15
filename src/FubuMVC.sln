@@ -62,8 +62,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JasperService", "JasperServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serenity", "Serenity\Serenity.csproj", "{900A0419-3579-4DAE-85BE-71A3E4B34239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.AspNet", "FubuMVC.AspNet\FubuMVC.AspNet.csproj", "{F3711812-E9CD-42EA-B439-3271370E6CDF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Marten", "Marten", "{0437EB5A-0401-4C38-A4B9-2DA6AA23A953}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Marten", "FubuMVC.Marten\FubuMVC.Marten.csproj", "{1431A58D-34DC-4EFB-9E3D-DC545D51BE6A}"
@@ -368,21 +366,6 @@ Global
 		{900A0419-3579-4DAE-85BE-71A3E4B34239}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{900A0419-3579-4DAE-85BE-71A3E4B34239}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{900A0419-3579-4DAE-85BE-71A3E4B34239}.Retail|x86.ActiveCfg = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Release|x86.ActiveCfg = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Retail|Any CPU.ActiveCfg = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Retail|Any CPU.Build.0 = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
-		{F3711812-E9CD-42EA-B439-3271370E6CDF}.Retail|x86.ActiveCfg = Release|Any CPU
 		{1431A58D-34DC-4EFB-9E3D-DC545D51BE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1431A58D-34DC-4EFB-9E3D-DC545D51BE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1431A58D-34DC-4EFB-9E3D-DC545D51BE6A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
