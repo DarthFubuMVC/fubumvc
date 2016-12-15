@@ -12,7 +12,7 @@ build_revision = tc_build_number || Time.new.strftime('5%H%M')
 build_number = "#{BUILD_VERSION}.#{build_revision}"
 BUILD_NUMBER = build_number 
 
-task :ci => [:default, :integration_test, :publish]
+task :ci => [:default, :integration_test, :pack]
 
 task :default => [:test]
 
