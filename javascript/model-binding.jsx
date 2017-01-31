@@ -1,5 +1,6 @@
 import React from 'react'
 import {Col, Row} from 'react-bootstrap'
+import Description from './description'
 
 var ModelBinding = React.createClass({
     getInitialState(){

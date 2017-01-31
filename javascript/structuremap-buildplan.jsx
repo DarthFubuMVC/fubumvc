@@ -9,7 +9,7 @@ var BuildPlanView = React.createClass({
     },
 
     componentDidMount(){
-        var params = this.getParams();
+        var params = this.getParams ? this.getParams() : this.props.params;
         FubuDiagnostics.getText('StructureMap:build_plan_PluginType_Name', params, data => {
             this.setState({text: data, loading: false});
         });
@@ -20,7 +20,7 @@ var BuildPlanView = React.createClass({
             return (<p>Loading..</p>);
         }
 
-        var params = this.getParams();
+        var params = this.getParams ? this.getParams() : this.props.params;
 
         return (
 

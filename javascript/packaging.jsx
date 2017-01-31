@@ -31,7 +31,7 @@ var Packaging = React.createClass({
 
             if (log.FullTraceText != '' && log.FullTraceText != null){
                 return [row, (
-                  <tr>
+                  <tr key={row.key + '-trace'}>
                     <td colSpan="4" className="bg-info">
                       {log.FullTraceText}
                     </td>
