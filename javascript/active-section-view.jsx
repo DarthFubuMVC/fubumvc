@@ -6,7 +6,7 @@ var ActiveSectionView = React.createClass({
 
     render(){
         var path = this.props.location;
-        var sectionKey = path.split('/')[1];
+        var sectionKey = path.pathname.split('/')[1];
         var activeSection = FubuDiagnostics.section(sectionKey);
 
         return (

@@ -145,7 +145,7 @@ var ChainDetails = React.createClass({
 
     buildPerformanceSummary(rows){
         var performanceHeader = (
-            <tr><td colSpan="2"><h4>Performance Summary</h4></td></tr>
+            <tr key='PerformanceHeader'><td colSpan="2"><h4>Performance Summary</h4></td></tr>
         );
         rows.push(performanceHeader);
 
@@ -181,7 +181,7 @@ var ChainDetails = React.createClass({
         rows = this.buildPerformanceSummary(rows);
 
         var behaviorHeader = (
-            <tr><td colSpan="2"><h4>Behaviors</h4></td></tr>
+            <tr key='BehaviorsHeader'><td colSpan="2"><h4>Behaviors</h4></td></tr>
         );
         rows.push(behaviorHeader);
 

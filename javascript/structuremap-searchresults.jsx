@@ -9,8 +9,8 @@ var InstanceRow = React.createClass({
 
         return (
             <tr>
-                <td><a href={familyUrl}>{this.props.pluginType}</a></td>
-                <td><a href={url}>{this.props.name}</a></td>
+                <td><a href={url}>{this.props.pluginType}</a></td>
+                <td>{this.props.name}</td>
                 <td>{this.props.lifecycle}</td>
                 <td>{this.props.returnedType}</td>
                 <td>{this.props.description}</td>
@@ -24,7 +24,7 @@ var InstanceResults = React.createClass({
         var items = this.props.instances.map(function(instance, i){
             instance._key = instance.key;
 
-            return (<InstanceRow key={instance.key} {...instance} />);
+            return (<InstanceRow {...instance} key={instance.key ? instance.key + '-' + instance.name : instance.pluginType} />);
         });
 
         return (
