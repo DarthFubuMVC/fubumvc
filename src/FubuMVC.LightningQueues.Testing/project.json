@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "dependencies": {
+    "FubuMVC.LightningQueues": {"target": "project"},
+    "FubuMVC.Tests": {"target": "project"}
+  },
+  "frameworks": {
+    "net46": {} 
+  }
+}

@@ -1,0 +1,406 @@
+{
+  "locked": false,
+  "version": 2,
+  "targets": {
+    ".NETFramework,Version=v4.6": {
+      "FubuCore/2.0.1.321": {
+        "type": "package",
+        "compile": {
+          "lib/FubuCore.dll": {}
+        },
+        "runtime": {
+          "lib/FubuCore.dll": {}
+        }
+      },
+      "HtmlTags/2.1.0.183": {
+        "type": "package",
+        "compile": {
+          "lib/4.0/HtmlTags.dll": {}
+        },
+        "runtime": {
+          "lib/4.0/HtmlTags.dll": {}
+        }
+      },
+      "LightningDB/0.9.7": {
+        "type": "package",
+        "compile": {
+          "lib/net45/LightningDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LightningDB.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/osx/native/lmdb.dylib": {
+            "assetType": "native",
+            "rid": "osx"
+          },
+          "runtimes/win7-x64/native/lmdb.dll": {
+            "assetType": "native",
+            "rid": "win7-x64"
+          },
+          "runtimes/win7-x86/native/lmdb.dll": {
+            "assetType": "native",
+            "rid": "win7-x86"
+          }
+        }
+      },
+      "LightningQueues/0.2.12": {
+        "type": "package",
+        "dependencies": {
+          "System.Reactive": "3.0.0"
+        },
+        "compile": {
+          "lib/net46/LightningQueues.dll": {}
+        },
+        "runtime": {
+          "lib/net46/LightningQueues.dll": {}
+        }
+      },
+      "LightningQueues.Storage.LMDB/0.2.10": {
+        "type": "package",
+        "dependencies": {
+          "LightningDB": "0.9.7",
+          "LightningQueues": "0.2.10"
+        },
+        "compile": {
+          "lib/net46/LightningQueues.Storage.LMDB.dll": {}
+        },
+        "runtime": {
+          "lib/net46/LightningQueues.Storage.LMDB.dll": {}
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "StructureMap/4.4.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/StructureMap.dll": {}
+        },
+        "runtime": {
+          "lib/net45/StructureMap.dll": {}
+        }
+      },
+      "System.Reactive/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Reactive.Core": "3.0.0",
+          "System.Reactive.Interfaces": "3.0.0",
+          "System.Reactive.Linq": "3.0.0",
+          "System.Reactive.PlatformServices": "3.0.0",
+          "System.Reactive.Windows.Threading": "3.0.0"
+        }
+      },
+      "System.Reactive.Core/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Reactive.Interfaces": "3.0.0"
+        },
+        "compile": {
+          "lib/net46/System.Reactive.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Reactive.Core.dll": {}
+        }
+      },
+      "System.Reactive.Interfaces/3.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net45/System.Reactive.Interfaces.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Reactive.Interfaces.dll": {}
+        }
+      },
+      "System.Reactive.Linq/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Reactive.Core": "3.0.0",
+          "System.Reactive.Interfaces": "3.0.0"
+        },
+        "compile": {
+          "lib/net46/System.Reactive.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Reactive.Linq.dll": {}
+        }
+      },
+      "System.Reactive.PlatformServices/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Reactive.Core": "3.0.0",
+          "System.Reactive.Interfaces": "3.0.0"
+        },
+        "compile": {
+          "lib/net46/System.Reactive.PlatformServices.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Reactive.PlatformServices.dll": {}
+        }
+      },
+      "System.Reactive.Windows.Threading/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Reactive.Core": "3.0.0"
+        },
+        "frameworkAssemblies": [
+          "WindowsBase"
+        ],
+        "compile": {
+          "lib/net45/System.Reactive.Windows.Threading.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Reactive.Windows.Threading.dll": {}
+        }
+      },
+      "FubuMVC.Core/3.0.2": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "FubuCore": "2.0.1.321",
+          "HtmlTags": "2.1.0.183",
+          "Newtonsoft.Json": "9.0.1",
+          "StructureMap": "4.4.3"
+        },
+        "frameworkAssemblies": [
+          "System.Security",
+          "System.Web",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "net46/FubuMVC.Core.dll": {}
+        },
+        "runtime": {
+          "net46/FubuMVC.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FubuCore/2.0.1.321": {
+      "sha512": "UUqZhWu4UsMuNMXDJNTr+K/yU7vdWY6AFkaSEtlqME1wBIv2V0Qvzqn08HO/NznMIlpPAbhDiiQTs78aXw7cBA==",
+      "type": "package",
+      "path": "FubuCore/2.0.1.321",
+      "files": [
+        "FubuCore.2.0.1.321.nupkg.sha512",
+        "FubuCore.nuspec",
+        "lib/FubuCore.dll",
+        "lib/FubuCore.pdb"
+      ]
+    },
+    "HtmlTags/2.1.0.183": {
+      "sha512": "iGCZn+2s7X5PvhhgP3HtjIVw75e0qaGqcWMAiO7PGvmoWFaAKWmlthjl3ffxwEqgsCD430C25ebIAdpp6NHm+g==",
+      "type": "package",
+      "path": "HtmlTags/2.1.0.183",
+      "files": [
+        "HtmlTags.2.1.0.183.nupkg.sha512",
+        "HtmlTags.nuspec",
+        "lib/4.0/HtmlTags.dll"
+      ]
+    },
+    "LightningDB/0.9.7": {
+      "sha512": "C+d5+4ukLuRf3uysaH/MFA48IxjGWxu5tNRYA6thBgcERi0oC5H6umLe57Z2kU9nLxeZTrMSFZpqH6u8aGdIbQ==",
+      "type": "package",
+      "path": "LightningDB/0.9.7",
+      "files": [
+        "LightningDB.0.9.7.nupkg.sha512",
+        "LightningDB.nuspec",
+        "lib/net45/LightningDB.dll",
+        "lib/netstandard1.3/LightningDB.dll",
+        "runtimes/osx/native/lmdb.dylib",
+        "runtimes/win7-x64/native/lmdb.dll",
+        "runtimes/win7-x86/native/lmdb.dll"
+      ]
+    },
+    "LightningQueues/0.2.12": {
+      "sha512": "fgZ7NtsVb1/wuZoaYqPkjvq0Zifp5h9GAcMpk8uU8wut4kjJq3ocNFWDBNVDsTZjwReUf5a0dqKoENxePR4r0g==",
+      "type": "package",
+      "path": "LightningQueues/0.2.12",
+      "files": [
+        "LightningQueues.0.2.12.nupkg.sha512",
+        "LightningQueues.nuspec",
+        "lib/net46/LightningQueues.dll",
+        "lib/netstandard1.3/LightningQueues.dll"
+      ]
+    },
+    "LightningQueues.Storage.LMDB/0.2.10": {
+      "sha512": "+c/lz7f3ybszv3Bwmuw1memf5vg8z5EK3ChciZHbLuWSTbnaw0R8WC12GdEXr15fmfXlp297cwbffhbbyi6hBQ==",
+      "type": "package",
+      "path": "LightningQueues.Storage.LMDB/0.2.10",
+      "files": [
+        "LightningQueues.Storage.LMDB.0.2.10.nupkg.sha512",
+        "LightningQueues.Storage.LMDB.nuspec",
+        "lib/net46/LightningQueues.Storage.LMDB.dll",
+        "lib/netstandard1.3/LightningQueues.Storage.LMDB.dll"
+      ]
+    },
+    "Newtonsoft.Json/9.0.1": {
+      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+      "type": "package",
+      "path": "Newtonsoft.Json/9.0.1",
+      "files": [
+        "Newtonsoft.Json.9.0.1.nupkg.sha512",
+        "Newtonsoft.Json.nuspec",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "tools/install.ps1"
+      ]
+    },
+    "StructureMap/4.4.3": {
+      "sha512": "tj8PyJzU5eVV9PPbIZZpC1g7QM2h6wjHWjRKnm1knCHI5QFk3CYueUQCJ+oPGC7PLjW8Dayd1Oebe9Ai7hG4hw==",
+      "type": "package",
+      "path": "StructureMap/4.4.3",
+      "files": [
+        "StructureMap.4.4.3.nupkg.sha512",
+        "StructureMap.nuspec",
+        "lib/net45/StructureMap.dll",
+        "lib/netstandard1.3/StructureMap.dll",
+        "lib/netstandard1.5/StructureMap.dll"
+      ]
+    },
+    "System.Reactive/3.0.0": {
+      "sha512": "tm+Kmqs1Gp+fPqd7UvnQHXoQ1iUHD1Cxt9he6dudBFWZqyCJ6XKz/DvD/CQ+Kv/m11Y8iXKp99qhf2cg0IrTpg==",
+      "type": "package",
+      "path": "System.Reactive/3.0.0",
+      "files": [
+        "System.Reactive.3.0.0.nupkg.sha512",
+        "System.Reactive.nuspec"
+      ]
+    },
+    "System.Reactive.Core/3.0.0": {
+      "sha512": "1mnBTTNzTDaKYu2fYA0fcbWmWspwXheV9eFR0ynWd0nFjBwgSW0ZUAxe7dfvU5imv+K9QlfhV+pEKGOlJVZ8+w==",
+      "type": "package",
+      "path": "System.Reactive.Core/3.0.0",
+      "files": [
+        "System.Reactive.Core.3.0.0.nupkg.sha512",
+        "System.Reactive.Core.nuspec",
+        "lib/net45/System.Reactive.Core.dll",
+        "lib/net45/System.Reactive.Core.xml",
+        "lib/net46/System.Reactive.Core.dll",
+        "lib/net46/System.Reactive.Core.xml",
+        "lib/netcore451/System.Reactive.Core.dll",
+        "lib/netcore451/System.Reactive.Core.xml",
+        "lib/netcoreapp1.0/System.Reactive.Core.dll",
+        "lib/netcoreapp1.0/System.Reactive.Core.xml",
+        "lib/netstandard1.0/System.Reactive.Core.dll",
+        "lib/netstandard1.0/System.Reactive.Core.xml",
+        "lib/netstandard1.1/System.Reactive.Core.dll",
+        "lib/netstandard1.1/System.Reactive.Core.xml",
+        "lib/netstandard1.3/System.Reactive.Core.dll",
+        "lib/netstandard1.3/System.Reactive.Core.xml",
+        "lib/uap10.0/System.Reactive.Core.dll",
+        "lib/uap10.0/System.Reactive.Core.xml",
+        "lib/wpa81/System.Reactive.Core.dll",
+        "lib/wpa81/System.Reactive.Core.xml"
+      ]
+    },
+    "System.Reactive.Interfaces/3.0.0": {
+      "sha512": "MuLvWYegIrhvUVe3MRMIBxFGx4kiz0FEzN3TTvhX+m3WmJCi5+OE4J7yPWtZjGGTUh5wysGyaF9thcnCzx/J3w==",
+      "type": "package",
+      "path": "System.Reactive.Interfaces/3.0.0",
+      "files": [
+        "System.Reactive.Interfaces.3.0.0.nupkg.sha512",
+        "System.Reactive.Interfaces.nuspec",
+        "lib/net45/System.Reactive.Interfaces.dll",
+        "lib/net45/System.Reactive.Interfaces.xml",
+        "lib/netstandard1.0/System.Reactive.Interfaces.dll",
+        "lib/netstandard1.0/System.Reactive.Interfaces.xml"
+      ]
+    },
+    "System.Reactive.Linq/3.0.0": {
+      "sha512": "CmQ+WpeOFzwYlDKafLQLT5McvR1TWCi3UudeBnajguvi/8ZGHDoQ2MPTo401EKkSvW48uTsJyvcKXN/C7g91Qg==",
+      "type": "package",
+      "path": "System.Reactive.Linq/3.0.0",
+      "files": [
+        "System.Reactive.Linq.3.0.0.nupkg.sha512",
+        "System.Reactive.Linq.nuspec",
+        "lib/net45/System.Reactive.Linq.dll",
+        "lib/net45/System.Reactive.Linq.xml",
+        "lib/net46/System.Reactive.Linq.dll",
+        "lib/net46/System.Reactive.Linq.xml",
+        "lib/netstandard1.0/System.Reactive.Linq.dll",
+        "lib/netstandard1.0/System.Reactive.Linq.xml",
+        "lib/netstandard1.1/System.Reactive.Linq.dll",
+        "lib/netstandard1.1/System.Reactive.Linq.xml",
+        "lib/netstandard1.3/System.Reactive.Linq.dll",
+        "lib/netstandard1.3/System.Reactive.Linq.xml"
+      ]
+    },
+    "System.Reactive.PlatformServices/3.0.0": {
+      "sha512": "1yYsCsIqrpu228er3iC1naLcCnIpdDRuyFhD78P6C54YyiR84ElDUjWYEMVneUKxrP6PlwrZp2VEf0DHAHX8gw==",
+      "type": "package",
+      "path": "System.Reactive.PlatformServices/3.0.0",
+      "files": [
+        "System.Reactive.PlatformServices.3.0.0.nupkg.sha512",
+        "System.Reactive.PlatformServices.nuspec",
+        "lib/net45/System.Reactive.PlatformServices.dll",
+        "lib/net45/System.Reactive.PlatformServices.xml",
+        "lib/net46/System.Reactive.PlatformServices.dll",
+        "lib/net46/System.Reactive.PlatformServices.xml",
+        "lib/netcore451/System.Reactive.PlatformServices.dll",
+        "lib/netcore451/System.Reactive.PlatformServices.xml",
+        "lib/netcoreapp1.0/System.Reactive.PlatformServices.dll",
+        "lib/netcoreapp1.0/System.Reactive.PlatformServices.xml",
+        "lib/netstandard1.0/System.Reactive.PlatformServices.dll",
+        "lib/netstandard1.0/System.Reactive.PlatformServices.xml",
+        "lib/netstandard1.3/System.Reactive.PlatformServices.dll",
+        "lib/netstandard1.3/System.Reactive.PlatformServices.xml",
+        "lib/uap10.0/System.Reactive.PlatformServices.dll",
+        "lib/uap10.0/System.Reactive.PlatformServices.xml",
+        "lib/wpa81/System.Reactive.PlatformServices.dll",
+        "lib/wpa81/System.Reactive.PlatformServices.xml"
+      ]
+    },
+    "System.Reactive.Windows.Threading/3.0.0": {
+      "sha512": "+JJ1tyTpNUNt5CI6MZfOgU/l5WPz35bTUuCkkP6+KbeCeAhU045dJ2AbP7s7CPw34IWWi6hcafwihL/C0ej97w==",
+      "type": "package",
+      "path": "System.Reactive.Windows.Threading/3.0.0",
+      "files": [
+        "System.Reactive.Windows.Threading.3.0.0.nupkg.sha512",
+        "System.Reactive.Windows.Threading.nuspec",
+        "lib/net45/System.Reactive.Windows.Threading.dll",
+        "lib/net45/System.Reactive.Windows.Threading.xml",
+        "lib/netcore451/System.Reactive.Windows.Threading.dll",
+        "lib/netcore451/System.Reactive.Windows.Threading.xml",
+        "lib/uap10.0/System.Reactive.Windows.Threading.dll",
+        "lib/uap10.0/System.Reactive.Windows.Threading.xml",
+        "lib/wpa81/System.Reactive.Windows.Threading.dll",
+        "lib/wpa81/System.Reactive.Windows.Threading.xml"
+      ]
+    },
+    "FubuMVC.Core/3.0.2": {
+      "type": "project",
+      "path": "../FubuMVC.Core/project.json",
+      "msbuildProject": "../FubuMVC.Core/FubuMVC.Core.xproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "FubuMVC.Core",
+      "LightningQueues >= 0.2.12",
+      "LightningQueues.Storage.LMDB >= 0.2.10"
+    ],
+    ".NETFramework,Version=v4.6": []
+  },
+  "tools": {},
+  "projectFileToolGroups": {}
+}

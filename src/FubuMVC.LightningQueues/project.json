@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "dependencies": {
+    "FubuMVC.Core": { "target": "project" },
+    "LightningQueues": "0.2.12",
+    "LightningQueues.Storage.LMDB": "0.2.10"
+  },
+  "frameworks": {
+    "net46": {} 
+  }
+}
