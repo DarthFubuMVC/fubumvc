@@ -4,7 +4,9 @@
     "debugType": "portable"
   },
   "dependencies": {
-    "FubuMVC.Core": {"target": "project"} 
+    "FubuMVC.Core": {"target": "project"},
+    "FubuMVC.LightningQueues": {"target": "project"},
+    "FubuMVC.Marten": {"target": "project"}
   },
   "frameworks": {
     "net46": {} 
