@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "dependencies": {
+    "FubuMVC.Tests": { "target": "project" },
+    "FubuMVC.LightningQueues": { "target": "project" },
+    "ServiceNode": { "target": "project" },
+    "Serenity": { "target": "project" }
+  },
+  "frameworks": {
+    "net46": {} 
+  }
+}

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using OpenQA.Selenium.Safari.Internal;
 using StoryTeller;
 
 namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
@@ -123,5 +122,10 @@ namespace FubuMVC.IntegrationTesting.Fixtures.ServiceBus.Monitoring
         }
 
         public bool Timesout { get; set; }
+    }
+
+    public class HandshakeException : Exception
+    {
+        
     }
 }
