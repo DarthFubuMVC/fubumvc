@@ -4,7 +4,10 @@
     "debugType": "portable"
   },
   "dependencies": {
-    "FubuMVC.Core": {"target": "project"} 
+    "FubuMVC.Core": { "target": "project" },
+    "Storyteller": "4.1.0-alpha-491",
+    "Selenium.WebDriver": "3.1.0",
+    "Selenium.Support": "3.1.0"
   },
   "frameworks": {
     "net46": {} 

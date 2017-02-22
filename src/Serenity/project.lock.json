@@ -1,0 +1,395 @@
+{
+  "locked": false,
+  "version": 2,
+  "targets": {
+    ".NETFramework,Version=v4.6": {
+      "Baseline/1.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Xml"
+        ],
+        "compile": {
+          "lib/net451/Baseline.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Baseline.dll": {}
+        }
+      },
+      "FubuCore/2.0.1.321": {
+        "type": "package",
+        "compile": {
+          "lib/FubuCore.dll": {}
+        },
+        "runtime": {
+          "lib/FubuCore.dll": {}
+        }
+      },
+      "HtmlTags/2.1.0.183": {
+        "type": "package",
+        "compile": {
+          "lib/4.0/HtmlTags.dll": {}
+        },
+        "runtime": {
+          "lib/4.0/HtmlTags.dll": {}
+        }
+      },
+      "Microsoft.DotNet.InternalAbstractions/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Microsoft.DotNet.InternalAbstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.DotNet.InternalAbstractions.dll": {}
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Selenium.Support/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Selenium.WebDriver": "3.1.0"
+        },
+        "frameworkAssemblies": [
+          "System.Drawing"
+        ],
+        "compile": {
+          "lib/net40/WebDriver.Support.dll": {}
+        },
+        "runtime": {
+          "lib/net40/WebDriver.Support.dll": {}
+        }
+      },
+      "Selenium.WebDriver/3.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Drawing"
+        ],
+        "compile": {
+          "lib/net40/WebDriver.dll": {}
+        },
+        "runtime": {
+          "lib/net40/WebDriver.dll": {}
+        }
+      },
+      "Storyteller/4.1.0-alpha-491": {
+        "type": "package",
+        "dependencies": {
+          "Baseline": "1.2.0",
+          "Microsoft.DotNet.InternalAbstractions": "1.0.0",
+          "Newtonsoft.Json": "9.0.1",
+          "System.Data.Common": "4.1.0",
+          "System.Reflection.TypeExtensions": "4.1.0"
+        },
+        "frameworkAssemblies": [
+          "System.Data",
+          "System.Reflection",
+          "System.Web"
+        ],
+        "compile": {
+          "lib/net46/Storyteller.dll": {}
+        },
+        "runtime": {
+          "lib/net46/Storyteller.dll": {}
+        }
+      },
+      "StructureMap/4.4.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/StructureMap.dll": {}
+        },
+        "runtime": {
+          "lib/net45/StructureMap.dll": {}
+        }
+      },
+      "System.Data.Common/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Data",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net451/System.Data.Common.dll": {}
+        },
+        "runtime": {
+          "lib/net451/System.Data.Common.dll": {}
+        }
+      },
+      "System.Reflection.TypeExtensions/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Reflection.TypeExtensions.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Reflection.TypeExtensions.dll": {}
+        }
+      },
+      "FubuMVC.Core/3.0.2": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "FubuCore": "2.0.1.321",
+          "HtmlTags": "2.1.0.183",
+          "Newtonsoft.Json": "9.0.1",
+          "StructureMap": "4.4.3"
+        },
+        "frameworkAssemblies": [
+          "System.Security",
+          "System.Web",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "net46/FubuMVC.Core.dll": {}
+        },
+        "runtime": {
+          "net46/FubuMVC.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Baseline/1.2.0": {
+      "sha512": "7bdR3mf/IPOtbHCbhVWieJVr+hHe0HZZKwlBVa/9heXHkq59UdLmgcBT6I/agL9J+JCaBtN0uKF4huOtqwvgag==",
+      "type": "package",
+      "path": "Baseline/1.2.0",
+      "files": [
+        "Baseline.1.2.0.nupkg.sha512",
+        "Baseline.nuspec",
+        "lib/net451/Baseline.dll",
+        "lib/netstandard1.3/Baseline.dll"
+      ]
+    },
+    "FubuCore/2.0.1.321": {
+      "sha512": "UUqZhWu4UsMuNMXDJNTr+K/yU7vdWY6AFkaSEtlqME1wBIv2V0Qvzqn08HO/NznMIlpPAbhDiiQTs78aXw7cBA==",
+      "type": "package",
+      "path": "FubuCore/2.0.1.321",
+      "files": [
+        "FubuCore.2.0.1.321.nupkg.sha512",
+        "FubuCore.nuspec",
+        "lib/FubuCore.dll",
+        "lib/FubuCore.pdb"
+      ]
+    },
+    "HtmlTags/2.1.0.183": {
+      "sha512": "iGCZn+2s7X5PvhhgP3HtjIVw75e0qaGqcWMAiO7PGvmoWFaAKWmlthjl3ffxwEqgsCD430C25ebIAdpp6NHm+g==",
+      "type": "package",
+      "path": "HtmlTags/2.1.0.183",
+      "files": [
+        "HtmlTags.2.1.0.183.nupkg.sha512",
+        "HtmlTags.nuspec",
+        "lib/4.0/HtmlTags.dll"
+      ]
+    },
+    "Microsoft.DotNet.InternalAbstractions/1.0.0": {
+      "sha512": "AAguUq7YyKk3yDWPoWA8DrLZvURxB/LrDdTn1h5lmPeznkFUpfC3p459w5mQYQE0qpquf/CkSQZ0etiV5vRHFA==",
+      "type": "package",
+      "path": "Microsoft.DotNet.InternalAbstractions/1.0.0",
+      "files": [
+        "Microsoft.DotNet.InternalAbstractions.1.0.0.nupkg.sha512",
+        "Microsoft.DotNet.InternalAbstractions.nuspec",
+        "lib/net451/Microsoft.DotNet.InternalAbstractions.dll",
+        "lib/netstandard1.3/Microsoft.DotNet.InternalAbstractions.dll"
+      ]
+    },
+    "Newtonsoft.Json/9.0.1": {
+      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+      "type": "package",
+      "path": "Newtonsoft.Json/9.0.1",
+      "files": [
+        "Newtonsoft.Json.9.0.1.nupkg.sha512",
+        "Newtonsoft.Json.nuspec",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "tools/install.ps1"
+      ]
+    },
+    "Selenium.Support/3.1.0": {
+      "sha512": "/DrptEJCZtMH+FAb1oNp4QnbEsambym1BY2R1hfC6SDNuAv+2Etj2N+gYQaz+t/89IFTSKBNCJeDusYS76/4HQ==",
+      "type": "package",
+      "path": "Selenium.Support/3.1.0",
+      "files": [
+        "Selenium.Support.3.1.0.nupkg.sha512",
+        "Selenium.Support.nuspec",
+        "lib/net35/WebDriver.Support.dll",
+        "lib/net35/WebDriver.Support.xml",
+        "lib/net40/WebDriver.Support.dll",
+        "lib/net40/WebDriver.Support.xml"
+      ]
+    },
+    "Selenium.WebDriver/3.1.0": {
+      "sha512": "2cZ3TYE6QGyLT/NmZpKhAQ3CnvbT5E/xfpCE3ZaS97VaDqUUt03sh5dPldwrr3aDokp93SxkZPH3j+v2Mt08NA==",
+      "type": "package",
+      "path": "Selenium.WebDriver/3.1.0",
+      "files": [
+        "Selenium.WebDriver.3.1.0.nupkg.sha512",
+        "Selenium.WebDriver.nuspec",
+        "lib/net35/WebDriver.dll",
+        "lib/net35/WebDriver.xml",
+        "lib/net40/WebDriver.dll",
+        "lib/net40/WebDriver.xml"
+      ]
+    },
+    "Storyteller/4.1.0-alpha-491": {
+      "sha512": "ba4k8Y7kuhJOx1jL4JKTUczwQ5Zlc3XDe68QUGDbVslHi05o09Cv6qR7A3eSt0tnsU8HFQJk3r7SwZWHgPeeog==",
+      "type": "package",
+      "path": "Storyteller/4.1.0-alpha-491",
+      "files": [
+        "Storyteller.4.1.0-alpha-491.nupkg.sha512",
+        "Storyteller.nuspec",
+        "lib/net46/Storyteller.dll",
+        "lib/netstandard1.6/Storyteller.dll"
+      ]
+    },
+    "StructureMap/4.4.3": {
+      "sha512": "tj8PyJzU5eVV9PPbIZZpC1g7QM2h6wjHWjRKnm1knCHI5QFk3CYueUQCJ+oPGC7PLjW8Dayd1Oebe9Ai7hG4hw==",
+      "type": "package",
+      "path": "StructureMap/4.4.3",
+      "files": [
+        "StructureMap.4.4.3.nupkg.sha512",
+        "StructureMap.nuspec",
+        "lib/net45/StructureMap.dll",
+        "lib/netstandard1.3/StructureMap.dll",
+        "lib/netstandard1.5/StructureMap.dll"
+      ]
+    },
+    "System.Data.Common/4.1.0": {
+      "sha512": "epU8jeTe7aE7RqGHq9rZ8b0Q4Ah7DgubzHQblgZMSqgW1saW868WmooSyC5ywf8upLBkcVLDu93W9GPWUYsU2Q==",
+      "type": "package",
+      "path": "System.Data.Common/4.1.0",
+      "files": [
+        "System.Data.Common.4.1.0.nupkg.sha512",
+        "System.Data.Common.nuspec",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net451/System.Data.Common.dll",
+        "lib/netstandard1.2/System.Data.Common.dll",
+        "lib/portable-net451+win8+wp8+wpa81/System.Data.Common.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net451/System.Data.Common.dll",
+        "ref/netstandard1.2/System.Data.Common.dll",
+        "ref/netstandard1.2/System.Data.Common.xml",
+        "ref/netstandard1.2/de/System.Data.Common.xml",
+        "ref/netstandard1.2/es/System.Data.Common.xml",
+        "ref/netstandard1.2/fr/System.Data.Common.xml",
+        "ref/netstandard1.2/it/System.Data.Common.xml",
+        "ref/netstandard1.2/ja/System.Data.Common.xml",
+        "ref/netstandard1.2/ko/System.Data.Common.xml",
+        "ref/netstandard1.2/ru/System.Data.Common.xml",
+        "ref/netstandard1.2/zh-hans/System.Data.Common.xml",
+        "ref/netstandard1.2/zh-hant/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/System.Data.Common.dll",
+        "ref/portable-net451+win8+wp8+wpa81/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/de/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/es/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/fr/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/it/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/ja/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/ko/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/ru/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/zh-hans/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/zh-hant/System.Data.Common.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._"
+      ]
+    },
+    "System.Reflection.TypeExtensions/4.1.0": {
+      "sha512": "iYIGrgC+/2nT6vqgWOYqGAgZpVpnPTSrSYYouPwWOYPLRUeaNX5q4d1+ADVqsvejX45aLBVUOnEh3zoySw6j1A==",
+      "type": "package",
+      "path": "System.Reflection.TypeExtensions/4.1.0",
+      "files": [
+        "System.Reflection.TypeExtensions.4.1.0.nupkg.sha512",
+        "System.Reflection.TypeExtensions.nuspec",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Reflection.TypeExtensions.dll",
+        "lib/net462/System.Reflection.TypeExtensions.dll",
+        "lib/netcore50/System.Reflection.TypeExtensions.dll",
+        "lib/netstandard1.5/System.Reflection.TypeExtensions.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Reflection.TypeExtensions.dll",
+        "ref/net462/System.Reflection.TypeExtensions.dll",
+        "ref/netstandard1.3/System.Reflection.TypeExtensions.dll",
+        "ref/netstandard1.3/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/de/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/es/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/fr/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/it/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/ja/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/ko/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/ru/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/zh-hans/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.3/zh-hant/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/System.Reflection.TypeExtensions.dll",
+        "ref/netstandard1.5/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/de/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/es/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/fr/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/it/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/ja/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/ko/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/ru/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/zh-hans/System.Reflection.TypeExtensions.xml",
+        "ref/netstandard1.5/zh-hant/System.Reflection.TypeExtensions.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/aot/lib/netcore50/System.Reflection.TypeExtensions.dll"
+      ]
+    },
+    "FubuMVC.Core/3.0.2": {
+      "type": "project",
+      "path": "../FubuMVC.Core/project.json",
+      "msbuildProject": "../FubuMVC.Core/FubuMVC.Core.xproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "FubuMVC.Core",
+      "Selenium.Support >= 3.1.0",
+      "Selenium.WebDriver >= 3.1.0",
+      "Storyteller >= 4.1.0-alpha-491"
+    ],
+    ".NETFramework,Version=v4.6": []
+  },
+  "tools": {},
+  "projectFileToolGroups": {}
+}

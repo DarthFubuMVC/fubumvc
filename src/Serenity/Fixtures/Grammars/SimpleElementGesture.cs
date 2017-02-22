@@ -48,7 +48,7 @@ namespace Serenity.Fixtures.Grammars
 
         protected override IEnumerable<Cell> buildCells(CellHandling cellHandling, Fixture fixture)
         {
-            _cell = new Cell(cellHandling, _config.CellName, _config.CellType) {output = isOutput};
+            _cell = new Cell(cellHandling, _config.CellName, _config.CellType) {result = isOutput};
 
             yield return _cell;
         }

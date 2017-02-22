@@ -14,7 +14,7 @@ namespace Serenity
 
         public void Navigating(string url, Action action)
         {
-            using (_context.Timings.Subject("Navigation", url))
+            using (_context.Timings.Record("Navigation", url))
             {
                 action();
             }
