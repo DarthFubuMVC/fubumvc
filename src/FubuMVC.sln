@@ -33,8 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinBottle", "OwinBottle\Ow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarnessApp", "TestHarnessApp\TestHarnessApp.csproj", "{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fubu", "Fubu\Fubu.csproj", "{90DBE31C-948D-47AF-8C17-0056511A7313}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProjects", "TestProjects", "{DE130877-DDCB-425C-9C20-BF1B73D4191D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteService", "RemoteService\RemoteService.csproj", "{F8186EC7-237A-4C24-AA48-1CFCDD099A8D}"
@@ -179,21 +177,6 @@ Global
 		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Retail|x86.ActiveCfg = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Release|x86.ActiveCfg = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Retail|Any CPU.ActiveCfg = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Retail|Any CPU.Build.0 = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
-		{90DBE31C-948D-47AF-8C17-0056511A7313}.Retail|x86.ActiveCfg = Release|Any CPU
 		{F8186EC7-237A-4C24-AA48-1CFCDD099A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8186EC7-237A-4C24-AA48-1CFCDD099A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8186EC7-237A-4C24-AA48-1CFCDD099A8D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

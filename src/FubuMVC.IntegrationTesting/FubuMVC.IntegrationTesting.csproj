@@ -68,9 +68,6 @@
     <Compile Include="Async\AsyncRouteIntegrationTester.cs" />
     <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
     <Compile Include="can_register_and_use_OWIN_middleware_from_a_package.cs" />
-    <Compile Include="CommandLine\Running\RemoteFubuMvcBootstrapperTester.cs" />
-    <Compile Include="CommandLine\Running\StartApplicationTester.cs" />
-    <Compile Include="CommandLine\usage_graph_smoke_tester.cs" />
     <Compile Include="Conneg\AjaxInputModelBindingIntegrationTester.cs" />
     <Compile Include="Conneg\ConnegFixture.cs" />
     <Compile Include="Conneg\Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML.cs" />
@@ -213,10 +210,6 @@
     <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
       <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
       <Name>FubuMVC.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fubu\Fubu.csproj">
-      <Project>{90dbe31c-948d-47af-8c17-0056511a7313}</Project>
-      <Name>Fubu</Name>
     </ProjectReference>
     <ProjectReference Include="..\OwinBottle\OwinBottle.csproj">
       <Project>{60b6139b-6bda-4860-a475-9675d47888f7}</Project>
