@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "dependencies": {
+    "FubuMVC.Core": { "target": "project" },
+    "TestMessages": { "target": "project" },
+    "TestPackage1": { "target": "project" },
+    "SampleService": { "target": "project" },
+    "AssemblyPackage": { "target": "project" },
+    "Fixie": "1.0.2",
+    "Shouldly": "2.8.2",
+    "RhinoMocks": "3.6.1"
+  },
+  "frameworks": {
+    "net46": {} 
+  }
+}

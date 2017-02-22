@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
@@ -348,5 +347,10 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         {
             return ex is T ? Continuation : null;
         }
+    }
+
+    public class DBConcurrencyException : Exception
+    {
+        
     }
 }

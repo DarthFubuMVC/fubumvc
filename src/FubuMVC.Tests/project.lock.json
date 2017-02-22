@@ -1,0 +1,290 @@
+{
+  "locked": false,
+  "version": 2,
+  "targets": {
+    ".NETFramework,Version=v4.6": {
+      "Fixie/1.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Fixie.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Fixie.dll": {}
+        }
+      },
+      "FubuCore/2.0.1.321": {
+        "type": "package",
+        "compile": {
+          "lib/FubuCore.dll": {}
+        },
+        "runtime": {
+          "lib/FubuCore.dll": {}
+        }
+      },
+      "HtmlTags/2.1.0.183": {
+        "type": "package",
+        "compile": {
+          "lib/4.0/HtmlTags.dll": {}
+        },
+        "runtime": {
+          "lib/4.0/HtmlTags.dll": {}
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "RhinoMocks/3.6.1": {
+        "type": "package",
+        "compile": {
+          "lib/net/Rhino.Mocks.dll": {}
+        },
+        "runtime": {
+          "lib/net/Rhino.Mocks.dll": {}
+        }
+      },
+      "Shouldly/2.8.2": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Shouldly.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Shouldly.dll": {}
+        }
+      },
+      "StructureMap/4.4.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/StructureMap.dll": {}
+        },
+        "runtime": {
+          "lib/net45/StructureMap.dll": {}
+        }
+      },
+      "AssemblyPackage/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "FubuMVC.Core": "1.0.0"
+        },
+        "compile": {
+          "net46/AssemblyPackage.dll": {}
+        },
+        "runtime": {
+          "net46/AssemblyPackage.dll": {}
+        }
+      },
+      "FubuMVC.Core/3.0.2": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "FubuCore": "2.0.1.321",
+          "HtmlTags": "2.1.0.183",
+          "Newtonsoft.Json": "9.0.1",
+          "StructureMap": "4.4.3"
+        },
+        "frameworkAssemblies": [
+          "System.Security",
+          "System.Web",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "net46/FubuMVC.Core.dll": {}
+        },
+        "runtime": {
+          "net46/FubuMVC.Core.dll": {}
+        }
+      },
+      "SampleService/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "FubuMVC.Core": "1.0.0"
+        },
+        "compile": {
+          "net46/SampleService.dll": {}
+        },
+        "runtime": {
+          "net46/SampleService.dll": {}
+        }
+      },
+      "TestMessages/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "FubuMVC.Core": "1.0.0",
+          "Shouldly": "2.8.2"
+        },
+        "compile": {
+          "net46/TestMessages.dll": {}
+        },
+        "runtime": {
+          "net46/TestMessages.dll": {}
+        }
+      },
+      "TestPackage1/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "FubuMVC.Core": "1.0.0"
+        },
+        "compile": {
+          "net46/TestPackage1.dll": {}
+        },
+        "runtime": {
+          "net46/TestPackage1.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Fixie/1.0.2": {
+      "sha512": "bqm0Z5mmpgAubU4PjGRQtBeYF5r4L1ypxu0lz5Da314Uv0kX/+OJ5F+NQSdBRTlgrLqIDrrhygmtk3lktJaumQ==",
+      "type": "package",
+      "path": "Fixie/1.0.2",
+      "files": [
+        "Fixie.1.0.2.nupkg.sha512",
+        "Fixie.nuspec",
+        "lib/net45/Fixie.Console.exe",
+        "lib/net45/Fixie.Console.exe.config",
+        "lib/net45/Fixie.Console.x86.exe",
+        "lib/net45/Fixie.Console.x86.exe.config",
+        "lib/net45/Fixie.TestDriven.dll",
+        "lib/net45/Fixie.VisualStudio.TestAdapter.dll",
+        "lib/net45/Fixie.dll",
+        "lib/net45/Fixie.dll.tdnet",
+        "lib/net45/Mono.Cecil.Pdb.dll",
+        "lib/net45/Mono.Cecil.Rocks.dll",
+        "lib/net45/Mono.Cecil.dll",
+        "lib/net45/TestDriven.Framework.dll"
+      ]
+    },
+    "FubuCore/2.0.1.321": {
+      "sha512": "UUqZhWu4UsMuNMXDJNTr+K/yU7vdWY6AFkaSEtlqME1wBIv2V0Qvzqn08HO/NznMIlpPAbhDiiQTs78aXw7cBA==",
+      "type": "package",
+      "path": "FubuCore/2.0.1.321",
+      "files": [
+        "FubuCore.2.0.1.321.nupkg.sha512",
+        "FubuCore.nuspec",
+        "lib/FubuCore.dll",
+        "lib/FubuCore.pdb"
+      ]
+    },
+    "HtmlTags/2.1.0.183": {
+      "sha512": "iGCZn+2s7X5PvhhgP3HtjIVw75e0qaGqcWMAiO7PGvmoWFaAKWmlthjl3ffxwEqgsCD430C25ebIAdpp6NHm+g==",
+      "type": "package",
+      "path": "HtmlTags/2.1.0.183",
+      "files": [
+        "HtmlTags.2.1.0.183.nupkg.sha512",
+        "HtmlTags.nuspec",
+        "lib/4.0/HtmlTags.dll"
+      ]
+    },
+    "Newtonsoft.Json/9.0.1": {
+      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+      "type": "package",
+      "path": "Newtonsoft.Json/9.0.1",
+      "files": [
+        "Newtonsoft.Json.9.0.1.nupkg.sha512",
+        "Newtonsoft.Json.nuspec",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "tools/install.ps1"
+      ]
+    },
+    "RhinoMocks/3.6.1": {
+      "sha512": "0HjdR7PVVUDz9Db5cLzU0Dquay8MhoCoZ8PJRZOo10Iysq4m+mjl2aaxc4eWztvZ6S1v/NYW5xv1qul0ToN21w==",
+      "type": "package",
+      "path": "RhinoMocks/3.6.1",
+      "files": [
+        "RhinoMocks.3.6.1.nupkg.sha512",
+        "RhinoMocks.nuspec",
+        "lib/net/Rhino.Mocks.dll",
+        "lib/net/Rhino.Mocks.xml"
+      ]
+    },
+    "Shouldly/2.8.2": {
+      "sha512": "H/AI4mu6J+ZHcRFfCT1Q/yeIxNYn73kAq94KJVZINTL7xJugRzZjqFPSTB4u4RpTsE9mk3xWEOhZrzmH8KasDA==",
+      "type": "package",
+      "path": "Shouldly/2.8.2",
+      "files": [
+        "Shouldly.2.8.2.nupkg.sha512",
+        "Shouldly.nuspec",
+        "lib/net35/Shouldly.dll",
+        "lib/net40/Shouldly.dll",
+        "lib/net451/Shouldly.dll",
+        "lib/netstandard1.3/Shouldly.dll"
+      ]
+    },
+    "StructureMap/4.4.3": {
+      "sha512": "tj8PyJzU5eVV9PPbIZZpC1g7QM2h6wjHWjRKnm1knCHI5QFk3CYueUQCJ+oPGC7PLjW8Dayd1Oebe9Ai7hG4hw==",
+      "type": "package",
+      "path": "StructureMap/4.4.3",
+      "files": [
+        "StructureMap.4.4.3.nupkg.sha512",
+        "StructureMap.nuspec",
+        "lib/net45/StructureMap.dll",
+        "lib/netstandard1.3/StructureMap.dll",
+        "lib/netstandard1.5/StructureMap.dll"
+      ]
+    },
+    "AssemblyPackage/1.0.0": {
+      "type": "project",
+      "path": "../AssemblyPackage/project.json",
+      "msbuildProject": "../AssemblyPackage/AssemblyPackage.xproj"
+    },
+    "FubuMVC.Core/3.0.2": {
+      "type": "project",
+      "path": "../FubuMVC.Core/project.json",
+      "msbuildProject": "../FubuMVC.Core/FubuMVC.Core.xproj"
+    },
+    "SampleService/1.0.0": {
+      "type": "project",
+      "path": "../SampleService/project.json",
+      "msbuildProject": "../SampleService/SampleService.xproj"
+    },
+    "TestMessages/1.0.0": {
+      "type": "project",
+      "path": "../TestMessages/project.json",
+      "msbuildProject": "../TestMessages/TestMessages.xproj"
+    },
+    "TestPackage1/1.0.0": {
+      "type": "project",
+      "path": "../TestPackage1/project.json",
+      "msbuildProject": "../TestPackage1/TestPackage1.xproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "AssemblyPackage",
+      "Fixie >= 1.0.2",
+      "FubuMVC.Core",
+      "RhinoMocks >= 3.6.1",
+      "SampleService",
+      "Shouldly >= 2.8.2",
+      "TestMessages",
+      "TestPackage1"
+    ],
+    ".NETFramework,Version=v4.6": []
+  },
+  "tools": {},
+  "projectFileToolGroups": {}
+}

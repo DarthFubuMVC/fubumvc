@@ -33,27 +33,11 @@ namespace Shouldly
 
     public static class SpecificationExtensions
     {
-        public static void ShouldBeTrue(this bool anObject)
-        {
-            anObject.ShouldBe(true);
-        }
-
-        public static void ShouldBeFalse(this bool anObject)
-        {
-            anObject.ShouldBe(false);
-        }
 
         public static void ShouldBeNull(this object anObject)
         {
             anObject.ShouldBe(null);
         }
-
-        public static T ShouldNotBeNull<T>(this T anObject) where T : class
-        {
-            anObject.ShouldNotBe(null);
-            return anObject;
-        }
-
 
         public static object ShouldBeTheSameAs(this object actual, object expected)
         {

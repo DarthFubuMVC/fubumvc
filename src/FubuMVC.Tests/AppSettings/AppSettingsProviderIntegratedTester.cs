@@ -1,25 +1,23 @@
+using FubuCore.Binding;
 using FubuCore.Configuration;
-using FubuMVC.StructureMap;
-using FubuTestingSupport;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.Tests.AppSettings
 {
     [TestFixture]
-    public class AppSettingsProviderIntegratedTester : InteractionContext<AppSettingsProvider>
+    public class AppSettingsProviderIntegratedTester 
     {
-        protected override void beforeEach()
-        {
-            Container.Configure(x => x.AddRegistry<AppSettingProviderRegistry>());
-        }
 
         [Test]
         public void fetch_a_simple_object()
         {
+            var provider = new AppSettingsProvider(ObjectResolver.Basic());
+
             // This data is pulled from the FubuMVC.Tests.dll.config file
-            var settings = ClassUnderTest.SettingsFor<FakeSettings>();
-            settings.Name.ShouldEqual("Max");
-            settings.Age.ShouldEqual(6);
+            var settings = provider.SettingsFor<FakeSettings>();
+            settings.Name.ShouldBe("Max");
+            settings.Age.ShouldBe(6);
             settings.Active.ShouldBeTrue();
         }
     }
