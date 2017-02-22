@@ -52,9 +52,7 @@ namespace ScheduledJobHarness
 
             ServiceBus.EnableInMemoryTransport(incoming);
 
-
-            Services.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
-            Services.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
+            // TODO -- probably 
             Services.ReplaceService(store);
 
             Services.AddService<ILogListener, ScheduledJobListener>();

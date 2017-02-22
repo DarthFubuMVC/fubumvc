@@ -70,10 +70,6 @@
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
-      <Project>{02441e35-668b-4713-9279-bd51948b95eb}</Project>
-      <Name>FubuMVC.RavenDb</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="CopyRuntimeDependencies" AssemblyFile="..\..\.paket\paket.exe" />
