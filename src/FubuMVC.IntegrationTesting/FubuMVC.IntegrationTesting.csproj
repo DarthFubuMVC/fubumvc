@@ -188,6 +188,7 @@
     <Compile Include="Using_a_custom_routing_policy.cs" />
     <Compile Include="Views\Actionless_Views.cs" />
     <Compile Include="Auto_Import_Model_Namespaces.cs" />
+    <Compile Include="ContentStream.cs" />
     <Compile Include="Views\LayoutAttachment\Explicit_declaration_of_master_layout.cs" />
     <Compile Include="Views\LayoutAttachment\Explicit_declaration_of_master_layout_spark.cs" />
     <Compile Include="Views\LayoutAttachment\override_the_default_layout_name.cs" />
