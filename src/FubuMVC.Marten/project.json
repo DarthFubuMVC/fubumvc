@@ -4,7 +4,8 @@
     "debugType": "portable"
   },
   "dependencies": {
-    "FubuMVC.Core": {"target": "project"} 
+    "FubuMVC.Core": { "target": "project" },
+    "Marten": "1.4.0"  
   },
   "frameworks": {
     "net46": {} 
