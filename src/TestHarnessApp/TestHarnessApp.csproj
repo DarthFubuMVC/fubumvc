@@ -62,10 +62,6 @@
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
-      <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
-      <Name>FubuMVC.Spark</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\images\Firefly.jpg" />

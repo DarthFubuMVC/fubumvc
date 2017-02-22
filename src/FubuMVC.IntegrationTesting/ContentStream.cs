@@ -1,5 +1,5 @@
 using System.IO;
-using FubuMVC.IntegrationTesting.Views;
+using FubuCore;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -26,7 +26,7 @@ namespace FubuMVC.IntegrationTesting
 
         public void DumpContents()
         {
-            ViewIntegrationContext.fileSystem.WriteStringToFile(_path, _writer.ToString());
+            new FileSystem().WriteStringToFile(_path, _writer.ToString());
         }
     }
 }
