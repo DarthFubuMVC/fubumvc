@@ -241,9 +241,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="lmdb.dll" />
-    <Content Include="phantomjs.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Serenity\App\errors.js" />
     <Content Include="Specs\Authentication\Logins\Cannot access the home page after logging out.xml" />
     <Content Include="Specs\Authentication\Logins\Expiration\Sliding_expiration_success_and_failure.xml" />
