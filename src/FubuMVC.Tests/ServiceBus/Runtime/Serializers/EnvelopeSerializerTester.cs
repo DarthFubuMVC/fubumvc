@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             var o = new object();
             serializers[3].Stub(x => x.Deserialize(null)).IgnoreArguments().Return(o);
 
-            ClassUnderTest.Deserialize(theEnvelope).ShouldBeTheSameAs(o);
+            ClassUnderTest.Deserialize(theEnvelope, new ChannelNode()).ShouldBeTheSameAs(o);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
                 ClassUnderTest.Serialize(theEnvelope, new ChannelNode());
             }).Message.ShouldContain("random/nonexistent");
         }
-        
+
         [Fact]
         public void throws_on_serialize_with_no_message()
         {
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
         {
             Exception<EnvelopeDeserializationException>.ShouldBeThrownBy(() =>
             {
-                ClassUnderTest.Deserialize(new Envelope());
+                ClassUnderTest.Deserialize(new Envelope(), new ChannelNode());
             }).Message.ShouldBe("No data on this envelope to deserialize");
         }
 
@@ -81,12 +81,27 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
                 var serializer = new EnvelopeSerializer(null, new[] { messageSerializer });
                 var envelope = new Envelope(new byte[10], new NameValueHeaders(), null);
                 envelope.ContentType = messageSerializer.ContentType;
-                serializer.Deserialize(envelope);
+                serializer.Deserialize(envelope, new ChannelNode());
             }).Message.ShouldBe("Message serializer has failed");
         }
 
         [Fact]
         public void select_serializer_uses_the_envelope_override_if_it_exists()
+        {
+            var node = new ChannelNode
+            {
+                DefaultContentType = serializers[1].ContentType
+            };
+            theGraph.DefaultContentType = serializers[4].ContentType;
+
+            theEnvelope.AcceptedContentTypes = new []{serializers[3].ContentType};
+
+            ClassUnderTest.SelectSerializer(theEnvelope, node)
+                .ShouldBeTheSameAs(serializers[3]);
+        }
+
+        [Fact]
+        public void select_serializer_users_the_envelope_accepted_content_types_if_it_exists()
         {
             var node = new ChannelNode
             {
@@ -101,12 +116,34 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
         }
 
         [Fact]
+        public void select_the_graph_accepted_content_type()
+        {
+            theGraph.AcceptedContentTypes.Add(serializers[3].ContentType);
+            theGraph.DefaultContentType = serializers[4].ContentType;
+            ClassUnderTest.SelectSerializer(theEnvelope, new ChannelNode())
+                .ShouldBeTheSameAs(serializers[3]);
+        }
+
+        [Fact]
         public void select_the_graph_default_in_the_absence_of_everything_else()
         {
             theGraph.DefaultContentType = serializers[4].ContentType;
             ClassUnderTest.SelectSerializer(theEnvelope, new ChannelNode())
                 .ShouldBeTheSameAs(serializers[4]);
 
+        }
+
+        [Fact]
+        public void use_channel_node_accepted_content_type_if_it_exists_and_not_set_on_envelope()
+        {
+            theGraph.DefaultContentType = serializers[4].ContentType;
+            var node = new ChannelNode
+            {
+                AcceptedContentTypes = {serializers[1].ContentType}
+            };
+
+            ClassUnderTest.SelectSerializer(theEnvelope, node)
+                .ShouldBeTheSameAs(serializers[1]);
         }
 
         [Fact]

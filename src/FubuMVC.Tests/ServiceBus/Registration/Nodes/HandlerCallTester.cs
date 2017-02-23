@@ -12,7 +12,7 @@ using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Registration.Nodes
 {
-    
+
     public class HandlerCallTester
     {
         [Fact]
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.ServiceBus.Registration.Nodes
                 .ShouldBeTrue();
             HandlerCall.IsCandidate(ReflectionHelper.GetMethod<ITargetHandler>(x => x.ManyIn(null, null)))
                 .ShouldBeFalse();
-            HandlerCall.IsCandidate(ReflectionHelper.GetMethod<ITargetHandler>(x => x.ReturnsValueType(null)))
+            HandlerCall.IsCandidate(ReflectionHelper.GetMethod<ITargetHandler>(x => (object)x.ReturnsValueType(null)))
                 .ShouldBeFalse();
         }
 

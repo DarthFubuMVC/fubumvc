@@ -30,7 +30,8 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
                 {
                     NodeName = graph.Name,
                     Receiver = receiver,
-                    Source = source
+                    Source = source,
+                    AcceptedContentTypes = graph.AcceptedContentTypes
                 };
             }
         }

@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.ServiceBus
         public static Envelope EnvelopeWithSerializationError()
         {
             var envelope = Envelope();
-            envelope.UseSerializer(new ThrowingEnvelopeSerializer());
+            envelope.UseSerializer(new ThrowingEnvelopeSerializer(), null);
             return envelope;
         }
 
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.ServiceBus
 
     public class ThrowingEnvelopeSerializer : IEnvelopeSerializer
     {
-        public object Deserialize(Envelope envelope)
+        public object Deserialize(Envelope envelope, ChannelNode node)
         {
             throw new EnvelopeDeserializationException("Error");
         }

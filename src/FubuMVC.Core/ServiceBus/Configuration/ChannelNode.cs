@@ -42,9 +42,9 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             }
         }
 
-        public readonly IList<IEnvelopeModifier> Modifiers = new List<IEnvelopeModifier>(); 
+        public readonly IList<IEnvelopeModifier> Modifiers = new List<IEnvelopeModifier>();
 
-        public readonly IList<ISettingsAware> SettingsRules = new List<ISettingsAware>(); 
+        public readonly IList<ISettingsAware> SettingsRules = new List<ISettingsAware>();
 
         public string Key { get; set; }
 
@@ -57,13 +57,13 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         public Uri Uri { get; set; }
         public IChannel Channel { get; set; }
 
-        
+
 
         public bool Publishes(Type type)
         {
             return Rules.Any(x => x.Matches(type));
         }
-        
+
         public void ReadSettings(IServiceLocator services)
         {
             var settings = services.GetInstance(SettingAddress.OwnerType);
@@ -123,7 +123,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                     }
                 }
             });
-            
+
         }
 
         // virtual for testing of course
@@ -181,8 +181,10 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             }
         }
 
+        public List<string> AcceptedContentTypes { get; set; } = new List<string>();
+
         public ChannelMode Mode { get; set; } = ChannelMode.DeliveryGuaranteed;
     }
 
-    
+
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
-using FubuCore.Logging;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
@@ -90,9 +90,9 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             }
         }
 
-        public void Receive(Envelope envelope)
+        public void Receive(Envelope envelope, ChannelNode node)
         {
-            envelope.UseSerializer(_serializer);
+            envelope.UseSerializer(_serializer, node);
             using (var context = _lifecycle.StartNew(this, envelope))
             {
                 context.InfoMessage(() => new EnvelopeReceived { Envelope = envelope.ToToken() });

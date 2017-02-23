@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 
             theSerializer.Serialize(envelope, new ChannelNode());
 
-            envelope.Message = theSerializer.Deserialize(envelope);
+            envelope.Message = theSerializer.Deserialize(envelope, null);
 
             envelope.Message.ShouldNotBeTheSameAs(theAddress);
             envelope.Message.ShouldBe(theAddress);
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 
             envelope.ContentType.ShouldBe(theGraph.DefaultContentType);
 
-            envelope.Message = theSerializer.Deserialize(envelope);
+            envelope.Message = theSerializer.Deserialize(envelope, null);
 
             envelope.Message.ShouldNotBeTheSameAs(theAddress);
             envelope.Message.ShouldBe(theAddress);

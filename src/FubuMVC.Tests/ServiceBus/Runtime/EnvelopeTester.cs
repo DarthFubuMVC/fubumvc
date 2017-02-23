@@ -192,6 +192,18 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
         }
 
         [Fact]
+        public void acceptable_content_types()
+        {
+            var envelope = new Envelope();
+            envelope.AcceptedContentTypes.ShouldBeEmpty();
+
+            envelope.AcceptedContentTypes = new [] {"application/json","application/xml"};
+
+            envelope.Headers[Envelope.AcceptedContentTypesKey].ShouldBe("application/json,application/xml");
+            envelope.AcceptedContentTypes.ShouldHaveTheSameElementsAs("application/json","application/xml");
+        }
+
+        [Fact]
         public void original_id()
         {
             var envelope = new Envelope();
@@ -328,9 +340,9 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
 
             var serializer = MockRepository.GenerateMock<IEnvelopeSerializer>();
             var theExpectedMessage = new object();
-            serializer.Stub(x => x.Deserialize(envelope)).Return(theExpectedMessage);
+            serializer.Stub(x => x.Deserialize(envelope, null)).Return(theExpectedMessage);
 
-            envelope.UseSerializer(serializer);
+            envelope.UseSerializer(serializer, null);
 
             envelope.Message.ShouldBeTheSameAs(theExpectedMessage);
         }
@@ -382,5 +394,5 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
         }
     }
 
-    
+
 }

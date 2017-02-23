@@ -14,7 +14,7 @@ using TestPackage1.FakeControllers;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    
+
     public class TypeScanningIntegratedTester
     {
 
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             policy.Include(x => x.Go());
 
             filter.Matches(ReflectionHelper.GetMethod<Router1>(x => x.Go())).ShouldBeTrue();
-            filter.Matches(ReflectionHelper.GetMethod<Router1>(x => x.CanGo())).ShouldBeFalse();
+            filter.Matches(ReflectionHelper.GetMethod<Router1>(x => (object)x.CanGo())).ShouldBeFalse();
         }
     }
 

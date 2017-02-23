@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
@@ -79,6 +80,20 @@ namespace FubuMVC.Tests.ServiceBus
         }
 
         [Fact]
+        public void set_the_accepted_content_types_by_string()
+        {
+            theRegistry.ServiceBus.AcceptedContentTypes("application/json", "application/xml");
+            theChannels.AcceptedContentTypes.ShouldHaveTheSameElementsAs("application/json","application/xml");
+        }
+
+        [Fact]
+        public void set_the_accepted_content_types_by_serializer_type()
+        {
+            theRegistry.ServiceBus.AcceptedContentTypes(new BasicJsonMessageSerializer(), new XmlMessageSerializer());
+            theChannels.AcceptedContentTypes.ShouldHaveTheSameElementsAs("application/json", "application/xml");
+        }
+
+        [Fact]
         public void set_the_default_content_type_for_a_channel_by_serializer()
         {
             theRegistry.Channel(x => x.Outbound).DefaultSerializer<BinarySerializer>();
@@ -95,6 +110,16 @@ namespace FubuMVC.Tests.ServiceBus
         {
             theRegistry.Channel(x => x.Outbound).DefaultContentType("application/json");
             channelFor(x => x.Outbound).DefaultContentType.ShouldBe("application/json");
+        }
+
+        [Fact]
+        public void set_the_accepted_content_type_for_a_channel_by_string()
+        {
+            theRegistry.Channel(x => x.Outbound).AcceptedContentTypes("application/json", "application/xml");
+            theRegistry.Channel(x => x.Outbound).DefaultContentType("application/json");
+
+            var channel = channelFor(x => x.Outbound);
+            channel.AcceptedContentTypes.ShouldHaveTheSameElementsAs("application/json","application/xml");
         }
 
         [Fact]

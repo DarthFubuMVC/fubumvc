@@ -16,7 +16,7 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration
 {
-    
+
     public class ActionCallTester
     {
 
@@ -160,7 +160,7 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
-    
+
     public class ActionCallValidationTester
     {
         [Fact]
@@ -252,7 +252,7 @@ namespace FubuMVC.Tests.Registration
         [Fact]
         public void should_throw_if_return_type_is_value_type()
         {
-            var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
+            var action = ActionCall.For<ControllerTarget>(x => (object)x.BogusReturn());
             var ex = Exception<FubuException>.ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
             ex.ErrorCode.ShouldBe(1004);
         }

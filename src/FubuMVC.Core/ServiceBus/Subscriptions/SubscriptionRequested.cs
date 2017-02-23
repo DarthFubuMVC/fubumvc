@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FubuMVC.Core.ServiceBus.Subscriptions
@@ -6,6 +7,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
     /// <summary>
     /// Sent to peer groups
     /// </summary>
+    [Serializable]
     public class SubscriptionRequested
     {
         private readonly IList<Subscription> _subscriptions = new List<Subscription>();

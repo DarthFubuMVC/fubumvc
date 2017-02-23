@@ -1,5 +1,8 @@
-﻿namespace FubuMVC.Core.ServiceBus.Runtime
+﻿using System;
+
+namespace FubuMVC.Core.ServiceBus.Runtime
 {
+    [Serializable]
     public class FailureAcknowledgement
     {
         public string CorrelationId { get; set; }

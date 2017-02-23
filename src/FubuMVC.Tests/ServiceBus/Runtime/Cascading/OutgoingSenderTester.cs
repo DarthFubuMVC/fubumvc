@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             {
                 ReplyUri = "foo://bar".ToUri(),
                 AckRequested = true,
-                CorrelationId = Guid.NewGuid().ToString()
+                CorrelationId = Guid.NewGuid().ToString(),
             };
 
             ClassUnderTest.SendOutgoingMessages(original, new object[0]);
@@ -113,8 +113,6 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             recordingSender.Outgoing.Any()
                 .ShouldBeFalse();
         }
-
-
     }
 
     
@@ -234,5 +232,4 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             theSentEnvelope.ResponseId.ShouldBe(original.CorrelationId);
         }
     }
-
 }

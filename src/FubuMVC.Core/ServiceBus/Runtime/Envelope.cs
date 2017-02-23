@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
@@ -26,6 +27,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
         public static readonly string AttemptsKey = "attempts";
         public static readonly string AckRequestedKey = "ack-requested";
         public static readonly string MessageTypeKey = "message-type";
+        public static readonly string AcceptedContentTypesKey = "accepted-content-types";
 
         public byte[] Data;
 
@@ -36,10 +38,10 @@ namespace FubuMVC.Core.ServiceBus.Runtime
         /// Used internally for logging
         /// </summary>
         [NonSerialized] internal ChainExecutionLog Log;
-            
+
         public object Message
         {
-            get { return _message == null ? null : _message.Value; }   
+            get { return _message == null ? null : _message.Value; }
             set
             {
                 if (value == null)
@@ -53,9 +55,9 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             }
         }
 
-        public void UseSerializer(IEnvelopeSerializer serializer)
+        public void UseSerializer(IEnvelopeSerializer serializer, ChannelNode node)
         {
-            _message = new Lazy<object>(() => serializer.Deserialize(this));
+            _message = new Lazy<object>(() => serializer.Deserialize(this, node));
         }
 
 
@@ -76,7 +78,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             {
                 CorrelationId = Guid.NewGuid().ToString();
             }
-            
+
         }
 
         public Envelope() : this(new NameValueHeaders())
@@ -102,7 +104,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
         }
 
         // TODO -- this is where the routing slip is going to come into place
-        
+
         public virtual Envelope ForResponse(object message)
         {
             var child = ForSend(message);
@@ -163,7 +165,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
                 MessageSource = _message
             };
 
-            
+
         }
 
         protected bool Equals(Envelope other)

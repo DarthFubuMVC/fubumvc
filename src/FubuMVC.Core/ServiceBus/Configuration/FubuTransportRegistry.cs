@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -151,6 +152,12 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             public ChannelExpression DefaultContentType(string contentType)
             {
                 alter = node => node.DefaultContentType = contentType;
+                return this;
+            }
+
+            public ChannelExpression AcceptedContentTypes(params string[] contentTypes)
+            {
+                alter = node => node.AcceptedContentTypes.AddRange(contentTypes);
                 return this;
             }
 

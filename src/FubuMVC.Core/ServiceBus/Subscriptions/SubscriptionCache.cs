@@ -37,7 +37,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
                     throw new UnknownChannelException(uri);
                 }
 
-                var node = new ChannelNode { Uri = uri, Key = uri.ToString() };
+                var node = new ChannelNode { Uri = uri, Key = uri.ToString(), AcceptedContentTypes = _graph.AcceptedContentTypes};
                 node.Channel = transport.BuildDestinationChannel(node.Uri);
 
                 return node;
@@ -113,11 +113,14 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
             var staticNodes = _graph.Where(x => x.Publishes(inputType));
 
             var subscriptions = _subscriptions.Where(x => x.Matches(inputType));
-            var dynamicNodes = subscriptions.Select(x => findDestination(x.Receiver));
+            var dynamicNodes = subscriptions.Select(x =>
+            {
+                var node = findDestination(x.Receiver);
+                node.AcceptedContentTypes = x.AcceptedContentTypes;
+                return node;
+            });
 
             return staticNodes.Union(dynamicNodes).Distinct();
-
-
         }
 
 

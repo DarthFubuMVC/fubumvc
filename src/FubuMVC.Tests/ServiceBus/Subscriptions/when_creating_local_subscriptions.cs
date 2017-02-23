@@ -21,7 +21,11 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
 
         public when_creating_local_subscriptions()
         {
-            theGraph = new ChannelGraph { Name = "FooNode" };
+            theGraph = new ChannelGraph
+            {
+                Name = "FooNode",
+                AcceptedContentTypes = new List<string> {"application/json","application/xml"}
+            };
 
             var requirement = new LocalSubscriptionRequirement<BusSettings>(x => x.Upstream);
             requirement.AddType(typeof(FooMessage));
@@ -48,6 +52,13 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         {
             theSubscriptions.Select(x => x.NodeName).Distinct()
                 .Single().ShouldBe(theGraph.Name);
+        }
+
+        [Fact]
+        public void sets_the_accepted_content_types_from_the_channel_graph()
+        {
+            theSubscriptions.First().AcceptedContentTypes
+                .ShouldHaveTheSameElementsAs("application/json", "application/xml");
         }
 
         [Fact]

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using FubuCore;
 using FubuCore.Logging;
 
@@ -38,7 +38,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Cascading
                     ResponseId = original.CorrelationId,
                     Message = new FailureAcknowledgement()
                     {
-                        CorrelationId = original.CorrelationId, 
+                        CorrelationId = original.CorrelationId,
                         Message = message
                     },
                     Callback = original.Callback
@@ -60,8 +60,6 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Cascading
                 {
                     _sender.Send(envelope);
                 }
-
-
             }
             catch (Exception e)
             {
@@ -89,6 +87,10 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Cascading
                 ? o.As<ISendMyself>().CreateEnvelope(original)
                 : original.ForResponse(o);
 
+            if (original.AcceptedContentTypes.Any())
+            {
+                cascadingEnvelope.AcceptedContentTypes = original.AcceptedContentTypes;
+            }
             cascadingEnvelope.Callback = original.Callback;
 
             Send(cascadingEnvelope);
