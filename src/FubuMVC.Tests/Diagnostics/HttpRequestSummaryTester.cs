@@ -3,15 +3,15 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics
 {
-    [TestFixture]
+    
     public class HttpRequestSummaryTester
     {
-        [Test]
+        [Fact]
         public void map_from_execution_log_happy_path()
         {
             var log = new ChainExecutionLog();
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Diagnostics
             summary.duration.ShouldBe(log.ExecutionTime);
         }
 
-        [Test]
+        [Fact]
         public void map_from_execution_when_the_request_was_redirected()
         {
             var log = new ChainExecutionLog();

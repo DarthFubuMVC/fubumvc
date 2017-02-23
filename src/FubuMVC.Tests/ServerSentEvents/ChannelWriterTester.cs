@@ -10,13 +10,13 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServerSentEvents;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServerSentEvents
 {
-    [TestFixture]
+    
     public class ChannelWriterTester
     {
         private IChannel<FakeTopic> theChannel;
@@ -34,8 +34,7 @@ namespace FubuMVC.Tests.ServerSentEvents
         private IChannelInitializer<FakeTopic> theInitializer;
         private ITopicChannelCache theCache;
 
-        [SetUp]
-        public void SetUp()
+        public ChannelWriterTester()
         {
             theInitializer = new DefaultChannelInitializer<FakeTopic>();
             theWriter = new RecordingServerEventWriter();
@@ -60,7 +59,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             ie3 = new ServerEvent("3", "initialization data-3");
         }
 
-        [Test]
+        [Fact]
         public void simple_scenario_when_there_are_already_events_queued_up()
         {
             theChannel.Write(q => q.Write(e1, e2, e3));
@@ -74,7 +73,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             theWriter.Events.ShouldHaveTheSameElementsAs(e1, e2, e3);
         }
 
-        [Test]
+        [Fact]
         public void sends_initialization_events_then_all_other_events()
         {
             theChannel.Write(q => q.Write(e1, e2, e3));
@@ -91,7 +90,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             theWriter.Events.ShouldHaveTheSameElementsAs(ie1, ie2, e1, e2, e3);
         }
 
-        [Test]
+        [Fact]
         public void sends_initialization_events_then_events_following_last_initial_event_id()
         {
             theChannel.Write(q => q.Write(e1, e2, e3, e4, e5));
@@ -108,7 +107,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             theWriter.Events.ShouldHaveTheSameElementsAs(ie1, ie2, ie3, e4, e5);
         }
 
-        [Test]
+        [Fact]
         public void polls_for_new_events()
         {
             theChannel.Write(q => q.Write(e1, e2));
@@ -127,7 +126,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             theWriter.Events.ShouldHaveTheSameElementsAs(e1, e2, e3, e4, e5);
         }
 
-        [Test]
+        [Fact]
         public void does_not_poll_when_the_client_is_initially_disconnected()
         {
             theWriter.ConnectedTest = () => false;
@@ -137,7 +136,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             task.Wait(15).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_write_poll_results_if_the_client_has_disconnected()
         {
             var task = theChannelWriter.Write(theTopic);
@@ -153,7 +152,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             theWriter.Events.ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void does_not_poll_when_the_channel_is_initially_disconnected()
         {
             theChannel.Flush();
@@ -163,7 +162,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             task.Wait(15).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_poll_when_the_channel_is_disconnected_after_initial_poll()
         {
             var task = theChannelWriter.Write(theTopic);
@@ -176,7 +175,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             theWriter.Events.ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void sets_last_event_id_to_last_successfully_written_message()
         {
             theWriter.FailOnNthWrite = 3;
@@ -192,7 +191,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             theTopic.LastEventId.ShouldBe(e2.Id);
         }
 
-        [Test]
+        [Fact]
         public void request_is_faulted_when_writer_throws_exception()
         {
             var requestCompletion = new RequestCompletion();
@@ -218,7 +217,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             exceptions[0].Message.ShouldBe(RecordingServerEventWriter.ExceptionMessage);
         }
 
-        [Test]
+        [Fact]
         public void parent_task_is_faulted_when_channel_initializer_fails()
         {
             theInitializer = new FailingTestChannelInitializer();
@@ -235,7 +234,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             exceptions[0].Message.ShouldBe(FailingTestChannelInitializer.ExceptionMessage);
         }
 
-        [Test]
+        [Fact]
         public void does_not_produce_stack_overflow_exception()
         {
             var parentTask = new Task(() => theChannelWriter.Write(theTopic));
@@ -255,7 +254,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             parentTask.Wait(150).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void failure_to_acquire_channel_terminates_without_errors()
         {
             theWriter = new RecordingServerEventWriter();

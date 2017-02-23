@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web.UI;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class FieldValidationModifierTester
     {
         private RequiredFieldRule theRule;
@@ -14,9 +14,8 @@ namespace FubuMVC.Tests.Validation.Web.UI
         private IValidationAnnotationStrategy theMatchingStrategy;
         private IValidationAnnotationStrategy theOtherStrategy;
         private FieldValidationModifier theModifier;
-        
-        [SetUp]
-        public void SetUp()
+
+        public FieldValidationModifierTester()
         {
             theRule = new RequiredFieldRule();
             theElementRequest = ElementRequest.For<FieldValidationModifierTarget>(x => x.Name);
@@ -30,13 +29,13 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theModifier.ModifyFor(theRule, theElementRequest);
         }
 
-        [Test]
+        [Fact]
         public void calls_the_matching_strategy()
         {
             theMatchingStrategy.AssertWasCalled(x => x.Modify(theElementRequest, theRule));
         }
 
-        [Test]
+        [Fact]
         public void does_not_call_the_other_strategy()
         {
             theOtherStrategy.AssertWasNotCalled(x => x.Modify(theElementRequest, theRule));

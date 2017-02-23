@@ -6,14 +6,14 @@ using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
 
-    [TestFixture]
+    
     public class when_unsuccessfully_taking_ownership_because_of_exception : TransportPeerContext
     {
         private readonly Uri theSubject = "subject://1".ToUri();
@@ -39,21 +39,21 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             theStatus = task.Result;
         }
 
-        [Test]
+        [Fact]
         public void does_not_persist_the_new_ownership()
         {
             AssertThatTheNodeWas_Not_Persisted();
             theNode.OwnedTasks.ShouldNotContain(theSubject);
         }
 
-        [Test]
+        [Fact]
         public void the_status_should_be_returned()
         {
             theStatus.ShouldBe(OwnershipStatus.Exception);
         }
     }
 
-    [TestFixture]
+    
     public class when_unsuccessfully_taking_ownership_because_the_remote_node_fails : TransportPeerContext
     {
         private readonly Uri theSubject = "subject://1".ToUri();
@@ -76,21 +76,21 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             theStatus = task.Result;
         }
 
-        [Test]
+        [Fact]
         public void does_not_persist_the_new_ownership()
         {
             AssertThatTheNodeWas_Not_Persisted();
             theNode.OwnedTasks.ShouldNotContain(theSubject);
         }
 
-        [Test]
+        [Fact]
         public void the_status_should_be_returned()
         {
             theStatus.ShouldBe(OwnershipStatus.Exception);
         }
     }
 
-    [TestFixture]
+    
     public class when_unsuccessfully_taking_ownership_because_of_the_peer_not_recognizing_the_job : TransportPeerContext
     {
         private readonly Uri theSubject = "subject://1".ToUri();
@@ -115,21 +115,21 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             theStatus = task.Result;
         }
 
-        [Test]
+        [Fact]
         public void does_not_persist_the_new_ownership()
         {
             AssertThatTheNodeWas_Not_Persisted();
             theNode.OwnedTasks.ShouldNotContain(theSubject);
         }
 
-        [Test]
+        [Fact]
         public void the_status_should_be_returned()
         {
             theStatus.ShouldBe(OwnershipStatus.UnknownSubject);
         }
     }
 
-    [TestFixture]
+    
     public class when_successfully_taking_ownership_of_a_single_responsibility : TransportPeerContext
     {
         private readonly Uri theSubject = "subject://1".ToUri();
@@ -154,14 +154,14 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             theStatus = task.Result;
         }
 
-        [Test]
+        [Fact]
         public void the_status_should_be_returned()
         {
             theStatus.ShouldBe(OwnershipStatus.OwnershipActivated);
         }
     }
 
-    [TestFixture]
+    
     public class when_successfully_taking_ownership_and_it_was_already_activated : TransportPeerContext
     {
         private readonly Uri theSubject = "subject://1".ToUri();
@@ -187,14 +187,14 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         }
 
 
-        [Test]
+        [Fact]
         public void the_status_should_be_returned()
         {
             theStatus.ShouldBe(OwnershipStatus.AlreadyOwned);
         }
     }
 
-    [TestFixture]
+    
     public class when_deactivating_successfully : TransportPeerContext
     {
         private readonly Uri theSubject = "foo://1".ToUri();
@@ -217,20 +217,20 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             theTask.Wait();
         }
 
-        [Test]
+        [Fact]
         public void should_send_the_deactivation_message_directly_to_the_correct_endpoint()
         {
            theServiceBus.AssertThatAllExpectedMessagesWereReceived();
         }
 
-        [Test]
+        [Fact]
         public void the_task_returns_true_to_denote_success()
         {
             theTask.Result.ShouldBeTrue();
         }
     }
 
-    [TestFixture]
+    
     public class when_deactivating_unsuccessfully : TransportPeerContext
     {
         private readonly Uri theSubject = "foo://1".ToUri();
@@ -249,26 +249,26 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             theTask.Wait();
         }
 
-        [Test]
+        [Fact]
         public void should_send_the_deactivation_message_directly_to_the_correct_endpoint()
         {
             theServiceBus.AssertThatAllExpectedMessagesWereReceived();
         }
 
-        [Test]
+        [Fact]
         public void should_still_have_removed_the_ownership_from_the_node()
         {
             theSubscriptions.AssertWasCalled(x => x.RemoveOwnershipFromNode(theNode.Id, theSubject));
         }
 
-        [Test]
+        [Fact]
         public void the_task_should_denote_failure_by_returning_false()
         {
             theTask.Result.ShouldBeFalse();
         }
     }
 
-    [TestFixture]
+    
     public class when_requesting_the_task_health_full_happy_path : TransportPeerContext
     {
         private readonly Uri subject1 = "foo://1".ToUri();
@@ -300,14 +300,14 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             
         }
 
-        [Test]
+        [Fact]
         public void should_just_return_the_response()
         {
             theReturnedTask.Result.ShouldBeTheSameAs(theResponse);
         }
     }
 
-    [TestFixture]
+    
     public class when_requesting_the_task_health_has_to_fill_in_missing_status_from_peer : TransportPeerContext
     {
         private readonly Uri subject1 = "foo://1".ToUri();
@@ -339,7 +339,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
 
         }
 
-        [Test]
+        [Fact]
         public void the_response_should_be_filled_with_inactive_for_the_missing_tasks()
         {
             var response = theReturnedTask.Result;
@@ -351,7 +351,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         }
     }
 
-    [TestFixture]
+    
     public class when_requesting_the_task_health_and_the_remote_message_returns_missing_tasks : TransportPeerContext
     {
         private readonly Uri subject1 = "foo://1".ToUri();
@@ -384,7 +384,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         }
 
 
-        [Test]
+        [Fact]
         public void the_response_should_be_filled_with_inactive_for_the_missing_tasks()
         {
             var response = theReturnedTask.Result;
@@ -396,7 +396,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         }
     }
 
-    [TestFixture]
+    
     public class when_requesting_the_task_health_and_the_remote_message_fails : TransportPeerContext
     {
         private readonly Uri subject1 = "foo://1".ToUri();
@@ -422,14 +422,14 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
 
         }
 
-        [Test]
+        [Fact]
         public void the_response_should_be_marked_as_a_failure()
         {
             theReturnedTask.Result.ResponseFailed.ShouldBeTrue();
         }
 
 
-        [Test]
+        [Fact]
         public void the_response_should_be_filled_with_inactive_for_the_missing_tasks()
         {
             var response = theReturnedTask.Result;
@@ -442,7 +442,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
     }
 
 
-    [TestFixture]
+    
     public abstract class TransportPeerContext
     {
         protected readonly TransportNode theNode = new TransportNode { Id = "node1", NodeName = "foo", Addresses = new []{"reply://1".ToUri()}};
@@ -451,8 +451,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         protected TransportPeer thePeer;
         private RecordingLogger theLogger;
 
-        [SetUp]
-        public void SetUp()
+        protected TransportPeerContext()
         {
             theServiceBus = new RiggedServiceBus();
             theSubscriptions = MockRepository.GenerateMock<ISubscriptionRepository>();

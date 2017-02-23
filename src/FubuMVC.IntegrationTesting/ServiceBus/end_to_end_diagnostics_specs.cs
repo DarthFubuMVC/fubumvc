@@ -11,16 +11,16 @@ using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.LightningQueues;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.IntegrationTesting.ServiceBus
 {
-    [TestFixture]
+    
     public class end_to_end_diagnostics_specs
     {
-        [Test]
+        [Fact]
         public void see_tracing_logs_in_production_mode_happy_path()
         {
             var registry = new FubuRegistry();
@@ -44,7 +44,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void get_error_messages_in_production_mode()
         {
             var registry = new FubuRegistry();
@@ -69,7 +69,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void see_tracing_logs_in_verbose_mode_happy_path()
         {
             var registry = new FubuRegistry();

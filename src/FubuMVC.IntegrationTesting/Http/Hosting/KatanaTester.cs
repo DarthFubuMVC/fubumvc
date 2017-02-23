@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Http.Hosting
 {
-    [TestFixture]
+    
     public class KatanaTester
     {
-        [Test]
+        [Fact]
         public void failing_to_host()
         {
             Exception<HostingFailedException>.ShouldBeThrownBy(() => FubuRuntime.For<BadKatanaRegistry>()).Message.ShouldContain("65536");

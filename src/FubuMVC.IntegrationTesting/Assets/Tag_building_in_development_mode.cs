@@ -3,11 +3,11 @@ using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.View;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    [TestFixture]
+    
     public class Tag_building_in_development_mode : AssetIntegrationContext
     {
         public Tag_building_in_development_mode()
@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         }
 
 
-        [Test]
+        [Fact]
         public void request_an_image_that_cannot_be_found()
         {
             Scenario.Get.Action<MissingAssetsEndpoint>(x => x.get_missing_image());
@@ -31,7 +31,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.ContentShouldContain("Requested image 'missing_image.bmp' cannot be found".HtmlEncode());
         }
 
-        [Test]
+        [Fact]
         public void request_a_script_that_cannot_be_found()
         {
             Scenario.Get.Action<MissingAssetsEndpoint>(x => x.get_missing_script());
@@ -41,7 +41,7 @@ namespace FubuMVC.IntegrationTesting.Assets
                 "Requested script(s) 'nonexistent.js', 'random.js' cannot be found".HtmlEncode());
         }
 
-        [Test]
+        [Fact]
         public void request_a_stylesheet_that_cannot_be_found()
         {
             Scenario.Get.Action<MissingAssetsEndpoint>(x => x.get_missing_stylesheet());

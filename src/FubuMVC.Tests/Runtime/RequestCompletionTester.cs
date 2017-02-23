@@ -1,20 +1,19 @@
 ﻿using System;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class RequestCompletionTester
     {
         private RequestCompletion _requestCompletion;
         private Exception _exception;
         private int _completedCount;
 
-        [SetUp]
-        public void Setup()
+        public RequestCompletionTester()
         {
             _completedCount = 0;
             _exception = null;
@@ -26,21 +25,21 @@ namespace FubuMVC.Tests.Runtime
             });
         }
 
-        [Test]
+        [Fact]
         public void start_completes_when_synchronous()
         {
             _requestCompletion.Start(() => { });
             _completedCount.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void no_errors_are_reported()
         {
             _requestCompletion.Start(() => { });
             _exception.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void when_an_error_occurs_it_is_not_handled()
         {
             Exception<InvalidOperationException>.ShouldBeThrownBy(() => 
@@ -48,7 +47,7 @@ namespace FubuMVC.Tests.Runtime
             _exception.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void multiple_completion_subscribers_are_notified()
         {
             var completed = false;
@@ -61,7 +60,7 @@ namespace FubuMVC.Tests.Runtime
             _completedCount.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void safe_start_errors_should_be_handled()
         {
             _requestCompletion.SafeStart(() => {throw new InvalidOperationException();});
@@ -69,7 +68,7 @@ namespace FubuMVC.Tests.Runtime
             _exception.ShouldBeOfType<InvalidOperationException>();
         }
 
-        [Test]
+        [Fact]
         public void asynchronous_completes_when_told()
         {
             var trackRequestCompletion = MockRepository.GenerateMock<ITrackRequestCompletion>();
@@ -81,7 +80,7 @@ namespace FubuMVC.Tests.Runtime
             _completedCount.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void asynchronous_completes_with_errors()
         {
             var trackRequestCompletion = MockRepository.GenerateMock<ITrackRequestCompletion>();

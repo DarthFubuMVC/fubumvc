@@ -3,14 +3,14 @@ using System.Linq;
 using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Assets
 {
-    [TestFixture]
+    
     public class JavascriptRouterTester
     {
-        [Test]
+        [Fact]
         public void add_route_happy_path()
         {
             var chain = new RoutedChain("foo");
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Assets
             route.Finder(null).ShouldBeTheSameAs(chain);
         }
 
-        [Test]
+        [Fact]
         public void got_to_have_a_route_name()
         {
             var chain = new RoutedChain("foo");
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Assets
             
         }
         
-        [Test]
+        [Fact]
         public void got_to_have_at_least_one_http_method()
         {
             var chain = new RoutedChain("foo");

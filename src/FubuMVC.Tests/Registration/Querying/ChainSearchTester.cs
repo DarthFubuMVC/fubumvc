@@ -3,46 +3,46 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using System.Linq;
 
 namespace FubuMVC.Tests.Registration.Querying
 {
-    [TestFixture]
+    
     public class ChainSearchTester
     {
-        [Test]
+        [Fact]
         public void default_category_search_mode_is_relaxed()
         {
             new ChainSearch().CategoryMode.ShouldBe(CategorySearchMode.Relaxed);
         }
 
-        [Test]
+        [Fact]
         public void default_type_search_mode_should_be_any()
         {
             new ChainSearch().TypeMode.ShouldBe(TypeSearchMode.Any);
         }
 
-        [Test]
+        [Fact]
         public void search_can_be_optional()
         {
             ChainSearch.ByUniqueInputType(typeof(ChainSearch), required: false).Required.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void default_search_is_required()
         {
             ChainSearch.ByUniqueInputType(typeof(ChainSearch)).Required.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void the_category_is_default()
         {
             new ChainSearch().CategoryOrHttpMethod.ShouldBe(Categories.DEFAULT);
         }
 
-        [Test]
+        [Fact]
         public void find_by_category_when_the_category_is_null_and_relaxed_search_and_only_one_chain()
         {
             var search = new ChainSearch{
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Registration.Querying
         }
 
 
-        [Test]
+        [Fact]
         public void find_by_category_when_the_category_is_null_and_relaxed_search_and_only_one_chain_2()
         {
             var search = new ChainSearch
@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).Single().ShouldBeTheSameAs(chains.Single());
         }
 
-        [Test]
+        [Fact]
         public void find_by_null_category_with_multiple_chains_but_only_one_is_default()
         {
             var search = new ChainSearch
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).Single().ShouldBeTheSameAs(chain2);
         }
 
-        [Test]
+        [Fact]
         public void find_by_null_category_with_multiple_chains_but_only_one_is_default_2()
         {
             var search = new ChainSearch
@@ -131,7 +131,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).Single().ShouldBeTheSameAs(chain2);
         }
 
-        [Test]
+        [Fact]
         public void find_by_null_category_with_multiple_chains_but_only_one_is_default_3()
         {
             var search = new ChainSearch
@@ -169,7 +169,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain2, chain3);
         }
 
-        [Test]
+        [Fact]
         public void find_by_null_category_with_multiple_chains_but_none_is_marked_default()
         {
             var search = new ChainSearch
@@ -207,7 +207,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain3);
         }
 
-        [Test]
+        [Fact]
         public void find_by_null_category_with_multiple_chains_one_null_category_one_default_strict_category_search()
         {
             var search = new ChainSearch
@@ -245,7 +245,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain3);
         }
 
-        [Test]
+        [Fact]
         public void find_by_category_strict_with_multiple_chains_1()
         {
             var search = new ChainSearch
@@ -283,7 +283,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain1);
         }
 
-        [Test]
+        [Fact]
         public void find_by_category_strict_with_multiple_chains_by_method()
         {
             var search = new ChainSearch
@@ -323,7 +323,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain1);
         }
 
-        [Test]
+        [Fact]
         public void find_by_category_strict_with_multiple_chains_2()
         {
             var search = new ChainSearch
@@ -362,7 +362,7 @@ namespace FubuMVC.Tests.Registration.Querying
         }
 
 
-        [Test]
+        [Fact]
         public void find_by_category_strict_with_only_one_chain_that_does_not_match_still_returns_nothing()
         {
             var search = new ChainSearch
@@ -386,7 +386,7 @@ namespace FubuMVC.Tests.Registration.Querying
             search.FindForCategory(chains).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void find_by_category_relaxed_with_only_one_chain()
         {
             var search = new ChainSearch
@@ -413,18 +413,12 @@ namespace FubuMVC.Tests.Registration.Querying
 
     }
 
-    [TestFixture]
+    
     public class finding_behavior_chains_by_type_only
     {
-        private BehaviorGraph theGraph;
+        private BehaviorGraph theGraph = BehaviorGraph.BuildFrom<FakeRegistry>();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theGraph = BehaviorGraph.BuildFrom<FakeRegistry>();
-        }
-
-        [Test]
+        [Fact]
         public void find_candidates_by_input_model_only_when_its_strict()
         {
             new ChainSearch{
@@ -433,7 +427,7 @@ namespace FubuMVC.Tests.Registration.Querying
             }.FindCandidatesByType(theGraph).Single().Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void find_candidates_by_type_fall_back_to_handler_type_if_possible()
         {
             var chains = new ChainSearch{
@@ -446,7 +440,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 .FirstCall().Description.ShouldBe("SingleActionController.DoSomething(InputModel model) : void");
         }
 
-        [Test]
+        [Fact]
         public void find_by_handler_type_only()
         {
 
@@ -456,7 +450,7 @@ namespace FubuMVC.Tests.Registration.Querying
             }.FindCandidatesByType(theGraph).Single().Single().FirstCall().Description.ShouldBe("SimpleInputModel.DoSomething(InputModel2 model) : void");
         }
 
-        [Test]
+        [Fact]
         public void find_by_input_model_only()
         {
             var chainSearch = new ChainSearch
@@ -471,7 +465,7 @@ namespace FubuMVC.Tests.Registration.Querying
             .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");
         }
 
-        [Test]
+        [Fact]
         public void find_by_any_looks_at_input_model_first_then_handler_type_second()
         {
             var candidates = new ChainSearch{
@@ -486,7 +480,7 @@ namespace FubuMVC.Tests.Registration.Querying
 
         }
 
-        [Test]
+        [Fact]
         public void find_by_any_looks_at_resource_model_first_then_handler_type_second()
         {
             var candidates = new ChainSearch
@@ -509,7 +503,7 @@ namespace FubuMVC.Tests.Registration.Querying
 
         }
 
-        [Test]
+        [Fact]
         public void find_by_method_if_it_exists()
         {
             var candidates = new ChainSearch
@@ -525,7 +519,7 @@ namespace FubuMVC.Tests.Registration.Querying
 
         }
 
-        [Test]
+        [Fact]
         public void find_by_method_if_it_exists_2()
         {
             var candidates = new ChainSearch

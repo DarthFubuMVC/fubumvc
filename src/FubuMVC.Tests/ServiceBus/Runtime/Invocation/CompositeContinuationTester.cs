@@ -5,12 +5,12 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class CompositeContinuationTester : InteractionContext<CompositeContinuation>
     {
         private IContinuation[] inners;
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             ClassUnderTest.Execute(envelope, theContext);
         }
 
-        [Test]
+        [Fact]
         public void should_have_delegated_to_all_inners()
         {
             inners.Each(inner => {

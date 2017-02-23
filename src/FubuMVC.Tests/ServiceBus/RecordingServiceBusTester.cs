@@ -2,15 +2,15 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class RecordingServiceBusTester
     {
-        [Test]
+        [Fact]
         public void send_records()
         {
             var message = new Message1();
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.ServiceBus
             bus.Sent.Single().ShouldBeTheSameAs(message);
         }
 
-        [Test]
+        [Fact]
         public void consumed_messages()
         {
             var message = new Message1();
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.ServiceBus
             bus.Consumed.Single().ShouldBeTheSameAs(message);
         }
 
-        [Test]
+        [Fact]
         public void send_delayed_by_time_span()
         {
             var message = new Message1();
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.ServiceBus
             bus.DelayedSent.Single().Delay.ShouldBe(5.Minutes());
         }
 
-        [Test]
+        [Fact]
         public void send_delayed_by_time()
         {
             var time = DateTime.Today.AddHours(5);
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.ServiceBus
 
         }
 
-        [Test]
+        [Fact]
         public void send_and_wait()
         {
             var message = new Message1();
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.ServiceBus
             bus.Await.Single().ShouldBeTheSameAs(message);
         }
 
-        [Test]
+        [Fact]
         public void send_to_destination()
         {
             var destination = new Uri("memory://blah");
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.ServiceBus
             sentTo.Message.ShouldBeTheSameAs(message);
         }
 
-        [Test]
+        [Fact]
         public void send_to_destination_and_wait()
         {
             var destination = new Uri("memory://blah");

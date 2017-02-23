@@ -4,19 +4,18 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class WrapWithAttributeConventionTester
     {
         private BehaviorGraph graph;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public WrapWithAttributeConventionTester()
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<WrapWithAttributeController>();
@@ -25,24 +24,24 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph = BehaviorGraph.BuildFrom(registry);
 
             graph.Chains.Count().ShouldBeGreaterThan(0);
-
         }
 
-        [Test]
+
+        [Fact]
         public void should_have_a_call_in_each_behavior_chain()
         {
             int callCount = graph.Chains.OfType<RoutedChain>().SelectMany(x => x.Calls).Count();
             callCount.ShouldBe(6);
         }
 
-        [Test]
+        [Fact]
         public void place_no_wrappers_on_actions_that_do_not_have_the_attribute()
         {
             graph.ChainFor<WrapWithAttributeController>(x => x.MethodWithNoAttributes()).First()
                 .ShouldNotBeOfType<Wrapper>();
         }
 
-        [Test]
+        [Fact]
         public void place_wrapper_on_action_with_a_single_attribute()
         {
             var chain = graph.ChainFor<WrapWithAttributeController>(x => x.MethodWithOneAttribute());
@@ -50,7 +49,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(Wrapper1));
         }
 
-        [Test]
+        [Fact]
         public void place_wrapper_on_action_with_multiple_attributes()
         {
             var behaviors =

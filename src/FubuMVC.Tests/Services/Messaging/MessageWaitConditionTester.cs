@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 using FubuMVC.Core.Services.Messaging;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Services.Messaging
 {
-    [TestFixture]
+    
     public class MessageWaitConditionTester
     {
-        [Test]
+        [Fact]
         public void watches_for_the_right_message()
         {
             var m1 = new Message();
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Services.Messaging
             condition.Received.ShouldBeTheSameAs(m4);
         }
 
-        [Test]
+        [Fact]
         public void wait_lasts_until_we_get_it()
         {
             var m1 = new Message();

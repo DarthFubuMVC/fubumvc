@@ -7,13 +7,13 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime
 {
-    [TestFixture]
+    
     public class ReceiverContentTypeHandling
     {
         private ChannelGraph theGraph;
@@ -23,8 +23,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
         private IMessageCallback theCallback;
         private RecordingLogger theLogger;
 
-        [SetUp]
-        public void SetUp()
+        public ReceiverContentTypeHandling()
         {
             theGraph = new ChannelGraph();
             theNode = new ChannelNode();
@@ -38,7 +37,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             theReceiver = new Receiver(theInvoker, theGraph, theNode);
         }
 
-        [Test]
+        [Fact]
         public void if_no_content_type_is_specified_on_envelope_or_channel_use_graph_default()
         {
             theGraph.DefaultContentType = "text/json";
@@ -50,7 +49,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             headers[Envelope.ContentTypeKey].ShouldBe("text/json");
         }
 
-        [Test]
+        [Fact]
         public void if_no_content_type_is_specified_use_channel_default_when_it_exists()
         {
             theGraph.DefaultContentType = "text/json";
@@ -63,7 +62,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             headers[Envelope.ContentTypeKey].ShouldBe("text/xml");
         }
 
-        [Test]
+        [Fact]
         public void the_envelope_content_type_wins()
         {
             theGraph.DefaultContentType = "text/json";
@@ -147,7 +146,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
     }
 
 
-    [TestFixture]
+    
     public class when_receiving_a_message : InteractionContext<Receiver>
     {
         Envelope envelope = new Envelope();
@@ -182,13 +181,13 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             ClassUnderTest.Receive(theData, theHeaders, theCallback);
         }
 
-        [Test]
+        [Fact]
         public void should_copy_the_channel_address_to_the_envelope()
         {
             new HeaderWrapper{Headers = theHeaders}.ReceivedAt.ShouldBe(address);
         }
 
-        [Test]
+        [Fact]
         public void should_call_through_to_the_pipeline()
         {
             MockFor<IHandlerPipeline>().AssertWasCalled(x => x.Receive(new Envelope(theData, theHeaders, theCallback)));

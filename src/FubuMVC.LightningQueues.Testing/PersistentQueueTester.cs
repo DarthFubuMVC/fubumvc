@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using FubuCore.Logging;
 using LightningQueues.Storage;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class PersistentQueueTester
     {
-        [Test]
+        [Fact]
         public void creates_queues_when_started()
         {
             using (var queues = new PersistentQueues(new RecordingLogger()))
@@ -27,7 +27,7 @@ namespace FubuMVC.LightningQueues.Testing
             }
         }
 
-        [Test]
+        [Fact]
         public void creates_non_persistent_queues_when_started()
         {
             using (var queues = new PersistentQueues(new RecordingLogger()))

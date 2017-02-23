@@ -4,11 +4,11 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.PathBased;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Resources.PathBased
 {
-	[TestFixture]
+	
     public class ResourcePathIntegratedUrlCreationTester
     {
         public class Controller1
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             }
         }
 
-        [Test]
+        [Fact]
         public void uses_the_resource_path_to_do_its_job()
         {
             var registry = new FubuRegistry();
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Resources.PathBased
                 .ShouldBe("resource/something/else");
         }
 
-        [Test]
+        [Fact]
         public void should_append_the_url_suffix_onto_each_appropriate_route()
         {
             var registry = new FubuRegistry();

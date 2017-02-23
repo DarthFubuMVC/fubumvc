@@ -6,12 +6,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Registration;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class PartialChainSwitcherTester : InteractionContext<PartialChainSwitcher>
     {
         private BehaviorChain theTarget;
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Runtime
             ClassUnderTest.InvokePartial();
         }
 
-        [Test]
+        [Fact]
         public void invoke_partial_causes_chain_context_switch()
         {
             theChain.AssertWasCalled(x => x.Push(theTarget));
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Runtime
             theChain.AssertWasCalled(x => x.Pop());
         }
 
-        [Test]
+        [Fact]
         public void invoke_throws_an_exception()
         {
             Exception<InvalidOperationException>.ShouldBeThrownBy(() =>

@@ -5,14 +5,14 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Certificates;
 using FubuMVC.Core.Security.Authentication.Saml2.Encryption;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class Saml2ServicesRegistry_specification
     {
         private void registeredTypeIs<TService, TImplementation>()
@@ -40,56 +40,56 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
 
         }
 
-        [Test]
+        [Fact]
         public void IAssertionXmlEncryptor()
         {
             registeredTypeIs<IAssertionXmlEncryptor, AssertionXmlEncryptor>();
         }
 
-        [Test]
+        [Fact]
         public void ISamlResponseXmlSigner()
         {
             registeredTypeIs<ISamlResponseXmlSigner, SamlResponseXmlSigner>();
         }
 
 
-        [Test]
+        [Fact]
         public void ISamlDirector()
         {
             registeredTypeIs<ISamlDirector, SamlDirector>();
         }
 
-        [Test]
+        [Fact]
         public void ISamlResponseReader()
         {
             registeredTypeIs<ISamlResponseReader, SamlResponseReader>();
         }
 
-        [Test]
+        [Fact]
         public void ISamlResponseRedirector()
         {
             registeredTypeIs<ISamlResponseRedirector, SamlResponseRedirector>();
         }
 
-        [Test]
+        [Fact]
         public void ISamlResponseWriter()
         {
             registeredTypeIs<ISamlResponseWriter, SamlResponseWriter>();
         }
 
-        [Test]
+        [Fact]
         public void ICertificateService()
         {
             registeredTypeIs<ICertificateService, CertificateService>();
         }
 
-        [Test]
+        [Fact]
         public void ICertificateLoader()
         {
             registeredTypeIs<ICertificateLoader, CertificateLoader>();
         }
 
-        [Test]
+        [Fact]
         public void IAssertionXmlDecryptor()
         {
             registeredTypeIs<IAssertionXmlDecryptor, AssertionXmlDecryptor>();

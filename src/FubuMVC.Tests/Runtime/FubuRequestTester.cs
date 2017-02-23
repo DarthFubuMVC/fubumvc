@@ -8,12 +8,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class when_trying_to_set_an_object_in_fubu_request : InteractionContext<FubuRequest>
     {
         private BindResult theResult;
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Runtime
             ClassUnderTest.Get<BinderTarget>().ShouldBeTheSameAs(theResult.Value);
         }
 
-        [Test]
+        [Fact]
         public void try_to_set_the_same_value_does_nothing()
         {
             ClassUnderTest.Set(theResult.Value.As<BinderTarget>());
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Runtime
     }
 
 
-    [TestFixture]
+    
     public class fetching_an_object_for_the_second_time_gets_the_same_object : InteractionContext<FubuRequest>
     {
         private object target;
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Runtime
                 });
         }
 
-        [Test]
+        [Fact]
         public void the_object_is_only_created_once()
         {
             var request = ClassUnderTest;
@@ -76,10 +76,10 @@ namespace FubuMVC.Tests.Runtime
     }
 
 
-    [TestFixture]
+    
     public class when_finding_something_by_a_base_class : InteractionContext<FubuRequest>
     {
-        [Test]
+        [Fact]
         public void inject_by_concrete_find_by_abstraction()
         {
             var request = ClassUnderTest;
@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.Runtime
     }
 
 
-    [TestFixture]
+    
     public class when_clearing_a_type_from_the_request : InteractionContext<FubuRequest>
     {
         private BinderTarget _binderTarget;
@@ -106,21 +106,21 @@ namespace FubuMVC.Tests.Runtime
             ClassUnderTest.Set(_binderTarget);
         }
 
-        [Test]
+        [Fact]
         public void should_not_do_anything_if_the_type_does_not_exist_in_the_request()
         {
             ClassUnderTest.Clear(typeof (when_clearing_a_type_from_the_request));
             ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeTheSameAs(_binderTarget);
         }
 
-        [Test]
+        [Fact]
         public void should_not_clear_a_subclass_type_when_instructed_to_clear_a_parent_type()
         {
             ClassUnderTest.Clear(typeof (BinderTargetBase));
             ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeTheSameAs(_binderTarget);
         }
 
-        [Test]
+        [Fact]
         public void should_remove_the_type_from_the_request_if_it_exists()
         {
             ClassUnderTest.Clear(_binderTarget.GetType());
@@ -129,7 +129,7 @@ namespace FubuMVC.Tests.Runtime
         }
     }
 
-    [TestFixture]
+    
     public class setting_an_object_explicitly_registers_the_new_object : InteractionContext<FubuRequest>
     {
         private BinderTarget registered;
@@ -145,7 +145,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void the_object_registered_by_set_object_is_always_returned_from_get()
         {
             request.SetObject(registered);
@@ -157,7 +157,7 @@ namespace FubuMVC.Tests.Runtime
             request.ProblemsFor<BinderTarget>().Count().ShouldBe(0);
         }
 
-        [Test]
+        [Fact]
         public void setting_the_object_records_a_SetValue_log()
         {
             request.SetObject(registered);
@@ -165,7 +165,7 @@ namespace FubuMVC.Tests.Runtime
             logs.DebugMessages.Single().ShouldBe(new SetValueReport(registered));
         }
 
-        [Test]
+        [Fact]
         public void the_object_registered_is_always_returned_from_get()
         {
             request.Set(registered);
@@ -177,7 +177,7 @@ namespace FubuMVC.Tests.Runtime
             request.ProblemsFor<BinderTarget>().Count().ShouldBe(0);
         }
 
-        [Test]
+        [Fact]
         public void trace_the_set_object_from_generic_set()
         {
             request.Set<BinderTargetBase>(registered);

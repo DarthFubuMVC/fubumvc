@@ -3,15 +3,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
 {
-    [TestFixture]
+    
     public class unauthenticated_ajax_request_against_an_authenticated_route : AuthenticationHarness
     {
-        [Test]
+        [Fact]
         public void execute()
         {
             Scenario(_ =>

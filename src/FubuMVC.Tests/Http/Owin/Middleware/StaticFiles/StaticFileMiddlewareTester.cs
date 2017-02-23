@@ -10,20 +10,19 @@ using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime.Files;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
 {
-    [TestFixture]
+    
     public class StaticFileMiddlewareTester
     {
         private OwinHttpRequest theRequest;
         private StubFubuApplicationFiles theFiles = new StubFubuApplicationFiles();
         private StaticFileMiddleware theMiddleware;
         private OwinHttpResponse theResponse;
- 
-        [SetUp]
-        public void SetUp()
+
+        public StaticFileMiddlewareTester()
         {
             theRequest = new OwinHttpRequest();
             theResponse = new OwinHttpResponse(theRequest.Environment);
@@ -58,7 +57,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             return theMiddleware.Invoke(theRequest, theResponse);
         }
 
-        [Test]
+        [Fact]
         public void will_not_write_a_file_that_is_denied_even_if_it_exists()
         {
             theFiles.WriteFile("my.config", "some stuff");
@@ -67,7 +66,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
                 .AssertOnlyContinuesToTheInner();
         }
 
-        [Test]
+        [Fact]
         public void just_continue_if_not_GET_or_HEAD()
         {
             theFiles.WriteFile("anything.htm", "some content");
@@ -76,7 +75,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             forMethodAndFile("PUT", "anything.htm").AssertOnlyContinuesToTheInner();
         }
 
-        [Test]
+        [Fact]
         public void GET_and_the_file_does_not_exist()
         {
             fileDoesNotExist("something.js");
@@ -85,7 +84,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
                 .AssertOnlyContinuesToTheInner();
         }
 
-        [Test]
+        [Fact]
         public void HEAD_and_the_file_does_not_exist()
         {
             fileDoesNotExist("something.js");
@@ -94,7 +93,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
                 .AssertOnlyContinuesToTheInner();
         }
 
-        [Test]
+        [Fact]
         public void file_exists_on_GET_request_no_headers_of_any_kind_should_write_file()
         {
             theFiles.WriteFile("/folder1/foo.htm", "hey you!");
@@ -106,7 +105,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
                 .ShouldBe("folder1/foo.htm");
         }
 
-        [Test]
+        [Fact]
         public void file_exists_on_HEAD_request_when_file_exists()
         {
             theFiles.WriteFile("foo.css", "something grand");
@@ -118,7 +117,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
-        [Test]
+        [Fact]
         public void file_exists_on_GET_but_miss_on_IfMatch_header()
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
@@ -132,7 +131,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             continuation.Status.ShouldBe(HttpStatusCode.PreconditionFailed);
         }
 
-        [Test]
+        [Fact]
         public void file_exists_on_GET_and_hit_on_IfMatch_header()
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
@@ -145,7 +144,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
-        [Test]
+        [Fact]
         public void file_exists_on_GET_but_miss_on_IfNoneMatch_header()
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
@@ -159,7 +158,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
-        [Test]
+        [Fact]
         public void file_exists_on_GET_and_hit_on_IfNoneMatch_header()
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
@@ -173,7 +172,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
-        [Test]
+        [Fact]
         public void if_modified_since_is_false_on_a_good_request()
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
@@ -187,7 +186,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
-        [Test]
+        [Fact]
         public void if_modified_since_is_true_on_a_good_request_should_write_the_file()
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
@@ -200,7 +199,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
-        [Test]
+        [Fact]
         public void if_un_modified_value_is_satisfied_so_write_the_file()
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
@@ -214,7 +213,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
-        [Test]
+        [Fact]
         public void if_un_modified_value_is_not_satisfied_write_the_file_head_with_412()
         {
             var file = theFiles.WriteFile("foo.css", "some contents");

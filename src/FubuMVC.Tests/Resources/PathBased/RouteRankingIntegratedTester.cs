@@ -4,11 +4,11 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Resources.PathBased
 {
-	[TestFixture]
+	
 	public class RouteRankingIntegratedTester
 	{
 		private BehaviorGraph _graph;
@@ -53,16 +53,16 @@ namespace FubuMVC.Tests.Resources.PathBased
 			public string Second { get; set; }
 		}
 
-		[TestFixtureSetUp]
-		public void beforeAll()
-		{
-			var registry = new FubuRegistry();
-			registry.Actions.IncludeType<Controller1>();
+	    public RouteRankingIntegratedTester()
+	    {
+            var registry = new FubuRegistry();
+            registry.Actions.IncludeType<Controller1>();
 
-			_graph = BehaviorGraph.BuildFrom(registry);
-		}
+            _graph = BehaviorGraph.BuildFrom(registry);
+        }
 
-		[Test]
+
+		[Fact]
 		public void rank_me_last_inputs_should_rank_highly()
 		{
 			_graph.ChainFor<Controller1>(x => x.get_last_ranked(null))
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 			      .Route.Rank.ShouldBe(int.MaxValue);
 		}
 
-		[Test]
+		[Fact]
 		public void no_route_inputs_should_rank_zero()
 		{
 			_graph.ChainFor<Controller1>(x => x.zero(null))
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 				  .Route.Rank.ShouldBe(0);
 		}
 
-		[Test]
+		[Fact]
 		public void one_route_input_should_as_one()
 		{
 			_graph.ChainFor<Controller1>(x => x.one(null))
@@ -86,7 +86,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 			      .Route.Rank.ShouldBe(1);
 		}
 
-		[Test]
+		[Fact]
 		public void two_route_inputs_should_as_one()
 		{
 			_graph.ChainFor<Controller1>(x => x.two(null))

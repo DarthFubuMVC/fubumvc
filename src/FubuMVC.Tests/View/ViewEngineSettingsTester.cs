@@ -10,34 +10,28 @@ using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.View
 {
-    [TestFixture]
+    
     public class ViewEngineSettingsTester
     {
-        private ViewEngineSettings _runner;
+        private ViewEngineSettings _runner = new ViewEngineSettings();
 
-        [SetUp]
-        public void Setup()
-        {
-            _runner = new ViewEngineSettings();
-        }
-
-        [Test]
+        [Fact]
         public void the_default_shared_folders_are_just_Shared()
         {
             _runner.SharedLayoutFolders.Single().ShouldBe("Shared");
         }
 
-        [Test]
+        [Fact]
         public void the_default_application_layout_is_Application()
         {
             _runner.ApplicationLayoutName.ShouldBe("Application");
         }
 
-        [Test]
+        [Fact]
         public void should_not_add_same_type_of_facility_more_than_once()
         {
             _runner.AddFacility(new TestViewFacility());
@@ -46,7 +40,7 @@ namespace FubuMVC.Tests.View
             _runner.Facilities.ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void default_logic_for_is_shared()
         {
             _runner.IsSharedFolder(@"foo/bar/Shared").ShouldBeTrue();
@@ -56,7 +50,7 @@ namespace FubuMVC.Tests.View
             _runner.IsSharedFolder("Foo/Bar").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void customize_is_shared_logic()
         {
             _runner.SharedLayoutFolders.Clear();
@@ -68,7 +62,7 @@ namespace FubuMVC.Tests.View
             _runner.IsSharedFolder("Layouts2").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_ignore_folders()
         {
             var settings = new ViewEngineSettings();

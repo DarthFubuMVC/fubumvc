@@ -1,20 +1,19 @@
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class AjaxContinuationResolverTester
     {
         private AjaxContinuationResolver theResolver;
         private RecordingAjaxContinuationModifier theModifier;
         private Notification theNotification;
 
-        [SetUp]
-        public void SetUp()
+        public AjaxContinuationResolverTester()
         {
             theModifier = new RecordingAjaxContinuationModifier();
             theResolver = new AjaxContinuationResolver(new[] { theModifier });
@@ -23,7 +22,7 @@ namespace FubuMVC.Tests.Validation.Web
             theResolver.Resolve(theNotification);
         }
 
-        [Test]
+        [Fact]
         public void modifies_the_continuation()
         {
             theModifier.Continuation.ShouldNotBeNull();

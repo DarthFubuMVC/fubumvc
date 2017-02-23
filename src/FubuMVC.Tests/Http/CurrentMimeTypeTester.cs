@@ -1,15 +1,15 @@
 using System.Linq;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class CurrentMimeTypeTester
     {
-        [Test]
+        [Fact]
         public void default_is_to_accept_anything()
         {
             new CurrentMimeType()
@@ -17,14 +17,14 @@ namespace FubuMVC.Tests.Http
                 .ShouldBe(MimeType.Any.ToString());
         }
 
-        [Test]
+        [Fact]
         public void feeding_in_null_for_contentType_defaults_to_HttpFormMimeType()
         {
             var currentMimeType = new CurrentMimeType(null, null);
             currentMimeType.ContentType.ShouldBe(MimeType.HttpFormMimetype);
         }
 
-        [Test]
+        [Fact]
         public void is_smart_enough_to_pull_out_charset()
         {
             var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", null);
@@ -32,58 +32,58 @@ namespace FubuMVC.Tests.Http
             currentMimeType.Charset.ShouldBe("UTF-8");
         }
 
-        [Test]
+        [Fact]
         public void accepts_html_negative()
         {
             var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", null);
             currentMimeType.AcceptsHtml().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void accepts_html_positive()
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html").AcceptsHtml().ShouldBeTrue();
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/json, text/html").AcceptsHtml().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void accepts_any_negative()
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html").AcceptsAny().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void accepts_any_positive()
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, */*").AcceptsAny().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void accepts_any_if_no_accept_header_specified()
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", null).AcceptsAny().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void accepts_any_if_accept_header_is_all_spaces()
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "  ").AcceptsAny().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void accepts_any_if_accept_header_is_empty()
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", string.Empty).AcceptsAny().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void select_first_matching_no_matches()
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html")
                 .SelectFirstMatching(new[]{"application/json"}).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void select_first_with_a_wild_card()
         {
             var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, */*");
@@ -97,7 +97,7 @@ namespace FubuMVC.Tests.Http
         
         }
 
-        [Test]
+        [Fact]
         public void select_first_when_one_does_match()
         {
             var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, application/json, */*");

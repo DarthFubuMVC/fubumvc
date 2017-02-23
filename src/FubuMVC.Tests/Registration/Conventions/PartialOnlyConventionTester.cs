@@ -2,16 +2,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class PartialOnlyConventionTester
     {
 
-        [Test]
+        [Fact]
         public void integrated_with_fubu_registry()
         {
             var registry = new FubuRegistry();

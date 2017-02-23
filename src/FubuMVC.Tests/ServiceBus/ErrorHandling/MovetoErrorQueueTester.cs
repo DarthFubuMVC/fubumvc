@@ -3,17 +3,16 @@ using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
-    [TestFixture]
+    
     public class when_the_move_to_error_queue_continuation_executes
     {
-        [SetUp]
-        public void SetUp()
+        public when_the_move_to_error_queue_continuation_executes()
         {
             theEnvelope = ObjectMother.Envelope();
             theException = new NotImplementedException();
@@ -30,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         private ILogger theLogger;
         private TestEnvelopeContext theContext;
 
-        [Test]
+        [Fact]
         public void should_add_a_new_error_report()
         {
             var report = theEnvelope.Callback.GetArgumentsForCallsMadeOn(x => x.MoveToErrors(null))
@@ -39,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             report.ExceptionText.ShouldBe(theException.ToString());
         }
 
-        [Test]
+        [Fact]
         public void should_send_a_failure_acknowledgement()
         {
             theContext.RecordedOutgoing.FailureAcknowledgementMessage

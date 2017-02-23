@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Localization;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class LocalStringTester
     {
-        [Test]
+        [Fact]
         public void two_instances_with_the_same_key_should_equal_each_other()
         {
             var x = new LocalString { value = "foo" };
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Localization
             y.ShouldBe(x);
         }
 
-        [Test]
+        [Fact]
         public void two_instances_with_the_same_key_should_be_considered_the_same_for_hashing_purposes()
         {
             var x = new LocalString { value = "foo" };
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Localization
             dict.ContainsKey(y).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void read_from_happy_path()
         {
             LocalString.ReadFrom("key=foo").ShouldBe(new LocalString("key", "foo"));
@@ -38,14 +38,14 @@ namespace FubuMVC.Tests.Localization
         }
 
 
-        [Test]
+        [Fact]
         public void read_from_happy_path_trims()
         {
             LocalString.ReadFrom("     key=foo   ").ShouldBe(new LocalString("key", "foo"));
 
         }
 
-        [Test]
+        [Fact]
         public void read_from_sad_path_fails_with_descriptive_error()
         {
             Exception<ArgumentException>.ShouldBeThrownBy(() =>
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Localization
             
         }
 
-        [Test]
+        [Fact]
         public void read_all()
         {
             LocalString.ReadAllFrom(@"

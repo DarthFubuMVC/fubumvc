@@ -2,18 +2,17 @@ using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class AjaxValidationTester
     {
         private Notification theNotification;
 
-        [SetUp]
-        public void SetUp()
+        public AjaxValidationTester()
         {
 			LocalizationManager.Stub();
 
@@ -22,7 +21,7 @@ namespace FubuMVC.Tests.Validation.Web
         }
 
 
-        [Test]
+        [Fact]
         public void should_add_corresponding_errors()
         {
             theContinuation
@@ -30,7 +29,7 @@ namespace FubuMVC.Tests.Validation.Web
                 .ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void should_set_field_for_errors()
         {
             theContinuation
@@ -38,7 +37,7 @@ namespace FubuMVC.Tests.Validation.Web
                 .ShouldContain(e => e.field.Equals("Field"));
         }
 
-		[Test]
+		[Fact]
 		public void sets_the_label()
 		{
 			theContinuation
@@ -46,7 +45,7 @@ namespace FubuMVC.Tests.Validation.Web
 				.ShouldContain(e => e.label.Equals("en-US_Field"));
 		}
 
-        [Test]
+        [Fact]
         public void should_set_messages_for_errors()
         {
             theContinuation
@@ -54,7 +53,7 @@ namespace FubuMVC.Tests.Validation.Web
                 .ShouldContain(e => e.message.Equals("Message"));
         }
 
-        [Test]
+        [Fact]
         public void should_set_success_flag()
         {
             theContinuation

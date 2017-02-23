@@ -6,18 +6,17 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Tests.Registration.Conventions;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 
 namespace FubuMVC.Tests.Registration.DSL
 {
-    [TestFixture]
+    
     public class when_applying_policies_for_wrappers_and_ordering
     {
         private BehaviorGraph graph;
 
-        [SetUp]
-        public void SetUp()
+        public when_applying_policies_for_wrappers_and_ordering()
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
@@ -33,7 +32,7 @@ namespace FubuMVC.Tests.Registration.DSL
         }
 
         
-        [Test]
+        [Fact]
         public void move_behavior_before_authorization()
         {
             // Ordinarily, AuthorizationNode would be before any other behavior wrappers
@@ -44,13 +43,12 @@ namespace FubuMVC.Tests.Registration.DSL
         }
     }
 
-    [TestFixture]
+    
     public class when_defining_a_new_reordering_rule_inline
     {
         private BehaviorGraph graph;
 
-        [SetUp]
-        public void SetUp()
+        public when_defining_a_new_reordering_rule_inline()
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
@@ -66,7 +64,7 @@ namespace FubuMVC.Tests.Registration.DSL
             graph = BehaviorGraph.BuildFrom(registry);
         }
 
-        [Test]
+        [Fact]
         public void move_behavior_before_authorization()
         {
             // Ordinarily, AuthorizationNode would be before any other behavior wrappers
@@ -77,10 +75,10 @@ namespace FubuMVC.Tests.Registration.DSL
         }
     }
 
-    [TestFixture]
+    
     public class when_adding_an_iconfigurationaction_without_specifying_configuration_type
     {
-        [Test]
+        [Fact]
         public void it_should_default_to_policy()
         {
             FakePolicy.Count = 0;
@@ -91,10 +89,10 @@ namespace FubuMVC.Tests.Registration.DSL
         }
     }
 
-    [TestFixture]
+    
     public class when_adding_an_action_of_policy_without_specifying_configuration_type
     {
-        [Test]
+        [Fact]
         public void it_should_default_to_policy()
         {
             FakePolicy.Count = 0;

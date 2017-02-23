@@ -4,24 +4,23 @@ using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Security.Authentication;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-	[TestFixture]
+	
 	public class AjaxAuthenticationRedirectTester
 	{
 		private AjaxAuthenticationRedirect theRedirect;
 		private IRequestData theRequestData;
 
-		[SetUp]
-		public void SetUp()
-		{
+	    public AjaxAuthenticationRedirectTester()
+	    {
 			theRequestData = new InMemoryRequestData();
 			theRedirect = new AjaxAuthenticationRedirect(theRequestData, null, null);
 		}
 
-		[Test]
+		[Fact]
 		public void applies_to_ajax_requests_positive()
 		{
 			var data = new Dictionary<string, string>();
@@ -31,7 +30,7 @@ namespace FubuMVC.Tests.Security.Authentication
 			theRedirect.Applies().ShouldBeTrue();
 		}
 
-		[Test]
+		[Fact]
 		public void applies_to_ajax_requests_negative()
 		{
 			theRedirect.Applies().ShouldBeFalse();

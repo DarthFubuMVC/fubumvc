@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Diagnostics
 {
-    [TestFixture]
+    
     public class can_bring_up_the_diagnostics_home_page
     {
-        [Test]
+        [Fact]
         public void get_the_200_in_normal_mode()
         {
             TestHost.Scenario(_ =>

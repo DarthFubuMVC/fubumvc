@@ -1,26 +1,26 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
-    public class SubscriptionsIntegrationTester
+    
+    public class SubscriptionsIntegrationTester : IDisposable
     {
         private FubuRuntime runtime;
         private ISubscriptionCache theRouter;
         private HarnessSettings settings;
 
-        [SetUp]
-        public void SetUp()
+        public SubscriptionsIntegrationTester()
         {
             var registry = new RoutedRegistry();
 
@@ -35,13 +35,12 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             theRouter = runtime.Get<ISubscriptionCache>();
         }
 
-        [TearDown]
-        public void Teardown()
+        public void Dispose()
         {
             runtime.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void if_destination_is_set_on_the_envelope_that_is_the_only_channel_returned()
         {
             var envelope = new Envelope
@@ -53,7 +52,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             theRouter.FindDestinationChannels(envelope).Single().Uri.ShouldBe(settings.Service4);
         }
 
-        [Test]
+        [Fact]
         public void can_happily_build_and_open_a_new_channel_for_a_destination()
         {
             var envelope = new Envelope
@@ -65,7 +64,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             theRouter.FindDestinationChannels(envelope).Single().Uri.ShouldBe(envelope.Destination);
         }
 
-        [Test]
+        [Fact]
         public void destination_is_specified_but_The_channel_does_not_exist_and_the_transport_is_unknown()
         {
             Exception<UnknownChannelException>.ShouldBeThrownBy(() => {
@@ -79,7 +78,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             });
         }
 
-        [Test]
+        [Fact]
         public void use_type_rules_on_the_channel_graph_1()
         {
             var envelope = new Envelope {Message = new Message1()};
@@ -87,7 +86,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .ShouldHaveTheSameElementsAs("Harness:Service1");
         }
 
-        [Test]
+        [Fact]
         public void use_type_rules_on_the_channel_graph_2()
         {
             var envelope = new Envelope { Message = new Message2() };
@@ -95,7 +94,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .ShouldHaveTheSameElementsAs("Harness:Service1", "Harness:Service3");
         }
 
-        [Test]
+        [Fact]
         public void use_type_rules_on_the_channel_graph_3()
         {
             var envelope = new Envelope { Message = new Message3() };

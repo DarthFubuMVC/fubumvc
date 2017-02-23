@@ -8,13 +8,13 @@ using FubuMVC.Core.Runtime;
 using Newtonsoft.Json;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Formatting = System.Xml.Formatting;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
     [Obsolete("Remove this after the ST specs are done")]
-    [TestFixture]
+    
     public class conneg_with_endpoint_that_accepts_all_formatters_and_form_posts
     {
         private readonly XmlJsonHtmlMessage input;
@@ -39,7 +39,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             expectedXml = writer.ToString();
         }
 
-        [Test]
+        [Fact]
         public void requesting_an_unsupported_media_type_returns_406()
         {
             TestHost.Scenario(_ =>
@@ -50,7 +50,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void send_no_accept_header_but_treat_like_anything_is_accepted()
         {
             TestHost.Scenario(_ =>
@@ -62,7 +62,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void send_json_expecting_json()
         {
             TestHost.Scenario(_ =>
@@ -99,7 +99,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
         }
 
-        [Test]
+        [Fact]
         public void send_the_request_as_http_form_expect_json_back()
         {
             TestHost.Scenario(_ =>
@@ -120,7 +120,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
         }
 
-        [Test]
+        [Fact]
         public void send_the_request_as_http_form_expect_xml_back()
         {
             TestHost.Scenario(_ =>
@@ -140,7 +140,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void uses_json_for_global_accept()
         {
             TestHost.Scenario(_ =>
@@ -160,7 +160,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void will_accept_xml_as_an_input()
         {
             TestHost.Scenario(_ =>

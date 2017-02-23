@@ -1,14 +1,14 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
-    [TestFixture]
+    
     public class JobScheduleTester
     {
-        [Test]
+        [Fact]
         public void remove_obsolete_jobs()
         {
             var schedule = new JobSchedule(new[]

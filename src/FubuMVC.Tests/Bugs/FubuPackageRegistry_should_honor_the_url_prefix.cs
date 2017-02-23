@@ -1,16 +1,16 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using FubuCore;
 using Shouldly;
 
 namespace FubuMVC.Tests.Bugs
 {
-    [TestFixture]
+    
     public class FubuPackageRegistry_should_honor_the_url_prefix
     {
-        [Test]
+        [Fact]
         public void the_routes_from_FubuPackageRegistry_have_the_prefix()
         {
             var registry = new FubuRegistry();

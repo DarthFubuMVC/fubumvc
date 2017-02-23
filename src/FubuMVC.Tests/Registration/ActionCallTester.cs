@@ -11,27 +11,18 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Tests.Registration.Conventions;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class ActionCallTester
     {
-        #region Setup/Teardown
 
-        [SetUp]
-        public void SetUp()
-        {
-            action = ActionCall.For<ControllerTarget>(x => x.OneInZeroOut(null));
-        }
+        private ActionCall action = ActionCall.For<ControllerTarget>(x => x.OneInZeroOut(null));
 
-        #endregion
-
-        private ActionCall action;
-
-        [Test]
+        [Fact]
         public void append_to_descendent_when_next_is_not_null()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
@@ -48,7 +39,7 @@ namespace FubuMVC.Tests.Registration
             action.ShouldHaveTheSameElementsAs(wrapper, next);
         }
 
-        [Test]
+        [Fact]
         public void append_when_next_is_null()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
@@ -59,14 +50,14 @@ namespace FubuMVC.Tests.Registration
             action.Next.ShouldBeTheSameAs(next);
         }
 
-        [Test]
+        [Fact]
         public void can_get_the_behavior_type()
         {
             ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null))
                 .BehaviorType.ShouldBe(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Model2>));
         }
 
-        [Test]
+        [Fact]
         public void enrich_puts_the_new_chain_node_directly_behind_the_call()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
@@ -96,14 +87,14 @@ namespace FubuMVC.Tests.Registration
             }
         }
 
-        [Test]
+        [Fact]
         public void fail_to_build_an_action_by_type_for_a_type_with_more_than_one_method()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(
                 () => { ActionCall.For(typeof (InvalidActionWithMultipleMethods)); });
         }
 
-        [Test]
+        [Fact]
         public void returns_T_should_tell_if_action_has_output_of_type()
         {
             action = ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null));
@@ -112,7 +103,7 @@ namespace FubuMVC.Tests.Registration
             action.Returns<Model1>().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_return_if_equal()
         {
             action.Equals(action).ShouldBeTrue();
@@ -121,13 +112,13 @@ namespace FubuMVC.Tests.Registration
             action.Equals("").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_return_is_internal_fubu_action()
         {
             action.IsInternalFubuAction().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void successfully_build_an_action_from_a_handler_type()
         {
             var action = ActionCall.For(typeof (ValidActionWithOneMethod));
@@ -135,7 +126,7 @@ namespace FubuMVC.Tests.Registration
             action.Method.ShouldBe(typeof (ValidActionWithOneMethod).GetMethod("Go"));
         }
 
-        [Test]
+        [Fact]
         public void to_definition_with_an_input_type()
         {
             ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null))
@@ -143,14 +134,14 @@ namespace FubuMVC.Tests.Registration
                 .Input.ShouldBeOfType<RouteInput<Model1>>();
         }
 
-        [Test]
+        [Fact]
         public void to_definition_with_no_input_type()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
             action.ToRouteDefinition().ShouldBeOfType<RouteDefinition>().Input.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void to_object_def_throws_when_has_no_return_and_no_input()
         {
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
@@ -159,7 +150,7 @@ namespace FubuMVC.Tests.Registration
                 .ErrorCode.ShouldBe(1005);
         }
 
-        [Test]
+        [Fact]
         public void to_object_def_throws_when_has_task_with_no_result_and_no_input()
         {
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInTaskNoResultOut());
@@ -169,10 +160,10 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
-    [TestFixture]
+    
     public class ActionCallValidationTester
     {
-        [Test]
+        [Fact]
         public void add_before_must_be_idempotent()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
@@ -187,7 +178,7 @@ namespace FubuMVC.Tests.Registration
             action.PreviousNodes.Count().ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void do_not_append_a_duplicate_node()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
@@ -203,7 +194,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void do_not_append_a_duplicate_node_2()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
@@ -221,28 +212,28 @@ namespace FubuMVC.Tests.Registration
             action.Count(x => x is InputNode).ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void should_not_throw_if_call_is_OMIOMO()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
             action.Validate();
         }
 
-        [Test]
+        [Fact]
         public void should_not_throw_if_call_is_OMIZMO()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.OneInZeroOut(null));
             action.Validate();
         }
 
-        [Test]
+        [Fact]
         public void should_not_throw_if_call_is_ZMIOMO()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
             action.Validate();
         }
 
-        [Test]
+        [Fact]
         public void should_throw_if_input_type_is_value_type()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusOneInput(9));
@@ -250,7 +241,7 @@ namespace FubuMVC.Tests.Registration
             ex.ErrorCode.ShouldBe(1006);
         }
 
-        [Test]
+        [Fact]
         public void should_throw_if_more_than_one_input_parameter()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
@@ -258,7 +249,7 @@ namespace FubuMVC.Tests.Registration
             ex.ErrorCode.ShouldBe(1005);
         }
 
-        [Test]
+        [Fact]
         public void should_throw_if_return_type_is_value_type()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());

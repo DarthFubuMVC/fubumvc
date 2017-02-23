@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using System.Linq;
 using Rhino.Mocks;
@@ -9,11 +9,11 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class ConfigurationActionSetTester
     {
 
-        [Test]
+        [Fact]
         public void latches_duplicate_types_if_they_are_unique()
         {
             var policy1 = new UniquePolicy();
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests
 
         }
 
-        [Test]
+        [Fact]
         public void will_not_double_register_actions_that_are_determined_to_be_equivalent()
         {
             var policy1 = new ConfiguredPolicy("foo");
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests
             actions.Actions.Single().ShouldBeTheSameAs(policy1);
         }
 
-        [Test]
+        [Fact]
         public void can_register_actions_of_the_same_type_that_are_determined_to_not_be_equivalent()
         {
             var policy1 = new ConfiguredPolicy("foo");
@@ -64,27 +64,27 @@ namespace FubuMVC.Tests
         }
 
 
-        [Test]
+        [Fact]
         public void type_is_unique_is_false_if_the_CanBeMultiplesAttribute_exists()
         {
             ConfigurationActionSet.TypeIsUnique(typeof(SimpleMultiplePolicy)).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void type_is_not_unique_if_there_are_any_constructors_with_parameters()
         {
             ConfigurationActionSet.TypeIsUnique(typeof(ConfiguredPolicy))
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void type_is_not_unique_if_there_are_any_settable_properties()
         {
             ConfigurationActionSet.TypeIsUnique(typeof(PropertiesPolicy))
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void type_is_unique_if_there_is_no_attribute_no_non_default_ctor_and_no_settable_properties()
         {
             ConfigurationActionSet.TypeIsUnique(typeof(UniquePolicy))

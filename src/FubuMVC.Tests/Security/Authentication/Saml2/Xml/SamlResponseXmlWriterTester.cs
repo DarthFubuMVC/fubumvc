@@ -4,34 +4,32 @@ using System.Xml;
 using FubuCore;
 using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Xml;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml 
 {
-    [TestFixture]
+    
     public class SamlResponseXmlWriterTester
     {
         private SamlResponse theOriginalResponse;
         private XmlDocument document;
         private SamlResponse theSecondResponse;
 
-        // TODO -- try to verify this against the real spec XSD
-
-        [TestFixtureSetUp]
-        public void SetUp()
+        public SamlResponseXmlWriterTester()
         {
             var xml = new FileSystem().ReadStringFromFile("sample.xml");
             theOriginalResponse = new SamlResponseXmlReader(xml).Read();
 
             document = new SamlResponseXmlWriter(theOriginalResponse).Write();
-            
+
             Debug.WriteLine(document.OuterXml);
-            
+
             theSecondResponse = new SamlResponseXmlReader(document.OuterXml).Read();
         }
 
-        [Test]
+
+        [Fact]
         public void writes_the_assertion_element()
         {
             var assertion = document.DocumentElement.FindChild("Assertion");
@@ -44,56 +42,56 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
             issuer.InnerText.ShouldBe("urn:idp:fakecompany:nbpartgenoutbds20:uat");
         }
 
-        [Test]
+        [Fact]
         public void version_should_be_2_point_0()
         {
             document.DocumentElement.GetAttribute("Version").ShouldBe("2.0");
         }
 
-        [Test]
+        [Fact]
         public void writes_the_issuer()
         {
             theSecondResponse.Issuer.ShouldBe(theOriginalResponse.Issuer);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_status()
         {
             theSecondResponse.Status.ShouldBe(theOriginalResponse.Status);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_Destination()
         {
             theSecondResponse.Destination.ShouldBe(theOriginalResponse.Destination);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_Id()
         {
             theSecondResponse.Id.ShouldBe("SamlResponse-"+theOriginalResponse.Id);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_issue_instant()
         {
             theSecondResponse.IssueInstant.ShouldBe(theOriginalResponse.IssueInstant);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_subject_name()
         {
             theSecondResponse.Subject.Name.ShouldBe(theOriginalResponse.Subject.Name);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_subject_format()
         {
             theSecondResponse.Subject.Name.Format
                              .ShouldBe(theOriginalResponse.Subject.Name.Format);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_subject_confirmation_methods()
         {
             theSecondResponse.Subject.Confirmations.Select(x => x.Method)
@@ -101,7 +99,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
 
         }
         
-        [Test]
+        [Fact]
         public void writes_the_subject_confirmation_name()
         {
             theSecondResponse.Subject.Confirmations.Select(x => x.Name)
@@ -109,7 +107,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
 
         }
 
-        [Test]
+        [Fact]
         public void writes_the_subject_confirmation_data()
         {
             var secondConfirmationData = theSecondResponse.Subject.Confirmations.First().ConfirmationData.First();
@@ -119,7 +117,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
             secondConfirmationData.Recipient.ShouldBe(originalConfirmationData.Recipient);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_condition_group_times()
         {
             theSecondResponse.Conditions.NotBefore
@@ -129,7 +127,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
                              .ShouldBe(theOriginalResponse.Conditions.NotOnOrAfter);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_audiences()
         {
             var secondAudiences = theSecondResponse.Conditions.Conditions.OfType<AudienceRestriction>().Select(x => x.Audiences);
@@ -140,7 +138,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
             secondAudiences.ShouldHaveTheSameElementsAs(originalAudiences);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_authentication_context_basic_properties()
         {
             theSecondResponse.Authentication.Instant.ShouldBe(theOriginalResponse.Authentication.Instant);
@@ -148,21 +146,21 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
             theSecondResponse.Authentication.SessionNotOnOrAfter.ShouldBe(theOriginalResponse.Authentication.SessionNotOnOrAfter);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_authentication_context_declaration_reference()
         {
             theSecondResponse.Authentication.DeclarationReference
                              .ShouldBe(theOriginalResponse.Authentication.DeclarationReference);
         }
         
-        [Test]
+        [Fact]
         public void writes_the_authentication_context_class_reference()
         {
             theSecondResponse.Authentication.ClassReference
                              .ShouldBe(theOriginalResponse.Authentication.ClassReference);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_attributes()
         {
             theSecondResponse.Attributes.Get("ClientId")

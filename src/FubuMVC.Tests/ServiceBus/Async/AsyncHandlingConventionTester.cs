@@ -3,16 +3,16 @@ using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Async
 {
-    [TestFixture]
+    
     public class AsyncHandlingConventionTester
     {
-        [Test]
+        [Fact]
         public void async_handling_node_should_be_right_before_any_calls()
         {
             using (var runtime = FubuRuntime.BasicBus())

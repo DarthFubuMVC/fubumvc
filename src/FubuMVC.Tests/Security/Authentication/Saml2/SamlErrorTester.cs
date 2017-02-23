@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Validation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class SamlErrorTester
     {
-        [Test]
+        [Fact]
         public void build_by_string_token()
         {
             var error = new SamlError(SamlValidationKeys.TimeFrameDoesNotMatch);

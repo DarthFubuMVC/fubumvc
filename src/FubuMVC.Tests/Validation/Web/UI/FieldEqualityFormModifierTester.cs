@@ -10,12 +10,12 @@ using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.UI;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-	[TestFixture]
+	
 	public class FieldEqualityFormModifierTester
 	{
 		private BehaviorGraph theGraph;
@@ -27,9 +27,8 @@ namespace FubuMVC.Tests.Validation.Web.UI
 		private StringToken token1;
 		private StringToken token2;
 
-		[SetUp]
-		public void SetUp()
-		{
+	    public FieldEqualityFormModifierTester()
+	    {
 			token1 = StringToken.FromKeyString("TestKeys:Key1", "Token 1");
 			token2 = StringToken.FromKeyString("TestKeys:Key2", "Token 2");
 
@@ -65,7 +64,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
 			return request;
 		}
 
-		[Test]
+		[Fact]
 		public void modifies_the_form()
 		{
 			var theRequest = requestFor<AjaxTarget>();
@@ -82,7 +81,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
 			values.ShouldHaveCount(2);
 		}
 
-		[Test]
+		[Fact]
 		public void no_strategies()
 		{
 			var theRequest = requestFor<AjaxTarget>();

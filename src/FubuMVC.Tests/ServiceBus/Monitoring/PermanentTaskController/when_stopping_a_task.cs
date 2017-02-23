@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
-    [TestFixture]
+    
     public class when_trying_to_stop_a_task_that_does_not_exist : PersistentTaskControllerContext
     {
-        [Test]
+        [Fact]
         public void should_denote_failure()
         {
             var task = theController.Deactivate("nonexistent://1".ToUri());
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
         }
     }
 
-    [TestFixture]
+    
     public class when_stopping_a_task_successfully : PersistentTaskControllerContext
     {
         private Task<bool> theTask;
@@ -36,20 +36,20 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
             theTask.Wait();
         }
 
-        [Test]
+        [Fact]
         public void the_task_should_denote_success()
         {
             theTask.Result.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_stop_the_task()
         {
             Task("running://1").IsActive.ShouldBeFalse();
         }
 
 
-        [Test]
+        [Fact]
         public void the_ownership_was_removed_and_persisted()
         {
             theCurrentNode.OwnedTasks.ShouldNotContain("running://1".ToUri());
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
         }
     }
 
-    [TestFixture]
+    
     public class when_stopping_a_task_unsuccessfully : PersistentTaskControllerContext
     {
         private Task<bool> theTask;
@@ -71,19 +71,19 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
             theTask.Wait();
         }
 
-        [Test]
+        [Fact]
         public void the_task_should_denote_failure_by_returning_false()
         {
             theTask.Result.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void logged_the_failure_message()
         {
             LoggedMessageForSubject<FailedToStopTask>("running://1");
         }
 
-        [Test]
+        [Fact]
         public void logged_the_exception()
         {
             theLogger.ErrorMessages.OfType<ErrorReport>()

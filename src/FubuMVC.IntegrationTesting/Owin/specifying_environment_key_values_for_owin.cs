@@ -4,14 +4,14 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class specifying_environment_key_values_for_owin
     {
-        [Test]
+        [Fact]
         public void can_inject_environment_keys_from_the_fubu_registry()
         {
             using (var server = FubuRuntime

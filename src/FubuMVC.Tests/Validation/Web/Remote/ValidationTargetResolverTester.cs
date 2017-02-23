@@ -2,25 +2,24 @@
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation.Web.Remote;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.Remote
 {
-    [TestFixture]
+    
     public class ValidationTargetResolverTester
     {
         private IObjectResolver theObjectResolver;
         private ValidationTargetResolver theResolver;
 
-        [SetUp]
-        public void SetUp()
+        public ValidationTargetResolverTester()
         {
             theObjectResolver = ObjectResolver.Basic();
             theResolver = new ValidationTargetResolver(theObjectResolver);
         }
 
-        [Test]
+        [Fact]
         public void target_with_simple_string_property()
         {
             var value = "Test";
@@ -30,7 +29,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             model.FirstName.ShouldBe(value);
         }
 
-        [Test]
+        [Fact]
         public void target_with_simple_int_property()
         {
             var accessor = ReflectionHelper.GetAccessor<ExampleModel>(x => x.Count);
@@ -39,7 +38,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             model.Count.ShouldBe(10);
         }
 
-        [Test]
+        [Fact]
         public void target_with_value_type()
         {
             var value = "Test";

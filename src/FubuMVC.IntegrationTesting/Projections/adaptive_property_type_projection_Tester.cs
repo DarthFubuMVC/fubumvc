@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.Projections;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Projections
 {
-    [TestFixture]
+    
     public class adaptive_property_type_projection_Tester
     {
-        [Test]
+        [Fact]
         public void use_adaptive_projection_of_child_properties()
         {
             TestHost.Scenario(_ =>
@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Projections
             });
         }
 
-        [Test]
+        [Fact]
         public void projection_adaptively_when_value_is_null()
         {
             TestHost.Scenario(_ =>
@@ -32,7 +32,7 @@ namespace FubuMVC.IntegrationTesting.Projections
             });
         }
 
-        [Test]
+        [Fact]
         public void projects_using_default_serialization_if_projection_cannot_be_found()
         {
             TestHost.Scenario(_ =>

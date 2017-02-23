@@ -1,20 +1,20 @@
 using System.Net;
 using FubuMVC.Core.Continuations;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Continuations
 {
-    [TestFixture]
+    
     public class RedirectToMethodsTester
     {
-        [Test]
+        [Fact]
         public void Stop()
         {
             Stop<StubRedirectable>.With(HttpStatusCode.NotModified)
                 .RedirectTo.AssertWasEndedWithStatusCode(HttpStatusCode.NotModified);
         }
 
-        [Test]
+        [Fact]
         public void Transfer_to_destination()
         {
             var destination = new Input1();
@@ -23,14 +23,14 @@ namespace FubuMVC.Tests.Continuations
                 .RedirectTo.AssertWasTransferedTo(destination);
         }
 
-        [Test]
+        [Fact]
         public void Transfer_to_action()
         {
             Transfer<StubRedirectable>.To<ActionTarget>(x => x.Go(null))
                 .RedirectTo.AssertWasTransferedTo<ActionTarget>(x => x.Go(null));
         }
 
-        [Test]
+        [Fact]
         public void Redirect_to_destination()
         {
             var destination = new Input1();
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Continuations
                 .RedirectTo.AssertWasRedirectedTo(destination);
         }
 
-        [Test]
+        [Fact]
         public void Redirect_to_action()
         {
             Redirect<StubRedirectable>.To<ActionTarget>(x => x.Go(null))

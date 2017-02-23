@@ -4,13 +4,13 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class Determining_MenuItemState_from_a_MenuNode : InteractionContext<MenuStateService>
     {
         private MenuNode theNode;
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Navigation
                 .Return(right);
         }
 
-        [Test]
+        [Fact]
         public void when_the_chain_is_not_authorized_with_the_default_unauthorized_state()
         {
             theRightsAre(AuthorizationRight.None);
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe(MenuItemState.Hidden);
         }
 
-        [Test]
+        [Fact]
         public void when_the_chain_is_not_authorized_with_the_default_unauthorized_state_2()
         {
             theRightsAre(AuthorizationRight.Deny);
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Navigation
         }
 
 
-        [Test]
+        [Fact]
         public void when_the_chain_is_not_authorized_and_the_unauthorized_state_is_disabled()
         {
             theRightsAre(AuthorizationRight.None);
@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe(MenuItemState.Disabled);
         }
 
-        [Test]
+        [Fact]
         public void when_the_chain_is_not_authorized_and_the_unauthorized_state_is_disabled_2()
         {
             theRightsAre(AuthorizationRight.Deny);
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe(MenuItemState.Disabled);
         }
 
-        [Test]
+        [Fact]
         public void assuming_that_authorization_is_fine_state_should_be_active_if_this_is_the_currently_displayed_chain()
         {
             theRightsAre(AuthorizationRight.Allow);
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe(MenuItemState.Active);
         }
 
-        [Test]
+        [Fact]
         public void authenticated_but_not_the_current_chain_and_enabled_condition_returns_true()
         {
             theRightsAre(AuthorizationRight.Allow);
@@ -94,7 +94,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe(MenuItemState.Available);
         }
 
-        [Test]
+        [Fact]
         public void authenticated_but_not_the_current_chain_and_hide_if_condition_returns_true()
         {
             theRightsAre(AuthorizationRight.Allow);
@@ -107,7 +107,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe(MenuItemState.Hidden);
         }
 
-        [Test]
+        [Fact]
         public void authenticated_but_not_the_current_chain_and_enabled_condition_returns_false()
         {
             theRightsAre(AuthorizationRight.Allow);
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe(MenuItemState.Disabled);
         }
 
-        [Test]
+        [Fact]
         public void when_the_menu_node_is_only_a_node_with_no_behavior_chain()
         {
             theNode = MenuNode.Node("Something");

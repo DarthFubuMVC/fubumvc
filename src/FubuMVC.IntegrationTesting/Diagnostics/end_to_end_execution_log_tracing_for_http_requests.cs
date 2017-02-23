@@ -6,15 +6,15 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Diagnostics
 {
-    [TestFixture]
+    
     public class end_to_end_execution_log_tracing_for_http_requests
     {
-        [Test]
+        [Fact]
         public void see_the_trace_messages_going_through()
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Features.Diagnostics.Enable(TraceLevel.Production)))
@@ -71,7 +71,7 @@ namespace FubuMVC.IntegrationTesting.Diagnostics
             }
         }
 
-        [Test]
+        [Fact]
         public void log_partial_execution()
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Features.Diagnostics.Enable(TraceLevel.Verbose)))

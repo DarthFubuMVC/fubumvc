@@ -3,16 +3,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
-    [TestFixture]
+    
     public class CompositeContinuation_integration_testing
     {
-        [Test]
+        [Fact]
         public void successfully_does_composite_continuations()
         {
             MessageThatThrowsHandler.ThrowsUntilAttemptNumber = 3;

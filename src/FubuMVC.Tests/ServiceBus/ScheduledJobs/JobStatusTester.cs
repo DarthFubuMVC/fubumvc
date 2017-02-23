@@ -3,15 +3,15 @@ using System.Threading;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
-    [TestFixture]
+    
     public class JobStatusTester
     {
-        [Test]
+        [Fact]
         public void to_status_without_any_attribute()
         {
             var status = new JobStatus(typeof (AJob), DateTime.Today)
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             dto.Status.ShouldBe(JobExecutionStatus.Scheduled);
         }
 
-        [Test]
+        [Fact]
         public void to_status_with_attribute_on_job_type()
         {
             var status = new JobStatus(typeof(DecoratedJob), DateTime.Today)

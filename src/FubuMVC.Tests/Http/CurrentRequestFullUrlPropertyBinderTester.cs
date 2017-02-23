@@ -3,34 +3,29 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class CurrentRequestFullUrlPropertyBinderTester
     {
-        private CurrentRequestFullUrlPropertyBinder binder;
+        private CurrentRequestFullUrlPropertyBinder binder = new CurrentRequestFullUrlPropertyBinder();
 
-        [SetUp]
-        public void SetUp()
-        {
-            binder = new CurrentRequestFullUrlPropertyBinder();
-        }
 
-        [Test]
+        [Fact]
         public void should_match_on_correct_property_name()
         {
             binder.Matches(ReflectionHelper.GetProperty<FullUrlModel>(f => f.FullUrl)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_not_match_on_other_name()
         {
             binder.Matches(ReflectionHelper.GetProperty<FullUrlModel>(f => f.Blah)).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_populate_fullurl_from_current_http_request()
         {
             var stubCurrentHttpRequest = OwinHttpRequest.ForTesting();

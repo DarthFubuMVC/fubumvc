@@ -4,14 +4,14 @@ using System.Linq;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-    [TestFixture]
+    
     public class AntiForgeryTokenProviderTester : InteractionContext<AntiForgeryTokenProvider>
     {
-        [Test]
+        [Fact]
         public void names_from_path_are_asp_compatible()
         {
             const string aspName = "__RequestVerificationToken_Pz4-Pj8.Pz4-Pj8.Pz4-Pg__";
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
         }
 
 
-        [Test]
+        [Fact]
         public void names_without_path_are_asp_compatible()
         {
             const string aspName = "__RequestVerificationToken";
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             name.ShouldBe(aspName);
         }
 
-        [Test]
+        [Fact]
         public void provided_tokens_are_correct_length()
         {
             AntiForgeryData token = ClassUnderTest.GenerateToken();
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             decodedValue.Length.ShouldBe(16);
         }
 
-        [Test]
+        [Fact]
         public void provided_tokens_are_random()
         {
             var tokens = new List<string>();

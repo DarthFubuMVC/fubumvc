@@ -1,15 +1,15 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class UriExtensionsTester
     {
-        [Test]
+        [Fact]
         public void can_handle_localhost_consistently()
         {
             var uri = new Uri("http://lOcAlHoSt/blahdee");
@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             normalizedUri.ToString().ShouldBe("http://{0}/blahdee".ToFormat(System.Environment.MachineName.ToLower()));
         }
 
-        [Test]
+        [Fact]
         public void can_handle_localhost_consistently_2()
         {
             var uri = new Uri("http://127.0.0.1/blahdee");

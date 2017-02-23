@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web.Remote;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.Remote
 {
-    [TestFixture]
+    
     public class RemoteRuleQueryTester
     {
         private RequiredFieldRule theRule;
@@ -14,9 +14,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
         private IRemoteRuleFilter f2;
         private RemoteRuleQuery theQuery;
 
-
-        [SetUp]
-        public void SetUp()
+        public RemoteRuleQueryTester()
         {
             theRule = new RequiredFieldRule();
             f1 = MockRepository.GenerateStub<IRemoteRuleFilter>();
@@ -26,7 +24,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
         }
 
 
-        [Test]
+        [Fact]
         public void matches_if_any_filters_match()
         {
             f1.Stub(x => x.Matches(theRule)).Return(true);
@@ -35,7 +33,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             theQuery.IsRemote(theRule).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_match_no_filters_match()
         {
             f1.Stub(x => x.Matches(theRule)).Return(false);

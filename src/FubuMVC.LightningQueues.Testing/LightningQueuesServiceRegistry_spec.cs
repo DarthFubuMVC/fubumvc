@@ -3,15 +3,15 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests;
 using LightningQueues;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class LightningQueuesServiceRegistry_spec
     {
-        [Test]
+        [Fact]
         public void service_registrations()
         {
             var registry = new FubuRegistry();

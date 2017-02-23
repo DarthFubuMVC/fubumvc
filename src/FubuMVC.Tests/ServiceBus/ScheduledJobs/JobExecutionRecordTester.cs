@@ -1,14 +1,14 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
-    [TestFixture]
+    
     public class JobExecutionRecordTester
     {
-        [Test]
+        [Fact]
         public void read_normal_exception()
         {
             var record = new JobExecutionRecord();
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             record.ExceptionText.ShouldBe(ex.ToString());
         }
 
-        [Test]
+        [Fact]
         public void read_aggregate_exception()
         {
             var ex1 = new DivideByZeroException("Only Chuck Norris can do that");

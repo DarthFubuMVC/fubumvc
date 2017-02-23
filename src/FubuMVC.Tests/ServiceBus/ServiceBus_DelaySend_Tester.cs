@@ -3,13 +3,13 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class ServiceBus_DelaySend_Tester : InteractionContext<Core.ServiceBus.ServiceBus>
     {
         protected override void beforeEach()
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void send_by_a_time()
         {
             var expectedTime = DateTime.Today.AddHours(5);
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.ServiceBus
             theLastEnvelopeSent.ExecutionTime.ShouldBe(expectedTime.ToUniversalTime());
         }
 
-        [Test]
+        [Fact]
         public void send_by_delay()
         {
             var theMessage = new Message1();

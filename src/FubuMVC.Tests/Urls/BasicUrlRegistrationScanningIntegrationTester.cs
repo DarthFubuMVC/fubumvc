@@ -6,27 +6,23 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Urls
 {
-    [TestFixture]
+    
     public class BasicUrlRegistrationScanningIntegrationTester
     {
-        #region Setup/Teardown
-
-        [TestFixtureSetUp]
-        public void SetUp()
+        public BasicUrlRegistrationScanningIntegrationTester()
         {
             graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
 
             var request = OwinHttpRequest.ForTesting().FullUrl("http://server/cool");
-	        var urlResolver = new ChainUrlResolver(request);
+            var urlResolver = new ChainUrlResolver(request);
 
             registry = new UrlRegistry(new ChainResolutionCache(graph), urlResolver, request);
         }
 
-        #endregion
 
         private BehaviorGraph graph;
         private IUrlRegistry registry;
@@ -124,7 +120,7 @@ namespace FubuMVC.Tests.Urls
             public long Id { get; set; }
         }
 
-        [Test]
+        [Fact]
         public void get_url_for_input_model()
         {
             registry.UrlFor(new SpecialModel
@@ -134,7 +130,7 @@ namespace FubuMVC.Tests.Urls
             }).ShouldBe("/special/Jeremy/is/35");
         }
 
-        [Test]
+        [Fact]
         public void get_url_for_input_model_default_value()
         {
             registry.UrlFor(new SpecialModelForDefault()
@@ -143,7 +139,7 @@ namespace FubuMVC.Tests.Urls
             }).ShouldBe("/defaultage/Frank/is/10");
         }
 
-        [Test]
+        [Fact]
         public void get_url_nullable_ok()
         {
             registry.UrlFor(new SpecialModelForDefault()
@@ -153,7 +149,7 @@ namespace FubuMVC.Tests.Urls
             }).ShouldBe("/defaultage/Frank/is/36");
         }
 
-        [Test]
+        [Fact]
         public void has_action_calls_for_actions_with_no_input_args()
         {
             registry.UrlFor<SpecialController>(x => x.NoArgMethod(), null).ShouldBe(

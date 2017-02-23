@@ -1,15 +1,15 @@
 ﻿using System;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
     [Obsolete("Remove this after the ST specs are done")]
-    [TestFixture]
+    
     public class Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML
     {
-        [Test]
+        [Fact]
         public void force_to_json_with_querystring()
         {
             TestHost.Scenario(_ =>
@@ -20,7 +20,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void force_to_xml_with_querystring()
         {
             TestHost.Scenario(_ =>
@@ -30,7 +30,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void force_to_json_with_querystring_2()
         {
             TestHost.Scenario(_ =>
@@ -43,7 +43,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void force_to_xml_with_querystring_2()
         {
             TestHost.Scenario(_ =>

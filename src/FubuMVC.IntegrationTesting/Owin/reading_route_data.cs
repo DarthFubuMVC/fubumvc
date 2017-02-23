@@ -1,12 +1,12 @@
 using FubuCore;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class reading_route_data
     {
-        [Test]
+        [Fact]
         public void bind_data_against_routing_data()
         {
             var input = new RouteInput

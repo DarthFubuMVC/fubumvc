@@ -5,17 +5,17 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Certificates;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class bottle_configuration_integration_tester
     {
-        [Test]
+        [Fact]
         public void register_with_basic_authentication_enabled()
         {
             var registry = new FubuRegistry();
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
 
         }
 
-        [Test]
+        [Fact]
         public void register_with_basic_authentication_disabled()
         {
             var registry = new FubuRegistry();
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
 
         }
 
-        [Test]
+        [Fact]
         public void blows_up_with_no_saml_certificate_repository()
         {
             var registry = new FubuRegistry();
@@ -108,7 +108,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
 
         }
 
-        [Test]
+        [Fact]
         public void blows_up_with_no_saml_handlers()
         {
             var registry = new FubuRegistry();

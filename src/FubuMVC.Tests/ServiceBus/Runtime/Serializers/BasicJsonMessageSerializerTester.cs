@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
-    [TestFixture]
+    
     public class BasicJsonMessageSerializerTester
     {
-        [Test]
+        [Fact]
         public void can_round_trip()
         {
             var address1 = new Address

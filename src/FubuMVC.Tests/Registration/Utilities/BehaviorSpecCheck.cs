@@ -1,6 +1,7 @@
+using System;
 using System.IO;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration.Utilities
 {
@@ -20,7 +21,7 @@ namespace FubuMVC.Tests.Registration.Utilities
         {
             if (_hasErrors)
             {
-                Assert.Fail(_builder.ToString());
+                throw new Exception(_builder.ToString());
             }
         }
 

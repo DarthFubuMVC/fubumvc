@@ -6,16 +6,16 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
 {
-    [TestFixture]
+    
     public class OutgoingSenderTester : InteractionContext<OutgoingSender>
     {
-        [Test]
+        [Fact]
         public void swallows_and_logs_exceptions_on_send()
         {
             // ONLY FOR NOW
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             MockFor<ILogger>().AssertWasCalled(x => x.Error(envelope.OriginalId, "Failure while trying to send a cascading message", ex));
         }
 
-        [Test]
+        [Fact]
         public void use_envelope_from_the_original_if_not_ISendMyself()
         {
             var original = MockRepository.GenerateMock<Envelope>();
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             MockFor<IEnvelopeSender>().AssertWasCalled(x => x.Send(resulting));
         }
 
-        [Test]
+        [Fact]
         public void use_envelope_from_ISendMySelf()
         {
             var message = MockRepository.GenerateMock<ISendMyself>();
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             MockFor<IEnvelopeSender>().AssertWasCalled(x => x.Send(resulting));
         }
 
-        [Test]
+        [Fact]
         public void if_original_envelope_is_ack_requested_send_ack_back()
         {
             var original = new Envelope
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             envelope.ParentId.ShouldBe(original.CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void do_not_send_ack_if_no_ack_is_requested()
         {
             var original = new Envelope
@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             MockFor<IEnvelopeSender>().AssertWasNotCalled(x => x.Send(null), x => x.IgnoreArguments());
         }
 
-        [Test]
+        [Fact]
         public void when_sending_a_failure_ack_if_no_ack_or_response_is_requested_do_nothing()
         {
             var original = new Envelope
@@ -117,15 +117,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
 
     }
 
-    [TestFixture]
+    
     public class when_sending_a_failure_ack_and_ack_is_requested
     {
         private FailureAcknowledgement theAck;
         private Envelope theSentEnvelope;
         private Envelope original;
 
-        [SetUp]
-        public void SetUp()
+        public when_sending_a_failure_ack_and_ack_is_requested()
         {
             original = new Envelope
             {
@@ -142,37 +141,37 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             theAck = theSentEnvelope.Message as FailureAcknowledgement;
         }
 
-        [Test]
+        [Fact]
         public void should_have_sent_a_failure_ack()
         {
             theAck.ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void the_message_should_be_what_was_requested()
         {
             theAck.Message.ShouldBe("you stink");
         }
 
-        [Test]
+        [Fact]
         public void should_have_The_parent_id_set_to_the_original_id_for_tracking()
         {
             theSentEnvelope.ParentId.ShouldBe(original.CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void should_have_The_correlation_id_from_the_original_envelope()
         {
             theAck.CorrelationId.ShouldBe(original.CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void should_be_sent_back_to_the_requester()
         {
             theSentEnvelope.Destination.ShouldBe(original.ReplyUri);
         }
 
-        [Test]
+        [Fact]
         public void the_response_id_going_back_should_be_the_original_correlation_id()
         {
             theSentEnvelope.ResponseId.ShouldBe(original.CorrelationId);
@@ -180,15 +179,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
     }
 
 
-    [TestFixture]
+    
     public class when_sending_a_failure_ack_and_response_is_requested
     {
         private FailureAcknowledgement theAck;
         private Envelope theSentEnvelope;
         private Envelope original;
 
-        [SetUp]
-        public void SetUp()
+        public when_sending_a_failure_ack_and_response_is_requested()
         {
             original = new Envelope
             {
@@ -206,31 +204,31 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             theAck = theSentEnvelope.Message as FailureAcknowledgement;
         }
 
-        [Test]
+        [Fact]
         public void should_have_sent_a_failure_ack()
         {
             theAck.ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void the_message_should_be_what_was_requested()
         {
             theAck.Message.ShouldBe("you stink");
         }
 
-        [Test]
+        [Fact]
         public void should_have_The_correlation_id_from_the_original_envelope()
         {
             theAck.CorrelationId.ShouldBe(original.CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void should_be_sent_back_to_the_requester()
         {
             theSentEnvelope.Destination.ShouldBe(original.ReplyUri);
         }
 
-        [Test]
+        [Fact]
         public void the_response_id_going_back_should_be_the_original_correlation_id()
         {
             theSentEnvelope.ResponseId.ShouldBe(original.CorrelationId);

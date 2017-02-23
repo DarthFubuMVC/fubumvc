@@ -10,19 +10,18 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Urls
 {
-    [TestFixture]
+    
     public class UrlRegistryIntegrationTester
     {
         private BehaviorGraph graph;
         private UrlRegistry urls;
         private OwinHttpRequest theHttpRequest;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public UrlRegistryIntegrationTester()
         {
             theHttpRequest = OwinHttpRequest.ForTesting();
             theHttpRequest.FullUrl("http://server/fubu");
@@ -41,7 +40,8 @@ namespace FubuMVC.Tests.Urls
             urls = new UrlRegistry(new ChainResolutionCache(graph), urlResolver, theHttpRequest);
         }
 
-        [Test]
+
+        [Fact]
         public void find_by_handler_type_if_only_one_method()
         {
 
@@ -49,32 +49,32 @@ namespace FubuMVC.Tests.Urls
                 .ShouldBe("/onlyoneaction/go");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_by_controller_action_even_if_it_has_an_input_model()
         {
             urls.UrlFor<OneController>(x => x.M1(null), null).ShouldBe("/one/m1");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_for_a_model_simple_case()
         {
             urls.UrlFor(new Model1()).ShouldBe("/one/m1");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_for_a_inferred_model_simple_case()
         {
             urls.UrlFor<Model1>((string) null).ShouldBe("/one/m1");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_for_a_model_that_does_not_exist()
         {
             Exception<FubuException>.ShouldBeThrownBy(() => { urls.UrlFor(new ModelWithNoChain()); });
         }
 
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_for_a_model_that_has_route_inputs()
         {
             urls.UrlFor(new ModelWithInputs
@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Urls
             }).ShouldBe("/find/Jeremy");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_for_a_model_that_has_querystring_inputs()
         {
             var model = new ModelWithQueryStringInput() {Param = 42};
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor(model).ShouldBe("/qs/test?Param=42");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_for_a_model_that_has_mixed_inputs()
         {
             var model = new ModelWithQueryStringAndRouteInput() {Param = 42, RouteParam = 23};
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor(model).ShouldBe("/qsandroute/test/23?Param=42");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_url_by_input_type_with_parameters()
         {
             var parameters = new RouteParameters<ModelWithInputs>();
@@ -108,26 +108,26 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor<ModelWithInputs>(parameters).ShouldBe("/find/Max");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_for_a_model_and_category()
         {
             urls.UrlFor(new UrlModel(), "different").ShouldBe("/one/m4");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_by_action()
         {
             urls.UrlFor<OneController>(x => x.M2(), null).ShouldBe("/one/m2");
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_url_by_action_negative_case()
         {
 
             Exception<FubuException>.ShouldBeThrownBy(() => { urls.UrlFor<RandomClass>(x => x.Ignored(), null); });
         }
 
-        [Test]
+        [Fact]
         public void url_for_handler_type_and_method_positive()
         {
             var method = ReflectionHelper.GetMethod<OneController>(x => x.M3());
@@ -135,7 +135,7 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor(typeof (OneController), method, null).ShouldBe("/one/m3");
         }
 
-        [Test]
+        [Fact]
         public void url_for_handler_type_and_method_negative_case_should_throw_204()
         {
             Exception<FubuException>.ShouldBeThrownBy(() => {
@@ -144,41 +144,41 @@ namespace FubuMVC.Tests.Urls
             }).ErrorCode.ShouldBe(2104);
         }
 
-        [Test]
+        [Fact]
         public void url_for_new_positive_case()
         {
             urls.UrlForNew<UrlModel>().ShouldBe("/two/m2");
             urls.UrlForNew(typeof (UrlModel)).ShouldBe("/two/m2");
         }
 
-        [Test]
+        [Fact]
         public void url_for_new_negative_case_should_throw_2109()
         {
             Exception<FubuException>.ShouldBeThrownBy(() => { urls.UrlForNew<ModelWithoutNewUrl>(); })
                 .ErrorCode.ShouldBe(2109);
         }
 
-        [Test]
+        [Fact]
         public void has_new_url_positive()
         {
             urls.HasNewUrl(typeof (UrlModel)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void has_new_url_negative()
         {
             urls.HasNewUrl(typeof (ModelWithoutNewUrl)).ShouldBeFalse();
         }
 
 
-        [Test]
+        [Fact]
         public void url_for_route_parameter_by_type_respects_the_absolute_path()
         {
             urls.UrlFor<Model6>(new RouteParameters())
                 .ShouldBe("/one/a");
         }
 
-        [Test]
+        [Fact]
         public void url_for_route_parameter_by_type_and_category_respects_absolute_path()
         {
             urls.UrlFor<UrlModel>(new RouteParameters(), "different")
@@ -186,15 +186,14 @@ namespace FubuMVC.Tests.Urls
         }
     }
 
-    [TestFixture]
+    
     public class Forwarding_tests
     {
         private BehaviorGraph graph;
         private UrlRegistry urls;
         private OwinHttpRequest theHttpRequest;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public Forwarding_tests()
         {
             theHttpRequest = OwinHttpRequest.ForTesting();
             theHttpRequest.FullUrl("http://server/fubu");
@@ -212,6 +211,7 @@ namespace FubuMVC.Tests.Urls
 
             urls = new UrlRegistry(new ChainResolutionCache(graph), urlResolver, theHttpRequest);
         }
+
 
     }
 

@@ -1,14 +1,14 @@
 ﻿using FubuCore;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
-    [TestFixture]
+    
     public class DelayedRetryContinuationTester
     {
-        [Test]
+        [Fact]
         public void do_as_a_delay_w_the_timespan_given()
         {
             var continuation = new DelayedRetryContinuation(5.Minutes());

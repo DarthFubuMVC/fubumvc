@@ -1,14 +1,14 @@
 using System.Globalization;
 using FubuMVC.Core.Localization;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class PropertyTokenTester
     {
-        [Test]
+        [Fact]
         public void find_default_header_for_the_attribute()
         {
             var token = new PropertyToken
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Localization
             token.FindDefaultHeader(new CultureInfo("ja-JP")).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void find_default_header_for_property_that_is_not_decorated_should_just_return_null()
         {
             var token = new PropertyToken

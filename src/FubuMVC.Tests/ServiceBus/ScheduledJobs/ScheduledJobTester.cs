@@ -8,7 +8,7 @@ using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         }
     }
 
-    [TestFixture]
+    
     public class when_deciding_whether_or_not_to_reschedule_a_job : InteractionContext<ScheduledJob<AJob>>
     {
         private StubTimedExecution theExecution;
@@ -80,14 +80,14 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_reschedule_if_there_is_no_timed_execution()
         {
             noTimedExecutionIsActive();
             shouldBeRescheduled();
         }
         
-        [Test]
+        [Fact]
         public void does_not_need_to_reschedule_if_the_execution_is_scheduled_correctly()
         {
             theExecution.ExpectedTime = expected;
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 
         }
 
-        [Test]
+        [Fact]
         public void does_not_need_to_reschedule_if_the_schedule_time_is_just_flat_out_wrong()
         {
             theExecution.ExpectedTime = expected.AddHours(3);
@@ -112,7 +112,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             shouldNotBeRescheduled();
         }
 
-        [Test]
+        [Fact]
         public void does_not_need_to_reschedule_if_executing_within_the_time_limit()
         {
             theExecution.ExpectedTime = expected;
@@ -124,7 +124,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void does_need_to_reschedule_if_executing_past_the_time_limit()
         {
             theExecution.ExpectedTime = expected;
@@ -146,17 +146,17 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         public DateTimeOffset ExpectedTime { get; set; }
     }
 
-    [TestFixture]
+    
     public class ScheduledJob_defaults
     {
-        [Test]
+        [Fact]
         public void default_timeout_is_5_minutes()
         {
             new ScheduledJob<AJob>(null)
                 .Timeout.ShouldBe(5.Minutes());
         }
 
-        [Test]
+        [Fact]
         public void default_maximum_execution_time_should_be_15_minutes()
         {
             new ScheduledJob<AJob>(null)
@@ -164,7 +164,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         }
     }
 
-    [TestFixture]
+    
     public class when_initializing_a_job
     {
         private JobSchedule theSchedule;
@@ -175,8 +175,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         private StubJobExecutor theExecutor;
         private JobExecutionRecord theLastRun;
 
-        [SetUp]
-        public void SetUp()
+        public when_initializing_a_job()
         {
             theSchedule = new JobSchedule();
 
@@ -196,20 +195,20 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             theJob.As<IScheduledJob>().Initialize(now, theExecutor, theSchedule);
         }
 
-        [Test]
+        [Fact]
         public void should_reset_the_new_job_status_time_for_record_keeping()
         {
             theSchedule.Find(theJob.JobType)
                 .NextTime.ShouldBe(next);
         }
 
-        [Test]
+        [Fact]
         public void grabs_a_reference_to_the_last_execution_if_if_exists()
         {
             theJob.LastExecution.ShouldBeTheSameAs(theLastRun);
         }
 
-        [Test]
+        [Fact]
         public void should_schedule_itself()
         {
             theExecutor.Scheduled[theJob.JobType]
@@ -225,8 +224,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         protected Task<RescheduleRequest<RiggedJob>> theTask;
         protected readonly TimeSpan theConfiguredTimeout = 3.Seconds();
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        protected ScheduledJobExecutionContext()
         {
             var rule = new StubbedScheduleRule();
             rule.ScheduledTimes[now] = theNextTimeAccordingToTheSchedulerRule;
@@ -253,7 +251,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         protected abstract RiggedJob theJobIs();
     }
 
-    [TestFixture]
+    
     public class when_running_a_job_happy_path : ScheduledJobExecutionContext
     {
         protected override RiggedJob theJobIs()
@@ -265,26 +263,26 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             };
         }
 
-        [Test]
+        [Fact]
         public void should_mark_the_job_as_executing_correctly_and_reschedules()
         {
             TheJobTracker.AssertWasCalled(x => x.Success(theNextTimeAccordingToTheSchedulerRule));
         }
 
-        [Test]
+        [Fact]
         public void should_return_the_reschedule_request_message()
         {
             theTask.Result.NextTime.ShouldBe(theNextTimeAccordingToTheSchedulerRule);
         }
 
-        [Test]
+        [Fact]
         public void should_run_the_to_completion()
         {
             theTask.IsCompleted.ShouldBeTrue();
         }
     }
 
-    [TestFixture]
+    
     public class when_running_a_job_that_times_out : ScheduledJobExecutionContext
     {
         protected override RiggedJob theJobIs()
@@ -296,14 +294,14 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             };
         }
 
-        [Test]
+        [Fact]
         public void should_fault_with_a_timeout()
         {
             theTask.IsFaulted.ShouldBeTrue();
             theTask.Exception.Flatten().InnerException.ShouldBeOfType<TimeoutException>();
         }
 
-        [Test]
+        [Fact]
         public void should_track_the_job_failure()
         {
             var exception = TheJobTracker.GetArgumentsForCallsMadeOn(x => x.Failure(null))
@@ -313,7 +311,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         }
     }
 
-    [TestFixture]
+    
     public class when_running_a_job_that_fails_before_timing_out : ScheduledJobExecutionContext
     {
         protected override RiggedJob theJobIs()
@@ -324,14 +322,14 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             };
         }
 
-        [Test]
+        [Fact]
         public void should_fault_with_the_job_exception()
         {
             theTask.IsFaulted.ShouldBeTrue();
             theTask.Exception.Flatten().InnerException.ShouldBeOfType<DivideByZeroException>();
         }
 
-        [Test]
+        [Fact]
         public void should_track_the_job_failure()
         {
             var exception = TheJobTracker.GetArgumentsForCallsMadeOn(x => x.Failure(null))

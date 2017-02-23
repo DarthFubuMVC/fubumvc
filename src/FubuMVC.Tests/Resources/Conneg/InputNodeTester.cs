@@ -6,22 +6,22 @@ using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class InputNodeTester
     {
-        [Test]
+        [Fact]
         public void IMayHaveInputType_implementation()
         {
             var node = new InputNode(typeof (Address));
             node.As<IMayHaveInputType>().InputType().ShouldBe(typeof (Address));
         }
 
-        [Test]
+        [Fact]
         public void ClearAll()
         {
             var node = new InputNode(typeof (Address));
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Resources.Conneg
         }
 
 
-        [Test]
+        [Fact]
         public void add_reader_by_formatter()
         {
             var node = new InputNode(typeof (Address));
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Resources.Conneg
                 .Formatter.ShouldBeTheSameAs(formatter);
         }
 
-        [Test]
+        [Fact]
         public void add_reader_by_type()
         {
             var node = new InputNode(typeof (Address));
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Resources.Conneg
                 .ShouldBeOfType<GenericReader<Address>>();
         }
 
-        [Test]
+        [Fact]
         public void add_reader_by_type_sad_path()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void add_reader_by_instance_happy_path()
         {
             var node = new InputNode(typeof (InputTarget));
@@ -77,7 +77,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             node.Explicits.Single().ShouldBeTheSameAs(reader);
         }
 
-        [Test]
+        [Fact]
         public void add_reader_by_instance_sad_path()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>

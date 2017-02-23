@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class CurrentChainTester
     {
         private BehaviorChain theChain;
@@ -16,8 +16,7 @@ namespace FubuMVC.Tests.Http
         private BehaviorChain theSecondChain;
         private BehaviorChain theThirdChain;
 
-        [SetUp]
-        public void SetUp()
+        public CurrentChainTester()
         {
             theChain = new RoutedChain(new RouteDefinition("some/pattern/url"));
 
@@ -40,21 +39,22 @@ namespace FubuMVC.Tests.Http
 
         }
 
-        [Test]
+
+        [Fact]
         public void keeps_the_route_data()
         {
             var currentChain = new CurrentChain(theChain, theRouteData);
             currentChain.RouteData.ShouldBeTheSameAs(theRouteData);
         }
 
-        [Test]
+        [Fact]
         public void is_in_partial_negative()
         {
             var currentChain = new CurrentChain(theChain, null);
             currentChain.IsInPartial().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void is_in_partial_positive()
         {
             var currentChain = new CurrentChain(theChain, null);
@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.Http
 
         }
 
-        [Test]
+        [Fact]
         public void is_in_partial_negative_after_popping_the_last_child()
         {
             var currentChain = new CurrentChain(theChain, null);
@@ -82,13 +82,13 @@ namespace FubuMVC.Tests.Http
             currentChain.IsInPartial().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void the_initial_state_points_to_the_top_chain()
         {
             new CurrentChain(theChain, theRouteData).Current.ShouldBeTheSameAs(theChain);
         }
 
-        [Test]
+        [Fact]
         public void the_top_chain_is_always_the_originating_chain()
         {
             var currentChain = new CurrentChain(theChain, theRouteData);
@@ -102,7 +102,7 @@ namespace FubuMVC.Tests.Http
             currentChain.OriginatingChain.ShouldBeTheSameAs(theChain);
         }
 
-        [Test]
+        [Fact]
         public void push_and_pop_track_the_current_chain()
         {
             var currentChain = new CurrentChain(theChain, theRouteData);
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.Http
             currentChain.Current.ShouldBeTheSameAs(theChain);
         }
 
-        [Test]
+        [Fact]
         public void the_resource_hash_is_deterministic_by_route_parameters()
         {
             var hash1 = new CurrentChain(theChain, theRouteData).ResourceHash();
@@ -133,7 +133,7 @@ namespace FubuMVC.Tests.Http
             hash1.ShouldNotBe(hash3);
         }
 
-        [Test]
+        [Fact]
         public void the_resource_hash_is_deterministic_by_pattern()
         {
             var hash1 = new CurrentChain(theChain, theRouteData).ResourceHash();

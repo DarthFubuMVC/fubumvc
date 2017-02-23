@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class Application_settings_alteration_wins_out_over_an_import
     {
-        [Test]
+        [Fact]
         public void application_settings_wins()
         {
             var import = new FubuRegistry();

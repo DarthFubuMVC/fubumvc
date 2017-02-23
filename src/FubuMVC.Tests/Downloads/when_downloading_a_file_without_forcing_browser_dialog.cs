@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.Downloads;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Downloads
 {
-    [TestFixture]
+    
     public class when_downloading_a_file_without_forcing_browser_dialog : InteractionContext<DownloadFileBehavior>
     {
         private DownloadFileModel _output;
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Downloads
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_set_content_type_correctly()
         {
             MockFor<IOutputWriter>().AssertWasCalled(w => w.WriteFile("image/jpeg", "filename.jpg", null));

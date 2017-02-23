@@ -6,16 +6,16 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Events
 {
-    [TestFixture]
+    
     public class ExpiringListenerCleanupTester : InteractionContext<ExpiringListenerCleanup>
     {
-        [Test]
+        [Fact]
         public void execute_prunes_for_the_current_time()
         {
             LocalSystemTime = DateTime.Today.AddHours(8);
@@ -26,10 +26,10 @@ namespace FubuMVC.Tests.ServiceBus.Events
         }
     }
 
-    [TestFixture]
+    
     public class Expiring_listener_polling_job_is_registered
     {
-        [Test]
+        [Fact]
         public void the_cleanup_job_is_registered()
         {
             using (var runtime = FubuRuntime.BasicBus()

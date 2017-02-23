@@ -5,15 +5,15 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Core.StructureMap;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Security.Authentication.Membership
 {
-    [TestFixture]
+    
     public class MembershipNodeTester
     {
-        [Test]
+        [Fact]
         public void can_only_take_in_a_membership_type()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership
             });
         }
 
-        [Test]
+        [Fact]
         public void can_build_the_instance_configuration()
         {
             var node = MembershipNode.For<FakeMembershipRepository>();

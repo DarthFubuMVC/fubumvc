@@ -6,11 +6,11 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Hypermedia;
 using FubuMVC.Core.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Resources.Hypermedia
 {
-    [TestFixture]
+    
     public class LinksSourceTester
     {
         private Site theSubject;
@@ -18,8 +18,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
         private ValidStubUrlRegistry theUrls;
         private LinksSource<Site> theLinks;
 
-        [SetUp]
-        public void SetUp()
+        public LinksSourceTester()
         {
             theSubject = new Site(){Name = "my site", Id = Guid.NewGuid()};
             theUrls = new ValidStubUrlRegistry();
@@ -28,7 +27,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             theLinks = new LinksSource<Site>();
         }
 
-        [Test]
+        [Fact]
         public void create_link_by_subject()
         {
             theLinks.ToSubject();
@@ -37,7 +36,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
                 .Single().Url.ShouldBe(theUrls.UrlFor(theSubject));
         }
 
-        [Test]
+        [Fact]
         public void create_a_link_by_using_route_parameters()
         {
             theLinks.ToInput<SiteAction>(x => x.Name);
@@ -49,7 +48,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
                 .Single().Url.ShouldBe(theUrls.UrlFor(parameters));
         }
 
-        [Test]
+        [Fact]
         public void create_link_by_transforming_the_subject()
         {
             theLinks.To(site => new SiteAction(site.Name));
@@ -58,7 +57,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
                 .Single().Url.ShouldBe(theUrls.UrlFor(new SiteAction(theSubject.Name)));
         }
 
-        [Test]
+        [Fact]
         public void create_link_by_identifier()
         {
             theLinks.ToSubject(x => x.Id);

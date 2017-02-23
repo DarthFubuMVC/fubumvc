@@ -3,15 +3,15 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class EndpointActionSourceTester
     {
-        [Test]
+        [Fact]
         public void only_finds_methods_that_follow_the_right_pattern_and_are_not_on_object()
         {
             var actions =
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldHaveTheSameElementsAs("HomeEndpoint.Index() : HtmlDocument");
         }
 
-        [Test]
+        [Fact]
         public void finds_methods_case_insensitively()
         {
             var actions = new EndpointActionSource().As<IActionSource>().FindActions(Assembly.GetExecutingAssembly());

@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class TagAttributeTester
     {
-        [Test]
+        [Fact]
         public void applies_the_tags()
         {
             var graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeType<TaggedEndpoint>());

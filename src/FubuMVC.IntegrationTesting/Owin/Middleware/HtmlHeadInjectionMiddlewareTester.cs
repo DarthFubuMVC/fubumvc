@@ -2,15 +2,15 @@
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin.Middleware
 {
-    [TestFixture]
+    
     public class HtmlHeadInjectionMiddlewareTester
     {
 
-        [Test]
+        [Fact]
         public void can_inject_the_right_html_on_GET_for_html_text()
         {
             var registry = new FubuRegistry();

@@ -3,15 +3,15 @@ using FubuCore;
 using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web.UI;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class RangeLengthModifierTester : ValidationElementModifierContext<RangeLengthModifier>
     {
-        [Test]
+        [Fact]
         public void adds_the_rangelength_data_attribute_for_range_length_rule()
         {
             var theRequest = ElementRequest.For(new TargetWithRangeLength(), x => x.Value);
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             values["max"].ShouldBe(10);
         }
 
-        [Test]
+        [Fact]
         public void no_rangelength_data_attribute_when_rule_does_not_exist()
         {
             var theRequest = ElementRequest.For(new TargetWithNoRangeLength(), x => x.Value);

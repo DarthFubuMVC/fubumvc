@@ -2,15 +2,15 @@
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication.Membership
 {
-    [TestFixture]
+    
     public class MembershipAuthenticationTester : InteractionContext<MembershipAuthentication>
     {
-        [Test]
+        [Fact]
         public void authentication_is_a_straight_up_delegation_positive()
         {
             var request = new LoginRequest
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership
             ClassUnderTest.AuthenticateCredentials(request).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void empty_user_name_is_automatically_negative()
         {
             ClassUnderTest.AuthenticateCredentials(new LoginRequest
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership
             }).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void authentication_is_a_straight_up_delegation_negative()
         {
             var request = new LoginRequest
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership
             ClassUnderTest.AuthenticateCredentials(request).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void build_principal()
         {
             var user = new UserInfo

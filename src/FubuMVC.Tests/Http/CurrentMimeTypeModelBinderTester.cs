@@ -1,13 +1,13 @@
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class CurrentMimeTypeModelBinderTester
     {
-        [Test]
+        [Fact]
         public void matches_current_mime_type_only()
         {
             var binder = new CurrentMimeTypeModelBinder();

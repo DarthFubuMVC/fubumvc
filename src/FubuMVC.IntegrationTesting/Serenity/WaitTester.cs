@@ -1,29 +1,29 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 using OpenQA.Selenium;
 using Serenity;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Serenity
 {
-    [TestFixture]
+    
     public class WaitTester
     {
-        [Test]
+        [Fact]
         public void immediately_true()
         {
             Wait.Until(() => true).
                 ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void always_going_to_be_false()
         {
             Wait.Until(() => false, timeoutInMilliseconds:20, millisecondPolling:5)
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void eventually_true()
         {
             int i = 0;
@@ -35,7 +35,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void not_true_within_timeout()
         {
             int i = 0;
@@ -49,7 +49,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             i.ShouldBeGreaterThan(1);
         }
 
-        [Test]
+        [Fact]
         public void immediately_true_many_conditions()
         {
             Wait.Until(new Func<bool>[]
@@ -61,7 +61,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             }).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void false_prevents_follow_on_conditions()
         {
             Wait.Until(new Func<bool>[]
@@ -72,7 +72,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             }, timeoutInMilliseconds: 1000).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void eventually_true_many_conditions()
         {
             var i = 0;
@@ -86,7 +86,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             }, millisecondPolling:5).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void not_true_within_timeout_many_conditions()
         {
             var i = 0;
@@ -102,14 +102,14 @@ namespace FubuMVC.IntegrationTesting.Serenity
             i.ShouldBeGreaterThan(4);
         }
 
-        [Test]
+        [Fact]
         public void immediately_true_generic()
         {
             var obj = new object();
             Wait.For(() => obj).ShouldBeTheSameAs(obj);
         }
 
-        [Test]
+        [Fact]
         public void throws_timeout_exception_generic()
         {
             var result = new object();
@@ -121,7 +121,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             result.ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void eventually_true_generic()
         {
             var i = 0;
@@ -135,7 +135,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             i.ShouldBeGreaterThan(4);
         }
 
-        [Test]
+        [Fact]
         public void not_true_within_timeout_generic()
         {
             var i = 0;

@@ -1,24 +1,23 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
-    [TestFixture]
+    
     public class ExceptionMatchingExpression_and_ExpressionMatch_Tester
     {
         private ExceptionMatch theMatch;
-        private ExceptionMatchExpression theExpression;
+        private readonly ExceptionMatchExpression theExpression;
 
-        [SetUp]
-        public void SetUp()
+        public ExceptionMatchingExpression_and_ExpressionMatch_Tester()
         {
             theExpression = new ExceptionMatchExpression(m => theMatch = m.As<ExceptionMatch>());
         }
 
-        [Test]
+        [Fact]
         public void message_contains()
         {
             var exception1 = new NotImplementedException("I don't like you");
@@ -32,7 +31,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             theMatch.Matches(null, exception2).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void exception_type()
         {
             var exception1 = new NotImplementedException();

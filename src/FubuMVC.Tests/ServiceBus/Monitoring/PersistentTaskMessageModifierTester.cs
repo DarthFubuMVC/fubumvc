@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
-    [TestFixture]
+    
     public class PersistentTaskMessageModifierTester
     {
         private readonly ChannelGraph theChannel = new ChannelGraph
@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
 
         };
 
-        [Test]
+        [Fact]
         public void adds_the_machine_name_and_channel_node_id_to_the_message()
         {
             var modifier = new PersistentTaskMessageModifier(theChannel);

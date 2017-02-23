@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
+    
     public class Subscription_equality_tester
     {
-        [Test]
+        [Fact]
         public void equals_if_all_are_equal()
         {
             var s1 = new Subscription(typeof(Message1))

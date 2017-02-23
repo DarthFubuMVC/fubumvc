@@ -7,11 +7,11 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Diagnostics.Routes
 {
-    [TestFixture]
+    
     public class EndpointReportTester
     {
         private Lazy<EndpointReport> _report;
@@ -20,8 +20,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
         private RoutedChain theRoutedChain;
         private Lazy<EndpointReport> _routedReport;
 
-        [SetUp]
-        public void SetUp()
+        public EndpointReportTester()
         {
             theChain = new BehaviorChain();
             theRoutedChain = new RoutedChain("something");
@@ -29,6 +28,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
             _report = new Lazy<EndpointReport>(() => EndpointReport.ForChain(theChain));
             _routedReport = new Lazy<EndpointReport>(() => EndpointReport.ForChain(theRoutedChain));
         }
+
 
         private EndpointReport theReport
         {
@@ -46,34 +46,34 @@ namespace FubuMVC.Tests.Diagnostics.Routes
             }
         }
 
-        [Test]
+        [Fact]
         public void resource_type()
         {
             theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
             theReport.ResourceType.ShouldBe(typeof (Output));
         }
 
-        [Test]
+        [Fact]
         public void input_model()
         {
             theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
             theReport.InputModel.ShouldBe(typeof (Input));
         }
 
-        [Test]
+        [Fact]
         public void action_with_no_actions()
         {
             theReport.Action.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void one_action()
         {
             theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
             theReport.Action.Single().ShouldBe("FakeEndpoint.get_something(Input input) : Output");
         }
 
-        [Test]
+        [Fact]
         public void multiple_actions()
         {
             theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
@@ -86,13 +86,13 @@ namespace FubuMVC.Tests.Diagnostics.Routes
                 "FakeEndpoint.get_third(Input input) : Output");
         }
 
-        [Test]
+        [Fact]
         public void constraints_with_no_route()
         {
             theReport.Constraints.ShouldBe("N/A");
         }
 
-        [Test]
+        [Fact]
         public void constraints_with_a_route_but_no_constraints()
         {
             theRoutedChain.Route.AllowedHttpMethods.Any().ShouldBeFalse();
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
             theRoutedReport.Constraints.ShouldBe("Any");
         }
 
-        [Test]
+        [Fact]
         public void one_constraint()
         {
             theRoutedChain.Route.AddHttpMethodConstraint("GET");
@@ -108,7 +108,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
             theRoutedReport.Constraints.ShouldBe("GET");
         }
 
-        [Test]
+        [Fact]
         public void multiple_constraints()
         {
             theRoutedChain.Route.AddHttpMethodConstraint("POST");
@@ -117,14 +117,14 @@ namespace FubuMVC.Tests.Diagnostics.Routes
             theRoutedReport.Constraints.ShouldBe("GET, POST");
         }
 
-        [Test]
+        [Fact]
         public void normal_route()
         {
 
             theRoutedReport.Title.ShouldBe("something");
         }
 
-        [Test]
+        [Fact]
         public void url_category()
         {
             theRoutedChain.UrlCategory.Category = "weird";
@@ -132,13 +132,13 @@ namespace FubuMVC.Tests.Diagnostics.Routes
             theRoutedReport.UrlCategory.ShouldBe("weird");
         }
 
-        [Test]
+        [Fact]
         public void wrappers_with_no_wrappers()
         {
             theReport.Wrappers.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void multiple_wrappers()
         {
             theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
@@ -148,7 +148,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
             theReport.Wrappers.ShouldHaveTheSameElementsAs("SimpleWrapper", "AnotherWrapper");
         }
 
-        [Test]
+        [Fact]
         public void input_with_no_InputNode_is_assumed_to_be_http_form()
         {
             theChain.Any(x => x is InputNode).ShouldBeFalse();

@@ -5,14 +5,14 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime
 {
-    [TestFixture]
+    
     public class when_sending_with_the_expectation_of_a_response : InteractionContext<EnvelopeSender>
     {
         private StubChannelNode destinationNode;
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             ClassUnderTest.Send(theEnvelope);
         }
 
-        [Test]
+        [Fact]
         public void should_have_associated_the_reply_channel_with_the_envelope()
         {
             theEnvelope.ReplyUri.ShouldBe(replyUri);

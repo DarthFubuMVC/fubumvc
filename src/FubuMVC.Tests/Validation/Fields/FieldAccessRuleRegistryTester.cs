@@ -7,21 +7,20 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class when_fetching_rules_for_a_type
     {
         private StubFieldValidationSource<FieldAccessRuleRegistryTarget> source1;
         private StubFieldValidationSource<FieldAccessRuleRegistryTarget> source2;
         private FieldRulesRegistry theRegistry;
 
-        [SetUp]
-        public void SetUp()
+        public when_fetching_rules_for_a_type()
         {
             source1 = new StubFieldValidationSource<FieldAccessRuleRegistryTarget>();
             source2 = new StubFieldValidationSource<FieldAccessRuleRegistryTarget>();
@@ -41,34 +40,34 @@ namespace FubuMVC.Tests.Validation.Fields
             return rules.RulesFor(property.ToAccessor());
         }
 
-        [Test]
+        [Fact]
         public void should_not_duplicate_rules()
         {
             rulesFor(x => x.Name).Single().ShouldBeOfType<RequiredFieldRule>();
         }
 
-        [Test]
+        [Fact]
         public void should_use_all_sources_to_find_field_rules()
         {
             rulesFor(x => x.Age).Single().ShouldBeOfType<GreaterThanZeroRule>();
             rulesFor(x => x.Children).Single().ShouldBeOfType<GreaterOrEqualToZeroRule>();
         }
 
-        [Test]
+        [Fact]
         public void has_rule_positive()
         {
             var accessor = ReflectionHelper.GetAccessor<FieldAccessRuleRegistryTarget>(x => x.Name);
             theRegistry.HasRule<RequiredFieldRule>(accessor).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void has_rule_negative()
         {
             var accessor = ReflectionHelper.GetAccessor<FieldAccessRuleRegistryTarget>(x => x.Name);
             theRegistry.HasRule<GreaterThanZeroRule>(accessor).ShouldBeFalse(); 
         }
 
-        [Test]
+        [Fact]
         public void for_rule_continuation_when_found()
         {
             var accessor = ReflectionHelper.GetAccessor<FieldAccessRuleRegistryTarget>(x => x.Name);
@@ -78,7 +77,7 @@ namespace FubuMVC.Tests.Validation.Fields
             action.AssertWasCalled(x => x.Invoke(new RequiredFieldRule()));
         }
 
-        [Test]
+        [Fact]
         public void for_rule_continuation_should_not_be_called_when_the_rule_can_not_found()
         {
             var accessor = ReflectionHelper.GetAccessor<FieldAccessRuleRegistryTarget>(x => x.Age);

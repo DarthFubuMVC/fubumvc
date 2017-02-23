@@ -2,15 +2,15 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Instrumentation
 {
-    [TestFixture]
+    
     public class ChainExecutionHistoryTester
     {
-        [Test]
+        [Fact]
         public void only_cache_up_to_the_setting_limit()
         {
             var settings = new DiagnosticsSettings

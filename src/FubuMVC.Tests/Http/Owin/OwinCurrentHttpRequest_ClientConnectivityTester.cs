@@ -2,19 +2,18 @@
 using System.Threading;
 using FubuMVC.Core.Http.Owin;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class OwinCurrentHttpRequest_ClientConnectivityTester
     {
         private CancellationToken theToken;
         private OwinHttpRequest theConnectivity;
         private CancellationTokenSource source;
 
-        [SetUp]
-        public void SetUp()
+        public OwinCurrentHttpRequest_ClientConnectivityTester()
         {
             var dictionary = new Dictionary<string,object>();
 
@@ -27,13 +26,13 @@ namespace FubuMVC.Tests.Http.Owin
             theConnectivity = new OwinHttpRequest(dictionary);
         }
 
-        [Test]
+        [Fact]
         public void the_call_is_connected_if_the_cancellation_token_is_not_signaled()
         {
             theConnectivity.IsClientConnected().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void the_call_is_not_connected_if_the_token_has_been_signaled()
         {
             source.Cancel();

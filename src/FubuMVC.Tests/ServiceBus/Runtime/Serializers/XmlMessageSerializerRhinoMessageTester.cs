@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
-    [TestFixture]
+    
     public class XmlMessageSerializerRhinoMessageTester
     {
         private readonly XmlMessageSerializer _serializer;
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             _stream = new MemoryStream();
         }
 
-        [Test]
+        [Fact]
         public void can_deserialize_rhino_esb_message()
         {
             var writer = new StreamWriter(_stream);

@@ -4,14 +4,14 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class HeaderValueAttributeTester
     {
-        [Test]
+        [Fact]
         public void bind_by_header()
         {
             var headers = OwinHttpRequest.ForTesting();

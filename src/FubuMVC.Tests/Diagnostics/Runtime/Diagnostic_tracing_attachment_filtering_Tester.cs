@@ -4,17 +4,14 @@ using FubuMVC.Core.Diagnostics.Endpoints;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
-    [TestFixture]
+    
     public class Diagnostic_tracing_attachment_filtering_Tester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void setup()
+        public Diagnostic_tracing_attachment_filtering_Tester()
         {
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
@@ -24,16 +21,14 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
                 x.Actions.IncludeType<OtherEndpoints>();
                 x.Actions.IncludeType<EndpointExplorerFubuDiagnostics>();
 
-                
+
             });
         }
-
-        #endregion
 
         private BehaviorGraph theGraph;
 
 
-        [Test]
+        [Fact]
         public void should_be_attached_to_normal_endpoints()
         {
             theGraph.ChainFor<SomeEndpoints>(x => x.M1(null)).First().ShouldBeOfType<BehaviorTracerNode>();
@@ -41,13 +36,13 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void should_not_attach_to_endpoints_marked_by_No_diagnostics_on_method()
         {
             theGraph.ChainFor<SomeEndpoints>(x => x.M3(null)).First().ShouldNotBeOfType<BehaviorTracerNode>();
         }
 
-        [Test]
+        [Fact]
         public void should_not_attach_to_endpoint_classes_marked_by_NoDiagnostics_on_class()
         {
             theGraph.ChainFor<OtherEndpoints>(x => x.M1(null)).First().ShouldNotBeOfType<BehaviorTracerNode>();

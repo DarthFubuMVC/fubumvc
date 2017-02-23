@@ -112,7 +112,7 @@ namespace Shouldly
                 exception = e.ShouldBeOfType<T>();
             }
 
-            if (exception == null) Assert.Fail("An exception was expected, but not thrown by the given action.");
+            if (exception == null) throw new Exception("An exception was expected, but not thrown by the given action.");
 
             return exception;
         }
@@ -222,7 +222,7 @@ namespace Shouldly
         {
             if (actual.Count(t => t.Equals(expected)) == 0)
             {
-                Assert.Fail("The item '{0}' was not found in the sequence.", expected);
+                throw new Exception("The item '{0}' was not found in the sequence.", expected);
             }
         }
 
@@ -235,7 +235,7 @@ namespace Shouldly
         {
             if (actual.Count(t => t.Equals(expected)) > 0)
             {
-                Assert.Fail("The item was found in the sequence it should not be in.");
+                throw new Exception("The item was found in the sequence it should not be in.");
             }
         }
 
@@ -352,7 +352,7 @@ namespace Shouldly
 
             if (exception == null)
             {
-                Assert.Fail("Expected {0} to be thrown.", exceptionType.FullName);
+                throw new Exception("Expected {0} to be thrown.", exceptionType.FullName);
             }
 
             return exception;

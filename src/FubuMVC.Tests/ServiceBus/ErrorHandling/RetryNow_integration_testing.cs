@@ -2,16 +2,16 @@
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
-    [TestFixture]
+    
     public class RetryNow_integration_testing
     {
-        [Test]
+        [Fact]
         public void successfully_retries_now()
         {
             MessageThatBombsHandler.Throws = 2;

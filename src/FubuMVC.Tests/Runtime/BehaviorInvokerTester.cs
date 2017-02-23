@@ -7,14 +7,14 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class BehaviorInvokerTester
     {
         private IServiceFactory theFactory;
@@ -24,8 +24,7 @@ namespace FubuMVC.Tests.Runtime
         private TypeArguments theArguments;
         private Dictionary<string, object> theRouteData;
 
-        [SetUp]
-        public void SetUp()
+        public BehaviorInvokerTester()
         {
             theFactory = MockRepository.GenerateMock<IServiceFactory>();
             theChain = new RoutedChain("something");
@@ -41,14 +40,14 @@ namespace FubuMVC.Tests.Runtime
             theInvoker = new BehaviorInvoker(theFactory, theChain);
         }
 
-        [Test]
+        [Fact]
         public void invoke_happy_path_calls_the_behavior()
         {
             theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
             theBehavior.AssertWasCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void invoke_happy_path_will_put_the_current_chain_together()
         {
             theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
@@ -57,7 +56,7 @@ namespace FubuMVC.Tests.Runtime
                 
         }
 
-        [Test]
+        [Fact]
         public void invoke_happy_path_with_a_continuation_filter()
         {
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
@@ -66,7 +65,7 @@ namespace FubuMVC.Tests.Runtime
             theBehavior.AssertWasCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void invoke_happy_path_with_multiple_continuation_filter()
         {
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
@@ -77,7 +76,7 @@ namespace FubuMVC.Tests.Runtime
             theBehavior.AssertWasCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void invoke_with_a_filter_that_says_stop()
         {
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Stop));
@@ -86,7 +85,7 @@ namespace FubuMVC.Tests.Runtime
             theBehavior.AssertWasNotCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void invoke_with_a_filter_that_says_stop_2()
         {
             theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));

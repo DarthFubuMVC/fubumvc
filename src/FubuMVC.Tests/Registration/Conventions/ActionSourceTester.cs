@@ -6,19 +6,18 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class ActionSourceTester
     {
         private Lazy<BehaviorGraph> _graph;
         private ActionSource source;
 
-        [SetUp]
-        public void SetUp()
+        public ActionSourceTester()
         {
             source = new ActionSource();
             _graph =
@@ -35,7 +34,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
 
-        [Test]
+        [Fact]
         public void uses_the_application_assembly_if_none_is_specified()
         {
             source.IncludeClassesSuffixedWithController();
@@ -47,7 +46,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void does_not_use_The_application_assembly_if_other_assemblies_are_specified()
         {
             source.Applies.ToAssemblyContainingType<AssemblyEndpoint>();
@@ -56,7 +55,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void does_find_actions_from_other_assemblies()
         {
             source.Applies.ToAssemblyContainingType<AssemblyEndpoint>();
@@ -66,7 +65,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void match_by_endpoint()
         {
             source.IncludeClassesSuffixedWithEndpoint();
@@ -75,7 +74,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void match_by_controller_suffix()
         {
             source.IncludeClassesSuffixedWithController();
@@ -84,7 +83,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void match_by_name()
         {
             source.IncludeTypesNamed(x => x.StartsWith("One"));
@@ -94,7 +93,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ChainFor<TwoEndpoint>(x => x.Report()).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void match_by_types()
         {
             source.IncludeTypes(x => x.Name.StartsWith("One"));
@@ -104,7 +103,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ChainFor<TwoEndpoint>(x => x.Report()).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void match_by_types_implementing()
         {
             source.IncludeTypesImplementing<IPattern>();
@@ -113,7 +112,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void include_methods()
         {
             source.IncludeClassesSuffixedWithController();
@@ -123,7 +122,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void exclude_types()
         {
             source.IncludeClassesSuffixedWithController();
@@ -133,7 +132,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ChainFor<TwoController>(x => x.Query(null)).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void exclude_methods()
         {
             source.IncludeClassesSuffixedWithController();
@@ -143,7 +142,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void ignore_methods_declared_by()
         {
             source.IncludeClassesSuffixedWithController();
@@ -153,7 +152,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ChainFor<ChildController>(x => x.ChildQuery(null)).ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void exclude_non_concrete_types()
         {
             source.IncludeTypes(x => x.CanBeCastTo<IPattern>());

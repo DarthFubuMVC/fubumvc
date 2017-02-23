@@ -9,13 +9,13 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
-    [TestFixture]
+    
     public abstract class PersistentTaskControllerContext : ITaskMonitoringSource
     {
         protected RecordingLogger theLogger;
@@ -32,8 +32,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
         protected ISubscriptionRepository theSubscriptions;
         protected HealthMonitoringSettings settings;
 
-        [SetUp]
-        public void SetUp()
+        protected PersistentTaskControllerContext()
         {
             peers.ClearAll();
             sources.ClearAll();
@@ -117,7 +116,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
             var hasIt = theLogger.InfoMessages.OfType<T>().Any(x => x.Subject == uriString.ToUri());
             if (!hasIt)
             {
-                Assert.Fail("Did not have expected log message of type {0} for subject {1}".ToFormat(typeof(T).Name, uriString));
+                throw new Exception("Did not have expected log message of type {0} for subject {1}".ToFormat(typeof(T).Name, uriString));
             }
         }
 
@@ -127,7 +126,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 
             if (inactive.Any())
             {
-                Assert.Fail("Tasks {0} have not been activated\n" + inactive.Join(", "));
+                throw new Exception("Tasks {0} have not been activated\n" + inactive.Join(", "));
             }
         }
 

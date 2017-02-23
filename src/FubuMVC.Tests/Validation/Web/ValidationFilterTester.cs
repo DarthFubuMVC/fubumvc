@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class ValidationFilterTester : InteractionContext<ValidationFilter<SampleInputModel>>
     {
         private SampleInputModel theInput;
@@ -21,13 +21,13 @@ namespace FubuMVC.Tests.Validation.Web
             MockFor<IValidator>().Stub(x => x.Validate(theInput)).Return(theNotification);
         }
 
-        [Test]
+        [Fact]
         public void builds_up_the_notification()
         {
             ClassUnderTest.Validate(theInput).ShouldBeTheSameAs(theNotification);
         }
 
-        [Test]
+        [Fact]
         public void adds_model_binding_errors()
         {
             ClassUnderTest.Validate(theInput);

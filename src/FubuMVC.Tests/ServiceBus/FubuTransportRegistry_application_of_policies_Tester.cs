@@ -8,15 +8,15 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class FubuTransportRegistry_application_of_policies_Tester
     {
-        [Test]
+        [Fact]
         public void policies_can_be_applied_locally()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.ServiceBus
             cache.FindUniqueByType(typeof (Message6)).IsWrappedBy(typeof (BlueWrapper)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void global_policies_on_all_handlers()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus
                 .Each(chain => { chain.IsWrappedBy(typeof (RedWrapper)).ShouldBeTrue(); });
         }
 
-        [Test]
+        [Fact]
         public void does_not_apply_policies_to_fubumvc_handlers()
         {
             var graph = BehaviorGraph.BuildFrom(x =>

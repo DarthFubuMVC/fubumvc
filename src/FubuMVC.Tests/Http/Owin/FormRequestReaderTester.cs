@@ -6,26 +6,26 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Readers;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class FormRequestReaderTester
     {
-        [Test]
+        [Fact]
         public void can_parse_query_string_with_encoding()
         {
             runFormReader("Anesth=Moore%2C+Roy")["Anesth"].ShouldBe("Moore, Roy");
         }
 
-        [Test]
+        [Fact]
         public void can_parse_field_values_in_query_string()
         {
             runFormReader("Moore%2C+Roy=Anesth")["Moore, Roy"].ShouldBe("Anesth");
         }
 
-        [Test]
+        [Fact]
         public void can_parse_multiple_values()
         {
             var dict = runFormReader("a=1&b=2&c=3");

@@ -1,23 +1,24 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Authorization
 {
-    [TestFixture]
-    public class end_to_end_authorization_tester
+    
+    public class end_to_end_authorization_tester : IDisposable
     {
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             TestHost.Service<SecuritySettings>().Reset();
         }
 
-        [Test]
+
+        [Fact]
         public void call_an_endpoint_that_is_not_authorized_and_get_the_403()
         {
             AuthorizationCheck.IsAuthorized = false;
@@ -29,7 +30,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             });
         }
 
-        [Test]
+        [Fact]
         public void call_an_endpoint_that_is_authorized_with_authorization_disabled()
         {
             AuthorizationCheck.IsAuthorized = false;
@@ -44,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             });
         }
 
-        [Test]
+        [Fact]
         public void call_an_endpoint_that_is_authorized_successfully_and_get_The_200_response()
         {
             AuthorizationCheck.IsAuthorized = true;
@@ -56,7 +57,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             });
         }
 
-        [Test]
+        [Fact]
         public void call_an_endpoint_that_is_not_authorized_with_a_special_auth_failure_handler()
         {
             AuthorizationCheck.IsAuthorized = false;
@@ -71,7 +72,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
         }
 
 
-        [Test]
+        [Fact]
         public void custom_auth_handler()
         {
             var registry = new FubuRegistry();
@@ -89,7 +90,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             }
         }
 
-        [Test]
+        [Fact]
         public void use_custom_auth_handler_on_only_one_endpoint()
         {
             var registry = new FubuRegistry();

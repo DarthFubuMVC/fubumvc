@@ -2,11 +2,11 @@
 using FubuMVC.Core.Json;
 using Shouldly;
 using Newtonsoft.Json;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Json
 {
-	[TestFixture]
+	
 	public class when_serializing_an_object_without_metadata
 	{
 		private NewtonSoftJsonSerializer theSerializer;
@@ -14,10 +14,9 @@ namespace FubuMVC.Tests.Json
 		private ParentType theTarget;
 		private string theResult;
 
-		[SetUp]
-		public void SetUp()
-		{
-			theConverter = new ComplexTypeConverter(new ObjectConverter());
+	    public when_serializing_an_object_without_metadata()
+	    {
+            theConverter = new ComplexTypeConverter(new ObjectConverter());
 			theSerializer = new NewtonSoftJsonSerializer(new JsonSerializerSettings(), new JsonConverter[] { theConverter });
 
 			theTarget = new ParentType
@@ -29,7 +28,7 @@ namespace FubuMVC.Tests.Json
 			theResult = theSerializer.Serialize(theTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void uses_the_provided_converters()
 		{
 			theResult.ShouldBe("{\"Name\":\"Test\",\"Child\":\"x:123\"}");

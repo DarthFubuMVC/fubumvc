@@ -7,18 +7,17 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class AuthorizedByAttributeConventionTester
     {
         private BehaviorGraph graph;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public AuthorizedByAttributeConventionTester()
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<AuthorizedByAttributeConventionController>();
@@ -26,12 +25,13 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph = BehaviorGraph.BuildFrom(registry);
         }
 
+
         private BehaviorChain chainFor(Expression<Action<AuthorizedByAttributeConventionController>> action)
         {
             return graph.ChainFor(action);
         }
 
-        [Test]
+        [Fact]
         public void get_policy_type_when_it_is_an_authorization_policy()
         {
             AuthorizedByAttribute.RuleTypeFor(typeof (Input1), typeof (AuthorizationRule1))
@@ -39,13 +39,13 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
 
-        [Test]
+        [Fact]
         public void no_authorization_rules_on_a_method_not_decorated_with_attributes()
         {
             chainFor(x => x.MethodWithNoAttributes()).Authorization.HasRules().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void authorization_rule_for_a_single_policy_on_a_method()
         {
             chainFor(x => x.MethodWithOnePolicy()).Authorization.Policies.Select(x => x.GetType())
@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
 
-        [Test]
+        [Fact]
         public void authorization_rules_for_multiple_policies_on_a_method()
         {
             chainFor(x => x.MethodWithMultiplePolicies()).Authorization.Policies.Select(x => x.GetType())
@@ -62,13 +62,12 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     }
 
-    [TestFixture]
+    
     public class AuthorizedByAttributeConventionAtTheClassLevel
     {
         private BehaviorGraph graph;
 
-        [SetUp]
-        public void SetUp()
+        public AuthorizedByAttributeConventionAtTheClassLevel()
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<AuthorizedController2>();
@@ -81,14 +80,14 @@ namespace FubuMVC.Tests.Registration.Conventions
             return graph.ChainFor(action);
         }
 
-        [Test]
+        [Fact]
         public void rules_should_be_picked_up_from_handler_type()
         {
             chainFor(x => x.MethodWithNoAttributes()).Authorization.Policies.Select(x => x.GetType())
                 .ShouldHaveTheSameElementsAs(typeof(AuthorizationRule2));
         }
 
-        [Test]
+        [Fact]
         public void rules_in_combination_of_method_and_handler_type()
         {
             var rules = chainFor(x => x.MethodWithOnePolicy()).Authorization.Policies.Select(x => x.GetType()).ToList();

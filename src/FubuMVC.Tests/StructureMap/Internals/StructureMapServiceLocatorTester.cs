@@ -2,19 +2,16 @@ using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.Tests.StructureMap.Internals
 {
-    [TestFixture]
+    
     public class StructureMapServiceLocatorTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public StructureMapServiceLocatorTester()
         {
             _testInstanceKey = "test";
 
@@ -28,13 +25,12 @@ namespace FubuMVC.Tests.StructureMap.Internals
             });
         }
 
-        #endregion
 
         private string _testInstanceKey;
         private ISecurityContext _mockSecurityContext;
         private IContainer container;
 
-        [Test]
+        [Fact]
         public void should_resolve_unnamed_instances()
         {
             new StructureMapServiceLocator(container).GetInstance(typeof (ISecurityContext))

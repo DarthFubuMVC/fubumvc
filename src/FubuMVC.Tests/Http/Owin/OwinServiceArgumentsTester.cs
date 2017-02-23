@@ -3,16 +3,16 @@ using System.Web.Routing;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class OwinServiceArgumentsTester
     {
-        [Test]
+        [Fact]
         public void registers_the_environment_dictionary_itself()
         {
             var environment = new Dictionary<string, object>();
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Http.Owin
                 .ShouldBeSameAs(environment);
         }
 
-        [Test]
+        [Fact]
         public void register_the_execution_log_if_it_exists()
         {
             var log = new ChainExecutionLog();

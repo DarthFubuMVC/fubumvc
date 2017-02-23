@@ -1,28 +1,22 @@
 ﻿using FubuMVC.Core.Security.Authentication.Windows;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Windows
 {
-    [TestFixture]
+    
     public class WindowsSignInRequestTester
     {
-        private WindowsSignInRequest theRequest;
+        private WindowsSignInRequest theRequest = new WindowsSignInRequest();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theRequest = new WindowsSignInRequest();
-        }
-
-        [Test]
+        [Fact]
         public void url_defaults_to_root()
         {
             theRequest.Url.ShouldBe("~/");
 
         }
 
-        [Test]
+        [Fact]
         public void uses_specified_url()
         {
             theRequest.Url = "123";

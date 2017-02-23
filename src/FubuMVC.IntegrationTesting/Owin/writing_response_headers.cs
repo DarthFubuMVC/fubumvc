@@ -2,14 +2,14 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class writing_response_headers
     {
-        [Test]
+        [Fact]
         public void can_write_extension_headers()
         {
             TestHost.Scenario(_ =>
@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         }
 
 
-        [Test]
+        [Fact]
         public void can_write_built_in_response_headers()
         {
             TestHost.Scenario(_ =>
@@ -34,7 +34,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             });
         }
 
-        [Test]
+        [Fact]
         public void can_write_etag()
         {
             TestHost.Scenario(_ =>
@@ -45,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             });
         }
 
-        [Test]
+        [Fact]
         public void can_write_content_headers()
         {
             TestHost.Scenario(_ =>
@@ -65,7 +65,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             });
         }
 
-        [Test]
+        [Fact]
         public void can_write_multiple_cookies()
         {
             TestHost.Scenario(_ =>

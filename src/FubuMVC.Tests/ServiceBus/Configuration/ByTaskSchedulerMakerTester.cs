@@ -1,15 +1,15 @@
 ﻿using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Scheduling;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class ByTask_and_ByThread_SchedulerMakerTester
     {
-        [Test]
+        [Fact]
         public void builds_a_schedule_by_task()
         {
             var settings = new ThreadSettings
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
         }
 
-        [Test]
+        [Fact]
         public void builds_a_schedule_by_threads()
         {
             var settings = new ThreadSettings

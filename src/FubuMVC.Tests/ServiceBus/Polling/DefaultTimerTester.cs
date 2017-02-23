@@ -1,14 +1,14 @@
 ﻿using System.Threading;
 using FubuMVC.Core.ServiceBus.Polling;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Polling
 {
-    [TestFixture]
+    
     public class DefaultTimerTester
     {
-        [Test]
+        [Fact]
         public void start_and_callback()
         {
             var reset = new ManualResetEvent(false);
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             timer.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void polls()
         {
             var reset = new ManualResetEvent(false);

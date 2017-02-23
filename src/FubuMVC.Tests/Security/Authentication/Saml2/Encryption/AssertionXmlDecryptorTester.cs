@@ -2,29 +2,29 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using FubuMVC.Core.Security.Authentication.Saml2.Encryption;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Encryption
 {
-    [TestFixture]
+    
     public class AssertionXmlDecryptorTester
     {
-        [Test]
+        [Fact]
         public void triple_des()
         {
             AssertionXmlDecryptor.GetSymmetricBlockEncryptionAlgorithm(EncryptedXml.XmlEncTripleDESUrl)
                                  .ShouldBeOfType<TripleDESCryptoServiceProvider>();
         }
 
-        [Test]
+        [Fact]
         public void des_crypto()
         {
             AssertionXmlDecryptor.GetSymmetricBlockEncryptionAlgorithm(EncryptedXml.XmlEncDESUrl)
                                  .ShouldBeOfType<DESCryptoServiceProvider>();
         }
 
-        [Test]
+        [Fact]
         public void rijndael_128()
         {
             AssertionXmlDecryptor.GetSymmetricBlockEncryptionAlgorithm(EncryptedXml.XmlEncAES128Url)
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Encryption
                                  .KeySize.ShouldBe(128);
         }
 
-        [Test]
+        [Fact]
         public void rijndael_192()
         {
             AssertionXmlDecryptor.GetSymmetricBlockEncryptionAlgorithm(EncryptedXml.XmlEncAES192Url)
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Encryption
                                  .KeySize.ShouldBe(192);
         }
 
-        [Test]
+        [Fact]
         public void rijndael_256()
         {
             AssertionXmlDecryptor.GetSymmetricBlockEncryptionAlgorithm(EncryptedXml.XmlEncAES256Url)
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Encryption
                                  .KeySize.ShouldBe(256);
         }
 
-        [Test]
+        [Fact]
         public void unrecognized_encryption()
         {
             Exception<Exception>.ShouldBeThrownBy(() => {

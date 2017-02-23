@@ -2,7 +2,7 @@ using System;
 using FubuCore;
 using FubuCore.Dates;
 using FubuCore.Logging;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using StructureMap;
 
@@ -18,8 +18,7 @@ namespace FubuMVC.Tests.TestSupport
         public RhinoAutoMocker<T> Services { get; private set; }
         public T ClassUnderTest { get { return Services.ClassUnderTest; } }
 
-        [SetUp]
-        public void SetUp()
+        public InteractionContext()
         {
             _clock = new SettableClock();
 

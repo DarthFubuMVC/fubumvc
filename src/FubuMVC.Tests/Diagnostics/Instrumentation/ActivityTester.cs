@@ -2,18 +2,18 @@
 using System.Linq;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Tests.View.FakeViews.Folder1;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Instrumentation
 {
-    [TestFixture]
+    
     public class ActivityTester
     {
 
 
-        [Test]
+        [Fact]
         public void mark_end_and_duration()
         {
             var subject = MockRepository.GenerateMock<ISubject>();
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             activity.Duration.ShouldBe(75);
         }
 
-        [Test]
+        [Fact]
         public void inner_time()
         {
             var subject = MockRepository.GenerateMock<ISubject>();
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             activity.InnerTime.ShouldBe(500 - 125);
         }
 
-        [Test]
+        [Fact]
         public void inner_time_with_nesteds()
         {
             var subject = MockRepository.GenerateMock<ISubject>();

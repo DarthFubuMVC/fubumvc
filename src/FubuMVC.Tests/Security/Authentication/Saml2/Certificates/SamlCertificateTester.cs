@@ -1,16 +1,16 @@
 ﻿using System;
 using FubuMVC.Core.Security.Authentication.Saml2.Certificates;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
 {
-    [TestFixture]
+    
     public class SamlCertificateTester
     {
         public readonly InMemoryCertificate Certificate = new InMemoryCertificate();
 
-        [Test]
+        [Fact]
         public void matches_on_both_serial_number_and_certificate_issuer()
         {
             new SamlCertificate
@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
             }.Matches(Certificate).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_match_serial_number_matches_certificate_issuer_does_not()
         {
             new SamlCertificate
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
             }.Matches(Certificate).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void does_not_match_certificate_issuer()
         {
             new SamlCertificate
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
             }.Matches(Certificate).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void neither_matches()
         {
             new SamlCertificate
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
             }.Matches(Certificate).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void formats_and_load_via_string()
         {
             var cert1 = new SamlCertificate

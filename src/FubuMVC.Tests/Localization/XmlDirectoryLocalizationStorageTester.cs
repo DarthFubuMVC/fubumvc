@@ -8,16 +8,15 @@ using FubuCore.Configuration;
 using FubuCore.Util;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Localization.Basic;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class XmlDirectoryLocalizationStorageTester
     {
-        [SetUp]
-        public void SetUp()
+        public XmlDirectoryLocalizationStorageTester()
         {
             var system = new FileSystem();
             system.DeleteDirectory("localization1");
@@ -35,7 +34,7 @@ namespace FubuMVC.Tests.Localization
             XmlDirectoryLocalizationStorage.Write(directory, culture, LocalString.ReadAllFrom(values));
         }
 
-        [Test]
+        [Fact]
         public void GetFileName()
         {
             XmlDirectoryLocalizationStorage.GetFileName(new CultureInfo("en-US"))
@@ -45,7 +44,7 @@ namespace FubuMVC.Tests.Localization
                 .ShouldBe("en-GB.locale.config");
         }
 
-        [Test]
+        [Fact]
         public void save_and_load_local_strings()
         {
             var strings = new List<LocalString>{
@@ -60,7 +59,7 @@ namespace FubuMVC.Tests.Localization
             XmlDirectoryLocalizationStorage.LoadFrom("locale.xml").ShouldHaveTheSameElementsAs(strings);
         }
 
-        [Test]
+        [Fact]
         public void save_and_load_local_strings_should_sort_on_key_for_easier_merges()
         {
             var strings = new List<LocalString>{
@@ -75,7 +74,7 @@ namespace FubuMVC.Tests.Localization
             XmlDirectoryLocalizationStorage.LoadFrom("locale.xml").ShouldHaveTheSameElementsAs(strings.OrderBy(x => x.value));
         }
 
-        [Test]
+        [Fact]
         public void load_from_a_single_source()
         {
             write("localization1", new CultureInfo("en-US"), @"
@@ -106,7 +105,7 @@ namespace FubuMVC.Tests.Localization
 
         }
 
-        [Test]
+        [Fact]
         public void load_from_a_multiple_directory()
         {
             write("localization1", new CultureInfo("en-US"), @"
@@ -132,7 +131,7 @@ namespace FubuMVC.Tests.Localization
 
         }
 
-        [Test]
+        [Fact]
         public void write_missing_with_no_file_there()
         {
             var source = new XmlDirectoryLocalizationStorage(new string[] { "localization1", "localization2", "localization3" });
@@ -150,7 +149,7 @@ namespace FubuMVC.Tests.Localization
 
         }
 
-        [Test]
+        [Fact]
         public void write_with_successive_missings()
         {
             var source = new XmlDirectoryLocalizationStorage(new string[] { "localization1", "localization2", "localization3" });
@@ -167,7 +166,7 @@ namespace FubuMVC.Tests.Localization
             element.InnerText.ShouldBe("us-b");
         }
 
-        [Test]
+        [Fact]
         public void do_not_double_dip_in_missing_when_writing()
         {
             var source = new XmlDirectoryLocalizationStorage(new string[] { "localization1", "localization2", "localization3" });
@@ -184,7 +183,7 @@ namespace FubuMVC.Tests.Localization
             document.DocumentElement.ChildNodes.Count.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void CultureFor()
         {
             XmlDirectoryLocalizationStorage.CultureFor("en-US.locale.config").ShouldBe(new CultureInfo("en-US"));
@@ -192,7 +191,7 @@ namespace FubuMVC.Tests.Localization
             XmlDirectoryLocalizationStorage.CultureFor("en-GB.locale.config").ShouldBe(new CultureInfo("en-GB"));
         }
 
-        [Test]
+        [Fact]
         public void load_all()
         {
             write("localization1", new CultureInfo("en-US"), @"
@@ -248,7 +247,7 @@ namespace FubuMVC.Tests.Localization
 
 
 
-        [Test]
+        [Fact]
         public void merge_missing()
         {
             var source = new XmlDirectoryLocalizationStorage(new string[] { "localization1", "localization2", "localization3" });

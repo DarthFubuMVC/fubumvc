@@ -3,12 +3,12 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.ServiceBus.Sagas
 {
-    [TestFixture]
+    
     public class when_the_state_can_be_found_and_not_completed : SagaBehaviorContext
     {
         protected override void theContextIs()
@@ -18,26 +18,26 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             isSagaCompletedByThisMessage = false;
         }
 
-        [Test]
+        [Fact]
         public void should_set_the_state_on_the_handler()
         {
             theHandler.AssertWasCalled(x => x.State = theInitialState);
         }
 
-        [Test]
+        [Fact]
         public void should_call_the_inner_behavior()
         {
             theInnerBehavior.AssertWasCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void should_persist_the_state()
         {
             theRepository.AssertWasCalled(x => x.Save(theResultingState, theMessage));
         }
     }
 
-    [TestFixture]
+    
     public class when_the_state_can_be_found_and_is_completed_by_the_message : SagaBehaviorContext
     {
         protected override void theContextIs()
@@ -47,26 +47,26 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             isSagaCompletedByThisMessage = true;
         }
 
-        [Test]
+        [Fact]
         public void should_set_the_state_on_the_handler()
         {
             theHandler.AssertWasCalled(x => x.State = theInitialState);
         }
 
-        [Test]
+        [Fact]
         public void should_call_the_inner_behavior()
         {
             theInnerBehavior.AssertWasCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void should_delete_the_state()
         {
             theRepository.AssertWasCalled(x => x.Delete(theResultingState, theMessage));
         }
     }
 
-    [TestFixture]
+    
     public class when_the_state_cannot_be_found_and_is_not_created_by_the_message : SagaBehaviorContext
     {
         protected override void theContextIs()
@@ -78,14 +78,14 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_call_the_inner_behavior()
         {
             theInnerBehavior.AssertWasCalled(x => x.Invoke());
         }
 
 
-        [Test]
+        [Fact]
         public void updates_and_deletes_nothing()
         {
             theRepository.AssertWasNotCalled(x => x.Save(null, theMessage), x => x.IgnoreArguments());

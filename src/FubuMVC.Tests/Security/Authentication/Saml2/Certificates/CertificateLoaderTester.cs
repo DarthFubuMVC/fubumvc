@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 using FubuMVC.Core.Security.Authentication.Saml2.Certificates;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
 {
-    [TestFixture]
+    
     public class CertificateLoaderTester
     {
         private X509Certificate2 certificate2;
 
-        [SetUp]
-        public void SetUp()
+        public CertificateLoaderTester()
         {
             var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
             store.Open(OpenFlags.ReadWrite);
@@ -21,7 +20,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
             store.Add(certificate2);
         }
 
-        [Test]
+        [Fact]
         public void can_load()
         {
             var loader = new CertificateLoader();
@@ -29,7 +28,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
                   .SerialNumber.ShouldBe(certificate2.SerialNumber);
         }
 
-        [Test]
+        [Fact]
         public void throws_unknown_certificate()
         {
             Exception<UnknownCertificateException>.ShouldBeThrownBy(() => {

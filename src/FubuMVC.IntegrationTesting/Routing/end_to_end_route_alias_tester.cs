@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Routing
 {
-    [TestFixture]
+    
     public class end_to_end_route_alias_tester 
     {
-        [Test]
+        [Fact]
         public void call_the_aliased_route()
         {
             TestHost.Scenario(_ =>

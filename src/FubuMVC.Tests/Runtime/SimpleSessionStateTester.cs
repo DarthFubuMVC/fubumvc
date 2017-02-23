@@ -3,20 +3,19 @@ using System.Web;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class SimpleSessionStateTester
     {
         private HttpContextBase theHttpContext;
         private StubSession theHttpSession;
         private SimpleSessionState theSessionState;
 
-        [SetUp]
-        public void SetUp()
+        public SimpleSessionStateTester()
         {
             theHttpContext = MockRepository.GenerateMock<HttpContextBase>();
             theHttpSession = new StubSession();
@@ -25,7 +24,7 @@ namespace FubuMVC.Tests.Runtime
             theSessionState = new SimpleSessionState(theHttpContext);
         }
 
-        [Test]
+        [Fact]
         public void gets_and_sets_an_object_by_type_name()
         {
             var target = new SimpleSessionTarget {Name = "Test"};
@@ -33,7 +32,7 @@ namespace FubuMVC.Tests.Runtime
             theSessionState.Get<SimpleSessionTarget>().ShouldBe(target);
         }
 
-        [Test]
+        [Fact]
         public void gets_and_sets_an_object_by_explicit_key()
         {
             var target = new SimpleSessionTarget { Name = "Test" };

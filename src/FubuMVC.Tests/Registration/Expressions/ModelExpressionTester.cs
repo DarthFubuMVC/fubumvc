@@ -2,12 +2,12 @@ using System;
 using System.Reflection;
 using FubuCore.Binding;
 using FubuMVC.Core;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
-    [TestFixture]
+    
     public class ModelExpressionTester
     {
         public class ExampleConverter : IConverterFamily
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             }
         }
 
-        [Test]
+        [Fact]
         public void can_register_custom_binding_services()
         {
             var registry = new FubuRegistry();

@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using FubuCore.Configuration;
 using FubuMVC.Core;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.StructureMap.Settings
 {
-    [TestFixture]
+    
     public class SettingIntegrationTester
     {
         private FubuRegistry registry;
         private Lazy<IContainer> container;
 
-        [SetUp]
-        public void SetUp()
+        public SettingIntegrationTester()
         {
             registry = new FubuRegistry();
             container = new Lazy<IContainer>(() => {
@@ -40,14 +39,14 @@ namespace FubuMVC.Tests.StructureMap.Settings
             get { return container.Value.GetInstance<FooSettings>(); }
         }
 
-        [Test]
+        [Fact]
         public void include_explicitly()
         {
             TheResultingSettings.Name.ShouldBe("Max");
             TheResultingSettings.Age.ShouldBe(9);
         }
 
-        [Test]
+        [Fact]
         public void include_by_settings_convention_in_the_application_assembly()
         {
             container.Value.GetInstance<BarSettings>().Direction.ShouldBe("North");
@@ -55,7 +54,7 @@ namespace FubuMVC.Tests.StructureMap.Settings
             TheResultingSettings.Age.ShouldBe(9);
         }
 
-        [Test]
+        [Fact]
         public void include_by_settings_convention_by_picking_the_assembly()
         {
             container.Value.GetInstance<BarSettings>().Direction.ShouldBe("North");
@@ -63,7 +62,7 @@ namespace FubuMVC.Tests.StructureMap.Settings
             TheResultingSettings.Age.ShouldBe(9);
         }
 
-        [Test]
+        [Fact]
         public void do_not_override_a_setting_class_that_is_configured_inside_the_fubu_registry()
         {
             registry.Services.ReplaceService(new BarSettings {Direction = "West"});

@@ -6,13 +6,13 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
+    
     public class when_handling_subscriptions_changed : InteractionContext<SubscriptionsHandler>
     {
         private Subscription[] theSubscriptions;
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             ClassUnderTest.Handle(new SubscriptionsChanged());
         }
 
-        [Test]
+        [Fact]
         public void should_load_the_new_subscriptions_into_the_running_cache()
         {
             MockFor<ISubscriptionCache>()
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         }
     }
 
-    [TestFixture]
+    
     public class when_sending_a_subscription_to_a_peer : InteractionContext<SubscriptionsHandler>
     {
         private RecordingEnvelopeSender theSender;
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             ClassUnderTest.SendSubscriptionChangedToPeer(thePeer);
         }
 
-        [Test]
+        [Fact]
         public void should_have_sent_a_message_to_the_peer_to_reload_subscriptions()
         {
             var envelope = theSender.Sent.Single();
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         }
     }
 
-    [TestFixture]
+    
     public class when_handling_the_subscriptions_changed_message : InteractionContext<SubscriptionsHandler>
     {
         private TransportNode[] thePeers;
@@ -113,20 +113,20 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             ClassUnderTest.Handle(theMessage);
         }
 
-        [Test]
+        [Fact]
         public void should_persist_the_new_subscriptions()
         {
             MockFor<ISubscriptionRepository>()
                 .AssertWasCalled(x => x.PersistPublishing(theMessage.Subscriptions));
         }
 
-        [Test]
+        [Fact]
         public void should_reload_subscriptions()
         {
             ClassUnderTest.AssertWasCalled(x => x.ReloadSubscriptions());
         }
 
-        [Test]
+        [Fact]
         public void should_message_all_of_its_peers_to_reload_their_subscriptions()
         {
             thePeers.Each(peer => {
@@ -135,7 +135,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         }
     }
 
-    [TestFixture]
+    
     public class when_handling_subscriptions_removed : InteractionContext<SubscriptionsHandler>
     {
         private SubscriptionsRemoved theMessage;
@@ -154,20 +154,20 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             ClassUnderTest.Handle(theMessage);
         }
 
-        [Test]
+        [Fact]
         public void should_remove_subscriptions_from_repository()
         {
             MockFor<ISubscriptionRepository>()
                 .AssertWasCalled(x => x.RemoveSubscriptionsForReceiver(theMessage.Receiver));
         }
 
-        [Test]
+        [Fact]
         public void should_reload_subscriptions()
         {
             ClassUnderTest.AssertWasCalled(x => x.ReloadSubscriptions());
         }
 
-        [Test]
+        [Fact]
         public void should_update_peers()
         {
             ClassUnderTest.AssertWasCalled(x => x.UpdatePeers());

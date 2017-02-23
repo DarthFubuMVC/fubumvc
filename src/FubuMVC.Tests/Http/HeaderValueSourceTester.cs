@@ -1,28 +1,29 @@
-﻿using FubuCore.Binding.Values;
+﻿using System;
+using FubuCore.Binding.Values;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Tests.Urls;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using System.Linq;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class HeaderValueSourceTester
     {
         private OwinHttpRequest theRequest;
         private HeaderValueSource theSource;
 
-        [SetUp]
-        public void SetUp()
+        public HeaderValueSourceTester()
         {
             theRequest = new OwinHttpRequest();
             theSource = new HeaderValueSource(theRequest);
         }
 
-        [Test]
+
+        [Fact]
         public void has()
         {
             theSource.Has("a").ShouldBeFalse();
@@ -32,14 +33,14 @@ namespace FubuMVC.Tests.Http
             theSource.Has("a").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void get_with_only_one_value()
         {
             theRequest.AppendHeader("a", "1");
             theSource.Get("a").ShouldBe("1");
         }
 
-        [Test]
+        [Fact]
         public void get_with_multiple_values()
         {
             theRequest.AppendHeader("a", "1", "2", "3");
@@ -47,15 +48,15 @@ namespace FubuMVC.Tests.Http
             theSource.Get("a").ShouldBe(new string[] { "1", "2", "3" });
         }
 
-        [Test]
+        [Fact]
         public void value_miss()
         {
             theSource.Value("a", v => {
-                Assert.Fail("NOT SUPPOSED TO BE HERE!");
+                throw new Exception("NOT SUPPOSED TO BE HERE!");
             }).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void value_hit_with_only_one_value()
         {
             theRequest.AppendHeader("a", "1");
@@ -67,7 +68,7 @@ namespace FubuMVC.Tests.Http
         }
 
 
-        [Test]
+        [Fact]
         public void value_hit_with_only_multiple_values()
         {
             theRequest.AppendHeader("a", "1", "2", "3");
@@ -79,7 +80,7 @@ namespace FubuMVC.Tests.Http
             }).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void report_smoke_test()
         {
             theRequest.AppendHeader("a", "1", "2", "3");
@@ -94,7 +95,7 @@ namespace FubuMVC.Tests.Http
             report.AssertWasCalled(x => x.Value("c", new string[] { "7", "2", "3" }));
         }
 
-        [Test]
+        [Fact]
         public void provenance()
         {
             // and yes, this *is* important

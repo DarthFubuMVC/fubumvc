@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting
 {
-    [TestFixture]
+    
     public class FubuRegistry_using_parallel_folder_spec
     {
-        [Test]
+        [Fact]
         public void use_parallel_folder()
         {
             using (var runtime = FubuRuntime.Basic(_ => _.UseParallelDirectory("AssemblyPackage")))

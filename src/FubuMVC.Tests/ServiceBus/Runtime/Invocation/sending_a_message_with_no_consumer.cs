@@ -4,16 +4,16 @@ using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class sending_a_message_with_no_consumer : InteractionContext<MessageExecutor>
     {
-        [Test]
+        [Fact]
         public void tryexecute_chooses_the_right_path()
         {
             var fakeMessage = new FakeMessage();
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             ClassUnderTest.AssertWasNotCalled(x => x.Execute(fakeMessage));
         }
 
-        [Test]
+        [Fact]
         public void should_call_execute_method()
         {
             var fakeMessage = new FakeMessage();

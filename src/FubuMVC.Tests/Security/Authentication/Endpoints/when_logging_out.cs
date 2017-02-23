@@ -4,12 +4,12 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication.Endpoints
 {
-	[TestFixture]
+	
 	public class when_logging_out : InteractionContext<LogoutController>
 	{
 		private FubuContinuation theContinuation;
@@ -23,13 +23,13 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
 			theContinuation = ClassUnderTest.Logout(null);
 		}
 
-		[Test]
+		[Fact]
 		public void should_clear_the_authentication()
 		{
 			MockFor<IAuthenticationSession>().AssertWasCalled(x => x.ClearAuthentication());
 		}
 
-		[Test]
+		[Fact]
 		public void should_return_the_continuation_from_the_registered_logout_handler()
 		{
 		    theContinuation.ShouldBeTheSameAs(expectedContinuation);

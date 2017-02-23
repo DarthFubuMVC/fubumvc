@@ -9,24 +9,21 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class OutputNodeIntegratedTester
     {
         private OutputBehavior<Address> theInputBehavior;
 
-        #region Setup/Teardown
-
-        [TestFixtureSetUp]
-        public void SetUp()
+        public OutputNodeIntegratedTester()
         {
-            var node = new OutputNode(typeof (Address));
+            var node = new OutputNode(typeof(Address));
             node.Add(new NewtonsoftJsonFormatter());
             node.Add(new XmlFormatter());
             node.Add(new FakeAddressWriter());
@@ -46,33 +43,33 @@ namespace FubuMVC.Tests.Resources.Conneg
             }
         }
 
-        [Test]
+
+        [Fact]
         public void first_off_the_behavior_can_be_built()
         {
             theInputBehavior.ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void first_media_has_the_formatter()
         {
             theInputBehavior.Media.First()
                 .ShouldBeOfType<FormatterWriter<Address>>();
         }
 
-        [Test]
+        [Fact]
         public void second_media_has_the_xml_formatter()
         {
             theInputBehavior.Media.ElementAt(1).ShouldBeOfType<FormatterWriter<Address>>();
         }
 
-        [Test]
+        [Fact]
         public void third_media_is_the_specific_writer_with_the_conditional()
         {
             theInputBehavior.Media.ElementAt(2)
                 .ShouldBeOfType<FakeAddressWriter>();
         }
 
-        #endregion
     }
 
 

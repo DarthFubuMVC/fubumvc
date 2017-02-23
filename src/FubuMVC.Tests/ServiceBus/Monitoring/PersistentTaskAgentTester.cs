@@ -2,16 +2,16 @@
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
-    [TestFixture]
+    
     public class PersistentTaskAgentTester : InteractionContext<PersistentTaskAgent>
     {
-        [Test]
+        [Fact]
         public void assert_available_happy()
         {
             ClassUnderTest.AssertAvailable().Wait();
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             MockFor<IPersistentTask>().AssertWasCalled(x => x.AssertAvailable());
         }
 
-        [Test]
+        [Fact]
         public void assert_available_sad_path()
         {
             var ex = new DivideByZeroException();
@@ -36,21 +36,21 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             task.Result.ShouldBe(HealthStatus.Error);
         }
 
-        [Test]
+        [Fact]
         public void activate_happy_path()
         {
             ClassUnderTest.Activate().Wait();
             MockFor<IPersistentTask>().AssertWasCalled(x => x.Activate());
         }
 
-        [Test]
+        [Fact]
         public void deactivate_happy_path()
         {
             ClassUnderTest.Deactivate().Wait();
             MockFor<IPersistentTask>().AssertWasCalled(x => x.Deactivate());
         }
 
-        [Test]
+        [Fact]
         public void assign_peers()
         {
             var peers = Services.CreateMockArrayFor<ITransportPeer>(4);

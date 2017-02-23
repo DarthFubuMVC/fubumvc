@@ -4,22 +4,21 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Scheduling;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
-    public class ChannelGraph_can_read_thread_and_task_counts_from_config
+    
+    public class ChannelGraph_can_read_thread_and_task_counts_from_config : IDisposable
     {
         private Container theContainer;
         private FubuRuntime theRuntime;
         private ChannelGraph theGraph;
         private ConfiguredSettings theSettings;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public ChannelGraph_can_read_thread_and_task_counts_from_config()
         {
             InMemoryQueueManager.ClearAll();
 
@@ -41,13 +40,13 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             theGraph = theContainer.GetInstance<ChannelGraph>();
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             theRuntime.Dispose();
         }
 
-        [Test]
+
+        [Fact]
         public void can_read_settings_to_create_task_schedulers()
         {
             theContainer.GetInstance<ConfiguredSettings>()
@@ -66,7 +65,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         }
 
 
-        [Test]
+        [Fact]
         public void can_read_settings_to_create_thread_schedulers()
         {
             theGraph.ChannelFor<ConfiguredSettings>(x => x.Upstream)

@@ -6,12 +6,12 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class AuthenticationServiceTester : InteractionContext<AuthenticationService>
     {
         private IAuthenticationStrategy[] theStrategies;
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Security.Authentication
             theStrategies = Services.CreateMockArrayFor<IAuthenticationStrategy>(4);
         }
 
-        [Test]
+        [Fact]
         public void constructor_function_throws_exception_if_there_are_no_strategies()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Security.Authentication
             });
         }
 
-        [Test]
+        [Fact]
         public void stops_if_any_strategy_is_deterministic()
         {
             var result = new AuthResult {Continuation = FubuContinuation.RedirectTo("somewhere"), Success = false};
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Security.Authentication
             ClassUnderTest.TryToApply().ShouldBeTheSameAs(result);
         }
 
-        [Test]
+        [Fact]
         public void try_to_apply_fails_if_all_fail()
         {
             theStrategies.Each(x => x.Stub(o => o.TryToApply()).Return(AuthResult.Failed()));
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Security.Authentication
         }
 
 
-        [Test]
+        [Fact]
         public void try_to_apply_succeeds_if_any_succeeds()
         {
             theStrategies[0].Stub(x => x.TryToApply()).Return(AuthResult.Failed());
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Security.Authentication
             ClassUnderTest.TryToApply().Success.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void authenticate_fails_if_all_fail()
         {
             var request = new LoginRequest();
@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.Security.Authentication
         }
 
 
-        [Test]
+        [Fact]
         public void authenticate_succeeds_if_any_succeeds()
         {
             var request = new LoginRequest();
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Security.Authentication
         }
 
 
-        [Test]
+        [Fact]
         public void should_have_applied_history()
         {
             var request = new LoginRequest();
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Security.Authentication
             MockFor<ILoginAuditor>().AssertWasCalled(x => x.ApplyHistory(request));
         }
 
-        [Test]
+        [Fact]
         public void should_audit_the_request()
         {
             var request = new LoginRequest();
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.Security.Authentication
             MockFor<ILoginAuditor>().AssertWasCalled(x => x.Audit(request));
         }
 
-        [Test]
+        [Fact]
         public void executes_strategies_sent_through_parameter()
         {
             var request = new LoginRequest();

@@ -1,19 +1,19 @@
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class MenuItemStateTester
     {
-        [Test]
+        [Fact]
         public void least_method_empty_is_available()
         {
             MenuItemState.Least().ShouldBe(MenuItemState.Available);
         }
 
-        [Test]
+        [Fact]
         public void least_method_with_data()
         {
             MenuItemState.Least(MenuItemState.Available).ShouldBe(MenuItemState.Available);
@@ -27,28 +27,28 @@ namespace FubuMVC.Tests.Navigation
             MenuItemState.Least(MenuItemState.Hidden, MenuItemState.Disabled).ShouldBe(MenuItemState.Hidden);
         }
 
-        [Test]
+        [Fact]
         public void hidden_is_not_visible_and_disabled()
         {
             MenuItemState.Hidden.IsEnabled.ShouldBeFalse();
             MenuItemState.Hidden.IsShown.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void disabled_is_visible_but_disabled()
         {
             MenuItemState.Disabled.IsEnabled.ShouldBeFalse();
             MenuItemState.Disabled.IsShown.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void available_is_enabled_and_shown()
         {
             MenuItemState.Available.IsEnabled.ShouldBeTrue();
             MenuItemState.Available.IsShown.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void active_is_enabled_and_shown()
         {
             MenuItemState.Active.IsEnabled.ShouldBeTrue();

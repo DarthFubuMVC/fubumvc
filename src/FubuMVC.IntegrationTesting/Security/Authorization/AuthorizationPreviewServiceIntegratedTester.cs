@@ -5,22 +5,20 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Security.Authorization
 {
-    [TestFixture]
-    public class AuthorizationPreviewServiceIntegratedTester
+    
+    public class AuthorizationPreviewServiceIntegratedTester : IDisposable
     {
         private FubuRuntime _runtime;
 
-        [TearDown]
-        public void TearDown()
+
+
+        public void Dispose()
         {
-            if (_runtime != null)
-            {
-                _runtime.Dispose();
-            }
+            _runtime?.Dispose();
         }
 
         private AuthorizationPreviewService withAuthorizationRules(Action<BehaviorGraph> configure)
@@ -47,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
             Thread.CurrentPrincipal = principal;
         }
 
-        [Test]
+        [Fact]
         public void positive_case_by_model_only()
         {
             userHasRoles("a");
@@ -58,14 +56,14 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
         }
 
 
-        [Test]
+        [Fact]
         public void positive_case_by_model_only_when_there_are_no_authorization_rules_on_a_chain()
         {
             userHasRoles("a");
             withAuthorizationRules(graph => { }).IsAuthorized(new Model1()).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void negative_case_by_model_only()
         {
             userHasRoles("a");
@@ -76,7 +74,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
             service.IsAuthorized(new Model1()).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void positive_by_model_only_with_multiple_roles()
         {
             userHasRoles("b", "c");
@@ -87,7 +85,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
             }).IsAuthorized(new Model1()).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void positive_by_model_and_category()
         {
             userHasRoles("a");
@@ -100,7 +98,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
         }
 
 
-        [Test]
+        [Fact]
         public void negative_by_model_and_category()
         {
             userHasRoles("a");
@@ -112,7 +110,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
             service.IsAuthorized(new UrlModel(), "different").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void positive_by_controller_method_expression()
         {
             userHasRoles("a");
@@ -125,7 +123,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
         }
 
 
-        [Test]
+        [Fact]
         public void negative_by_controller_method_expression()
         {
             userHasRoles("a");
@@ -137,7 +135,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
             service.IsAuthorized<OneController>(x => x.M2()).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void positive_for_new_entity()
         {
             userHasRoles("a");
@@ -150,7 +148,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
         }
 
 
-        [Test]
+        [Fact]
         public void negative_for_new_entity()
         {
             userHasRoles("a");

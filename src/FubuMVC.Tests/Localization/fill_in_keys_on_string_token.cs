@@ -1,13 +1,13 @@
 using FubuMVC.Core.Localization;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class fill_in_keys_on_string_token
     {
-        [Test]
+        [Fact]
         public void all_keys_are_derived_from_the_field_name()
         {
             MyKeys.Key1.ToLocalizationKey().Key1.ShouldBe("MyKeys:Key1");
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Localization
             MyKeys.Key1.DefaultValue.ShouldBe("Default1");
         }
 
-        [Test]
+        [Fact]
         public void all_keys_are_derived_from_the_field_name_2()
         {
             MyKeys2.Key1.ToLocalizationKey().Key1.ShouldBe("MyKeys2:Key1");

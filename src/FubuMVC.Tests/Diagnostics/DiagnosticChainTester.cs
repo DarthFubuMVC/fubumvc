@@ -2,21 +2,21 @@
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Diagnostics
 {
-    [TestFixture]
+    
     public class DiagnosticChainTester
     {
-        [Test]
+        [Fact]
         public void build_the_route()
         {
             DiagnosticChain.For<FakeFubuDiagnostics>(x => x.get_link())
                 .GetRoutePattern().ShouldBe("_fubu/fake/link");
         }
 
-        [Test]
+        [Fact]
         public void chain_includes_the_call()
         {
             DiagnosticChain.For<FakeFubuDiagnostics>(x => x.get_link())

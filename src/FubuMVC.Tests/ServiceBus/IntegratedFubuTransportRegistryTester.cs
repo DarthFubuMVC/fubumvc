@@ -8,16 +8,15 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Routing;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Scheduling;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class IntegratedFubuTransportRegistryTester
     {
-        [SetUp]
-        public void SetUp()
+        public IntegratedFubuTransportRegistryTester()
         {
             theRegistry = new BusRegistry();
             _behaviors = new Lazy<BehaviorGraph>(() =>
@@ -43,7 +42,7 @@ namespace FubuMVC.Tests.ServiceBus
             return theChannels.ChannelFor(expression);
         }
 
-        [Test]
+        [Fact]
         public void set_channel_to_listening()
         {
             theRegistry.Channel(x => x.Upstream).ReadIncoming();
@@ -52,7 +51,7 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Downstream).Incoming.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void set_channel_to_listening_override_thread_count()
         {
             theRegistry.Channel(x => x.Upstream).ReadIncoming(new ThreadScheduler(5));
@@ -63,7 +62,7 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Downstream).Incoming.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void set_the_default_content_type_by_serializer_type()
         {
             theRegistry.ServiceBus.DefaultSerializer<BinarySerializer>();
@@ -71,14 +70,14 @@ namespace FubuMVC.Tests.ServiceBus
             theChannels.DefaultContentType.ShouldBe(new BinarySerializer().ContentType);
         }
 
-        [Test]
+        [Fact]
         public void set_the_default_content_type_by_string()
         {
             theRegistry.ServiceBus.DefaultContentType("application/json");
             theChannels.DefaultContentType.ShouldBe("application/json");
         }
 
-        [Test]
+        [Fact]
         public void set_the_default_content_type_for_a_channel_by_serializer()
         {
             theRegistry.Channel(x => x.Outbound).DefaultSerializer<BinarySerializer>();
@@ -90,14 +89,14 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Upstream).DefaultSerializer.ShouldBeOfType<BasicJsonMessageSerializer>();
         }
 
-        [Test]
+        [Fact]
         public void set_the_default_content_type_for_a_channel_by_string()
         {
             theRegistry.Channel(x => x.Outbound).DefaultContentType("application/json");
             channelFor(x => x.Outbound).DefaultContentType.ShouldBe("application/json");
         }
 
-        [Test]
+        [Fact]
         public void add_namespace_publishing_rule()
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInNamespaceContainingType<BusSettings>();
@@ -108,7 +107,7 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void add_namespace_publishing_rule_2()
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInNamespace(typeof (BusSettings).Namespace);
@@ -119,7 +118,7 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void add_assembly_publishing_rule()
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInAssemblyContainingType<BusSettings>();
@@ -130,7 +129,7 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void add_assembly_publishing_rule_2()
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInAssembly(typeof (BusSettings).Assembly.GetName().Name);
@@ -141,7 +140,7 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void add_single_type_rule()
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessage<BusSettings>();
@@ -151,7 +150,7 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void add_single_type_rule_2()
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessage(typeof (BusSettings));
@@ -161,7 +160,7 @@ namespace FubuMVC.Tests.ServiceBus
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void add_adhoc_rule()
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessages(type => type == typeof (BusSettings));
@@ -173,7 +172,7 @@ namespace FubuMVC.Tests.ServiceBus
             rule.Matches(GetType()).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void add_custom_rule()
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesMatchingRule<CustomRule>();

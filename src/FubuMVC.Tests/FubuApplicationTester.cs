@@ -6,15 +6,14 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class FubuApplicationTester
     {
-        [SetUp]
-        public void SetUp()
+        public FubuApplicationTester()
         {
             var system = new FileSystem();
             system.FindFiles(".".ToFullPath(), new FileSet
@@ -23,7 +22,8 @@ namespace FubuMVC.Tests
             }).ToList().Each(system.DeleteFile);
         }
 
-        [Test]
+
+        [Fact]
         public void the_restarted_property_is_set()
         {
             var floor = DateTime.Now.AddSeconds(-5);
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void description_smoke_tester()
         {
             using (var runtime = FubuRuntime.Basic())
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void can_use_the_default_policies()
         {
             var application = FubuRuntime.Basic();

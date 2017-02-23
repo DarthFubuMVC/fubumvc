@@ -1,15 +1,15 @@
 ﻿using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
-    [TestFixture]
+    
     public class Service_registration_specs
     {
-        [Test]
+        [Fact]
         public void registrations()
         {
             using (var runtime = FubuRuntime.BasicBus())

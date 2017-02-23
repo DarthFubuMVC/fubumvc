@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 
 namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
-    [TestFixture]
+    
     public class ScheduleRepositoryTester
     {
 

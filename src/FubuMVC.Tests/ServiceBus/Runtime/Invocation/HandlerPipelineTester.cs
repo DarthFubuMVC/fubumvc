@@ -6,13 +6,13 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class when_invoking_an_envelope : InteractionContext<HandlerPipeline>
     {
         private IContinuation theContinuation;
@@ -39,20 +39,20 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             ClassUnderTest.Invoke(theEnvelope, theContext);
         }
 
-        [Test]
+        [Fact]
         public void should_have_incremented_the_attempt_count()
         {
             theEnvelope.Attempts.ShouldBe(2);
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_continuation()
         {
             theContinuation.AssertWasCalled(x => x.Execute(theEnvelope, theContext));
         }
     }
 
-    [TestFixture]
+    
     public class when_invoking_an_envelope_with_serialization_error : InteractionContext<HandlerPipeline>
     {
         private Envelope theEnvelope;
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theEnvelope.Callback = MockFor<IMessageCallback>();
         }
 
-        [Test]
+        [Fact]
         public void exception_is_handled()
         {
             ClassUnderTest.Invoke(theEnvelope, new TestEnvelopeContext());
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         }
     }
 
-    [TestFixture]
+    
     public class when_receiving_an_envelope : InteractionContext<HandlerPipeline>
     {
         private IContinuation theContinuation;
@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             ClassUnderTest.Receive(theEnvelope);
         }
 
-        [Test]
+        [Fact]
         public void the_serializer_should_be_set_on_the_envelope()
         {
             var theExpectedMessage = new object();
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theEnvelope.Message.ShouldBeTheSameAs(theExpectedMessage);
         }
 
-        [Test]
+        [Fact]
         public void log_the_envelope_received()
         {
             theContext.RecordedLogs.InfoMessages.ShouldContain(new EnvelopeReceived
@@ -129,7 +129,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             });
         }
 
-        [Test]
+        [Fact]
         public void should_invoke()
         {
             ClassUnderTest.AssertWasCalled(x => x.Invoke(theEnvelope, theContext));
@@ -137,7 +137,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     }
 
 
-    [TestFixture]
+    
     public class when_determining_the_continuation : InteractionContext<HandlerPipeline>
     {
         private IEnvelopeHandler[] theHandlers;
@@ -163,13 +163,13 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theFoundContinuation = ClassUnderTest.FindContinuation(theEnvelope, theContext);
         }
 
-        [Test]
+        [Fact]
         public void should_find_the_first_non_null_continuation_from_a_handler()
         {
             theFoundContinuation.ShouldBeTheSameAs(theContinuation);
         }
 
-        [Test]
+        [Fact]
         public void should_debug_the_handler_and_continuation_used()
         {
             var log = theContext.RecordedLogs.DebugMessages.Single().ShouldBeOfType<EnvelopeContinuationChosen>();

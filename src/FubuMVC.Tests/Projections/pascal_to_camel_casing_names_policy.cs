@@ -2,14 +2,14 @@
 using FubuCore;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class pascal_to_camel_casing_names_policy
     {
-        [Test]
+        [Fact]
         public void with_the_camel_casing_correction()
         {
             var projection = new Projection<SomeTarget>();
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Projections
 
         }
 
-        [Test]
+        [Fact]
         public void with_the_normal_casing()
         {
             var projection = new Projection<SomeTarget>();

@@ -6,15 +6,15 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class OutputBeforeAjaxContinuationPolicyTester
     {
-        [Test]
+        [Fact]
         public void reorders_output_node_before_the_first_action()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Registration
             chain.Last().ShouldBeOfType<ActionCall>();
         }
 
-        [Test]
+        [Fact]
         public void does_not_reorder_async_continuation()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Registration
             chain.FirstCall().Next.Next.ShouldBeOfType<OutputNode>();
         }
 
-        [Test]
+        [Fact]
         public void modifies_a_chain()
         {
             var chain = new BehaviorChain();
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Registration
             chain.Last().ShouldBeTheSameAs(theAction);
         }
 
-        [Test]
+        [Fact]
         public void chains_with_input()
         {
             var graph = BehaviorGraph.BuildFrom(x =>

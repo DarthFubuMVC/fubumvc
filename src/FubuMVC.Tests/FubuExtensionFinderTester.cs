@@ -4,14 +4,14 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class FubuExtensionFinderTester
     {
-        [Test]
+        [Fact]
         public void do_not_import_extensions_marked_with_DoNotAutoImport()
         {
             var assembly = Assembly.GetExecutingAssembly();

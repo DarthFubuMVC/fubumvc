@@ -1,21 +1,15 @@
 using System.Linq;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class MinValueFieldRuleTester
     {
-        private MinValueTarget theTarget;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theTarget = new MinValueTarget();
-        }
+        private MinValueTarget theTarget = new MinValueTarget();
 
         private Notification theNotification
         {
@@ -31,13 +25,13 @@ namespace FubuMVC.Tests.Validation.Fields
             }
         }
 
-		[Test]
+		[Fact]
 		public void uses_the_default_token()
 		{
 			new MinValueFieldRule(0).Token.ShouldBe(ValidationKeys.MinValue);
 		}
 
-        [Test]
+        [Fact]
         public void registers_a_message_when_the_value_is_less_than_min()
         {
             theTarget.Value = 6;
@@ -45,21 +39,21 @@ namespace FubuMVC.Tests.Validation.Fields
             messages.Single().StringToken.ShouldBe(ValidationKeys.MinValue);
         }
 
-        [Test]
+        [Fact]
         public void no_message_when_equal_to_min()
         {
             theTarget.Value = 10;
             theNotification.MessagesFor<MinValueTarget>(x => x.Value).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void no_message_when_greater_than_min()
         {
             theTarget.Value = 11;
             theNotification.MessagesFor<MinValueTarget>(x => x.Value).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void renders_the_substitutions()
         {
             theTarget.Value = 7;

@@ -1,10 +1,10 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    [TestFixture]
+    
     public class asset_writing_in_production : AssetIntegrationContext
     {
         public asset_writing_in_production()
@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             File("Foo.js").WriteLine("var x = 0;");
         }
 
-        [Test]
+        [Fact]
         public void writes_the_headers_and_content()
         {
             Scenario.Get.Url("/Foo.js");

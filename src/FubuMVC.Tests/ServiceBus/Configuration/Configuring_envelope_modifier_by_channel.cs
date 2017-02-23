@@ -3,15 +3,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class Configuring_envelope_modifier_by_channel
     {
-        [Test]
+        [Fact]
         public void can_register_modifiers_by_channel()
         {
             using (var runtime = FubuRuntime.For<ModifyingChannelRegistry>())

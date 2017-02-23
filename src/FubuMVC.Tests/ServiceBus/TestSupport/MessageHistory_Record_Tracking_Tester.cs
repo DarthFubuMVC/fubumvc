@@ -3,15 +3,15 @@ using System.Linq;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.Services.Messaging.Tracking;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.TestSupport
 {
-    [TestFixture]
+    
     public class MessageHistory_Record_Tracking_Tester
     {
-        [Test]
+        [Fact]
         public void handle_chain_started()
         {
             MessageHistory.ClearHistory();
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.ServiceBus.TestSupport
             sent.Type.ShouldBe(MessageLogRecord.MessageTrackType);
         }
 
-        [Test]
+        [Fact]
         public void handle_chain_finished()
         {
             MessageHistory.ClearHistory();
@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.ServiceBus.TestSupport
             MessageHistory.Outstanding().Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void handle_envelope_sent_then_message_successful_tracking_for_the_same_message_to_multiple_nodes()
         {
             MessageHistory.ClearHistory();
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.ServiceBus.TestSupport
             MessageHistory.Outstanding().Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void handle_envelope_sent_then_message_successful_for_multiple_messages_to_the_same_node()
         {
             MessageHistory.ClearHistory();
@@ -125,7 +125,7 @@ namespace FubuMVC.Tests.ServiceBus.TestSupport
 
 
 
-        [Test]
+        [Fact]
         public void handle_envelope_sent_then_message_failed_tracking_for_the_same_message_to_multiple_nodes()
         {
             MessageHistory.ClearHistory();
@@ -159,7 +159,7 @@ namespace FubuMVC.Tests.ServiceBus.TestSupport
             MessageHistory.Outstanding().Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void handle_envelope_sent_then_message_failed_for_multiple_messages_to_the_same_node()
         {
             MessageHistory.ClearHistory();

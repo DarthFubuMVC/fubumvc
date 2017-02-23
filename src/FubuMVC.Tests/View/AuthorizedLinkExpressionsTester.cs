@@ -4,21 +4,19 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.UI
 {
-    [TestFixture]
+    
     public class AuthorizedLinkExpressionsTester
     {
         private IFubuPage page;
         private IEndpointService endpoints;
         private Endpoint theEndpoint;
 
-
-        [SetUp]
-        public void SetUp()
+        public AuthorizedLinkExpressionsTester()
         {
             _resultingTag = null;
 
@@ -53,7 +51,7 @@ namespace FubuMVC.Tests.UI
             }
         }
 
-        [Test]
+        [Fact]
         public void get_a_link_for_an_authorized_endpoint()
         {
             theEndpoint.IsAuthorized = true;
@@ -64,7 +62,7 @@ namespace FubuMVC.Tests.UI
             theResultingTag.ToString().ShouldNotBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void get_a_link_for_an_endpoint_that_is_not_authorized()
         {
             theEndpoint.IsAuthorized = false;

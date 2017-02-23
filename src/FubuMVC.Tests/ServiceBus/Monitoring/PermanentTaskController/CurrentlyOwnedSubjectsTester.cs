@@ -1,14 +1,14 @@
 ﻿using System.Linq;
 using FubuMVC.Core.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
-    [TestFixture]
+    
     public class CurrentlyOwnedSubjectsTester : PersistentTaskControllerContext
     {
-        [Test]
+        [Fact]
         public void includes_both_active_subjects_and_subjects_persisted_as_owned()
         {
             Task("foo://1").IsFullyFunctionalAndActive();

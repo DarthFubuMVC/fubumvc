@@ -5,12 +5,12 @@ using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.Remote;
 using FubuMVC.Core.Validation.Web.UI;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class RemoteValidationElementModifierTester
     {
         private RemoteValidationElementModifier theModifier;
@@ -21,8 +21,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
         private IUrlRegistry theUrls;
         private RemoteFieldRule theRemoteRule;
 
-        [SetUp]
-        public void SetUp()
+        public RemoteValidationElementModifierTester()
         {
             theModifier = new RemoteValidationElementModifier();
             theTag = new HtmlTag("input");
@@ -42,13 +41,13 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theRequest.Attach(theServices);
         }
 
-        [Test]
+        [Fact]
         public void always_matches()
         {
             theModifier.Matches(null).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void registers_the_validation_def()
         {
             theModifier.Modify(theRequest);
@@ -58,7 +57,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             def.rules.ShouldHaveTheSameElementsAs(theRemoteRule.ToHash());
         }
         
-        [Test]
+        [Fact]
         public void no_registration_when_no_rules_are_found()
         {
             theRemoteGraph = new RemoteRuleGraph();

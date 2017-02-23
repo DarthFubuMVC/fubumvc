@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Security.Authentication.Saml2;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class SamlStatusTester
     {
-        [Test]
+        [Fact]
         public void can_read_saml_status()
         {
             SamlStatus.Get(SamlStatus.Success.Uri.ToString()).ShouldBeTheSameAs(SamlStatus.Success);

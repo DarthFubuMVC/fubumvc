@@ -4,21 +4,20 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
-    public class FubuTransportRegistry_register_subscription_requirements_Tester
+    
+    public class FubuTransportRegistry_register_subscription_requirements_Tester : IDisposable
     {
         private FubuRuntime runtime;
         private Container container;
         private readonly BusSettings theSettings = InMemoryTransport.ToInMemory<BusSettings>();
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public FubuTransportRegistry_register_subscription_requirements_Tester()
         {
             container = new Container(x => {
                 x.For<BusSettings>().Use(theSettings);
@@ -29,14 +28,14 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             runtime = registry.ToRuntime();
         }
 
-        [TestFixtureTearDown]
-        public void TearDown()
+
+        public void Dispose()
         {
             runtime.Dispose();
         }
 
 
-        [Test]
+        [Fact]
         public void the_expected_subscriptions()
         {
             var graph = container.GetInstance<ChannelGraph>();

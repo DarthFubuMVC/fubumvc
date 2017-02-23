@@ -1,5 +1,5 @@
 ﻿using FubuCore;
-using NUnit.Framework;
+using Xunit;
 using Serenity;
 using Shouldly;
 using StoryTeller;
@@ -7,11 +7,11 @@ using StoryTeller.Engine;
 
 namespace FubuMVC.IntegrationTesting.Serenity
 {
-    [TestFixture]
+    
     public class BrowserType_selection_tester
     {
 
-        [Test]
+        [Fact]
         public void select_with_no_profile_or_default_should_be_chrome()
         {
             Project.CurrentProject = new Project{Profile = null};
@@ -20,7 +20,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
 
         }
 
-        [Test]
+        [Fact]
         public void select_with_no_profile_and_a_default()
         {
             Project.CurrentProject = new Project { Profile = null };
@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
                 .ShouldBe(BrowserType.Firefox);
         }
 
-        [Test]
+        [Fact]
         public void profile_wins()
         {
             Project.CurrentProject = new Project { Profile = "phantom" };
@@ -41,7 +41,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
 
         }
 
-        [Test]
+        [Fact]
         public void build_for_a_system_all_defaults()
         {
             Project.CurrentProject = new Project { Profile = null };
@@ -54,7 +54,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             }
         }
 
-        [Test]
+        [Fact]
         public void build_for_a_system_with_default()
         {
             Project.CurrentProject = new Project { Profile = null };
@@ -67,7 +67,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
             }
         }
 
-        [Test]
+        [Fact]
         public void build_with_system_for_profile()
         {
             Project.CurrentProject = new Project { Profile = "phantom/katana" };

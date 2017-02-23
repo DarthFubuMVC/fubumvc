@@ -3,12 +3,12 @@ using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class when_there_are_outputs_that_would_write_headers : InteractionContext<OutputBehavior<Address>>
     {
         protected override void beforeEach()
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Resources.Conneg
         }
 
 
-        [Test]
+        [Fact]
         public void should_write_all_possible_headers()
         {
             MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("a", "1"));
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Resources.Conneg
     }
 
 
-    [TestFixture]
+    
     public class when_the_resource_cannot_be_found : InteractionContext<OutputBehavior<OutputTarget>>
     {
         protected override void beforeEach()
@@ -52,13 +52,13 @@ namespace FubuMVC.Tests.Resources.Conneg
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_write_the_404_just_in_case()
         {
             MockFor<IOutputWriter>().AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.NotFound));
         }
 
-        [Test]
+        [Fact]
         public void should_call_through_to_the_resource_not_found_handler()
         {
             MockFor<IResourceNotFoundHandler>().AssertWasCalled(x => x.HandleResourceNotFound<OutputTarget>());

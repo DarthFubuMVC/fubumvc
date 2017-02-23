@@ -3,12 +3,12 @@ using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web.Remote;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.Remote
 {
-    [TestFixture]
+    
     public class RemoteFieldRuleTester
     {
         private Accessor accessorFor(Expression<Func<RemoteFieldModel, object>> expression)
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             return expression.ToAccessor();
         }
 
-        [Test]
+        [Fact]
         public void equality_check()
         {
             var accessor = accessorFor(x => x.Name);
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             r1.ShouldBe(r2);
         }
 
-        [Test]
+        [Fact]
         public void equality_check_negative_accessor()
         {
             var r1 = RemoteFieldRule.For<RequiredFieldRule>(accessorFor(x => x.Name));
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             r1.ShouldNotBe(r2);
         }
 
-        [Test]
+        [Fact]
         public void equality_check_negative_type()
         {
             var accessor = accessorFor(x => x.Name);
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             r1.ShouldNotBe(r2);
         }
 
-        [Test]
+        [Fact]
         public void hash_is_repeatable()
         {
 			var r1 = RemoteFieldRule.For<RequiredFieldRule>(accessorFor(x => x.Name));
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             r1.ToHash().ShouldBe(r2.ToHash());
         }
 
-        [Test]
+        [Fact]
         public void hash_is_unique_by_rule_model_and_accessor()
         {
             var r1 = RemoteFieldRule.For<RequiredFieldRule>(SingleProperty.Build<SomeNamespace.Model>(e => e.Property));

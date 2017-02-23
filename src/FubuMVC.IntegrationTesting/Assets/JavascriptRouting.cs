@@ -9,15 +9,15 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.View;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    [TestFixture]
+    
     public class JavascriptRouting
     {
-        [Test]
+        [Fact]
         public void can_write_the_javascript_routes_for_all_methods()
         {
             using (var host = FubuRuntime.Basic())
@@ -43,7 +43,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             }
         }
 
-        [Test]
+        [Fact]
         public void can_swap_out_the_javascript_route_data()
         {
 

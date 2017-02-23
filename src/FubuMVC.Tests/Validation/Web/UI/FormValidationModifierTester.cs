@@ -10,19 +10,18 @@ using FubuMVC.Core.Urls;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.UI;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class FormValidationModifierTester
     {
         private BehaviorGraph theGraph;
         private ValidationSettings theSettings;
 
-        [SetUp]
-        public void SetUp()
+        public FormValidationModifierTester()
         {
             theSettings = new ValidationSettings();
             theGraph = BehaviorGraph.BuildFrom(x =>
@@ -50,7 +49,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             return request;
         }
 
-        [Test]
+        [Fact]
         public void modifies_the_form()
         {
             var theRequest = requestFor<AjaxTarget>();
@@ -63,7 +62,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theRequest.CurrentTag.HasClass("validated-form").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void excluded_from_activation()
         {
             theSettings.ExcludeFormActivation = chain => chain.InputType() == typeof(AjaxTarget);
@@ -78,7 +77,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theRequest.CurrentTag.HasClass("validated-form").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void no_strategies()
         {
             var theRequest = requestFor<AjaxTarget>();
@@ -90,7 +89,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theRequest.CurrentTag.HasClass("validated-form").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void adds_the_validation_options()
         {
             var theRequest = requestFor<AjaxTarget>();
@@ -102,7 +101,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theRequest.CurrentTag.Data(ValidationOptions.Data).ShouldBe(options);
         }
 
-        [Test]
+        [Fact]
         public void writes_the_validation_activator_requirement()
         {
             var theRequest = requestFor<AjaxTarget>();

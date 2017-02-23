@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class UrlPatternAttributeTester
     {
-        [Test]
+        [Fact]
         public void build_route_with_a_single_method_restrictions()
         {
             var attribute = new UrlPatternAttribute("GET::foo");
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET");
         }
 
-        [Test]
+        [Fact]
         public void build_route_with_multiple_method_restrictions()
         {
             var attribute = new UrlPatternAttribute("GET,post,PUT::foo");
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET", "POST", "PUT");
         }
 
-        [Test]
+        [Fact]
         public void GetAttribute()
         {
             var attribute = new GetAttribute("foo");
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET");
         }
 
-        [Test]
+        [Fact]
         public void PostAttribute()
         {
             var attribute = new PostAttribute("foo");
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests
         }
 
 
-        [Test]
+        [Fact]
         public void PutAttribute()
         {
             var attribute = new PutAttribute("foo");
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests
 
 
 
-        [Test]
+        [Fact]
         public void DeleteAttribute()
         {
             var attribute = new DeleteAttribute("foo");

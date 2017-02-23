@@ -6,7 +6,7 @@ using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Samples
 {
@@ -50,10 +50,10 @@ namespace FubuMVC.IntegrationTesting.Samples
     }
 
 
-    [TestFixture]
+    
     public class NumberEndpointTester
     {
-        [Test]
+        [Fact]
         public void try_out_continuations()
         {
             // SAMPLE: fubucontinuation-in-action
@@ -140,10 +140,10 @@ namespace FubuMVC.IntegrationTesting.Samples
     // ENDSAMPLE
 
     // SAMPLE: filter-testing
-    [TestFixture]
+    
     public class NumberFilterTester
     {
-        [Test]
+        [Fact]
         public void just_go_on_if_not_a_special_number()
         {
             new NumberFilter()
@@ -151,7 +151,7 @@ namespace FubuMVC.IntegrationTesting.Samples
                 .AssertWasContinuedToNextBehavior();
         }
 
-        [Test]
+        [Fact]
         public void stop_if_greater_than_10()
         {
             new NumberFilter()
@@ -159,7 +159,7 @@ namespace FubuMVC.IntegrationTesting.Samples
                 .AssertWasEndedWithStatusCode(HttpStatusCode.Unauthorized);
         }
 
-        [Test]
+        [Fact]
         public void redirect_if_a_negative_number()
         {
             new NumberFilter()
@@ -167,7 +167,7 @@ namespace FubuMVC.IntegrationTesting.Samples
                 .AssertWasRedirectedTo<NumberEndpoint>(x => x.get_invalid());
         }
 
-        [Test]
+        [Fact]
         public void transfer_to_special_if_5()
         {
             new NumberFilter()
@@ -175,7 +175,7 @@ namespace FubuMVC.IntegrationTesting.Samples
                 .AssertWasTransferedTo<NumberEndpoint>(x => x.get_special());
         }
 
-        [Test]
+        [Fact]
         public void transfer_if_2()
         {
             new NumberFilter()
@@ -183,7 +183,7 @@ namespace FubuMVC.IntegrationTesting.Samples
                 .AssertWasTransferedTo(new DoubleNumber {Value = 4});
         }
 
-        [Test]
+        [Fact]
         public void redirect_if_4()
         {
             new NumberFilter()

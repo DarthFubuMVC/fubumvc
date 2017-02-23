@@ -8,16 +8,13 @@ using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Core.Services.Remote;
 using Shouldly;
-using NUnit.Framework;
 using SampleService;
 using Foo = FubuMVC.Tests.Services.Messaging.Tracking.Foo;
 
 namespace FubuMVC.Tests.Services.Remote
 {
-    [Explicit("Only for examples")]
     public class Examples
     {
-        [Test]
         public void loading_a_custom_application_loader()
         {
             // SAMPLE: bootstrap-custom-loader
@@ -36,7 +33,6 @@ namespace FubuMVC.Tests.Services.Remote
             // ENDSAMPLE
         }
 
-        [Test]
         public void overriding_the_configuration_file()
         {
             // SAMPLE: override-config-file
@@ -63,7 +59,6 @@ namespace FubuMVC.Tests.Services.Remote
         // ENDSAMPLE
 
 
-        [Test]
         public void simplest_usage()
         {
             // SAMPLE: simple-remote-service-runner
@@ -88,7 +83,6 @@ namespace FubuMVC.Tests.Services.Remote
 
         public class SomeMessage{}
 
-        [Test]
         public void open_to_a_parallel_directory()
         {
             // SAMPLE: parallel-service
@@ -98,7 +92,6 @@ namespace FubuMVC.Tests.Services.Remote
             // ENDSAMPLE
         }
 
-        [Test]
         public void control_appdomain_setup()
         {
             // SAMPLE: appdomain-setup
@@ -116,7 +109,6 @@ namespace FubuMVC.Tests.Services.Remote
             // ENDSAMPLE
         }
 
-        [Test]
         public void load_assemblies()
         {
             // SAMPLE: require-assemblies
@@ -129,7 +121,6 @@ namespace FubuMVC.Tests.Services.Remote
         }
     }
 
-    [TestFixture, Explicit("These tests do not play nice on the build server")]
     public class BigRemoteServicesIntegrationTester
     {
         private RemoteServiceRunner start()
@@ -140,7 +131,6 @@ namespace FubuMVC.Tests.Services.Remote
             });
         }
 
-        [Test]
         public void start_with_only_the_folder_name_with_an_IActivator()
         {
             var servicePath = ".".ToFullPath().ParentDirectory().ParentDirectory().ParentDirectory().AppendPath("SampleService");
@@ -151,7 +141,6 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
         public void start_with_only_the_folder_name_with_an_IApplicationLoader()
         {
             var servicePath = ".".ToFullPath().ParentDirectory().ParentDirectory().ParentDirectory().AppendPath("ApplicationLoaderService");
@@ -161,7 +150,6 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
         public void start_with_a_parallel_folder()
         {
             using (var runner = new RemoteServiceRunner(x => {
@@ -172,7 +160,6 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
         public void coordinate_message_history_via_remote_service()
         {
             
@@ -195,7 +182,6 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
         public void coordinate_message_history_via_remote_service_and_clear_data_does_not_remove_listeners()
         {
 
@@ -217,7 +203,6 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
         public void spin_up_the_remote_service_for_the_sample_and_send_messages_back_and_forth()
         {
             using (var runner = start())
@@ -229,7 +214,6 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
         public void spin_up_and_send_and_receive_messages()
         {
             using (var runner = start())
@@ -254,7 +238,6 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
         public void copy_new_remote_assembly_over_old_assembly_when_copymode_always()
         {
             using (var runner = new RemoteServiceRunner(x =>
@@ -279,7 +262,6 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
         public void copy_assembly_once_by_default()
         {
             using (var runner = new RemoteServiceRunner(x =>

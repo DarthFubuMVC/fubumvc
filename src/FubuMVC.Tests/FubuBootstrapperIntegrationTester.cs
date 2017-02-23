@@ -11,18 +11,15 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
-    public class FubuBootstrapperIntegrationTester
+    
+    public class FubuBootstrapperIntegrationTester : IDisposable
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public FubuBootstrapperIntegrationTester()
         {
             registry = new FubuRegistry(x => { x.Actions.IncludeType<TestController>(); });
 
@@ -45,26 +42,25 @@ namespace FubuMVC.Tests
             container.Configure(x => x.For<IOutputWriter>().Use(new InMemoryOutputWriter()));
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             fubuRuntime.Dispose();
         }
 
-        #endregion
+
 
         private FubuRegistry registry;
         private Container container;
         private IList<RouteBase> routes;
         private FubuRuntime fubuRuntime;
 
-        [Test]
+        [Fact]
         public void should_have_a_route_in_the_RouteCollection_with_a_Fubu_RouteHandler_for_each_route_in_the_registry()
         {
             routes.Each(x => x.ShouldBeOfType<Route>().RouteHandler.ShouldBeOfType<FubuRouteHandler>());
         }
 
-        [Test]
+        [Fact]
         public void should_have_registered_behaviors_in_the_container()
         {
             Debug.WriteLine(container.WhatDoIHave());
@@ -72,7 +68,7 @@ namespace FubuMVC.Tests
             (container.Model.For<IActionBehavior>().Instances.Count() >= 6).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_register_routes_in_order_of_the_number_of_their_inputs()
         {
             var urls = routes.OfType<Route>().Select(r => r.Url).Where(x => !x.Contains("hello"));

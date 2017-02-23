@@ -2,15 +2,15 @@
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
+    
     public class SubscriptionCache_replace_subscriptions_tester
     {
-        [Test]
+        [Fact]
         public void can_replace_the_subscriptions()
         {
             var cache = new SubscriptionCache(new ChannelGraph(), new ITransport[]{new InMemoryTransport(), });
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             cache.ActiveSubscriptions.ShouldHaveTheSameElementsAs(subscriptions2);
         }
 
-        [Test]
+        [Fact]
         public void updates_cached_routes()
         {
             var cache = new SubscriptionCache(new ChannelGraph(), new ITransport[]{new InMemoryTransport(), });

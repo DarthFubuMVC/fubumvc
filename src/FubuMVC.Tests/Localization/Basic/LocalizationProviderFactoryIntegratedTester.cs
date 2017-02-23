@@ -3,16 +3,15 @@ using System.Threading;
 using FubuCore;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Localization.Basic;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization.Basic
 {
-    [TestFixture]
+    
     public class LocalizationProviderFactoryIntegratedTester
     {
-        [SetUp]
-        public void SetUp()
+        public LocalizationProviderFactoryIntegratedTester()
         {
             var system = new FileSystem();
             system.DeleteDirectory("localization1");
@@ -30,7 +29,7 @@ namespace FubuMVC.Tests.Localization.Basic
             XmlDirectoryLocalizationStorage.Write(directory, culture, LocalString.ReadAllFrom(values));
         }
 
-        [Test]
+        [Fact]
         public void load_all()
         {
             write("localization1", new CultureInfo("en-US"),
@@ -81,7 +80,7 @@ namespace FubuMVC.Tests.Localization.Basic
                 .ShouldBe("gb-a");
         }
 
-        [Test]
+        [Fact]
         public void put_it_all_together()
         {
             write("localization1", new CultureInfo("en-US"),

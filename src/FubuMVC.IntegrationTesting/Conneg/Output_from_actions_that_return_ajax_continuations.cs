@@ -1,15 +1,15 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
-    [TestFixture]
+    
     public class Output_from_actions_that_return_ajax_continuations 
     {
 
-        [Test]
+        [Fact]
         public void get_output_from_continuation()
         {
             TestHost.Scenario(_ =>
@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void get_output_from_custom_continuation()
         {
             var specialInput = new SpecialInput {Name = "somebody"};

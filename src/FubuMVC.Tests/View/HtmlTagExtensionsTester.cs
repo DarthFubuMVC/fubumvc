@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using FubuMVC.Core.View;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.UI
 {
-    [TestFixture]
+    
     public class HtmlTagExtensionsTester
     {
 
-        [Test]
+        [Fact]
         public void find_first_child()
         {
             var tag = new HtmlTag("a");
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.UI
             new TagHolder(tag).ForChild("div").ShouldBeTheSameAs(div);
         }
 
-        [Test]
+        [Fact]
         public void mustache_attr()
         {
             var tag = new HtmlTag("a");
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.UI
             tag.ToString().ShouldBe("<a href=\"{{url}}\"></a>");
         }
 
-        [Test]
+        [Fact]
         public void mustache_value()
         {
             var tag = new TextboxTag();
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.UI
             tag.ToString().ShouldBe("<input type=\"text\" value=\"{{prop}}\" />");
         }
 
-        [Test]
+        [Fact]
         public void mustache_text()
         {
             var tag = new HtmlTag("span");
@@ -71,10 +71,10 @@ namespace FubuMVC.Tests.UI
 
 
 
-    [TestFixture]
+    
     public class TextIfEmptyTester
     {
-        [Test]
+        [Fact]
         public void trying_to_set_the_default_text_on_an_input_element_should_throw_an_exception()
         {
             Exception<InvalidOperationException>.ShouldBeThrownBy(() =>
@@ -83,14 +83,14 @@ namespace FubuMVC.Tests.UI
             });
         }
 
-        [Test]
+        [Fact]
         public void do_nothing_if_the_tag_already_has_text()
         {
             new HtmlTag("div").Text("original").TextIfEmpty("different")
                 .Text().ShouldBe("original");
         }
 
-        [Test]
+        [Fact]
         public void set_the_text_if_the_tag_text_is_initially_null()
         {
             new HtmlTag("div").TextIfEmpty("defaulted")

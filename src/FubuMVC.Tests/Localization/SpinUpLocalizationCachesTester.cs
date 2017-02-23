@@ -2,13 +2,13 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Localization.Basic;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Is = Rhino.Mocks.Constraints.Is;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class SpinUpLocalizationCachesTester : InteractionContext<SpinUpLocalizationCaches>
     {
         protected override void beforeEach()
@@ -16,14 +16,14 @@ namespace FubuMVC.Tests.Localization
             ClassUnderTest.Activate(MockFor<IActivationLog>(), null);
         }
 
-        [Test]
+        [Fact]
         public void should_load_the_caches()
         {
             MockFor<ILocalizationProviderFactory>()
                 .AssertWasCalled(x => x.LoadAll(null), x => x.Constraints(Is.NotNull()));
         }
 
-        [Test]
+        [Fact]
         public void should_apply_the_factory_to_localization_manager()
         {
             MockFor<ILocalizationProviderFactory>().AssertWasCalled(x => x.ApplyToLocalizationManager());

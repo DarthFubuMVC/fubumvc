@@ -1,14 +1,14 @@
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class ValueSourceTester
     {
-        [Test]
+        [Fact]
         public void find_values_invokes_the_fubu_request()
         {
             var request = new InMemoryFubuRequest();

@@ -1,15 +1,15 @@
 using FubuMVC.Core;
 using FubuMVC.Core.ServerSentEvents;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServerSentEvents
 {
-    [TestFixture]
+    
     public class TopicFamilyTester
     {
-        [Test]
+        [Fact]
         public void builds_and_caches_by_topic()
         {
             var factory = new DefaultEventQueueFactory<FakeTopic>();
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             family.ChannelFor(topic1).ShouldNotBeTheSameAs(family.ChannelFor(topic2));
         }
 
-        [Test]
+        [Fact]
         public void spin_up_pre_builds()
         {
             var factory = MockRepository.GenerateMock<IEventQueueFactory<FakeTopic>>();

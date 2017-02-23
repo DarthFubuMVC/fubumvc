@@ -1,10 +1,10 @@
 using System;
 using FubuMVC.Core.Behaviors;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Behaviors
 {
-    public abstract class BehaviorTestContext<BEHAVIOR>
+    public abstract class BehaviorTestContext<BEHAVIOR> : IDisposable
         where BEHAVIOR : IActionBehavior
     {
         protected BEHAVIOR _behavior;
@@ -12,13 +12,7 @@ namespace FubuMVC.Tests.Behaviors
         protected object _input;
         protected TestOutputModel _outputModel;
 
-        protected virtual BEHAVIOR CreateBehavior()
-        {
-            return Activator.CreateInstance<BEHAVIOR>();
-        }
-
-        [SetUp]
-        public void SetUp()
+        protected BehaviorTestContext()
         {
             _behavior = CreateBehavior();
             _controller = new TestController();
@@ -28,11 +22,16 @@ namespace FubuMVC.Tests.Behaviors
             beforeEach();
         }
 
-        [TearDown]
-        public void TearDown()
+        protected virtual BEHAVIOR CreateBehavior()
+        {
+            return Activator.CreateInstance<BEHAVIOR>();
+        }
+
+        public void Dispose()
         {
             afterEach();
         }
+
 
         protected virtual void beforeEach()
         {

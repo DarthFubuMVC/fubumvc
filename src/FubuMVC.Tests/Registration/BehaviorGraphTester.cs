@@ -6,12 +6,12 @@ using System.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Routes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class BehaviorGraphTester
     {
         public class FakeController
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Registration
         {
         }
 
-        [Test]
+        [Fact]
         public void requires_session_state_is_true_by_default()
         {
             var graph = new BehaviorGraph();
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void find_home_is_not_set()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -77,7 +77,7 @@ namespace FubuMVC.Tests.Registration
             graph.FindHomeChain().ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void should_remove_chain()
         {
             var graph = BehaviorGraph.BuildFrom(x => { x.Actions.IncludeClassesSuffixedWithController(); });
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldNotContain(chain);
         }
 
-        [Test]
+        [Fact]
         public void explicit_version()
         {
             var graph = new BehaviorGraph();
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.Registration
             graph.Version.ShouldBe("2.3");
         }
 
-        [Test]
+        [Fact]
         public void derive_if_the_assembly_is_set()
         {
             var graph = new BehaviorGraph

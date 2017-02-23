@@ -1,13 +1,13 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class writing_a_file_to_output
     {
-        [Test]
+        [Fact]
         public void can_write_the_contents_of_a_file_to_the_output()
         {
             var fileInput = new FileInput

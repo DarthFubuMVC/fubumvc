@@ -10,13 +10,12 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
-    [TestFixture, Explicit("This test is necessarily *slow*")]
-    public class ScheduledJobController_integration_Tester
+    public class ScheduledJobController_integration_Tester : IDisposable
     {
         private FubuRuntime runtime;
         private JobHistory history;
@@ -27,8 +26,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         private DateTimeOffset theStartingTime;
         private DateTimeOffset theEndingTime;
 
-        [TestFixtureSetUp]
-        public void FixtureSetUp()
+        public ScheduledJobController_integration_Tester()
         {
             //FubuTransport.AllQueuesInMemory = true;
 
@@ -44,7 +42,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             theTimer.ClearAll();
             history.ClearAll();
 
-            theStartingTime = (DateTimeOffset) DateTime.Today.AddHours(8).ToUniversalTime();
+            theStartingTime = (DateTimeOffset)DateTime.Today.AddHours(8).ToUniversalTime();
 
             theEndingTime = theStartingTime.AddSeconds(30);
 
@@ -63,7 +61,9 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             theController.Deactivate();
         }
 
-        [Test]
+
+
+        [Fact]
         public void all_the_expected_jobs_ran_successfully()
         {
             history.AssertAll();
@@ -80,8 +80,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             }
         }
 
-        [TestFixtureTearDown]
-        public void FixtureTearDown()
+        public void Dispose()
         {
             runtime.Dispose();
         }
@@ -206,7 +205,8 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             if (list.Any())
             {
                 var message = list.Join(System.Environment.NewLine);
-                Assert.Fail(message);
+
+                throw new Exception(message);
             }
         }
 

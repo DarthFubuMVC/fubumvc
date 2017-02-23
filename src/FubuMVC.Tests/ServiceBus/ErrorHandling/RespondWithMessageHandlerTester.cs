@@ -1,15 +1,15 @@
 ﻿using System;
 using FubuCore.Descriptions;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
-    [TestFixture]
+    
     public class RespondWithMessageHandlerTester
     {
-        [Test]
+        [Fact]
         public void describes_itself()
         {
             var handler = new RespondWithMessageHandler<Exception>(null);
@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             description.Title.ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void returns_no_continuation_when_exception_does_not_match()
         {
             var handler = new RespondWithMessageHandler<NotImplementedException>(null);
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             handler.DetermineContinuation(null, new NullReferenceException()).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void responds_with_message_when_the_exception_matches()
         {
             var message = new object();

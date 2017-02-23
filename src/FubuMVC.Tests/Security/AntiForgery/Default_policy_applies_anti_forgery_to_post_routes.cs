@@ -4,14 +4,14 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.AntiForgery;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-    [TestFixture]
+    
     public class Default_policy_applies_anti_forgery_to_post_routes
     {
-        [Test]
+        [Fact]
         public void the_order_of_the_configuration_action_was_wrong()
         {
             var registry = new FubuRegistry();

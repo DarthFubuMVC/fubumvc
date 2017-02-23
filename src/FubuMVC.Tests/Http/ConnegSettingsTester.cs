@@ -7,16 +7,16 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class ConnegSettingsTester
     {
         private const string theOriginalMimetype = "random/custom";
 
-        [Test]
+        [Fact]
         public void no_correction_with_no_querystring()
         {
             var request = OwinHttpRequest.ForTesting();
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Http
             mimeType.AcceptTypes.Single().ShouldBe(theOriginalMimetype);
         }
 
-        [Test]
+        [Fact]
         public void no_correction_with_wrong_querystring()
         {
             var request = OwinHttpRequest.ForTesting();
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Http
             mimeType.AcceptTypes.Single().ShouldBe(theOriginalMimetype);
         }
 
-        [Test]
+        [Fact]
         public void correct_to_json()
         {
             var request = OwinHttpRequest.ForTesting();
@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.Http
             mimeType.AcceptTypes.Single().ShouldBe(MimeType.Json.Value);
         }
 
-        [Test]
+        [Fact]
         public void correct_to_xml()
         {
             var request = OwinHttpRequest.ForTesting();
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.Http
             mimeType.AcceptTypes.Single().ShouldBe(MimeType.Xml.Value);
         }
 
-        [Test]
+        [Fact]
         public void use_a_custom_querystring_parameter()
         {
             var request = OwinHttpRequest.ForTesting();
@@ -82,14 +82,14 @@ namespace FubuMVC.Tests.Http
             mimeType.AcceptTypes.Single().ShouldBe(MimeType.Text.Value);
         }
 
-        [Test]
+        [Fact]
         public void the_default_formatters_are_json_then_xml()
         {
             new ConnegSettings().Formatters.Select(x => x.GetType())
                 .ShouldHaveTheSameElementsAs(typeof(NewtonsoftJsonFormatter), typeof(XmlFormatter));
         }
 
-        [Test]
+        [Fact]
         public void find_formatter_by_mimetype()
         {
             new ConnegSettings().FormatterFor(MimeType.Json)
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.Http
                 .ShouldBeOfType<XmlFormatter>();
         }
 
-        [Test]
+        [Fact]
         public void add_formatter_places_it_first()
         {
             var settings = new ConnegSettings();

@@ -2,23 +2,17 @@
 using FubuCore;
 using FubuMVC.Core.Services.Remote;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Services.Remote
 {
-    [TestFixture]
-    public class RemoteDomainExpressionTester
+    
+    public class RemoteDomainExpressionTester : IDisposable
     {
-        private string serviceDirectory;
+        private string serviceDirectory = Guid.NewGuid().ToString();
 
-        [SetUp]
-        public void SetUp()
-        {
-            serviceDirectory = Guid.NewGuid().ToString();
-        }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             try
             {
@@ -30,7 +24,7 @@ namespace FubuMVC.Tests.Services.Remote
             }
         }
 
-        [Test]
+        [Fact]
         public void will_use_bin_for_private_bin_path_if_it_exists()
         {
             var fileSystem = new FileSystem();
@@ -51,7 +45,7 @@ namespace FubuMVC.Tests.Services.Remote
             fileSystem.DeleteDirectory(serviceDirectory);
         }
 
-        [Test]
+        [Fact]
         public void will_use_bin_release_for_private_bin_path_if_it_exists_and_release_has_precedence()
         {
             var fileSystem = new FileSystem();
@@ -74,7 +68,7 @@ namespace FubuMVC.Tests.Services.Remote
         }
 
 
-        [Test]
+        [Fact]
         public void will_use_bin_debug_for_private_bin_path_if_it_exists_and_release_does_not()
         {
             var fileSystem = new FileSystem();
@@ -93,7 +87,7 @@ namespace FubuMVC.Tests.Services.Remote
             expression.Setup.PrivateBinPath.ShouldBe("bin".AppendPath("Debug"));
         }
 
-        [Test]
+        [Fact]
         public void do_not_use_bin_for_private_bin_path_if_it_does_not_exist()
         {
             var fileSystem = new FileSystem();

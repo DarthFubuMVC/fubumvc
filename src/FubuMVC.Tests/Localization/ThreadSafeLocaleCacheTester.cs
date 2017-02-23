@@ -2,18 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using FubuMVC.Core.Localization;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class ThreadSafeLocaleCacheTester
     {
         private ThreadSafeLocaleCache cache;
 
-        [SetUp]
-        public void SetUp()
+        public ThreadSafeLocaleCacheTester()
         {
             var dictionary = new Dictionary<LocalizationKey, string>()
             {
@@ -25,7 +24,7 @@ namespace FubuMVC.Tests.Localization
             cache = new ThreadSafeLocaleCache(new CultureInfo("en-US"), dictionary);
         }
 
-        [Test]
+        [Fact]
         public void retrieve_a_key_that_can_be_found()
         {
             cache.Retrieve(new LocalizationKey("a"), () =>
@@ -35,7 +34,7 @@ namespace FubuMVC.Tests.Localization
             .ShouldBe("a1");
         }
 
-        [Test]
+        [Fact]
         public void append_and_retrieve()
         {
             cache.Append(new LocalizationKey("d"), "d1");
@@ -46,7 +45,7 @@ namespace FubuMVC.Tests.Localization
             .ShouldBe("d1");
         }
 
-        [Test]
+        [Fact]
         public void call_the_missing_function_if_the_key_cannot_be_found()
         {
             cache.Retrieve(new LocalizationKey("d"), () => "d1").ShouldBe("d1");
@@ -59,7 +58,7 @@ namespace FubuMVC.Tests.Localization
             .ShouldBe("d1");
         }
 
-		[Test]
+		[Fact]
 		public void initializing_via_localstrings_with_duplicate_keys_should_throw()
 		{
 			const string duplicatedkey = "duplicatedkey";

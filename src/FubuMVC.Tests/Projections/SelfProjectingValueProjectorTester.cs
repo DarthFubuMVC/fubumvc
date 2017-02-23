@@ -3,14 +3,14 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class SelfProjectingValueProjectorTester
     {
-        [Test]
+        [Fact]
         public void accessors()
         {
             var accessor = ReflectionHelper.GetAccessor<HoldsProjectsItself>(x => x.Itself);

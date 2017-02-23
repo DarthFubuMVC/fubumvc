@@ -3,20 +3,20 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class intregated_rule_using_service_tester
     {
         private CreateUser theModel;
         private IUserService theService;
 
-        [SetUp]
-        public void SetUp()
+
+        public intregated_rule_using_service_tester()
         {
             theModel = new CreateUser { Username = "test" };
             theService = MockRepository.GenerateStub<IUserService>();
@@ -37,14 +37,14 @@ namespace FubuMVC.Tests.Validation
             }
         }
 
-        [Test]
+        [Fact]
         public void fails_if_external_service_reports_failure()
         {
             theService.Stub(service => service.ExistsByUsername(theModel.Username)).Return(true);
             theNotification.MessagesFor<CreateUser>(m => m.Username).ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void succeeds_if_external_service_reports_success()
         {
             theService.Stub(service => service.ExistsByUsername(theModel.Username)).Return(false);

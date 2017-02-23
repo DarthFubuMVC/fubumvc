@@ -8,16 +8,16 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.StructureMap;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class OutputNodeTester : IMediaWriter<string>
     {
-        [Test]
+        [Fact]
         public void ClearAll()
         {
             var node = new OutputNode(typeof (Address));
@@ -36,14 +36,14 @@ namespace FubuMVC.Tests.Resources.Conneg
         }
 
 
-        [Test]
+        [Fact]
         public void implements_the_IMayHaveResourceType_interface()
         {
             var node = new OutputNode(typeof (Address));
             node.As<IMayHaveResourceType>().ResourceType().ShouldBe(node.ResourceType);
         }
 
-        [Test]
+        [Fact]
         public void add_a_custom_no_resource_handler()
         {
             var node = new OutputNode(typeof (Address));
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Resources.Conneg
                 .ReturnedType.ShouldBe(typeof (MyFakeResourceNotHandler));
         }
 
-        [Test]
+        [Fact]
         public void no_custom_resource_not_found_handler()
         {
             var node = new OutputNode(typeof (Address));
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.Resources.Conneg
                 .ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void add_writer_by_formatter_happy_path_no_condition()
         {
             var node = new OutputNode(typeof(Address));
@@ -77,7 +77,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
         }
 
-        [Test]
+        [Fact]
         public void add_writer_with_explicit_condition()
         {
             var node = new OutputNode(typeof(Address));
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
         }
 
-        [Test]
+        [Fact]
         public void add_writer_happy_path_with_open_type()
         {
             var node = new OutputNode(typeof(Address)) {typeof (FooWriter<>)};
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             node.Explicits.Single().ShouldBeOfType<FooWriter<Address>>();
         }
 
-        [Test]
+        [Fact]
         public void add_writer_happy_path_with_open_type_and_explicit_condition()
         {
             var node = new OutputNode(typeof (Address));
@@ -105,7 +105,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             node.Explicits.Single().ShouldBeOfType<FooWriter<Address>>();
         }
 
-        [Test]
+        [Fact]
         public void add_writer_sad_path()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
@@ -114,7 +114,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void add_a_closed_writer_happy_path()
         {
             var writer = new SpecialWriter();
@@ -124,7 +124,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             var media = node.Explicits.Single().ShouldBeTheSameAs(writer);
         }
 
-        [Test]
+        [Fact]
         public void add_a_closed_writer_with_conditional()
         {
             var writer = new SpecialWriter();
@@ -134,7 +134,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             node.Explicits.Single().ShouldBeTheSameAs(writer);
         }
 
-        [Test]
+        [Fact]
         public void add_a_writer_by_object_sad_path()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {

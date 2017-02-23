@@ -1,12 +1,12 @@
 using FubuMVC.Core;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class binding_against_querystring_values
     {
-        [Test]
+        [Fact]
         public void can_bind_against_querystring_parameters()
         {
             TestHost.Scenario(_ =>

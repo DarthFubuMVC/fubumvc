@@ -7,12 +7,12 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
-    [TestFixture]
+    
     public class ScheduledStatusMonitorTester
     {
         private JobStatusDTO foo1;
@@ -25,8 +25,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         private ScheduleStatusMonitor theStatusMonitor;
         private ChannelGraph theChannelGraph = new ChannelGraph {Name = "foo"};
 
-        [SetUp]
-        public void SetUp()
+        public ScheduledStatusMonitorTester()
         {
             foo1 = new JobStatusDTO { JobKey = "1", NodeName = "foo" };
             foo2 = new JobStatusDTO { JobKey = "2", NodeName = "foo" };
@@ -43,7 +42,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 
         }
 
-        [Test]
+        [Fact]
         public void mark_scheduled_persistence()
         {
             var next = (DateTimeOffset)DateTime.Today;
@@ -53,7 +52,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             foo1.NextTime.ShouldBe(next);
         }
 
-        [Test]
+        [Fact]
         public void mark_executing_persistence()
         {
             foo1.Executor = null;
@@ -65,7 +64,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 
         }
 
-        [Test]
+        [Fact]
         public void mark_completion_persistence()
         {
             var record = new JobExecutionRecord{Success = true};
@@ -81,7 +80,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
                 .ShouldHaveTheSameElementsAs(record);
         }
 
-        [Test]
+        [Fact]
         public void track_and_succeed()
         {
             var tracker = theStatusMonitor.TrackJob(3, new FooJob1());
@@ -100,7 +99,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             foo1.LastExecution.Executor.ShouldBe(theChannelGraph.NodeId);
         }
 
-        [Test]
+        [Fact]
         public void track_and_fail()
         {
             var tracker = theStatusMonitor.TrackJob(3, new FooJob1());
@@ -122,7 +121,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             foo1.LastExecution.Executor.ShouldBe(theChannelGraph.NodeId);
         }
 
-        [Test]
+        [Fact]
         public void mark_completion_with_failure_persistence()
         {
             var record = new JobExecutionRecord

@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core.ServiceBus.Runtime.Routing;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using TestMessages;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Routing
 {
-    [TestFixture]
+    
     public class AssemblyRuleTester
     {
-        [Test]
+        [Fact]
         public void positive_test()
         {
             var rule = AssemblyRule.For<NewUser>();
@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Routing
             rule.Matches(typeof(DeleteUser)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void negative_test()
         {
             var rule = AssemblyRule.For<NewUser>();

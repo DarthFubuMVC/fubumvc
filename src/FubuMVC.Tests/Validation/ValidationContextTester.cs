@@ -3,19 +3,18 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class ValidationContextTester
     {
         private ValidationContextTarget theTarget;
         private ValidationContext theContext;
 
-        [SetUp]
-        public void SetUp()
+        public ValidationContextTester()
         {
             theTarget = new ValidationContextTarget(){
                 Name = "Jeremy",
@@ -31,25 +30,25 @@ namespace FubuMVC.Tests.Validation
             return theContext.GetFieldValue<T>(accessor);
         }
 
-        [Test]
+        [Fact]
         public void get_value_when_the_type_is_correct()
         {
             get<string>(x => x.Name).ShouldBe("Jeremy");
         }
 
-        [Test]
+        [Fact]
         public void get_value_when_the_type_matches_2()
         {
             get<int>(x => x.Number).ShouldBe(25);
         }
 
-        [Test]
+        [Fact]
         public void services_defaults_to_in_memory()
         {
             theContext.ServiceLocator.ShouldBeOfType<InMemoryServiceLocator>();
         }
 
-        [Test]
+        [Fact]
         public void gets_the_service()
         {
             var theServices = new InMemoryServiceLocator();

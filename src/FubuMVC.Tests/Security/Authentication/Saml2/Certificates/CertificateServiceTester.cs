@@ -4,16 +4,16 @@ using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Certificates;
 using FubuMVC.Core.Security.Authentication.Saml2.Validation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates    
 {
-    [TestFixture]
+    
     public class CertificateServiceTester : InteractionContext<CertificateService>
     {
-        [Test]
+        [Fact]
         public void load_certificate_when_it_can_be_found()
         {
             var issuer = new SamlCertificate
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
                           .ShouldBeTheSameAs(cert);
         }
 
-        [Test]
+        [Fact]
         public void returns_null_if_no_cert_can_be_found_for_that_issuer()
         {
             var issuer = new SamlCertificate
@@ -52,14 +52,14 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
 
         }
 
-        [Test]
+        [Fact]
         public void returns_null_if_no_saml_certificate_for_that_issuer()
         {
             ClassUnderTest.LoadCertificate("foo:bar")
                 .ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void matches_issuer_only_has_to_match_once_single_cert()
         {
             var cert = ObjectMother.Certificate1();
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_match_issuer_if_all_strategies_fail()
         {
             var cert = ObjectMother.Certificate1();
@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void only_has_to_match_on_one_cert()
         {
             var certs = new ICertificate[]
@@ -118,7 +118,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void fails_if_no_certs_match_any_of_the_matchers()
         {
             var certs = new ICertificate[]
@@ -141,7 +141,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void returns_CannotMatchIssuer_if_the_cert_does_not_match_the_issuers_we_are_aware_of()
         {
             Services.PartialMockTheClassUnderTest();
@@ -154,7 +154,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
                           .ShouldBe(SamlValidationKeys.CannotMatchIssuer);
         }
 
-        [Test]
+        [Fact]
         public void return_certificate_is_not_valid_if_all_of_them_fail()
         {
             var response = new SamlResponse();
@@ -169,7 +169,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
                           .ShouldBe(SamlValidationKeys.NoValidCertificates);
         }
 
-        [Test]
+        [Fact]
         public void return_verified_if_any_certificate_matches_and_is_verified()
         {
             var response = new SamlResponse();

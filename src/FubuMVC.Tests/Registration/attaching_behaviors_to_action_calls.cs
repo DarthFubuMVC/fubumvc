@@ -4,23 +4,18 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class attaching_behaviors_to_action_calls
     {
-        private BehaviorGraph graph;
+        private BehaviorGraph graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
 
-        [SetUp]
-        public void SetUp()
-        {
-            graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
-        }
 
-        [Test]
+        [Fact]
         public void can_prepend_behaviors_in_front_of_an_action()
         {
             graph.Actions().Each(x => x.AddBefore(Wrapper.For<MyWrapper>()));
@@ -32,7 +27,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void can_prepend_behaviors_in_front_of_an_action_2()
         {
             graph.Actions().Each(x => x.WrapWith<MyWrapper>());
@@ -44,7 +39,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void can_prepend_behaviors_in_front_of_an_action_3()
         {
             graph.Actions().Each(x => x.WrapWith(typeof(MyWrapper)));

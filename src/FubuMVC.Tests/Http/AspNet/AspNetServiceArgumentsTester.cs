@@ -4,13 +4,13 @@ using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.AspNet;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Http.AspNet
 {
-    [TestFixture]
+    
     public class AspNetServiceArgumentsTester
     {
         private HttpContextBase theHttpContext;
@@ -19,8 +19,7 @@ namespace FubuMVC.Tests.Http.AspNet
         private HttpRequestBase theHttpRequest;
         private HttpResponseBase theHttpResponse;
 
-        [SetUp]
-        public void SetUp()
+        public AspNetServiceArgumentsTester()
         {
             theHttpContext = MockRepository.GenerateMock<HttpContextBase>();
             theRequestContext = new RequestContext(theHttpContext, new RouteData());
@@ -34,30 +33,29 @@ namespace FubuMVC.Tests.Http.AspNet
             theHttpContext.Stub(x => x.Items).Return(new Dictionary<string, object>());
 
             theArguments = new AspNetServiceArguments(theRequestContext);
-
-            
         }
 
-        [Test]
+
+        [Fact]
         public void registers_an_http_context_base()
         {
             theArguments.Get<HttpContextBase>().ShouldNotBeNull();
         }
 
 
-        [Test]
+        [Fact]
         public void should_register_the_http_context_base()
         {
             theArguments.Get<HttpContextBase>().ShouldBeTheSameAs(theHttpContext);
         }
 
-        [Test]
+        [Fact]
         public void should_register_a_current_request_implementation()
         {
             theArguments.Get<IHttpRequest>().ShouldBeOfType<AspNetHttpRequest>();
         }
 
-        [Test]
+        [Fact]
         public void should_register_an_HttpWriter()
         {
             theArguments.Get<IHttpResponse>().ShouldBeOfType<AspNetHttpResponse>();

@@ -4,12 +4,12 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class when_authenticating_and_authentication_is_disabled : InteractionContext<AuthenticationFilter>
     {
         private FubuContinuation theResult;
@@ -24,13 +24,13 @@ namespace FubuMVC.Tests.Security.Authentication
             theResult = ClassUnderTest.Authenticate();
         }
 
-        [Test]
+        [Fact]
         public void should_continue()
         {
             theResult.AssertWasContinuedToNextBehavior();
         }
 
-        [Test]
+        [Fact]
         public void should_not_actually_do_authentication()
         {
             MockFor<IAuthenticationService>().AssertWasNotCalled(x => x.TryToApply());
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Security.Authentication
     }
 
 
-    [TestFixture]
+    
     public class when_authenticating_and_there_is_not_a_previous_authentication_token : InteractionContext<AuthenticationFilter>
     {
         private FubuContinuation theResult;
@@ -59,14 +59,14 @@ namespace FubuMVC.Tests.Security.Authentication
             theResult = ClassUnderTest.Authenticate();
         }
 
-        [Test]
+        [Fact]
         public void should_redirect_based_on_what_IAuthenticationRedirector_decides()
         {
             theResult.ShouldBeTheSameAs(theRedirect);
         }
     }
 
-    [TestFixture]
+    
     public class when_authenticating_and_there_is_a_previously_authenticated_user : InteractionContext<AuthenticationFilter>
     {
         private FubuContinuation theResult;
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Security.Authentication
             theResult = ClassUnderTest.Authenticate();
         }
 
-        [Test]
+        [Fact]
         public void should_continue()
         {
 			theResult.AssertWasContinuedToNextBehavior();
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Security.Authentication
 
     }
 
-    [TestFixture]
+    
     public class when_authenticating_and_the_service_returns_a_continuation_on_success : InteractionContext<AuthenticationFilter>
     {
         private FubuContinuation theResult;
@@ -105,14 +105,14 @@ namespace FubuMVC.Tests.Security.Authentication
             theResult = ClassUnderTest.Authenticate();
         }
 
-        [Test]
+        [Fact]
         public void should_continue_to_what_the_service_determined()
         {
             theResult.ShouldBeTheSameAs(theContinuation);
         }
     }
 
-    [TestFixture]
+    
     public class when_authenticating_and_the_service_returns_a_continuation_on_failure : InteractionContext<AuthenticationFilter>
     {
         private FubuContinuation theResult;
@@ -129,14 +129,14 @@ namespace FubuMVC.Tests.Security.Authentication
             theResult = ClassUnderTest.Authenticate();
         }
 
-        [Test]
+        [Fact]
         public void should_continue_to_what_the_service_determined()
         {
             theResult.ShouldBeTheSameAs(theContinuation);
         }
     }
 
-    [TestFixture]
+    
     public class when_authenticating_in_a_partial_always_go_to_next : InteractionContext<AuthenticationFilter>
     {
         private FubuContinuation theResult;
@@ -151,7 +151,7 @@ namespace FubuMVC.Tests.Security.Authentication
             theResult = ClassUnderTest.Authenticate();
         }
 
-        [Test]
+        [Fact]
         public void should_continue()
         {
             theResult.AssertWasContinuedToNextBehavior();

@@ -7,12 +7,12 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Urls
 {
-	[TestFixture]
-	public class ChainUrlResolverTester
+	
+	public class ChainUrlResolverTester : IDisposable
 	{
 		private OwinHttpRequest theHttpRequest;
 		private ChainUrlResolver theUrlResolver;
@@ -21,43 +21,42 @@ namespace FubuMVC.Tests.Urls
 		private BehaviorChain theSimpleChain;
 		private BehaviorChain theChainWithRouteParams;
 
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
+	    public ChainUrlResolverTester()
+	    {
             theHttpRequest = OwinHttpRequest.ForTesting();
-			UrlContext.Stub("http://server");
+            UrlContext.Stub("http://server");
 
-			theUrlResolver = new ChainUrlResolver(theHttpRequest);
+            theUrlResolver = new ChainUrlResolver(theHttpRequest);
 
-			theGraph = BehaviorGraph.BuildFrom(registry =>
-			{
-				registry.Actions.IncludeType<ChainUrlResolverEndpoint>();
-			});
+            theGraph = BehaviorGraph.BuildFrom(registry =>
+            {
+                registry.Actions.IncludeType<ChainUrlResolverEndpoint>();
+            });
 
-			theSimpleChain = theGraph.ChainFor<ChainUrlResolverEndpoint>(x => x.get_index());
-			theChainWithRouteParams = theGraph.ChainFor(typeof(ChainUrlParams));
-		}
+            theSimpleChain = theGraph.ChainFor<ChainUrlResolverEndpoint>(x => x.get_index());
+            theChainWithRouteParams = theGraph.ChainFor(typeof(ChainUrlParams));
+        }
 
-		[TearDown]
-		public void TearDown()
+
+		public void Dispose()
 		{
 			UrlContext.Reset();
 		}
 
-		[Test]
+		[Fact]
 		public void resolve_a_url_without_route_params()
 		{
 			theUrlResolver.UrlFor(null, theSimpleChain).ShouldBe("/index");
 		}
 
-		[Test]
+		[Fact]
 		public void resolve_a_url_with_route_params_filled_by_input()
 		{
 			var input = new ChainUrlParams {Name = "Joel"};
 			theUrlResolver.UrlFor(input, theChainWithRouteParams).ShouldBe("/Joel");
 		}
 
-		[Test]
+		[Fact]
 		public void resolve_a_url_with_route_params_explicitly_filled()
 		{
 			var values = new RouteParameters();

@@ -2,14 +2,14 @@
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class reading_querystring_values
     {
-        [Test]
+        [Fact]
         public void read_querystring_values_from_current_request()
         {
             TestHost.BehaviorGraph.ChainFor<ReadingQuerystringEndpoint>(x => x.get_querystring_Key(null))

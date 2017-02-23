@@ -10,7 +10,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Routing;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Scheduling;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using TestMessages;
@@ -18,24 +18,24 @@ using Is = Rhino.Mocks.Constraints.Is;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class ChannelNodeTester
     {
-        [Test]
+        [Fact]
         public void default_channel_mode_is_delivery_guaranteed()
         {
             var node = new ChannelNode();
             node.Mode.ShouldBe(ChannelMode.DeliveryGuaranteed);
         }
 
-        [Test]
+        [Fact]
         public void no_publishing_rules_is_always_false()
         {
             var node = new ChannelNode();
             node.Publishes(typeof(NewUser)).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void publishes_is_true_if_any_rule_passes()
         {
             var node = new ChannelNode();
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             node.Publishes(typeof(NewUser)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void publishes_is_false_if_no_rules_pass()
         {
             var node = new ChannelNode();
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             node.Publishes(typeof(NewUser)).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void setting_address_has_to_be_a_Uri()
         {
             var node = new ChannelNode();
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             });
         }
 
-        [Test]
+        [Fact]
         public void setting_default_content_type_will_clear_the_serializer()
         {
             var node = new ChannelNode();
@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             node.DefaultSerializer.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void setting_the_default_serializer_will_clear_the_default_content_type()
         {
             var node = new ChannelNode
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         {
             if (DateTime.Today > new DateTime(2013, 11, 21))
             {
-                Assert.Fail("Jeremy needs to fix the structure so that this is possible");
+                throw new Exception("Jeremy needs to fix the structure so that this is possible");
             }
 
             
@@ -125,7 +125,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 //            node.Channel.AssertWasCalled(x => x.Receive(new Receiver(invoker, graph, node)));
         }
 
-        [Test]
+        [Fact]
         public void ReceiveFailed_error_handling()
         {
             var node = new ChannelNode
@@ -145,7 +145,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             message.Exception.ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void continuous_receive_errors()
         {
             var logger = new RecordingLogger();
@@ -167,7 +167,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
         }
 
-        [Test]
+        [Fact]
         public void doesnt_throw_if_receive_only_fails_intermittently()
         {
             var channel = new FakeChannel { StopAfter = 20 };
@@ -225,7 +225,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         }
     }
 
-    [TestFixture]
+    
     public class when_sending_an_envelope
     {
         private Envelope theEnvelope;
@@ -233,8 +233,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         private ChannelNode theNode;
         private IEnvelopeSerializer theSerializer;
 
-        [SetUp]
-        public void SetUp()
+        public when_sending_an_envelope()
         {
             theEnvelope = new Envelope()
             {
@@ -281,7 +280,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             }
         }
 
-        [Test]
+        [Fact]
         public void should_serialize_the_envelope()
         {
             theSerializer.AssertWasCalled(x => x.Serialize(null, theNode), x => {
@@ -295,7 +294,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             });
         }
 
-        [Test]
+        [Fact]
         public void should_have_applied_the_channel_specific_modifiers()
         {
             var sentHeaders = theChannel.Sent.Single().Headers;
@@ -304,7 +303,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         }
 
  
-        [Test]
+        [Fact]
         public void should_have_sent_a_copy_of_the_headers()
         {
             var sentHeaders = theChannel.Sent.Single().Headers;
@@ -315,14 +314,14 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             sentHeaders["C"].ShouldBe("3");
         }
 
-        [Test]
+        [Fact]
         public void sends_the_channel_key()
         {
             var sentHeaders = theChannel.Sent.Single().Headers;
             sentHeaders[Envelope.ChannelKey].ShouldBe(theNode.Key);
         }
 
-        [Test]
+        [Fact]
         public void sends_the_destination_as_a_header()
         {
             var sentHeaders = theChannel.Sent.Single().Headers;

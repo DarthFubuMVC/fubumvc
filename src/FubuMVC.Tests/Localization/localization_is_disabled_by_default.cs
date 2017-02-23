@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Localization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class localization_is_disabled_by_default
     {
-        [Test]
+        [Fact]
         public void default_value_is_disabled()
         {
             new LocalizationSettings().Enabled.ShouldBeFalse();

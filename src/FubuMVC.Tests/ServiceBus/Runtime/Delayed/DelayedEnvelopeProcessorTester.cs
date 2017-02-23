@@ -5,16 +5,16 @@ using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
 {
-    [TestFixture]
+    
     public class DelayedEnvelopeProcessorTester : InteractionContext<DelayedEnvelopeProcessor>
     {
-        [Test]
+        [Fact]
         public void dequeue_from_all_the_transports()
         {
             var transports = Services.CreateMockArrayFor<ITransport>(4);
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
             });
         }
 
-        [Test]
+        [Fact]
         public void dequeue_a_single_transport_should_log_all_the_requeued_envelopes()
         {
             var logger = new RecordingLogger();

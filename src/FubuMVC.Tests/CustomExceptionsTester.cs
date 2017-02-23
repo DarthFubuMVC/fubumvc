@@ -2,16 +2,16 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using FubuMVC.Core;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 using FubuCore;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class CustomExceptionsTester
     {
-        [Test]
+        [Fact]
         public void all_exceptions_should_be_marked_as_serializable()
         {
             const string failureMessage = @"All custom exceptions must be marked as [Serializable]. The following Exceptions were found without the attribute: 
@@ -24,7 +24,7 @@ Additionally, if the custom exception has properties, you may want individual te
             var notMarkedSerializable = typesToCheck.Where(t => !t.GetCustomAttributes(typeof (SerializableAttribute), false).Any()).ToArray();
             if (notMarkedSerializable.Any())
             {
-                Assert.Fail(failureMessage + "\n" + String.Join("\n\t", notMarkedSerializable.Select(t => t.FullName).ToArray()));
+                throw new Exception(failureMessage + "\n" + String.Join("\n\t", notMarkedSerializable.Select(t => t.FullName).ToArray()));
             }
         }
 

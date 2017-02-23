@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Localization;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class StringTokenStronglyTypedTester
     {
-        [Test]
+        [Fact]
         public void simple_localization()
         {
             var token = Loc.Basic;
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Localization
             token.DefaultValue.ShouldBe("Basic_Trans");
         }
 
-        [Test]
+        [Fact]
         public void nested_class_localization()
         {
             var token = Loc.Account.AccountName;
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Localization
             token.DefaultValue.ShouldBe("Account_Trans");
         }
 
-        [Test]
+        [Fact]
         public void parameter_localization()
         {
             var token = Loc.User.NameWithParams;
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Localization
             token.FormatTokenWith(new NameParams { LastName = "Sir" }).ShouldBe("Name_Sir");
         }
 
-        [Test]
+        [Fact]
         public void parameter_localization_raw_key()
         {
             var token = Loc.User.NameWithParams;

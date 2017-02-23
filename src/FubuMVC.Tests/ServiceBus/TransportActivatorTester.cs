@@ -10,13 +10,13 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class when_activating_the_transport_subsystem : InteractionContext<TransportActivator>
     {
         private ChannelGraph theGraph;
@@ -34,32 +34,32 @@ namespace FubuMVC.Tests.ServiceBus
             ClassUnderTest.Activate(new ActivationLog(), null);
         }
 
-        [Test]
+        [Fact]
         public void reads_the_settings()
         {
             theGraph.AssertWasCalled(x => x.ReadSettings(MockFor<IServiceLocator>()));
         }
 
-        [Test]
+        [Fact]
         public void should_start_the_channels()
         {
             ClassUnderTest.AssertWasCalled(x => x.OpenChannels());
         }
 
-        [Test]
+        [Fact]
         public void should_start_receiving()
         {
             theGraph.AssertWasCalled(x => x.StartReceiving(MockFor<IHandlerPipeline>(), MockFor<ILogger>()));
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_activators()
         {
             ClassUnderTest.AssertWasCalled(x => x.ExecuteActivators());
         }
     }
 
-    [TestFixture]
+    
     public class when_starting_the_subscriptions : InteractionContext<TransportActivator>
     {
         private ChannelGraph theGraph;
@@ -75,17 +75,17 @@ namespace FubuMVC.Tests.ServiceBus
         }
 
 
-        [Test]
+        [Fact]
         public void starts_each_transport()
         {
             theTransports.Each(transport => transport.AssertWasCalled(x => x.OpenChannels(theGraph)));
         }
     }
 
-    [TestFixture]
+    
     public class when_starting_the_subscriptions_and_there_are_unknown_channels
     {
-        [Test]
+        [Fact]
         public void should_throw_an_exception_listing_the_channels_that_are_missing()
         {
             var graph = new ChannelGraph();
@@ -110,7 +110,7 @@ namespace FubuMVC.Tests.ServiceBus
         }
     }
 
-    [TestFixture]
+    
     public class when_starting_the_subscriptions_and_there_are_activators :
         InteractionContext<TransportActivator>
     {
@@ -122,7 +122,7 @@ namespace FubuMVC.Tests.ServiceBus
             ClassUnderTest.ExecuteActivators();
         }
 
-        [Test]
+        [Fact]
         public void invokes_each_activator()
         {
             theActivators.Each(activator => activator.AssertWasCalled(x => x.Activate()));

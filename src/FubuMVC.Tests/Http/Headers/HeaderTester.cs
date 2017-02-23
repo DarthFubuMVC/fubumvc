@@ -1,15 +1,15 @@
 using System.Net;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Headers
 {
-    [TestFixture]
+    
     public class HeaderTester
     {
-        [Test]
+        [Fact]
         public void replay_writes_to_the_IHttpWriter()
         {
             var header = new Header(HttpResponseHeader.Warning, "don't do it!");

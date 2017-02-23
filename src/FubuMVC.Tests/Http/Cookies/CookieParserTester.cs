@@ -1,16 +1,16 @@
 ﻿using System;
 using FubuMVC.Core.Http.Cookies;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 using Shouldly;
 using FubuCore;
 
 namespace FubuMVC.Tests.Http.Cookies
 {
-    [TestFixture]
+    
     public class CookieParserTester
     {
-        [Test]
+        [Fact]
         public void one_simple_value()
         {
             var cookie = CookieParser.ToCookie("a=1");
@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Http.Cookies
             state.Value.ShouldBe("1");
         }
 
-        [Test]
+        [Fact]
         public void multiple_values()
         {
             var cookie = CookieParser.ToCookie("a=1; b=2");
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Http.Cookies
 
         }
 
-        [Test]
+        [Fact]
         public void nested_values()
         {
             var cookie = CookieParser.ToCookie("a=1; b=b1=2&b2=3");
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Http.Cookies
             state["b2"].ShouldBe("3");
         }
 
-        [Test]
+        [Fact]
         public void quoted_value_just_for_fun()
         {
             var cookie = CookieParser.ToCookie("a=\"some text\"");
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Http.Cookies
             state.Value.ShouldBe("some text");
         }
 
-        [Test]
+        [Fact]
         public void sets_the_domain()
         {
             var cookie = CookieParser.ToCookie("a=1; domain=http://cnn.com");
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.Domain.ShouldBe("http://cnn.com");
         }
 
-        [Test]
+        [Fact]
         public void sets_the_domain_is_case_insensitive()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com");
@@ -64,14 +64,14 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.Domain.ShouldBe("http://cnn.com");
         }
 
-        [Test]
+        [Fact]
         public void set_The_max_age()
         {
             var cookie = CookieParser.ToCookie("a=1; domain=http://cnn.com; max-age=5");
             cookie.MaxAge.ShouldBe(5.Seconds());
         }
 
-        [Test]
+        [Fact]
         public void set_the_path()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com; path=foo;");
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.Path.ShouldBe("foo");
         }
 
-        [Test]
+        [Fact]
         public void set_The_path_with_default_value()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com; path=;");
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.Path.ShouldBe("/");
         }
 
-        [Test]
+        [Fact]
         public void set_The_path_with_default_value_2()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com; path;");
@@ -95,28 +95,28 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.Path.ShouldBe("/");
         }
 
-        [Test]
+        [Fact]
         public void set_secure()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com; secure;");
             cookie.Secure.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void set_secure_is_case_insensitive()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com; Secure;");
             cookie.Secure.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void do_not_set_secure()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com;");
             cookie.Secure.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void set_http_only()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com; httponly;");
@@ -124,7 +124,7 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.HttpOnly.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void set_http_only_is_case_insensitive()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com; HttpOnly;");
@@ -132,21 +132,21 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.HttpOnly.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void http_only_is_not_set_by_default()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com;");
             cookie.HttpOnly.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void expires_is_not_set_by_default()
         {
             var cookie = CookieParser.ToCookie("a=1; Domain=http://cnn.com;");
             cookie.Expires.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void expires_smoke()
         {
             var date = DateTime.Today.AddHours(5).ToUniversalTime();

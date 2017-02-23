@@ -3,18 +3,17 @@ using FubuCore;
 using FubuMVC.Core.ServerSentEvents;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServerSentEvents
 {
-    [TestFixture]
+    
     public class TopicChannelCacheTester : InteractionContext<TopicChannelCache>
     {
         private FakeAspNetShutDownDetector _shutdownDetector;
 
-        [SetUp]
-        protected override void  beforeEach()
+        public TopicChannelCacheTester()
         {
             _shutdownDetector = new FakeAspNetShutDownDetector();
 
@@ -26,7 +25,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             });
         }
 
-        [Test]
+        [Fact]
         public void caches_against_a_single_topic_family()
         {
             var topic1 = new FakeTopic
@@ -49,7 +48,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             ClassUnderTest.ChannelFor(topic1).ShouldNotBeTheSameAs(ClassUnderTest.ChannelFor(topic2));
         }
 
-        [Test]
+        [Fact]
         public void caches_against_a_multiple_topic_families()
         {
             // All relatives of mine from the same family.  In-law finally
@@ -89,7 +88,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             ClassUnderTest.ChannelFor(topic3).ShouldNotBeTheSameAs(ClassUnderTest.ChannelFor(topic4));
         }
 
-        [Test]
+        [Fact]
         public void disposes_on_asp_shutdown_event()
         {
             var topic1 = new FakeTopic

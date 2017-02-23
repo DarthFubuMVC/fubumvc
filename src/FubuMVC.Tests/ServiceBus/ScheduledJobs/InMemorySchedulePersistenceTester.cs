@@ -1,10 +1,10 @@
 ﻿using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
-    [TestFixture]
+    
     public class InMemorySchedulePersistenceTester
     {
         private JobStatusDTO foo1;
@@ -14,8 +14,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         private JobStatusDTO bar2;
         private InMemorySchedulePersistence thePersistence;
 
-        [SetUp]
-        public void SetUp()
+        public InMemorySchedulePersistenceTester()
         {
             foo1 = new JobStatusDTO { JobKey = "1", NodeName = "foo" };
             foo2 = new JobStatusDTO { JobKey = "2", NodeName = "foo" };
@@ -27,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             thePersistence.Persist(new []{foo1, foo2, foo3, bar1, bar2});
         }
 
-        [Test]
+        [Fact]
         public void store_history()
         {
             var record1 = new JobExecutionRecord();
@@ -44,7 +43,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             thePersistence.FindHistory("foo", "2").ShouldHaveTheSameElementsAs(record3, record4);
         }
 
-        [Test]
+        [Fact]
         public void find_all_for_node()
         {
             thePersistence.FindAll("foo")
@@ -54,7 +53,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
                 .ShouldHaveTheSameElementsAs(bar1, bar2);
         }
 
-        [Test]
+        [Fact]
         public void find_all_active_for_node()
         {
             foo1.Status = foo2.Status = bar1.Status = JobExecutionStatus.Scheduled;
@@ -67,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
                 .ShouldHaveTheSameElementsAs(bar1);
         }
 
-        [Test]
+        [Fact]
         public void persist_job_status()
         {
             foo1.Status = foo2.Status = foo3.Status = bar1.Status = bar2.Status = JobExecutionStatus.Inactive;
@@ -82,7 +81,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             thePersistence.Find("foo", "1").ShouldBeTheSameAs(change);
         }
 
-        [Test]
+        [Fact]
         public void find_a_single_status()
         {
             thePersistence.Find("foo", "1")

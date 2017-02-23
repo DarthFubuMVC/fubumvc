@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Globalization;
 using FubuMVC.Core.Http.Cookies;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using System.Linq;
 
 namespace FubuMVC.Tests.Http.Cookies
 {
-    [TestFixture]
+    
     public class CookieTester
     {
-        [Test]
+        [Fact]
         public void matches()
         {
             var cookie = new Cookie();
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.Matches("a").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void to_string_smoke_testing()
         {
             roundTrip("a=1; b=2");
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Http.Cookies
             roundTrip("a=1; max-age=5; domain=http://cnn.com; path=foo; secure; httponly");
         }
 
-        [Test]
+        [Fact]
         public void to_string_expires()
         {
             var cookie = new Cookie("something");
@@ -54,14 +54,14 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.ToString().ShouldContain("expires=" + cookie.Expires.Value.ToString("r", CultureInfo.InvariantCulture) + ";");
         }
 
-        [Test]
+        [Fact]
         public void value_with_only_one_state_with_only_one_value()
         {
             var cookie = new Cookie("a", "2");
             cookie.Value.ShouldBe("2");
         }
 
-        [Test]
+        [Fact]
         public void can_set_value_for_single_value_cookies()
         {
             var cookie = new Cookie("a", "2");
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.States.Single().Value.ShouldBe("3");
         }
 
-        [Test]
+        [Fact]
         public void value_with_more_than_one_state()
         {
             var cookie = new Cookie("a").Add(new CookieState("a1", "1"));
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Http.Cookies
 
         }
 
-        [Test]
+        [Fact]
         public void value_with_no_states()
         {
             var cookie = new Cookie("foo");
@@ -97,7 +97,7 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.ToString().ShouldBe(text);
         }
 
-        [Test]
+        [Fact]
         public void get_value()
         {
             var cookie = new Cookie("foo").Add(new CookieState("a", "1")).Add(new CookieState("b", "2"));
@@ -106,7 +106,7 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.GetValue("b").ShouldBe("2");
         }
 
-		[Test]
+		[Fact]
 		public void split_values()
 		{
 			CookieParser.SplitValues("a=b;c=d;").ShouldHaveTheSameElementsAs("a=b", "c=d");

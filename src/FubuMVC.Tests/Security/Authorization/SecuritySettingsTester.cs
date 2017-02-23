@@ -2,28 +2,28 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authorization
 {
-    [TestFixture]
+    
     public class SecuritySettingsTester
     {
-        [Test]
+        [Fact]
         public void authentication_is_enabled_by_default()
         {
             new SecuritySettings().AuthenticationEnabled
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void authorization_is_enabled_by_default()
         {
             new SecuritySettings().AuthorizationEnabled
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void reset_sets_everything_to_enabled()
         {
             var settings = new SecuritySettings

@@ -2,14 +2,14 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Ajax
 {
-    [TestFixture]
+    
     public class AjaxContinuationProcessingTester
     {
-        [Test]
+        [Fact]
         public void send_message_that_gets_through_the_first_behavior_and_is_handled_by_the_last()
         {
             TestHost.Scenario(_ =>
@@ -25,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.Ajax
             });
         }
 
-        [Test]
+        [Fact]
         public void send_message_that_gets_caught_by_validation_behavior()
         {
             TestHost.Scenario(_ =>

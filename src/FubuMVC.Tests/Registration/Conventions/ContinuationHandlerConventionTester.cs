@@ -7,28 +7,17 @@ using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class ContinuationHandlerConventionTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        private BehaviorGraph graph = BehaviorGraph.BuildFrom(x =>
         {
-            graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeType<ContinuationHandlerController>();
-            });
-
-        }
-
-        #endregion
-
-        private BehaviorGraph graph;
+            x.Actions.IncludeType<ContinuationHandlerController>();
+        });
 
 
         public class ContinuationHandlerController
@@ -78,7 +67,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             }
         }
 
-        [Test]
+        [Fact]
         public void should_attach_continuation_handlers_to_actions_that_return_an_IRedirectable()
         {
             graph.ChainFor<ContinuationHandlerController>(x => x.RedirectedMethod())
@@ -86,14 +75,14 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_not_attach_continuation_handlers_to_actions_that_do_not_return_continuations()
         {
             graph.ChainFor<ContinuationHandlerController>(x => x.ZeroInOneOut()).Top.Any(x => x is ContinuationNode).
                 ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void
             the_actions_that_return_continuations_should_have_a_continuation_handler_right_behind_the_action_in_the_chain
             ()

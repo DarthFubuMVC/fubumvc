@@ -4,14 +4,14 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Projections
 {
 
 
-    [TestFixture]
+    
     public class ProjectionRunnerTester : InteractionContext<ProjectionRunner>
     {
         private TargetProjection theProjection;
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Projections
         }
 
 
-        [Test]
+        [Fact]
         public void run_by_the_projection_and_values()
         {
             ClassUnderTest.Run(theProjection, new SimpleValues<Target>(theTarget), theNode);
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Projections
             assertTheProjectionWasRun();
         }
 
-        [Test]
+        [Fact]
         public void run_by_the_projection_and_target()
         {
             ClassUnderTest.Run(theProjection, theTarget, theNode);
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Projections
             assertTheProjectionWasRun();
         }
 
-        [Test]
+        [Fact]
         public void run_by_the_projection_type()
         {
             ClassUnderTest.Run<Target, TargetProjection>(new SimpleValues<Target>(theTarget), theNode);
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Projections
             assertTheProjectionWasRun();
         }
 
-        [Test]
+        [Fact]
         public void run_by_the_projection_type_2()
         {
             ClassUnderTest.Run<Target, TargetProjection>(theTarget, theNode);

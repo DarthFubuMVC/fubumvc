@@ -3,15 +3,15 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.View;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    [TestFixture]
+    
     public class determine_the_public_asset_folder
     {
 
-        [Test]
+        [Fact]
         public void public_folder_only()
         {
             var registry = new FubuRegistry();
@@ -32,7 +32,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             }
         }
 
-        [Test]
+        [Fact]
         public void public_folder_and_version()
         {
             var registry = new FubuRegistry();

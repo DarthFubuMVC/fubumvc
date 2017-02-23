@@ -1,23 +1,17 @@
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web.Remote;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.Remote
 {
-    [TestFixture]
+    
     public class RemoteRuleGraphTester
     {
-        private RemoteRuleGraph theGraph;
+        private RemoteRuleGraph theGraph = new RemoteRuleGraph();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theGraph = new RemoteRuleGraph();
-        }
-
-        [Test]
+        [Fact]
         public void registers_rules()
         {
             var a1 = ReflectionHelper.GetAccessor<RuleGraphModel>(x => x.FirstName);
@@ -35,7 +29,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             theGraph.RulesFor(a2).ShouldHaveTheSameElementsAs(RemoteFieldRule.For(a2, r1));
         }
 
-        [Test]
+        [Fact]
         public void finds_the_rule_by_the_hash()
         {
             var a1 = ReflectionHelper.GetAccessor<RuleGraphModel>(x => x.FirstName);

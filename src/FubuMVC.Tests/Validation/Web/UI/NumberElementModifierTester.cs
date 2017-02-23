@@ -1,14 +1,14 @@
 using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Validation.Web.UI;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class NumberElementModifierTester : ValidationElementModifierContext<NumberElementModifier>
     {
-        [Test]
+        [Fact]
         public void adds_the_number_css_class_for_numeric_types()
         {
             tagFor(ElementRequest.For<NumberElementTarget>(x => x.Integer)).HasClass("number").ShouldBeTrue();
@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             tagFor(ElementRequest.For<NumberElementTarget>(x => x.Float)).HasClass("number").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void no_number_class_for_other_types()
         {
             new NumberElementModifier().Matches(ElementRequest.For<NumberElementTarget>(x => x.NoNumber)).ShouldBeFalse();

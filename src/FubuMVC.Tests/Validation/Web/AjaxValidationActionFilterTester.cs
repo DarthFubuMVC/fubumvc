@@ -5,12 +5,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class AjaxValidationBehaviorTester : InteractionContext<AjaxValidationBehavior<SampleInputModel>>
     {
         private SampleInputModel theInput;
@@ -29,14 +29,14 @@ namespace FubuMVC.Tests.Validation.Web
             MockFor<IAjaxContinuationResolver>().Stub(x => x.Resolve(theNotification)).Return(theAjaxContinuation);
         }
 
-        [Test]
+        [Fact]
         public void continues_to_next_behavior_when_validation_succeeds()
         {
             ClassUnderTest.Invoke();
             MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void writes_the_ajax_continuation_when_validation_fails()
         {
             theNotification.RegisterMessage(StringToken.FromKeyString("Test"));

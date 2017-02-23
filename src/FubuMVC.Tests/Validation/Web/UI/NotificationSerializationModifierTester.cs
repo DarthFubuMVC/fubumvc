@@ -11,34 +11,27 @@ using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.UI;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class NotificationSerializationModifierTester
     {
-        private BehaviorGraph theGraph;
+        private BehaviorGraph theGraph = BehaviorGraph.BuildFrom(x =>
+        {
+            x.Actions.IncludeType<FormValidationModeEndpoint>();
+            x.Features.Validation.Enable(true);
+            x.Policies.Local.Add<ValidationPolicy>();
+        });
+
         private NotificationSerializationModifier theModifier;
         private Notification theNotification;
         private IFubuRequest theRequest;
 
         private AjaxContinuation theContinuation;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theGraph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeType<FormValidationModeEndpoint>();
-                x.Features.Validation.Enable(true);
-                x.Policies.Local.Add<ValidationPolicy>();
-            });
-
-            theModifier = new NotificationSerializationModifier();
-        }
 
         private FormRequest requestFor<T>() where T : class, new()
         {
@@ -67,7 +60,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             return request;
         }
 
-        [Test]
+        [Fact]
         public void does_nothing_if_the_notification_is_valid()
         {
             var request = requestFor<LoFiTarget>();
@@ -76,7 +69,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             request.CurrentTag.Data("validation-results").ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void serializes_the_continuation_if_the_notification_is_invalid()
         {
             var request = requestFor<LoFiTarget>();
@@ -86,7 +79,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             request.CurrentTag.Data("validation-results").ShouldBe(theContinuation.ToDictionary());
         }
 
-        [Test]
+        [Fact]
         public void writes_the_validation_results_activator_requirement()
         {
             var request = requestFor<LoFiTarget>();

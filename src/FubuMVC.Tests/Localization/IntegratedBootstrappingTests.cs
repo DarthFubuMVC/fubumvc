@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
 using FubuMVC.Core;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class IntegratedBootstrappingTests
     {
-        [Test]
+        [Fact]
         public void smoke()
         {
             using (FubuRuntime.Basic(_ => _.Features.Localization.Enable(true)))

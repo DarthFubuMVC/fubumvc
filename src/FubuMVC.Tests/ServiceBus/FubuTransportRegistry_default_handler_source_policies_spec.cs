@@ -6,15 +6,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class FubuTransportRegistry_default_handler_source_policies_spec
     {
-        [Test]
+        [Fact]
         public void should_automatically_pick_up_classes_suffixed_with_Handler()
         {
             using (var runtime = FubuRuntime.BasicBus())
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.ServiceBus
 
         }
 
-        [Test]
+        [Fact]
         public void should_automatically_pick_up_classes_suffixed_with_Consumer()
         {
             using (var runtime = FubuRuntime.BasicBus())
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void default_handler_sources_are_not_used_if_a_custom_one_is_registered_and_disabled()
         {
             using (var runtime = FubuRuntime.BasicBus(r =>
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.ServiceBus
 
         }
 
-        [Test]
+        [Fact]
         public void default_handler_sources_are_not_used_if_a_custom_one_is_registered_2_and_disabled()
         {
             using (var runtime = FubuRuntime.BasicBus(r =>
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus
 
         }
 
-        [Test]
+        [Fact]
         public void can_override_the_default_handler_source_by_explicits_and_disabled()
         {
             using (var runtime = FubuRuntime.BasicBus(r =>

@@ -3,31 +3,30 @@ using System.Linq;
 using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Services.Messaging.Tracking
 {
-    [TestFixture]
-    public class MessageHistoryTester
+    
+    public class MessageHistoryTester : IDisposable
     {
         private IListener<AllMessagesComplete> listener;
 
-        [SetUp]
-        public void SetUp()
+        public MessageHistoryTester()
         {
             MessageHistory.ClearAll();
 
             listener = MockRepository.GenerateMock<IListener<AllMessagesComplete>>();
             GlobalMessageTracking.Messaging.AddListener(listener);
-
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             GlobalMessageTracking.Messaging.RemoveListener(listener);
         }
+
+
 
         private void assertHasNotReceivedAllCompleteMessage()
         {
@@ -39,7 +38,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             listener.AssertWasCalled(x => x.Receive(null), x => x.IgnoreArguments());
         }
 
-        [Test]
+        [Fact]
         public void track_outstanding()
         {
             var foo1 = new Foo();
@@ -66,7 +65,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             
         }
 
-        [Test]
+        [Fact]
         public void finish_successfully_with_MessageHistory_WaitForWorkToFinish_positive()
         {
             var foo1 = new Foo();
@@ -84,7 +83,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             }).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void timeout_unsuccessful_with_MessageHistory_WaitForWorkToFinish_positive()
         {
             var foo1 = new Foo();
@@ -103,7 +102,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             }).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void track_received()
         {
             var foo1 = new Foo();
@@ -119,7 +118,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
 
         }
 
-        [Test]
+        [Fact]
         public void clear_all_absolutely_has_to_work()
         {
             var foo1 = new Foo();
@@ -142,7 +141,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             
         }
 
-        [Test]
+        [Fact]
         public void sends_the_all_clear_message_when_it_gets_everything()
         {
             var foo1 = new Foo();
@@ -165,7 +164,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             assertAllCompleteMessage();
         }
 
-        [Test]
+        [Fact]
         public void clear_history_removes_all()
         {
             var foo1 = new Foo();

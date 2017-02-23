@@ -4,12 +4,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authorization
 {
-    [TestFixture]
+    
     public class when_executing_authorization_policies : InteractionContext<AuthorizationPolicyExecutor>
     {
         private IAuthorizationPolicy[] policies;
@@ -28,20 +28,20 @@ namespace FubuMVC.Tests.Security.Authorization
             _answer = ClassUnderTest.IsAuthorized(request, policies);
         }
 
-        [Test]
+        [Fact]
         public void should_log_the_combined_result()
         {
            RecordedLog().DebugMessages.OfType<AuthorizationResult>().Single().Rights.ShouldBe(_answer);
         }
 
-        [Test]
+        [Fact]
         public void should_log_the_result_of_each_policy()
         {
             var results = RecordedLog().DebugMessages.OfType<AuthorizationPolicyResult>();
             results.Select(x => x.Rights.Name).ShouldHaveTheSameElementsAs("Allow", "None", "None");
         }
 
-        [Test]
+        [Fact]
         public void should_query_all_authorization_policies_once()
         {
             policies[0].VerifyAllExpectations();
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Security.Authorization
             policies[2].VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_return_the_combined_result_of_all_policies()
         {
             _answer.ShouldBe(AuthorizationRight.Allow);

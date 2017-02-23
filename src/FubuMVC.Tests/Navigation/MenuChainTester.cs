@@ -1,14 +1,14 @@
 using System;
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class MenuChainTester
     {
-        [Test]
+        [Fact]
         public void find_by_key_in_deep_structure()
         {
             var node1 = MenuNode.ForCreatorOf(FakeKeys.Key1, typeof(Address));
@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.Navigation
             chain.FindByKey(FakeKeys.Key10).ShouldBeTheSameAs(node10);
         }
 
-        [Test]
+        [Fact]
         public void all_nodes_of_deep_structure()
         {
             var node1 = MenuNode.ForCreatorOf(FakeKeys.Key1, typeof(Address));

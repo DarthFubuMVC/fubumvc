@@ -5,16 +5,16 @@ using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using StructureMap.TypeRules;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class ProjectionContextTester : InteractionContext<ProjectionContext<ProjectionModel>>
     {
-        [Test]
+        [Fact]
         public void subject_delegates_to_the_inner_values()
         {
             var model = new ProjectionModel();
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Projections
             ClassUnderTest.Subject.ShouldBeTheSameAs(model);
         }
 
-        [Test]
+        [Fact]
         public void formatted_value_of_extension_method_1()
         {
             var formatter = MockFor<IDisplayFormatter>();
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Projections
 
 
 
-        [Test]
+        [Fact]
         public void value_for_delegates_to_the_inner_values()
         {
             var accessor = ReflectionHelper.GetAccessor<ProjectionModel>(x => x.Name);
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Projections
             ClassUnderTest.Values.ValueFor(accessor).ShouldBe("Jeremy");
         }
 
-        [Test]
+        [Fact]
         public void getting_a_service_delegates_to_the_service_locator()
         {
             var stub = new StubUrlRegistry();
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Projections
             ClassUnderTest.Service<IUrlRegistry>().ShouldBeTheSameAs(stub);
         }
 
-        [Test]
+        [Fact]
         public void urls_are_pulled_from_the_service_locator_but_only_once()
         {
             var stub = new StubUrlRegistry();
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Projections
             MockFor<IServiceLocator>().AssertWasCalled(x => x.GetInstance<IUrlRegistry>(), x => x.Repeat.Once());
         }
 
-        [Test]
+        [Fact]
         public void display_formatter_is_pulled_from_the_service_locator_once()
         {
             var formatter = MockFor<IDisplayFormatter>();
@@ -94,7 +94,7 @@ namespace FubuMVC.Tests.Projections
             MockFor<IServiceLocator>().AssertWasCalled(x => x.GetInstance<IDisplayFormatter>(), x => x.Repeat.Once());
         }
 
-        [Test]
+        [Fact]
         public void create_a_context_for_a_different_type()
         {
             var formatter = MockFor<IDisplayFormatter>();

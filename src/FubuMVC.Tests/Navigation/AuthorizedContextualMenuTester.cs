@@ -1,13 +1,13 @@
 using FubuMVC.Core.Navigation;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class AuthorizedContextualMenuTester : InteractionContext<AuthorizedContextualMenu<ContextualObject>>
     {
         private IContextualAction<ContextualObject> definition;
@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.Navigation
             }
         }
 
-        [Test]
+        [Fact]
         public void should_get_the_key_from_the_inner_definition()
         {
             WouldBeAuthorized = true;
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Navigation
             theResultingMenuItemToken.Key.ShouldBe(theKey);
         }
 
-        [Test]
+        [Fact]
         public void should_get_the_text_from_the_inner_definition()
         {
             WouldBeAuthorized = true;
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Navigation
             theResultingMenuItemToken.Text.ShouldBe(theTextOfTheMenuItem);
         }
 
-		[Test]
+		[Fact]
 		public void should_get_the_description_from_the_inner_definition()
 		{
 			WouldBeAuthorized = true;
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.Navigation
 			theResultingMenuItemToken.Description.ShouldBe(theDescriptionOfTheMenuItem);
 		}
 
-		[Test]
+		[Fact]
 		public void should_get_the_category_from_the_inner_definition()
 		{
 			WouldBeAuthorized = true;
@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.Navigation
 			theResultingMenuItemToken.Category.ShouldBe(theCategory);
 		}
 
-        [Test]
+        [Fact]
         public void should_get_the_url_from_the_inner_definition()
         {
             WouldBeAuthorized = true;
@@ -118,7 +118,7 @@ namespace FubuMVC.Tests.Navigation
             theResultingMenuItemToken.Url.ShouldBe(theUrl);
         }
 
-        [Test]
+        [Fact]
         public void build_menu_state_when_the_authorization_succeeds_and_is_available()
         {
             WouldBeAuthorized = true;
@@ -127,7 +127,7 @@ namespace FubuMVC.Tests.Navigation
             theResultingMenuItemToken.MenuItemState.ShouldBe(MenuItemState.Available);
         }
 
-        [Test]
+        [Fact]
         public void build_menu_state_when_the_authorization_fails_and_the_inner_definition_says_unauthorized_endpoints_should_be_hidden()
         {
             WouldBeAuthorized = false;
@@ -137,7 +137,7 @@ namespace FubuMVC.Tests.Navigation
             theResultingMenuItemToken.MenuItemState.ShouldBe(MenuItemState.Hidden);
         }
 
-        [Test]
+        [Fact]
         public void build_menu_state_when_the_authorization_fails_and_the_inner_definition_says_unauthorized_endpoints_should_be_disabled()
         {
             WouldBeAuthorized = false;
@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.Navigation
             theResultingMenuItemToken.MenuItemState.ShouldBe(MenuItemState.Disabled);
         }
 
-        [Test]
+        [Fact]
         public void build_menu_state_when_is_authorized_by_availibility_determinied_by_the_definition_is_disabled()
         {
             WouldBeAuthorized = true;
@@ -157,7 +157,7 @@ namespace FubuMVC.Tests.Navigation
         }
 
 
-        [Test]
+        [Fact]
         public void build_menu_state_when_is_authorized_by_availibility_determinied_by_the_definition_is_hidden()
         {
             WouldBeAuthorized = true;

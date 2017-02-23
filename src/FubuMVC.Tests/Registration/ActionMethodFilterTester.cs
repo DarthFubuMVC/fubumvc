@@ -5,19 +5,18 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class ActionMethodFilterTester
     {
         private List<MethodInfo> methods;
 
-        [SetUp]
-        public void SetUp()
+        public ActionMethodFilterTester()
         {
             var filter = new ActionMethodFilter();
             methods = typeof(ActionMethodTarget).PublicInstanceMethods().Where(filter.Matches).ToList();
@@ -29,7 +28,7 @@ namespace FubuMVC.Tests.Registration
             return methods.Any(x => x.Name == method.Name); // Never count on equality between reflection members
         }
 
-        [Test]
+        [Fact]
         public void does_not_include_object_methods()
         {
             contains(x => x.ToString()).ShouldBeFalse();
@@ -37,25 +36,25 @@ namespace FubuMVC.Tests.Registration
             contains(x => x.Equals(null)).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void does_not_include_methods_from_marshal_by_ref_object()
         {
             contains(x => x.InitializeLifetimeService()).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void does_not_contain_the_dispose_method()
         {
             contains(x => x.Dispose()).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void does_not_contain_property_accessors()
         {
             methods.Any(x => x.Name.Contains("Name")).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void does_contain_other_methods()
         {
             methods.Single().Name.ShouldBe("Good");

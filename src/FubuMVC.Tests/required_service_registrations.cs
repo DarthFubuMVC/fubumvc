@@ -26,15 +26,15 @@ using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class required_service_registrations
     {
-        [Test]
+        [Fact]
         public void all_default_service_registrations()
         {
             using (var runtime = FubuRuntime.Basic())
@@ -117,7 +117,7 @@ namespace FubuMVC.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void IAssetTagBuilder_is_registered_in_development_mode()
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))

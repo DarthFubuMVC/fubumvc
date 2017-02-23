@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
                 _expectations.FirstOrDefault(x => x.Message.Equals(request) && x.Destination == options.Destination);
 
             if (expectation == null)
-                Assert.Fail("No expectation for message {0} to destination {1}", request, options.Destination);
+                throw new System.Exception($"No expectation for message {request} to destination {options.Destination}");
 
             var completion = new TaskCompletionSource<TResponse>();
 
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             if (missing.Any())
             {
                 var message = missing.Select(x => x.ToString()).Join("\n");
-                Assert.Fail(message);
+                throw new Exception(message);
             }
         }
 

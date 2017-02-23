@@ -4,19 +4,19 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
+    
     public class SubscriptionCache_clearing_tester
     {
         private readonly SubscriptionCache _cache = new SubscriptionCache(
             new ChannelGraph(),
             new ITransport[] { new InMemoryTransport() });
 
-        [Test]
+        [Fact]
         public void clears_all_subscriptions()
         {
             var subscriptions = new[]
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             _cache.ActiveSubscriptions.ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void clears_volatile_nodes()
         {
             var envelope = ObjectMother.EnvelopeWithMessage();

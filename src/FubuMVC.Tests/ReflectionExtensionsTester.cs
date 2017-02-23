@@ -6,49 +6,43 @@ using System.Text;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class ReflectionExtensionsTester
     {
-        private MethodInfo _method1;
+        private MethodInfo _method1 = ReflectionHelper.GetMethod<PureTestPurposes>(x => x.Bind(5));
 
-        [TestFixtureSetUp]
-        public void FixtureSetUp()
-        {
-            _method1 = ReflectionHelper.GetMethod<PureTestPurposes>(x => x.Bind(5));
-        }
-
-        [Test]
+        [Fact]
         public void methods_from_different_types_should_not_match()
         {
             var method2 = ReflectionHelper.GetMethod<AnotherTestCase>(x => x.Bind(12));
             _method1.Matches(method2).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void methods_with_different_names_should_not_match()
         {
             var method2 = ReflectionHelper.GetMethod<PureTestPurposes>(x => x.Bind2(20));
             _method1.Matches(method2).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void methods_with_different_parameter_count_should_not_match()
         {
             var method2 = ReflectionHelper.GetMethod<PureTestPurposes>(x => x.SmartBind(20, "Some format"));
             _method1.Matches(method2).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void method_should_match_itself()
         {
             _method1.Matches(_method1).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void parameters_of_different_types_should_not_match()
         {
             var method = ReflectionHelper.GetMethod<PureTestPurposes>(x => x.SmartBind(20, "Some format"));
@@ -57,7 +51,7 @@ namespace FubuMVC.Tests
             intParameter.Matches(stringParameter).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void parameter_should_match_itself()
         {
             var parameter = _method1.GetParameters().SingleOrDefault(p => p.Name == "input");

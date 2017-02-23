@@ -1,20 +1,20 @@
 ﻿using FubuMVC.Core.ServiceBus.Runtime.Routing;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Routing
 {
-    [TestFixture]
+    
     public class LambdaRoutingRuleTester
     {
-        [Test]
+        [Fact]
         public void positive_match()
         {
             var rule = new LambdaRoutingRule(type => type == typeof (BusSettings));
             rule.Matches(typeof(BusSettings)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void negative_match()
         {
             var rule = new LambdaRoutingRule(type => type == typeof(BusSettings));

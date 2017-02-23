@@ -2,20 +2,19 @@ using System;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
-    [TestFixture]
+    
     public class BehaviorTracerNodeTester
     {
         private Wrapper inner;
         private BehaviorChain chain;
         private BehaviorTracerNode theNode;
 
-        [SetUp]
-        public void SetUp()
+        public BehaviorTracerNodeTester()
         {
             inner = Wrapper.For<SimpleBehavior>();
             chain = new BehaviorChain();
@@ -25,13 +24,14 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             theNode = new BehaviorTracerNode(inner);
         }
 
-        [Test]
+
+        [Fact]
         public void should_put_itself_before_the_inner_node()
         {
             theNode.Next.ShouldBeTheSameAs(inner);
         }
 
-        [Test]
+        [Fact]
         public void category_has_to_be_instrumentation()
         {
             theNode.Category.ShouldBe(BehaviorCategory.Instrumentation);

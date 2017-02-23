@@ -1,12 +1,12 @@
 using FubuMVC.Core.Navigation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class MenuRegistrationTester : InteractionContext<MenuRegistration>
     {
         private MenuNode theNode;
@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Navigation
             Services.Inject(theNode);
         }
 
-        [Test]
+        [Fact]
         public void depends_on_positive()
         {
             var token = new NavigationKey("something");
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Navigation
             ClassUnderTest.DependsOn(token).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void depends_on_negative()
         {
             var token = new NavigationKey("something");
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Navigation
             ClassUnderTest.DependsOn(token).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void get_the_description()
         {
             var theStringTokenDescription = "the string token description";
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Navigation
             ClassUnderTest.Description.ShouldBe("some description");
         }
 
-        [Test]
+        [Fact]
         public void configure_if_the_matcher_can_find_something()
         {
             var graph = new NavigationGraph();
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Navigation
             MockFor<IMenuPlacementStrategy>().AssertWasCalled(x => x.Apply(theChain, theNode));
         }
 
-        [Test]
+        [Fact]
         public void configure_if_the_matcher_cannot_find_something_will_add_a_menu_chain_for_the_parent()
         {
             var graph = new NavigationGraph();

@@ -2,15 +2,15 @@
 using FubuCore;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class DictionaryExtensionsTester
     {
-        [Test]
+        [Fact]
         public void copy_multiple_keys_that_all_exist_in_source()
         {
             var source = new Dictionary<string, object>();
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Http.Owin
             destination["c"].ShouldBe(3);
         }
 
-        [Test]
+        [Fact]
         public void copy_multiple_keys_with_some_misses()
         {
             var source = new Dictionary<string, object>();
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Http.Owin
             destination["c"].ShouldBe(3);
         }
 
-        [Test]
+        [Fact]
         public void set_and_read_request_id()
         {
             var dict = new Dictionary<string, object>();
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Http.Owin
         }
 
 
-        [Test]
+        [Fact]
         public void set_the_chain_execution_log()
         {
             var source = new Dictionary<string, object>();

@@ -1,27 +1,27 @@
 using FubuMVC.Core.Http;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class MimeTypeListTester
     {
-        [Test]
+        [Fact]
         public void build_from_string()
         {
             var list = new MimeTypeList("text/json");
             list.ShouldHaveTheSameElementsAs("text/json");
         }
 
-        [Test]
+        [Fact]
         public void build_with_multiple_mimetypes()
         {
             var list = new MimeTypeList("text/json,application/json");
             list.ShouldHaveTheSameElementsAs("text/json", "application/json");
         }
 
-        [Test]
+        [Fact]
         public void  build_with_complex_mimetypes()
         {
             var list =
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Http
             list.ShouldHaveTheSameElementsAs("application/xml", "application/xhtml+xml", "text/html", "text/plain", "image/png", "*/*");
         }
 
-        [Test]
+        [Fact]
         public void matches_positive()
         {
             var list = new MimeTypeList("text/json,application/json");
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Http
             list.Matches("text/json", "application/json").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_negative()
         {
             var list = new MimeTypeList("text/json,application/json");
@@ -48,21 +48,21 @@ namespace FubuMVC.Tests.Http
             list.Matches("weird", "wrong").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_ignore_null()
         {
             var list = new MimeTypeList((string)null);
             list.ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void should_ignore_empty_string()
         {
             var list = new MimeTypeList(string.Empty);
             list.ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void should_ignore_whitespace_only_string()
         {
             var list = new MimeTypeList("    ");

@@ -9,17 +9,14 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Ajax
 {
-    [TestFixture]
+    
     public class AjaxContinuationPolicyIntegratedTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public AjaxContinuationPolicyIntegratedTester()
         {
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
@@ -27,7 +24,6 @@ namespace FubuMVC.Tests.Ajax
             });
         }
 
-        #endregion
 
         private BehaviorGraph theGraph;
 
@@ -68,7 +64,7 @@ namespace FubuMVC.Tests.Ajax
         }
 
 
-        [Test]
+        [Fact]
         public void should_be_a_behavior_on_actions_that_return_a_subclass_of_AjaxContinuation()
         {
             var outputNode = chainFor(x => x.SpecialContinuation(null))
@@ -80,7 +76,7 @@ namespace FubuMVC.Tests.Ajax
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_be_a_behavior_on_actions_that_return_the_AjaxContinuation()
         {
             chainFor(x => x.BasicContinuation(null)).Output.Media().OfType<AjaxContinuationWriter<AjaxContinuation>>()
@@ -88,7 +84,7 @@ namespace FubuMVC.Tests.Ajax
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_have_a_conneg_input_node_with_json_or_http_post_input()
         {
             var connegInput = chainFor(x => x.BasicContinuation(null)).Input;

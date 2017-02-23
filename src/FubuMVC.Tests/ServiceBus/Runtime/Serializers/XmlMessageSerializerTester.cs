@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
     //Copied from RSB for backwards compatibility
-    [TestFixture]
+    
     public class XmlMessageSerializerTester
     {
         private readonly Order sample = new Order
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             TimeToDelivery = TimeSpan.FromDays(1),
         };
 
-        [Test]
+        [Fact]
         public void can_round_trip_object_array()
         {
             var messages = new object[] {sample, sample2, new Address {City = "SLC", State = "Utah"}};
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 
         }
 
-        [Test]
+        [Fact]
         public void can_round_trip_single_message()
         {
             var serializer = new XmlMessageSerializer();
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             actual.OrderId.ShouldBe(sample.OrderId);
         }
 
-        [Test]
+        [Fact]
         public void Can_serialize_and_deserialize_primitive()
         {
             long ticks = DateTime.Now.Ticks;
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             ticks.ShouldBe(actual);
         }
 
-        [Test]
+        [Fact]
         public void Can_serialize_and_deserialize_double()
         {
             double aDouble = 1.12;
@@ -111,7 +111,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             aDouble.ShouldBe(actual);
         }
 
-        [Test]
+        [Fact]
         public void Can_serialize_and_deserialize_float()
         {
             float aFloat = 1.12f;
@@ -123,7 +123,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             aFloat.ShouldBe(actual);
         }
 
-        [Test]
+        [Fact]
         public void Can_serialize_and_deserialize_byte_array()
         {
             var serializer = new XmlMessageSerializer();
@@ -134,7 +134,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             new byte[] { 1, 2, 3, 4 }.ShouldBe(actual);
         }
 
-        [Test]
+        [Fact]
         public void Can_serialize_and_deserialize_DateTimeOffset()
         {
             var value = DateTimeOffset.Now;
@@ -146,7 +146,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             value.ShouldBe(actual);
         }
 
-        [Test]
+        [Fact]
         public void Can_serialize_and_deserialize_array()
         {
             var serializer = new XmlMessageSerializer();
@@ -163,7 +163,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             "ayende".ShouldBe(actual.Items[0].As<OrderLine>().Product);
         }
 
-        [Test]
+        [Fact]
         public void can_serialize_and_deserialize_dictionary()
         {
             var serializer = new XmlMessageSerializer();
@@ -183,7 +183,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             "ayende".ShouldBe(actual.DictionaryItems["products"][0].As<OrderLine>().Product);
         }
 
-        [Test]
+        [Fact]
         public void can_serialize_and_deserialize_when_dictionary_property_null()
         {
             var serializer = new XmlMessageSerializer();
@@ -201,7 +201,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             actual.DictionaryItems.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void Can_deserialize_complex_object_graph()
         {
             var serializer = new XmlMessageSerializer();

@@ -3,29 +3,23 @@ using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web.Remote;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.Remote
 {
-    [TestFixture]
+    
     public class RemoteFieldValidationRuleFilterTester
     {
-        private RemoteFieldValidationRuleFilter theFilter;
+        private RemoteFieldValidationRuleFilter theFilter = new RemoteFieldValidationRuleFilter();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theFilter = new RemoteFieldValidationRuleFilter();
-        }
-
-        [Test]
+        [Fact]
         public void matches_rules_that_implment_IRemoteFieldValidationRule()
         {
             theFilter.Matches(new RemoteRuleStub()).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_match_rules_that_do_not_implement_IRemoteFieldValidationRule()
         {
             theFilter.Matches(new RequiredFieldRule()).ShouldBeFalse();

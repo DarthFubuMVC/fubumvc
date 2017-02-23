@@ -1,36 +1,31 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http.Hosting;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting
 {
-    [TestFixture]
-    public class AboutEndpointIntegrationTester
+    
+    public class AboutEndpointIntegrationTester : IDisposable
     {
-        private FubuRuntime server;
-
-        [TestFixtureSetUp]
-        public void SetUp()
+        private readonly FubuRuntime server = FubuRuntime.Basic(_ =>
         {
-            server = FubuRuntime.Basic(_ =>
-            {
-                _.Mode = "development";
-                _.HostWith<Katana>();
-            });
+            _.Mode = "development";
+            _.HostWith<Katana>();
+        });
+
+
+        public void Dispose()
+        {
+            server.Dispose();
         }
 
-        [TestFixtureTearDown]
-        public void TearDown()
-        {
-            server.SafeDispose();
-        }
-
-        [Test]
+        [Fact]
         public void can_get_The_about_page_smoke_test()
         {
             TestHost.Scenario(_ =>

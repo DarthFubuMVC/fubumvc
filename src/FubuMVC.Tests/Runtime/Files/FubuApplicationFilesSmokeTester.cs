@@ -3,22 +3,16 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Files;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Runtime.Files
 {
-    [TestFixture]
+    
     public class FubuApplicationFilesSmokeTester
     {
-        private FubuApplicationFiles theFiles;
+        private FubuApplicationFiles theFiles = new FubuApplicationFiles(AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory());
 
-        [SetUp]
-        public void SetUp()
-        {
-            theFiles = new FubuApplicationFiles(AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory());
-        }
-
-        [Test]
+        [Fact]
         public void find_file()
         {
             theFiles.AssertHasFile("Runtime/Files/Data/a.txt");
@@ -30,7 +24,7 @@ namespace FubuMVC.Tests.Runtime.Files
                 .Trim().ShouldBe("some text from a.txt");
         }
 
-        [Test]
+        [Fact]
         public void find_file_canonicizes_paths()
         {
             theFiles.AssertHasFile("Runtime\\Files\\Data\\a.txt");

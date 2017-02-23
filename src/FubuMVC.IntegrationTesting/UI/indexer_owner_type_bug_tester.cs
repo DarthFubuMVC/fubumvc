@@ -3,7 +3,7 @@ using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.UI;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
@@ -36,10 +36,10 @@ namespace FubuMVC.IntegrationTesting.UI
         }
     }
 
-    [TestFixture]
+    
     public class indexer_owner_type_bug_tester
     {
-        [Test]
+        [Fact]
         public void should_build_the_template_just_fine()
         {
             using (var server = FubuRuntime.Basic())

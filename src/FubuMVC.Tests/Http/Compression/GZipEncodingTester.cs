@@ -3,28 +3,22 @@ using System.IO.Compression;
 using FubuCore;
 using FubuMVC.Core.Http.Compression;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Compression
 {
-    [TestFixture]
+    
     public class GZipEncodingTester
     {
-        private GZipHttpContentEncoding theEncoding;
+        private GZipHttpContentEncoding theEncoding = new GZipHttpContentEncoding();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theEncoding = new GZipHttpContentEncoding();
-        }
-
-        [Test]
+        [Fact]
         public void matches_gzip()
         {
             theEncoding.MatchingEncoding.ShouldBe(ContentEncoding.GZip);
         }
 
-        [Test]
+        [Fact]
         public void compresses_the_stream()
         {
             var original = "Testing...".AsStream().As<MemoryStream>();

@@ -5,17 +5,17 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServerSentEvents;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServerSentEvents
 {
 
-    [TestFixture]
+    
     public class Can_build_from_container
     {
-        [Test]
+        [Fact]
         public void end_to_end()
         {
             var registry = new FubuRegistry();
@@ -35,13 +35,12 @@ namespace FubuMVC.Tests.ServerSentEvents
         }
     }
 
-    [TestFixture]
+    
     public class ServerSentEventExtensionIntegratedTester
     {
         private BehaviorGraph theGraph;
 
-        [SetUp]
-        public void SetUp()
+        public ServerSentEventExtensionIntegratedTester()
         {
             var registry = new FubuRegistry();
             registry.Features.ServerSentEvents.Enable(true);
@@ -49,7 +48,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             theGraph = BehaviorGraph.BuildFrom(registry);
         }
 
-        [Test]
+        [Fact]
         public void should_have_an_endpoint_for_concrete_topic_class()
         {
             theGraph.ChainFor<ChannelWriter<FakeTopic>>(x => x.Write(null))
@@ -59,7 +58,7 @@ namespace FubuMVC.Tests.ServerSentEvents
                 .ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void should_have_url_patter_for_the_topic_classes()
         {
             theGraph.ChainFor<ChannelWriter<FakeTopic>>(x => x.Write(null))
@@ -67,7 +66,7 @@ namespace FubuMVC.Tests.ServerSentEvents
                 .Route.Pattern.ShouldBe("_events/fake");
         }
 
-        [Test]
+        [Fact]
         public void should_have_url_patter_for_the_topic_classes_with_route()
         {
             var route = theGraph

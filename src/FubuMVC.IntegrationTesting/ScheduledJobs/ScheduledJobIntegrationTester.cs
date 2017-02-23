@@ -11,35 +11,32 @@ using FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.Tests.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.ScheduledJobs
 {
-    [TestFixture]
-    public class ScheduledJobIntegrationTester
+    
+    public class ScheduledJobIntegrationTester : IDisposable
     {
         private FubuRuntime theRuntime;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public ScheduledJobIntegrationTester()
         {
             AJob.Reset();
             BJob.Reset();
             CJob.Reset();
 
-            theRuntime = FubuRuntime.For<ScheduledJobRegistry>()
-                
-                ;
+            theRuntime = FubuRuntime.For<ScheduledJobRegistry>();
         }
 
-        [TestFixtureTearDown]
-        public void Teardown()
+        public void Dispose()
         {
             theRuntime.Dispose();
         }
 
-        [Test]
+
+        [Fact]
         public void the_scheduled_job_chains_are_present()
         {
             var graph = theRuntime.Get<BehaviorGraph>();
@@ -48,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.ScheduledJobs
             chains.ShouldHaveCount(3);
         }
 
-        [Test]
+        [Fact]
         public void the_chains_for_rescheduling_a_job_are_present()
         {
             var graph = theRuntime.Get<BehaviorGraph>();
@@ -57,7 +54,7 @@ namespace FubuMVC.IntegrationTesting.ScheduledJobs
             chains.ShouldHaveCount(3);
         }
 
-        [Test]
+        [Fact]
         public void registration_of_scheduled_jobs_can_capture_channel_names()
         {
             var graph = theRuntime.Get<ScheduledJobGraph>();
@@ -65,14 +62,14 @@ namespace FubuMVC.IntegrationTesting.ScheduledJobs
             graph.FindJob(typeof (AJob)).Channel.Name.ShouldBe("Upstream");
         }
 
-        [Test]
+        [Fact]
         public void explicitly_register_a_routing_rule_for_a_scheduled_job()
         {
             var graph = theRuntime.Get<ChannelGraph>();
             graph.ChannelFor<BusSettings>(x => x.Upstream).ShouldExecuteJob<AJob>();
         }
 
-        [Test]
+        [Fact]
         public void jobs_are_registered_in_the_container()
         {
             theRuntime.Get<IScheduledJob<AJob>>().ShouldNotBeNull();
@@ -80,7 +77,7 @@ namespace FubuMVC.IntegrationTesting.ScheduledJobs
             theRuntime.Get<IScheduledJob<CJob>>().ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void use_the_default_channel_for_scheduled_jobs_if_none_is_explicitly_set()
         {
             var graph = theRuntime.Get<ChannelGraph>();
@@ -89,7 +86,7 @@ namespace FubuMVC.IntegrationTesting.ScheduledJobs
                 .ShouldExecuteJob<CJob>();
         }
 
-        [Test]
+        [Fact]
         public void can_override_the_default_timeout()
         {
             var graph = theRuntime.Get<ScheduledJobGraph>();

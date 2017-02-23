@@ -4,15 +4,15 @@ using System.Reflection;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
-    [TestFixture]
+    
     public class AjaxInputModelBindingIntegrationTester 
     {
 
-        [Test]
+        [Fact]
         public void The_answer_should_be_model_bound_when_posting_json()
         {
             var theInput = new JsonInput
@@ -35,7 +35,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }
 
-        [Test]
+        [Fact]
         public void The_answer_should_be_model_bound_when_posting_xml()
         {
             var theInput = new XmlInput
@@ -54,7 +54,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }
 
-        [Test]
+        [Fact]
         public void The_answer_should_be_overwritten_by_binding_even_if_already_supplied_in_json_input()
         {
             var theInput = new JsonInput
@@ -72,7 +72,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }
 
-        [Test]
+        [Fact]
         public void The_answer_should_be_overwritten_by_binding_even_if_already_supplied_in_xml_input()
         {
             var theInput = new XmlInput

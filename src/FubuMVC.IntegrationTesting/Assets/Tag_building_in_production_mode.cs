@@ -3,11 +3,11 @@ using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.View;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    [TestFixture]
+    
     public class Tag_building_in_production_mode : AssetIntegrationContext
     {
         public Tag_building_in_production_mode()
@@ -19,7 +19,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             File("content/images/image1.bmp");
         }
 
-        [Test]
+        [Fact]
         public void run_with_existing_assets()
         {
             Scenario.Get.Action<TagBuildingEndpoint>(x => x.get_page_with_assets());
@@ -32,7 +32,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.StatusCodeShouldBe(HttpStatusCode.OK);
         }
 
-        [Test]
+        [Fact]
         public void non_existent_assets_show_up_with_the_supplied_url()
         {
             Scenario.Get.Action<TagBuildingEndpoint>(x => x.get_page_with_assets());
@@ -43,7 +43,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.ContentShouldContain("<img src=\"/image2.bmp\" />");
         }
 
-        [Test]
+        [Fact]
         public void get_page_with_optional_assets()
         {
             Scenario.Get.Action<TagBuildingEndpoint>(x => x.get_page_with_optional_assets());

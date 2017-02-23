@@ -1,13 +1,13 @@
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class LiteralTester
     {
-        [Test]
+        [Fact]
         public void matches_positive()
         {
             var key = new NavigationKey("something");
@@ -15,14 +15,14 @@ namespace FubuMVC.Tests.Navigation
             new Literal(key).Matches(key).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_negative()
         {
             var key = new NavigationKey("something");
             new Literal(new NavigationKey("else")).Matches(key).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void default_key()
         {
             var key = new NavigationKey("something");

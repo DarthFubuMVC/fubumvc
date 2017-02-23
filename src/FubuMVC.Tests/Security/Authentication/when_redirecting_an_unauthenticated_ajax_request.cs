@@ -7,12 +7,12 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-	[TestFixture]
+	
 	public class when_redirecting_an_unauthenticated_ajax_request : InteractionContext<AjaxAuthenticationRedirect>
 	{
 		private string theUrl;
@@ -32,25 +32,25 @@ namespace FubuMVC.Tests.Security.Authentication
 
 		}
 
-	    [Test]
+	    [Fact]
 	    public void the_continuation_should_be_stop()
 	    {
             theContinuation.AssertWasEndedWithStatusCode(HttpStatusCode.Unauthorized);
 	    }
 
-		[Test]
+		[Fact]
 		public void sets_the_navigate_page_property()
 		{
 			theValues["navigatePage"].ShouldBe(theUrl);
 		}
 
-		[Test]
+		[Fact]
 		public void sets_the_success_flag()
 		{
 			theValues["success"].As<bool>().ShouldBeFalse();
 		}
 
-		[Test]
+		[Fact]
 		public void writes_the_json_mimetype()
 		{
 			MockFor<IOutputWriter>()

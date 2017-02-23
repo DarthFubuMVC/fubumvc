@@ -4,15 +4,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Async;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Async
 {
-    [TestFixture]
+    
     public class AsynchHandlingTester
     {
-        [Test]
+        [Fact]
         public void finish_successfully()
         {
             var handling = new AsyncHandling(ObjectMother.InvocationContext());
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
             list.OrderBy(x => x).ShouldHaveTheSameElementsAs("A", "B", "C");
         }
 
-        [Test]
+        [Fact]
         public void sad_path_wait_for_blows_up_with_the_aggregate_exception()
         {
             var handling = new AsyncHandling(ObjectMother.InvocationContext());
@@ -77,7 +77,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
             inner.Any(x => x is NotImplementedException).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void records_outgoing_on_the_invocation_context()
         {
             var context = ObjectMother.InvocationContext();
@@ -98,7 +98,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
                 .ShouldBeTheSameAs(expectedMessage);
         }
 
-        [Test]
+        [Fact]
         public void records_outgoing_on_the_invocation_context_for_object_array()
         {
             var context = ObjectMother.InvocationContext();

@@ -1,39 +1,33 @@
 using FubuMVC.Core.Http.Compression;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Compression
 {
-    [TestFixture]
+    
     public class ContentEncodingTester
     {
-        private ContentEncoding theEncoding;
+        private ContentEncoding theEncoding = ContentEncoding.GZip;
 
-        [SetUp]
-        public void SetUp()
-        {
-            theEncoding = ContentEncoding.GZip;
-        }
-
-        [Test]
+        [Fact]
         public void equals()
         {
             theEncoding.ShouldBe(ContentEncoding.GZip);
         }
 
-        [Test]
+        [Fact]
         public void simple_match()
         {
             theEncoding.Matches("gzip").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_case_insensitive()
         {
             theEncoding.Matches("GZip").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_negative()
         {
             theEncoding.Matches("deflate").ShouldBeFalse();

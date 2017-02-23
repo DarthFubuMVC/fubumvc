@@ -1,15 +1,15 @@
 using FubuCore.Binding;
 using FubuCore.Configuration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.AppSettings
 {
-    [TestFixture]
+    
     public class AppSettingsProviderIntegratedTester 
     {
 
-        [Test]
+        [Fact]
         public void fetch_a_simple_object()
         {
             var provider = new AppSettingsProvider(ObjectResolver.Basic());

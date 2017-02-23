@@ -1,13 +1,13 @@
 using System;
 using System.Net;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class handling_501_responses
     {
-        [Test]
+        [Fact]
         public void handle_the_exception_with_a_501_and_the_exception_message()
         {
             TestHost.Scenario(_ =>

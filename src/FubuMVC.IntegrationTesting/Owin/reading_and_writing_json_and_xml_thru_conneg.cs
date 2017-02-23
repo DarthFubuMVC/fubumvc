@@ -1,12 +1,12 @@
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class reading_and_writing_json_and_xml_thru_conneg
     {
-        [Test]
+        [Fact]
         public void read_and_write_json()
         {
             var message = new Message
@@ -23,7 +23,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             });
         }
 
-        [Test]
+        [Fact]
         public void read_and_write_xml()
         {
             var message = new Message

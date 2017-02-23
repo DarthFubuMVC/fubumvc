@@ -1,20 +1,20 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class FubuRegistryTester
     {
-        [Test]
+        [Fact]
         public void what_is_the_order()
         {
             new FubuRegistry();
         }
 
-        [Test]
+        [Fact]
         public void policies_are_only_registered_once()
         {
             FakePolicy.Count = 0;
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests
             FakePolicy.Count.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void registries_may_only_be_registered_once()
         {
             FakeIncludeRegistry.Count = 0;
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests
             FakeIncludeRegistry.Count.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void alter_settings_modifies_settings_object()
         {
             var registry = new FubuRegistry(r => r.AlterSettings<SettingsObject>(so => so.Touched = true));
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests
                 .Settings.Get<SettingsObject>().Touched.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void replace_settings()
         {
             var settings1 = new SettingsObject();

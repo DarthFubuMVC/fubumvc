@@ -1,13 +1,13 @@
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Instrumentation
 {
-    [TestFixture]
+    
     public class ChainExecutionListenerTester : InteractionContext<ChainExecutionListener>
     {
         private void assertMessageWasLogged(object message)
@@ -15,19 +15,19 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             MockFor<IChainExecutionLog>().AssertWasCalled(x => x.Log(message));
         }
 
-        [Test]
+        [Fact]
         public void debugging_is_enabled()
         {
             ClassUnderTest.IsDebugEnabled.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void info_is_enabled()
         {
             ClassUnderTest.IsInfoEnabled.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void debug_message_delegates()
         {
             var message = new object();
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             assertMessageWasLogged(message);
         }
 
-        [Test]
+        [Fact]
         public void debug_string_delegates()
         {
             ClassUnderTest.Debug("some stuff");
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             assertMessageWasLogged(new StringMessage("some stuff"));
         }
 
-        [Test]
+        [Fact]
         public void info_message_delegates()
         {
             var message = new object();
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             assertMessageWasLogged(message);
         }
 
-        [Test]
+        [Fact]
         public void info_string_delegates()
         {
             ClassUnderTest.Info("some stuff");

@@ -2,16 +2,16 @@
 using System.Security.Cryptography.X509Certificates;
 using FubuMVC.Core.ServiceBus.Runtime;
 using LightningQueues;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class TransactionCallbackTester
     {
-        [Test]
+        [Fact]
         public void sending_on_callback_translates_headers()
         {
             var envelope = new Envelope

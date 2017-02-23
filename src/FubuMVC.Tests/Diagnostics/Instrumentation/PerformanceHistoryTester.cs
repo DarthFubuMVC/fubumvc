@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Diagnostics.Instrumentation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Instrumentation
 {
-    [TestFixture]
+    
     public class PerformanceHistoryTester
     {
-        [Test]
+        [Fact]
         public void read_increments_hit_count()
         {
             var history = new PerformanceHistory();
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             }
         }
 
-        [Test]
+        [Fact]
         public void read_stores_the_last_execution()
         {
             var history = new PerformanceHistory();
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             history.LastExecution.ShouldBeTheSameAs(log2);
         }
 
-        [Test]
+        [Fact]
         public void read_increments_exception_count_correctly()
         {
             var history = new PerformanceHistory();
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             history.ExceptionCount.ShouldBe(2);
         }
 
-        [Test]
+        [Fact]
         public void increment_total_time()
         {
             var history = new PerformanceHistory();
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             history.TotalExecutionTime.ShouldBe(100 + 200 + 50 + 70);
         }
 
-        [Test]
+        [Fact]
         public void calculate_average()
         {
             var history = new PerformanceHistory();
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             history.Average.ShouldBe((100 + 200 + 50 + 70) / 4);
         }
 
-        [Test]
+        [Fact]
         public void no_hits_means_zero_exception_percentage_and_zero_average()
         {
             var history = new PerformanceHistory();
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             history.ExceptionPercentage.ShouldBe(0);
         }
 
-        [Test]
+        [Fact]
         public void calculate_exception_percentage()
         {
             var history = new PerformanceHistory();
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             history.ExceptionPercentage.ShouldBe(40);
         }
 
-        [Test]
+        [Fact]
         public void track_min_time()
         {
             var history = new PerformanceHistory();
@@ -117,7 +117,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             history.MinTime.ShouldBe(50);
         }
 
-        [Test]
+        [Fact]
         public void track_max_time()
         {
             var history = new PerformanceHistory();

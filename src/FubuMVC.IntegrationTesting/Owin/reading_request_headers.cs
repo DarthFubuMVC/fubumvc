@@ -1,13 +1,13 @@
 using System.Linq;
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class reading_request_headers
     {
-        [Test]
+        [Fact]
         public void read_build_in_header()
         {
             var message = new HeaderRequest
@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             });
         }
 
-        [Test]
+        [Fact]
         public void read_custom_header()
         {
             var message = new HeaderRequest

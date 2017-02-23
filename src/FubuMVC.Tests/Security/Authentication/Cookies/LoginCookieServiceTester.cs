@@ -6,12 +6,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication.Cookies;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication.Cookies
 {
-    [TestFixture]
+    
     public class LoginCookieServiceTester : InteractionContext<LoginCookieService>
     {
         private CookieSettings theSettings;
@@ -31,34 +31,34 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
 
         private Cookie theCookie { get { return ClassUnderTest.CreateCookie(theSystemTime); } }
 
-        [Test]
+        [Fact]
         public void sets_the_name_from_the_settings()
         {
             theCookie.States.First().Name.ShouldBe(theSettings.Name);
         }
 
-        [Test]
+        [Fact]
         public void sets_the_domain_if_specified_in_the_settings()
         {
             theSettings.Domain = "test.com";
             theCookie.Domain.ShouldBe(theSettings.Domain);
         }
 
-        [Test]
+        [Fact]
         public void sets_the_path_if_specified_in_the_settings()
         {
             theSettings.Path = "/test";
             theCookie.Path.ShouldBe(theSettings.Path);
         }
 
-        [Test]
+        [Fact]
         public void does_not_set_the_path_if_not_specified_in_the_settings()
         {
             theSettings.Path = null;
             theCookie.Path.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void sets_the_secure_flag_from_the_settings()
         {
             theSettings.Secure = false;
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
             theCookie.Secure.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void sets_the_httponly_flag_from_the_settings()
         {
             theSettings.HttpOnly = false;
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
             theCookie.HttpOnly.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void sets_the_expiration_date()
         {
             var actual = theCookie.Expires.Value.UtcDateTime;
@@ -86,7 +86,7 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
         }
     }
 
-    [TestFixture]
+    
     public class when_getting_the_current_cookie : InteractionContext<LoginCookieService>
     {
         private Cookie theCookie;
@@ -98,14 +98,14 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
             MockFor<ICookies>().Stub(x => x.Get(CookieSettings.DefaultCookieName)).Return(theCookie);
         }
 
-        [Test]
+        [Fact]
         public void finds_the_cookie_by_name_from_the_settings()
         {
             ClassUnderTest.Current().ShouldBeTheSameAs(theCookie);
         }
     }
 
-    [TestFixture]
+    
     public class when_updating_the_login_cookie : InteractionContext<LoginCookieService>
     {
         private Cookie theCookie;
@@ -116,7 +116,7 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
             ClassUnderTest.Update(theCookie);
         }
 
-        [Test]
+        [Fact]
         public void adds_the_cookie_to_the_response()
         {
             MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendCookie(theCookie));

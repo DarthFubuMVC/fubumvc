@@ -3,13 +3,13 @@ using System.Security.Principal;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Security.Authentication.Windows;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Windows
 {
-    [TestFixture]
+    
     public class WindowsControllerTester : InteractionContext<WindowsController>
     {
         private WindowsPrincipal thePrincipal;
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Security.Authentication.Windows
             MockFor<IWindowsAuthentication>().Stub(x => x.Authenticate(theRequest, thePrincipal)).Return(theContinuation);
         }
 
-        [Test]
+        [Fact]
         public void just_delegates_to_the_strategy()
         {
             ClassUnderTest.Login(theRequest).ShouldBe(theContinuation);

@@ -4,15 +4,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.UI
 {
-    [TestFixture]
+    
     public class ElementConventionsFubuPageExtensions_FullStackTester_DefaultConventions : FubuPageExtensionContext
     {
-        [Test]
+        [Fact]
         public void input_for_default_conventions()
         {
             execute(page => {
@@ -23,7 +23,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<input type=\"text\" value=\"Jeremy\" name=\"Name\" />");
         }
 
-        [Test]
+        [Fact]
         public void input_for_a_completely_different_model()
         {
             execute(page => {
@@ -37,7 +37,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<input type=\"text\" value=\"123\" name=\"Order\" />");
         }
 
-        [Test]
+        [Fact]
         public void input_for_a_different_model()
         {
             execute(page => {
@@ -50,7 +50,7 @@ namespace FubuMVC.IntegrationTesting.UI
         }
 
 
-        [Test]
+        [Fact]
         public void label_for_expression()
         {
             execute(page => page.LabelFor(x => x.Name));
@@ -60,7 +60,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<label for=\"MaximumLengthProp\">en-US_MaximumLengthProp</label>");
         }
 
-        [Test]
+        [Fact]
         public void label_for_a_different_thing()
         {
             execute(page => page.LabelFor<DifferentThing>(x => x.Order));
@@ -69,7 +69,7 @@ namespace FubuMVC.IntegrationTesting.UI
         }
 
 
-        [Test]
+        [Fact]
         public void display_for_default_conventions()
         {
             execute(page =>
@@ -81,7 +81,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<span id=\"Name\">Jeremy</span>");
         }
 
-        [Test]
+        [Fact]
         public void display_for_a_completely_different_model()
         {
             execute(page =>
@@ -96,7 +96,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<span id=\"Order\">123</span>");
         }
 
-        [Test]
+        [Fact]
         public void display_for_a_different_model()
         {
             execute(page =>
@@ -115,30 +115,21 @@ namespace FubuMVC.IntegrationTesting.UI
         public int Order { get; set; }
     }
 
-    [TestFixture]
-    public class FubuPageExtensionContext
+    
+    public class FubuPageExtensionContext : IDisposable
     {
-        [TestFixtureSetUp]
-        public void StartServer()
+        public FubuPageExtensionContext()
         {
-
             _server = FubuRuntime.Basic();
         }
 
-        [TestFixtureTearDown]
-        public void StopServer()
+        public void Dispose()
         {
             _server.Dispose();
         }
 
-        [SetUp]
-        public void SetUp()
-        {
-            theResult = string.Empty;
-        }
 
-
-        protected string theResult;
+        protected string theResult = string.Empty;
         private FubuRuntime
             _server;
 

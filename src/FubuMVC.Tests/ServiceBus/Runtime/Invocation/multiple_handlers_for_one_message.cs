@@ -1,14 +1,14 @@
 ﻿using System.Linq;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class multiple_handlers_for_one_message : InvocationContext
     {
-        [Test]
+        [Fact]
         public void multiple_handlers_should_fire_for_message()
         {
             handler<OneHandler, DifferentOneHandler, AnotherOneHandler, TwoHandler>();

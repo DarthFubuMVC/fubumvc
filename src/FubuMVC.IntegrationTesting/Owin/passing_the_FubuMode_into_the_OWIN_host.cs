@@ -5,14 +5,14 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class passing_the_FubuMode_into_the_OWIN_host
     {
-        [Test]
+        [Fact]
         public void the_mode_is_passed_in()
         {
             // THIS HAS TO BE A KATANA TEST. 

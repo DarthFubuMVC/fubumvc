@@ -3,14 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Diagnostics
 {
-    [TestFixture]
+    
     public class PerfTimerSmokeTester
     {
-        [Test]
+        [Fact]
         public void try_it_out()
         {
             var timer = new PerfTimer();

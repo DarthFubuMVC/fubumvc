@@ -3,15 +3,15 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.Core.Security.Authentication.Cookies;
 using FubuMVC.Core.Security.Authentication.Tickets;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class AuthenticationServiceRegistryTester
     {
-        [Test]
+        [Fact]
         public void services_are_registered()
         {
             var registry = new FubuRegistry();

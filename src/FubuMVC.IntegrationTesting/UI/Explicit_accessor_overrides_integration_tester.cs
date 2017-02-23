@@ -4,11 +4,11 @@ using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Elements;
 using HtmlTags;
 using HtmlTags.Conventions;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.UI
 {
-    [TestFixture]
+    
     public class Explicit_accessor_overrides_integration_tester
     {
         public class TestRegistry : FubuRegistry
@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.UI
         }
 
 
-        [Test]
+        [Fact]
         public void override_the_display_for_the_default()
         {
             TestHost.Scenario<TestRegistry>(_ =>
@@ -35,7 +35,7 @@ namespace FubuMVC.IntegrationTesting.UI
             });
         }
 
-        [Test]
+        [Fact]
         public void override_the_display_for_the_label()
         {
             TestHost.Scenario<TestRegistry>(_ =>
@@ -46,7 +46,7 @@ namespace FubuMVC.IntegrationTesting.UI
             });
         }
 
-        [Test]
+        [Fact]
         public void override_the_display_for_the_input()
         {
             TestHost.Scenario<TestRegistry>(_ =>
@@ -57,7 +57,7 @@ namespace FubuMVC.IntegrationTesting.UI
             });
         }
 
-        [Test]
+        [Fact]
         public void override_display_by_profile()
         {
             TestHost.Scenario<TestRegistry>(_ =>

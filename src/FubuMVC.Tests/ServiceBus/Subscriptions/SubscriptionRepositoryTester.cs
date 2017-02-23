@@ -4,12 +4,12 @@ using System.Linq;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
+    
     public class SubscriptionRepositoryTester
     {
         private InMemorySubscriptionPersistence persistence;
@@ -17,8 +17,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         private string TheNodeName = "TheNode";
         private ChannelGraph channelGraph;
 
-        [SetUp]
-        public void SetUp()
+        public SubscriptionRepositoryTester()
         {
             persistence = new InMemorySubscriptionPersistence();
             channelGraph = new ChannelGraph{Name = TheNodeName};
@@ -28,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             theRepository = new SubscriptionRepository(channelGraph, persistence);
         }
 
-        [Test]
+        [Fact]
         public void save_the_first_subscriptions()
         {
             var subscription = ObjectMother.NewSubscription();
@@ -42,7 +41,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             requirements.Single().Id.ShouldNotBe(Guid.Empty);
         }
 
-        [Test]
+        [Fact]
         public void save_a_new_subscription_that_does_not_match_existing()
         {
             var existing = ObjectMother.ExistingSubscription();
@@ -60,7 +59,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             requirements.ShouldContain(subscription);
         }
 
-        [Test]
+        [Fact]
         public void save_a_new_subscription_with_a_mix_of_existing_subscriptions()
         {
             var existing = ObjectMother.ExistingSubscription();
@@ -84,7 +83,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             requirements.ShouldContain(subscription);
         }
 
-        [Test]
+        [Fact]
         public void save_a_subscription_that_already_exists()
         {
             var existing = ObjectMother.ExistingSubscription();
@@ -99,7 +98,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .ShouldBe(existing);
         }
 
-        [Test]
+        [Fact]
         public void save_a_mixed_bag_of_existing_and_new_subscriptions()
         {
             var existing = ObjectMother.ExistingSubscription(TheNodeName);
@@ -129,7 +128,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
 
         }
 
-        [Test]
+        [Fact]
         public void save_transport_node_for_the_first_time()
         {
             theRepository.Persist(new TransportNode(channelGraph));
@@ -141,7 +140,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             node.Id.ShouldNotBe(Guid.Empty.ToString());
         }
 
-        [Test]
+        [Fact]
         public void saving_the_transport_node_is_idempotent()
         {
             theRepository.Persist(new TransportNode(channelGraph));
@@ -163,7 +162,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .Single().Id.ShouldBe(id);
         }
 
-        [Test]
+        [Fact]
         public void find_local()
         {
             var local = new TransportNode(channelGraph);
@@ -173,7 +172,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             theRepository.FindLocal().ShouldBeTheSameAs(local);
         }
 
-        [Test]
+        [Fact]
         public void find_peer()
         {
             var local = new TransportNode(channelGraph);
@@ -185,7 +184,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .ShouldBeTheSameAs(fooNode);
         }
 
-        [Test]
+        [Fact]
         public void record_ownership_to_this_node_singular()
         {
             var local = new TransportNode(channelGraph);
@@ -200,7 +199,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             local.OwnedTasks.ShouldContain(subject);
         }
 
-        [Test]
+        [Fact]
         public void record_multiple_ownerships_to_this_node()
         {
             var subjects = new Uri[] {"foo://1".ToUri(), "foo://2".ToUri(), "bar://1".ToUri()};
@@ -215,7 +214,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             local.OwnedTasks.ShouldHaveTheSameElementsAs(subjects);
         }
 
-        [Test]
+        [Fact]
         public void remove_ownership_from_the_current_node()
         {
             var local = new TransportNode(channelGraph);
@@ -231,7 +230,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             local.OwnedTasks.ShouldNotContain(subject);
         }
 
-        [Test]
+        [Fact]
         public void remove_ownership_from_a_different_node()
         {
             var subject = "foo://1".ToUri();
@@ -248,7 +247,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             fooNode.OwnedTasks.ShouldNotContain(subject);
         }
 
-        [Test]
+        [Fact]
         public void remove_local_subscriptions()
         {
             var subscriptions = new[] { ObjectMother.NewSubscription(), ObjectMother.NewSubscription() };
@@ -269,7 +268,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void remove_subscriptions_for_receiver()
         {
             var differentNode = ObjectMother.ExistingSubscription("DifferentNode");

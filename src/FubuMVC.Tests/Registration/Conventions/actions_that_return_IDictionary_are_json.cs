@@ -4,19 +4,18 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 using FubuMVC.Core.Resources.Conneg;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class actions_that_return_IDictionary_are_json
     {
         private BehaviorGraph theGraph;
 
-        [SetUp]
-        public void SetUp()
+        public actions_that_return_IDictionary_are_json()
         {
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
@@ -24,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             });
         }
 
-        [Test]
+        [Fact]
         public void methods_that_return_an_IDictionary_string_object_should_be_asymmetric_json()
         {
             var chain = theGraph.ChainFor<MyController>(x => x.ReturnsJson(null));

@@ -1,14 +1,14 @@
 ﻿using System.Net;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Security.Authentication;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
 {
-    [TestFixture]
+    
     public class unauthenticated_request_against_an_authenticated_route : AuthenticationHarness
     {
-        [Test]
+        [Fact]
         public void redirects_to_login()
         {
             var loginUrl = Urls.UrlFor(new LoginRequest {Url = "some/authenticated/route"}, "GET");

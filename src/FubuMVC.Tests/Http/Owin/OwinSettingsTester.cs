@@ -4,15 +4,15 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class OwinSettingsTester
     {
-        [Test]
+        [Fact]
         public void static_file_middle_ware_is_added_by_default()
         {
             var settings = new OwinSettings();
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Http.Owin
                 .Count().ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void create_with_no_html_head_injection()
         {
             var settings = new OwinSettings();
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Http.Owin
                 .Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void create_with_html_head_injection()
         {
             var html = new HtmlTag("script").Attr("foo", "bar").ToString();

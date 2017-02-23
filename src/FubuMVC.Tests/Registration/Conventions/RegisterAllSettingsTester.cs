@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class RegisterAllSettingsTester
     {
-        [Test]
+        [Fact]
         public void all_explicitly_changed_settings_should_get_registered_as_a_service()
         {
             var registry = new FubuRegistry();

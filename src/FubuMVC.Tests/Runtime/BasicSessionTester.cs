@@ -1,14 +1,14 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.UI;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class BasicSessionTester
     {
-        [Test]
+        [Fact]
         public void store_and_retrieve_objects()
         {
             var address = new Address();

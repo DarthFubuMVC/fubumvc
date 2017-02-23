@@ -4,12 +4,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class AjaxValidationFailureHandlerTester : InteractionContext<AjaxValidationFailureHandler>
     {
         private AjaxContinuation theAjaxContinuation;
@@ -30,13 +30,13 @@ namespace FubuMVC.Tests.Validation.Web
             ClassUnderTest.Handle(theNotification);
         }
 
-        [Test]
+        [Fact]
         public void writes_bad_request_status_code()
         {
             MockFor<IOutputWriter>().AssertWasCalled(x => x.WriteResponseCode(theSettings.StatusCode));
         }
 
-        [Test]
+        [Fact]
         public void sets_the_continuation_in_the_request()
         {
             MockFor<IFubuRequest>().AssertWasCalled(x => x.Set(theAjaxContinuation));

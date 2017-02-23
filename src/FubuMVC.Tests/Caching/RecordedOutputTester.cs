@@ -6,7 +6,7 @@ using FubuCore;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using FubuCore.Configuration;
@@ -14,20 +14,20 @@ using System.Linq;
 
 namespace FubuMVC.Tests.Caching
 {
-    [TestFixture]
+    
     public class RecordedOutputTester
     {
         private IHttpResponse theHttpResponse;
         private RecordedOutput theRecordedOutput;
 
-        [SetUp]
-        public void SetUp()
+        public RecordedOutputTester()
         {
             theHttpResponse = MockRepository.GenerateMock<IHttpResponse>();
             theRecordedOutput = new RecordedOutput(new FileSystem());
         }
 
-        [Test]
+
+        [Fact]
         public void get_headers()
         {
             theRecordedOutput.AppendHeader("a", "1");
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Caching
             theRecordedOutput.Headers().ShouldHaveTheSameElementsAs(new Header("a", "1"),new Header("b", "2"),new Header("c", "3"));
         }
 
-        [Test]
+        [Fact]
         public void the_replay_method_calls_all_the_recorded_outputs_in_order()
         {            
             var output1 = MockRepository.GenerateMock<IRecordedHttpOutput>();
@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.Caching
             output5.AssertWasCalled(x => x.Replay(theHttpResponse));
         }
 
-        [Test]
+        [Fact]
         public void the_get_text_method_calls_relevant_outputs_in_order()
         {
             var output1 = MockRepository.GenerateMock<IRecordedHttpOutput>();
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.Caching
             output4.As<IRecordedTextOutput>().AssertWasCalled(x => x.WriteText(Arg<StringWriter>.Is.NotNull));
         }
 
-        [Test]
+        [Fact]
         public void the_get_text_method_returns_empty_string_when_no_text()
         {
             var output = MockRepository.GenerateMock<IRecordedHttpOutput>();
@@ -86,14 +86,14 @@ namespace FubuMVC.Tests.Caching
             theRecordedOutput.GetText().ShouldBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void the_get_text_method_appends_text_output_in_order()
         {            
             addOutputs(new WriteTextOutput("hep"), new WriteTextOutput("hey"));
             theRecordedOutput.GetText().ShouldBe("hephey");
         }
 
-        [Test]
+        [Fact]
         public void write_stream()
         {
             var document = new XmlDocument();
@@ -107,7 +107,7 @@ namespace FubuMVC.Tests.Caching
             writeStream.ReadAll().ShouldBe(document.OuterXml);
         }
 
-        [Test]
+        [Fact]
         public void append_header_recording()
         {
             theRecordedOutput.AppendHeader("key", "value");
@@ -115,7 +115,7 @@ namespace FubuMVC.Tests.Caching
             theRecordedOutput.Outputs.ShouldHaveTheSameElementsAs(new Header("key", "value"));
         }
 
-        [Test]
+        [Fact]
         public void write_textual_content_adds_the_correct_recordings()
         {
             theRecordedOutput.Write("text/json", "{}");
@@ -127,7 +127,7 @@ namespace FubuMVC.Tests.Caching
         }
 
 
-        [Test]
+        [Fact]
         public void write_only_textual_content_adds_the_correct_recordings()
         {
             theRecordedOutput.Write("{}");
@@ -137,7 +137,7 @@ namespace FubuMVC.Tests.Caching
                 );
         }
 
-        [Test]
+        [Fact]
         public void SetContentType_replay_writes_the_content_type_to_the_HttpWriter()
         {
             var setContentType = new SetContentType("text/json");
@@ -146,7 +146,7 @@ namespace FubuMVC.Tests.Caching
             theHttpResponse.AssertWasCalled(x => x.WriteContentType("text/json"));
         }
 
-        [Test]
+        [Fact]
         public void WriteTextOutput_replay_writes_the_text_to_the_HttpWriter()
         {
             var writeText = new WriteTextOutput("something");
@@ -163,7 +163,7 @@ namespace FubuMVC.Tests.Caching
             writer.ToString().ShouldBe("jambalay");
         }
 
-        [Test]
+        [Fact]
         public void WriteStream_Replay_copies_to_a_stream()
         {
             var stream = new MemoryStream();
@@ -180,7 +180,7 @@ namespace FubuMVC.Tests.Caching
             recordingWriter.AllText().Trim().ShouldBe("Hello!");
         }
 
-        [Test]
+        [Fact]
         public void write_file()
         {
             new FileSystem().WriteStringToFile("text.txt", "some text");

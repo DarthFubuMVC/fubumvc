@@ -4,16 +4,16 @@ using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Validation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class SamlDirectorTester : InteractionContext<SamlDirector>
     {
-        [Test]
+        [Fact]
         public void default_result()
         {
             var result = ClassUnderTest.Result();
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             },"GET");
         }
 
-        [Test]
+        [Fact]
         public void failed_with_no_continuation()
         {
             ClassUnderTest.FailedUser();
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             },"GET");
         }
 
-        [Test]
+        [Fact]
         public void failed_with_a_continuation()
         {
             var continuation = FubuContinuation.RedirectTo("something");
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
 
     }
 
-    [TestFixture]
+    
     public class when_director_succceeds_with_no_continuation : InteractionContext<SamlDirector>
     {
         private const string theUserName = "somebody";
@@ -72,32 +72,32 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theResult = ClassUnderTest.Result();
         }
 
-        [Test]
+        [Fact]
         public void should_mark_the_session_as_authenticated()
         {
             MockFor<IAuthenticationSession>().AssertWasCalled(x => x.MarkAuthenticated(theUserName));
         }
 
-        [Test]
+        [Fact]
         public void should_have_set_the_principal()
         {
             MockFor<IPrincipalContext>().AssertWasCalled(x => x.Current = principal);
         }
 
-        [Test]
+        [Fact]
         public void the_result_is_successful()
         {
             theResult.Success.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void the_continuation_is_to_just_continue()
         {
             theResult.Continuation.AssertWasContinuedToNextBehavior();
         }
     }
 
-    [TestFixture]
+    
     public class when_director_succceeds_with_an_explicit_continuation : InteractionContext<SamlDirector>
     {
         private const string theUserName = "somebody";
@@ -117,25 +117,25 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theResult = ClassUnderTest.Result();
         }
 
-        [Test]
+        [Fact]
         public void should_mark_the_session_as_authenticated()
         {
             MockFor<IAuthenticationSession>().AssertWasCalled(x => x.MarkAuthenticated(theUserName));
         }
 
-        [Test]
+        [Fact]
         public void should_have_set_the_principal()
         {
             MockFor<IPrincipalContext>().AssertWasCalled(x => x.Current = principal);
         }
 
-        [Test]
+        [Fact]
         public void the_result_is_successful()
         {
             theResult.Success.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void uses_the_explicit_continuation()
         {
             theResult.Continuation.ShouldBeTheSameAs(theContinuation);

@@ -5,29 +5,22 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Projections
 {
-    [TestFixture]
-    public class end_to_end_json_serialization
+    
+    public class end_to_end_json_serialization : IDisposable
     {
-        private FubuRuntime _host;
-
-        [TestFixtureSetUp]
-        public void FixtureSetUp()
-        {
-            _host = FubuRuntime
+        private FubuRuntime _host = FubuRuntime
                 .For<JsonSerializationFubuRegistry>();
-        }
 
-        [TestFixtureTearDown]
-        public void FixtureTearDown()
+        public void Dispose()
         {
-            _host.SafeDispose();
+            _host.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void getting_large_json_data()
         {
             _host.Scenario(x =>
@@ -41,7 +34,7 @@ namespace FubuMVC.IntegrationTesting.Projections
             });
         }
 
-        [Test]
+        [Fact]
         public void getting_small_json_data()
         {
             _host.Scenario(x =>
@@ -55,7 +48,7 @@ namespace FubuMVC.IntegrationTesting.Projections
             });
         }
 
-        [Test]
+        [Fact]
         public void posting_large_json_data()
         {
             _host.Scenario(x =>
@@ -78,7 +71,7 @@ namespace FubuMVC.IntegrationTesting.Projections
             });
         }
 
-        [Test]
+        [Fact]
         public void posting_small_json_data()
         {
             _host.Scenario(x =>

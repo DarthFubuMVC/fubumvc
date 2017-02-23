@@ -3,15 +3,15 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Tests.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class throws_descriptive_message_if_a_single_port_has_mixed_modes
     {
-        [Test]
+        [Fact]
         public void throws()
         {
             var registry = new SampleRegistry();

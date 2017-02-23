@@ -2,14 +2,14 @@
 using FubuCore;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class Using_a_custom_value_projector
     {
-        [Test]
+        [Fact]
         public void should_just_use_IValueProjector_when_overriden_in_accessor_projection()
         {
             var projection = AccessorProjection<CustomValueHolder, CustomValue>.For(x => x.Value);
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Projections
             node.Values["Value"].As<IDictionary<string, object>>()["Age"].ShouldBe(38);
         }
 
-        [Test]
+        [Fact]
         public void should_just_use_IValueProjector_when_overriden_in_accessor_projection_and_can_override_the_attribute_name()
         {
             var projection = AccessorProjection<CustomValueHolder, CustomValue>.For(x => x.Value);

@@ -4,13 +4,13 @@ using FubuMVC.Core.Runtime.SessionState;
 using FubuMVC.Tests.Http.Cookies;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Tests.SessionState
 {
-    [TestFixture]
+    
     public class flashing_an_object : InteractionContext<CookieFlashProvider>
     {
         private RecordingOutputWriter theOutputWriter;
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.SessionState
 
         private Cookie theCookie { get { return theOutputWriter.LastCookie; } }
 
-        [Test]
+        [Fact]
         public void writes_the_cookie()
         {
             theCookie.Matches(CookieFlashProvider.FlashKey).ShouldBeTrue();

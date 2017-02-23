@@ -5,13 +5,13 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class ValidationStepTester
     {
         private ValidationStep theStep;
@@ -21,8 +21,7 @@ namespace FubuMVC.Tests.Validation
         private IValidationRule r2;
         private ValidationContext theContext;
 
-        [SetUp]
-        public void SetUp()
+        public ValidationStepTester()
         {
             theModel = new SimpleModel();
 
@@ -35,19 +34,19 @@ namespace FubuMVC.Tests.Validation
             theStep = new ValidationStep(theModel.GetType(), theSource, new[] { r1, r2 });
         }
 
-        [Test]
+        [Fact]
         public void the_source()
         {
             theStep.Source.ShouldBe(theSource);
         }
 
-        [Test]
+        [Fact]
         public void sets_the_rules()
         {
             theStep.Rules.ShouldHaveTheSameElementsAs(r1, r2);
         }
 
-        [Test]
+        [Fact]
         public void executes_each_rule()
         {
             theStep.Execute(theContext);
@@ -56,7 +55,7 @@ namespace FubuMVC.Tests.Validation
             r2.AssertWasCalled(x => x.Validate(theContext));
         }
 
-		[Test]
+		[Fact]
 		public void finds_the_rules()
 		{
 			var r1 = new StubRule();
@@ -78,15 +77,14 @@ namespace FubuMVC.Tests.Validation
 		}
 	}
 
-    [TestFixture]
+    
     public class when_building_the_description_for_the_validation_step
     {
         private ValidationStep theStep;
         private Description theDescription;
         private BulletList theRuleList;
 
-        [SetUp]
-        public void SetUp()
+        public when_building_the_description_for_the_validation_step()
         {
             theStep = new ValidationStep(typeof(string), typeof(ConfiguredValidationSource), new IValidationRule[] { new Rule1(), new Rule2()  });
 
@@ -94,20 +92,20 @@ namespace FubuMVC.Tests.Validation
             theRuleList = theDescription.BulletLists.Single();
         }
 
-        [Test]
+        [Fact]
         public void the_short_description_of_the_step()
         {
             theDescription.ShortDescription.ShouldBe("Validate {0} from {1}".ToFormat(typeof(string).Name, typeof(ConfiguredValidationSource).Name));
         }
 
-        [Test]
+        [Fact]
         public void the_name_and_the_label_of_the_validation_rule_list()
         {
             theRuleList.Name.ShouldBe("ValidationRules");
             theRuleList.Label.ShouldBe("Validation Rules");
         }
 
-        [Test]
+        [Fact]
         public void the_validation_rules_list_must_be_marked_as_order_dependent()
         {
             theRuleList.IsOrderDependent.ShouldBeTrue();

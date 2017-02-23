@@ -4,22 +4,15 @@ using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.View;
 using FubuMVC.Tests;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.UI
 {
-    [TestFixture]
+    
     public class FubuPageExtension_with_default_conventions_tester 
     {
-        [SetUp]
-        public void SetUp()
-        {
-            theResult = string.Empty;
-        }
-
-
-        protected string theResult;
+        protected string theResult = string.Empty;
 
         protected void execute(Func<IFubuPage<ConventionTarget>, object> func)
         {
@@ -34,7 +27,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult = response.Body.ReadAsText();
         }
 
-        [Test]
+        [Fact]
         public void authorized_link_to_positive_directly_against_endpoint_service()
         {
             execute(page =>
@@ -47,7 +40,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<a href=\"/authorized/data\"></a>");
         }
 
-        [Test]
+        [Fact]
         public void authorized_link_to_negative_directly_against_endpoint_service()
         {
             execute(page =>
@@ -60,21 +53,21 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe(string.Empty);
         }
 
-        [Test]
+        [Fact]
         public void link_to_by_input_model_type()
         {
             execute(page => page.LinkTo<SpecificInput>());
             theResult.ShouldBe("<a href=\"/specific/input\"></a>");
         }
 
-        [Test]
+        [Fact]
         public void link_to_by_input_model_gets_full_pattern()
         {
             execute(page => page.LinkTo(new InputWithPattern {Name = "Jeremy"}));
             theResult.ShouldBe("<a href=\"/input/Jeremy\"></a>");
         }
 
-        [Test]
+        [Fact]
         public void link_to_by_input_model_that_passes_authorization()
         {
             execute(page =>
@@ -87,7 +80,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<a href=\"/secured/by/role/Max\"></a>");
         }
 
-        [Test]
+        [Fact]
         public void link_to_by_input_model_that_does_not_pass_authorization()
         {
             execute(page =>
@@ -100,7 +93,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void link_to_by_controller_name_and_expression()
         {
             execute(page => page.LinkTo<ConventionEndpoint>(x => x.get_result()));
@@ -108,7 +101,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<a href=\"/result\"></a>");
         }
 
-        [Test]
+        [Fact]
         public void link_to_new()
         {
             execute(page => page.LinkToNew<Foo>());
@@ -116,7 +109,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("<a href=\"/creates/foo\"></a>");
         }
 
-        [Test]
+        [Fact]
         public void link_variable_simple()
         {
             execute(page => page.LinkVariable("foo", new InputWithPattern {Name = "Shiner"}));
@@ -124,7 +117,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("var foo = '/input/Shiner';");
         }
 
-        [Test]
+        [Fact]
         public void link_varuable_by_input_type()
         {
             execute(page => page.LinkVariable<SpecificInput>("foo"));
@@ -132,7 +125,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("var foo = '/specific/input';");
         }
 
-        [Test]
+        [Fact]
         public void element_name_for()
         {
             execute(page => page.ElementNameFor(x => x.NullableNow));
@@ -140,7 +133,7 @@ namespace FubuMVC.IntegrationTesting.UI
             theResult.ShouldBe("NullableNow");
         }
 
-        [Test]
+        [Fact]
         public void TextboxFor()
         {
             execute(page =>

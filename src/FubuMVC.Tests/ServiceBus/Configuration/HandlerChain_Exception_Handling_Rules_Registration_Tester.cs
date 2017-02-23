@@ -5,15 +5,15 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class HandlerChain_Exception_Handling_Rules_Registration_Tester
     {
-        [Test]
+        [Fact]
         public void retry_now()
         {
             var chain = new HandlerChain();
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             handler.Continuation(null, null).ShouldBeOfType<RetryNowContinuation>();
         }
 
-        [Test]
+        [Fact]
         public void requeue()
         {
             var chain = new HandlerChain();
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             handler.Continuation(null, null).ShouldBeOfType<RequeueContinuation>();
         }
 
-        [Test]
+        [Fact]
         public void move_to_error_queue()
         {
             var chain = new HandlerChain();
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             chain.ErrorHandlers.Single().As<ErrorHandler>().Sources.Single().ShouldBeOfType<MoveToErrorQueueHandler<NotSupportedException>>();
         }
 
-        [Test]
+        [Fact]
         public void retry_later()
         {
             var chain = new HandlerChain();
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .Delay.ShouldBe(10.Minutes());
         }
 
-        [Test]
+        [Fact]
         public void add_multiple_continuations()
         {
             var chain = new HandlerChain();
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
         }
 
-        [Test]
+        [Fact]
         public void respond_with_message()
         {
             var chain = new HandlerChain();

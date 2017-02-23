@@ -1,17 +1,17 @@
 ﻿using System.Net;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.StaticFiles
 {
-    [TestFixture]
+    
     public class reading_static_file_content_with_katana
     {
         private readonly IFubuFile file = FubuFile.Load("Sample.js");
 
-        [Test]
+        [Fact]
         public void read_file_with_hit_on_etag()
         {
             TestHost.Scenario(_ =>
@@ -21,7 +21,7 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
             });
         }
 
-        [Test]
+        [Fact]
         public void can_return_the_HEAD_for_a_file()
         {
             TestHost.Scenario(_ =>
@@ -34,7 +34,7 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
             });
         }
 
-        [Test]
+        [Fact]
         public void can_return_the_text_of_a_txt_file()
         {
             TestHost.Scenario(_ =>
@@ -45,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
             });
         }
 
-        [Test]
+        [Fact]
         public void can_return_the_text_of_a_txt_file_on_etag_miss()
         {
             TestHost.Scenario(_ =>
@@ -56,7 +56,7 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
             });
         }
 
-        [Test]
+        [Fact]
         public void get_304_on_if_modified_since_pass()
         {
             var lastModified = file.LastModified().ToUniversalTime().AddMinutes(10);
@@ -70,7 +70,7 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
             });
         }
 
-        [Test]
+        [Fact]
         public void get_the_file_on_if_modified_since_and_has_been_modified()
         {
             var ifModifiedSince = file.LastModified().ToUniversalTime().AddMinutes(-20);

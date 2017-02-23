@@ -4,13 +4,13 @@ using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web.Remote;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.Remote
 {
-    [TestFixture]
+    
     public class RuleRunnerTester : InteractionContext<RuleRunner>
     {
         private RecordingFieldValidationRule theRule;
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             ClassUnderTest.Run(theRemoteRule, theValue);
         }
 
-        [Test]
+        [Fact]
         public void invokes_the_rule()
         {
             theRule.Accessor.ShouldBe(theAccessor);

@@ -1,19 +1,18 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Diagnostics
 {
-    [TestFixture]
+    
     public class when_creating_a_message_record_from_envelope_token
     {
         private EnvelopeToken theToken;
         private MessageRecord theRecord;
 
-        [SetUp]
-        public void SetUp()
+        public when_creating_a_message_record_from_envelope_token()
         {
             theToken = ObjectMother.EnvelopeWithMessage().ToToken();
             theToken.ParentId = Guid.NewGuid().ToString();
@@ -23,25 +22,25 @@ namespace FubuMVC.Tests.ServiceBus.Diagnostics
             theRecord = new MessageRecord(theToken);
         }
 
-        [Test]
+        [Fact]
         public void capture_the_correlation_id()
         {
             theRecord.Id.ShouldBe(theToken.CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void capture_the_parent_id()
         {
             theRecord.ParentId.ShouldBe(theToken.ParentId);
         }
 
-        [Test]
+        [Fact]
         public void capture_the_message_type()
         {
             theRecord.Type.ShouldBe(theToken.Message.GetType().FullName);
         }
 
-        [Test]
+        [Fact]
         public void capture_the_headers()
         {
             theRecord.Headers.ShouldContain("A=1");

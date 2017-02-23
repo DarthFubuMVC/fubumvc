@@ -1,36 +1,35 @@
 using FubuMVC.Core.ServerSentEvents;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServerSentEvents
 {
-    [TestFixture]
+    
     public class ChannelTester
     {
         private EventQueue<FakeTopic> theQueue;
         private Channel<FakeTopic> theChannel;
 
-        [SetUp]
-        public void SetUp()
+        public ChannelTester()
         {
             theQueue = new EventQueue<FakeTopic>();
             theChannel = new Channel<FakeTopic>(theQueue);
         }
 
-        [Test]
+        [Fact]
         public void is_connected_at_startup_time()
         {
             theChannel.IsConnected().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void flush_clears_out_the_channel_and_sets_the_connection_to_false()
         {
             theChannel.Flush();
             theChannel.IsConnected().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void multiple_listeners_get_the_events_when_new_events_are_written_to_the_channel()
         {
             var task1 = theChannel.FindEvents(null);
@@ -51,7 +50,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             task3.Result.ShouldHaveTheSameElementsAs(e1, e2, e3);
         }
 
-        [Test]
+        [Fact]
         public void multiple_listeners_at_different_places_in_their_queue()
         {
             var task1 = theChannel.FindEvents(new FakeTopic{LastEventId = "1"});
@@ -72,7 +71,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             task3.Result.ShouldHaveTheSameElementsAs(e1, e2, e3);
         }
 
-        [Test]
+        [Fact]
         public void find_events_that_are_already_published()
         {
             var e1 = new ServerEvent("1", "data-1");
@@ -93,7 +92,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             task3.Result.ShouldHaveTheSameElementsAs(e1, e2, e3);
         }
 
-        [Test]
+        [Fact]
         public void disconnected_channel_returns_empty_enumerable()
         {
             var e1 = new ServerEvent("1", "data-1");

@@ -9,14 +9,14 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class UrlPatternAttributeOnViewModelPolicyTester
     {
-        [Test]
+        [Fact]
         public void should_build_a_route_for_view_model_marked_with_UrlPattern()
         {
             var graph = BehaviorGraph.BuildFrom(x =>

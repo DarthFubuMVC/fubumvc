@@ -10,32 +10,23 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Continuations
 {
-    [TestFixture]
+    
     public class FubuContinuationTester
     {
-        #region Setup/Teardown
 
-        [SetUp]
-        public void SetUp()
-        {
-            director = MockRepository.GenerateMock<IContinuationDirector>();
-        }
-
-        #endregion
-
-        private IContinuationDirector director;
+        private IContinuationDirector director = MockRepository.GenerateMock<IContinuationDirector>();
 
         private void shouldFail(Action action)
         {
             Exception<FubuAssertionException>.ShouldBeThrownBy(action);
         }
 
-        [Test]
+        [Fact]
         public void Continue_just_continues()
         {
             FubuContinuation continuation = FubuContinuation.NextBehavior();
@@ -45,7 +36,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.InvokeNextBehavior());
         }
 
-        [Test]
+        [Fact]
         public void end_with_status_code_calls_to_same_on_continuation_director()
         {
             var continuation = FubuContinuation.EndWithStatusCode(HttpStatusCode.NotModified);
@@ -57,7 +48,7 @@ namespace FubuMVC.Tests.Continuations
         }
 
 
-        [Test]
+        [Fact]
         public void assert_continued()
         {
             FubuContinuation continuation = FubuContinuation.NextBehavior();
@@ -69,7 +60,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
         }
 
-        [Test]
+        [Fact]
         public void assert_redirect_to_a_method()
         {
             FubuContinuation continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null));
@@ -84,7 +75,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasContinuedToNextBehavior());
         }
 
-        [Test]
+        [Fact]
         public void assert_redirect_to_a_method_with_category()
         {
             FubuContinuation continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null));
@@ -99,7 +90,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasContinuedToNextBehavior());
         }
 
-        [Test]
+        [Fact]
         public void assert_redirect_to_a_target_via_equals()
         {
             var input = new InputModelWithEquals {Name = "Luke"};
@@ -115,7 +106,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
         }
 
-        [Test]
+        [Fact]
         public void assert_redirect_to_a_target_via_predicate()
         {
             var input = new InputModel { Name = "Luke", Age = 1 };
@@ -131,21 +122,21 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
         }
 
-        [Test]
+        [Fact]
         public void when_destination_null_redirect_to_throws()
         {
             var argNullEx = Exception< ArgumentNullException>.ShouldBeThrownBy(() => FubuContinuation.RedirectTo(null));
             argNullEx.Message.ShouldContain("destination");
         }
 
-        [Test]
+        [Fact]
         public void when_destination_null_transfer_to_throws()
         {
             var argNullEx = Exception<ArgumentNullException>.ShouldBeThrownBy(() => FubuContinuation.TransferTo(null));
             argNullEx.Message.ShouldContain("destination");
         }
 
-        [Test]
+        [Fact]
         public void assert_transfer_to_a_method()
         {
             FubuContinuation continuation = FubuContinuation.TransferTo<ControllerTarget>(x => x.OneInOneOut(null));
@@ -159,7 +150,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasContinuedToNextBehavior());
         }
 
-        [Test]
+        [Fact]
         public void assert_transfered_to_by_method_respects_category()
         {
             var continuation = FubuContinuation.TransferTo<ControllerTarget>(x => x.OneInOneOut(null), "PUT");
@@ -170,7 +161,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasTransferedTo<ControllerTarget>(x => x.OneInOneOut(null)));
         }
 
-        [Test]
+        [Fact]
         public void assert_transfer_by_destination_respects_category()
         {
             var input = new InputModel { Name = "Luke", Age = 1 };
@@ -183,7 +174,7 @@ namespace FubuMVC.Tests.Continuations
             
         }
 
-        [Test]
+        [Fact]
         public void assert_was_redirected_to_destination_respects_category()
         {
             var input = new InputModel { Name = "Luke", Age = 1 };
@@ -195,7 +186,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasRedirectedTo(input, "GET"));
         }
 
-        [Test]
+        [Fact]
         public void assert_redirected_to_by_method_respects_category()
         {
             var continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null), "PUT");
@@ -206,7 +197,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
         }
 
-        [Test]
+        [Fact]
         public void assert_transfer_to_a_target_via_equals()
         {
             var input = new InputModelWithEquals {Name = "Luke"};
@@ -222,7 +213,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
         }
 
-        [Test]
+        [Fact]
         public void assert_transfer_to_a_target_via_predicate()
         {
             var input = new InputModel {Name = "Luke", Age = 1};
@@ -238,7 +229,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
         }
 
-        [Test]
+        [Fact]
         public void redirect_to_a_method()
         {
             FubuContinuation continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null));
@@ -252,7 +243,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.RedirectToCall(call));
         }
 
-        [Test]
+        [Fact]
         public void redirect_to_a_method_with_category()
         {
             FubuContinuation continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null), "PUT");
@@ -266,7 +257,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.RedirectToCall(call, "PUT"));
         }
 
-        [Test]
+        [Fact]
         public void redirect_to_a_target()
         {
             var input = new InputModel();
@@ -279,7 +270,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.RedirectTo(input));
         }
 
-        [Test]
+        [Fact]
         public void redirect_to_a_target_with_category()
         {
             var input = new InputModel();
@@ -293,7 +284,7 @@ namespace FubuMVC.Tests.Continuations
         }
 
 
-        [Test]
+        [Fact]
         public void transfer_to_a_method()
         {
             FubuContinuation continuation = FubuContinuation.TransferTo<ControllerTarget>(x => x.OneInOneOut(null));
@@ -307,7 +298,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.TransferToCall(call));
         }
 
-        [Test]
+        [Fact]
         public void transfer_to_a_method_with_a_category()
         {
             FubuContinuation continuation = FubuContinuation.TransferTo<ControllerTarget>(x => x.OneInOneOut(null), "PUT");
@@ -321,7 +312,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.TransferToCall(call, "PUT"));
         }
 
-        [Test]
+        [Fact]
         public void transfer_to_a_target()
         {
             var input = new InputModel();
@@ -334,7 +325,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.TransferTo(input));
         }
 
-        [Test]
+        [Fact]
         public void transfer_to_a_target_with_a_method()
         {
             var input = new InputModel();
@@ -347,7 +338,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.TransferTo(input, "PUT"));
         }
 
-        [Test]
+        [Fact]
         public void transfer_to_a_method_with_a_category_2()
         {
             FubuContinuation continuation = FubuContinuation.TransferTo<ControllerTarget>(x => x.OneInOneOut(null), "PUT");
@@ -361,7 +352,7 @@ namespace FubuMVC.Tests.Continuations
             director.AssertWasCalled(x => x.TransferToCall(call, "PUT"));
         }
 
-        [Test]
+        [Fact]
         public void transfer_to_null_throws()
         {
             var urlRegistry = MockRepository.GenerateStub<IUrlRegistry>();
@@ -379,7 +370,7 @@ namespace FubuMVC.Tests.Continuations
         }
 
 
-        [Test]
+        [Fact]
         public void destination_returns_destination_object()
         {
             var destination = new object();
@@ -387,35 +378,35 @@ namespace FubuMVC.Tests.Continuations
             continuation.Destination<object>().ShouldBe(destination);
         }
 
-        [Test]
+        [Fact]
         public void redirect_via_generic()
         {
             var continuation = FubuContinuation.RedirectTo<TestModel>();
             continuation.AssertWasRedirectedTo<TestModel>(x => x.GetType() == typeof (TestModel));
         }
 
-        [Test]
+        [Fact]
         public void redirect_via_generic_with_a_method()
         {
             var continuation = FubuContinuation.RedirectTo<TestModel>("PUT");
             continuation.AssertWasRedirectedTo<TestModel>(x => x.GetType() == typeof(TestModel), "PUT");
         }
 
-        [Test]
+        [Fact]
         public void transfer_via_generic()
         {
             var continuation = FubuContinuation.TransferTo<TestModel>();
             continuation.AssertWasTransferedTo<TestModel>(x => x.GetType() == typeof(TestModel));
         }
 
-        [Test]
+        [Fact]
         public void transfer_via_generic_with_a_method()
         {
             var continuation = FubuContinuation.TransferTo<TestModel>("PUT");
             continuation.AssertWasTransferedTo<TestModel>(x => x.GetType() == typeof(TestModel), "PUT");
         }
 
-        [Test]
+        [Fact]
         public void assert_exited_with_status_code()
         {
             var continuation = FubuContinuation.EndWithStatusCode(HttpStatusCode.NotModified);
@@ -426,7 +417,7 @@ namespace FubuMVC.Tests.Continuations
             shouldFail(() => continuation.AssertWasEndedWithStatusCode(HttpStatusCode.UseProxy));
         }
 
-        [Test]
+        [Fact]
         public void assert_exited_with_status_code_negative()
         {
             var continuation = FubuContinuation.RedirectTo<TestModel>();

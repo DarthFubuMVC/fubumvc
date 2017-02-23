@@ -3,70 +3,70 @@ using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Services;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Services
 {
-    [TestFixture]
+    
     public class ApplicationLoaderFinderTester
     {
-        [Test]
+        [Fact]
         public void concrete_type_of_application_loader_with_default_ctor_is_a_candidate()
         {
             ApplicationLoaderFinder.IsLoaderTypeCandidate(typeof (FakeApplicationLoader))
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void application_loader_is_not_candidate_if_abstract()
         {
             ApplicationLoaderFinder.IsLoaderTypeCandidate(typeof (AbstractApplicationLoader))
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void application_loader_is_not_candidate_if_no_default_ctor()
         {
             ApplicationLoaderFinder.IsLoaderTypeCandidate(typeof (TemplatedApplicationLoader))
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void application_source_with_default_ctor_and_concrete_is_candidate()
         {
             ApplicationLoaderFinder.IsLoaderTypeCandidate(typeof (GoodApplicationSource))
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void application_source_with_no_default_ctor_is_not_candidate()
         {
             ApplicationLoaderFinder.IsLoaderTypeCandidate(typeof (AbstractApplicationSource))
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void application_source_without_default_ctor_is_not_a_candidate()
         {
             ApplicationLoaderFinder.IsLoaderTypeCandidate(typeof (TemplatedApplicationSource))
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void build_application_loader_for_application_loader_type()
         {
             ApplicationLoaderFinder.BuildApplicationLoader(typeof (FakeApplicationLoader))
                 .ShouldBeOfType<FakeApplicationLoader>();
         }
 
-        [Test]
+        [Fact]
         public void building_an_activation_loader_for_a_bad_type_thows()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(
                 () => { ApplicationLoaderFinder.BuildApplicationLoader(GetType()); });
         }
 
-        [Test]
+        [Fact]
         public void find_loader_types()
         {
             var types = ApplicationLoaderFinder.FindLoaderTypes();
@@ -74,14 +74,14 @@ namespace FubuMVC.Tests.Services
             types.ShouldContain(typeof (FakeApplicationLoader));
         }
 
-        [Test]
+        [Fact]
         public void finds_bootstrapper_by_name()
         {
             ApplicationLoaderFinder.FindLoader(typeof (FakeApplicationLoader).AssemblyQualifiedName)
                 .ShouldBeOfType<FakeApplicationLoader>();
         }
 
-        [Test]
+        [Fact]
         public void blows_up_if_more_than_one_application_source()
         {
             Exception<Exception>.ShouldBeThrownBy(() => { ApplicationLoaderFinder.FindLoader(null); })
@@ -89,14 +89,14 @@ namespace FubuMVC.Tests.Services
                     "Found multiple candidates, you may need to specify an explicit selection in the bottle-service.config file.");
         }
 
-        [Test]
+        [Fact]
         public void determine_loader_for_fuburegistry()
         {
             ApplicationLoaderFinder.DetermineLoaderType(typeof(StandinFubuRegistry))
                 .ShouldBe(typeof(FubuRegistryLoader<StandinFubuRegistry>));
         }
 
-        [Test]
+        [Fact]
         public void build_loader_for_fuburegistry()
         {
             ApplicationLoaderFinder.BuildApplicationLoader(typeof (StandinFubuRegistry))

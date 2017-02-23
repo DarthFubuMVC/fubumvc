@@ -2,21 +2,15 @@ using System.Linq;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class MaximumLengthRuleTester
     {
-        private AddressModel theModel;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theModel = new AddressModel();
-        }
+        private AddressModel theModel = new AddressModel();
 
         private Notification theNotification
         {
@@ -32,20 +26,20 @@ namespace FubuMVC.Tests.Validation.Fields
             }
         }
 
-		[Test]
+		[Fact]
 		public void uses_the_default_token()
 		{
 			new MaximumLengthRule(0).Token.ShouldBe(ValidationKeys.MaxLength);
 		}
 
-        [Test]
+        [Fact]
         public void should_not_register_message_if_value_is_null()
         {
             theModel.Address1 = null;
             theNotification.AllMessages.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_register_message_if_string_is_greater_than_limit()
         {
             theModel.Address1 = "Invalid property value";
@@ -53,7 +47,7 @@ namespace FubuMVC.Tests.Validation.Fields
             theMessage.GetMessage().ShouldBe("Maximum length exceeded. Must be less than or equal to 5");
         }
 
-        [Test]
+        [Fact]
         public void should_not_register_a_message_if_property_is_valid()
         {
             theModel.Address1 = "Valid";

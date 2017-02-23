@@ -1,14 +1,14 @@
 ﻿using FubuCore;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authorization
 {
-    [TestFixture]
+    
     public class AuthorizationByServiceTester
     {
-        [Test]
+        [Fact]
         public void delegates_by_auth_rights_func()
         {
             var policy = new AuthorizationByService<AuthCheckingService>(x => x.Rights);
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Security.Authorization
             policy.RightsFor(context).ShouldBe(AuthorizationRight.Deny);
         }
 
-        [Test]
+        [Fact]
         public void delegates_by_bool_func()
         {
             var policy = new AuthorizationByService<AuthCheckingService>(x => x.IsOk);

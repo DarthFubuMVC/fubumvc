@@ -2,14 +2,14 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting
 {
-    [TestFixture]
+    
     public class EndpointServiceIntegratedSmokeTester
     {
-        [Test]
+        [Fact]
         public void chain_is_on_the_endpoint()
         {
             var runtime = FubuRuntime.For<SomeRegistry>();

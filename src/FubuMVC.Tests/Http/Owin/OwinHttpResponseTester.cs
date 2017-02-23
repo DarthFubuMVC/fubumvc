@@ -4,20 +4,20 @@ using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class OwinHttpResponseTester
     {
-        [Test]
+        [Fact]
         public void do_not_blow_up_when_there_are_no_headers()
         {
             new OwinHttpResponse().AllHeaders().Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void write_a_header_that_allows_multiple_values()
         {
             var settings = new OwinHeaderSettings();
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Http.Owin
             headers[HttpGeneralHeaders.Allow].ShouldHaveTheSameElementsAs("application/json", "text/json");
         }
 
-        [Test]
+        [Fact]
         public void write_a_header_that_does_not_allow_multiple_values()
         {
             var settings = new OwinHeaderSettings();

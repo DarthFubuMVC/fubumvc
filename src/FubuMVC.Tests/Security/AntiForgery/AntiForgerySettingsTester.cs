@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.Security.AntiForgery;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
     public class AntiForgerySettingsTester
     {
-        [Test]
+        [Fact]
         public void anti_forgery_is_disabled_by_default()
         {
             new AntiForgerySettings().Enabled.ShouldBeFalse();

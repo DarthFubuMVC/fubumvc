@@ -7,15 +7,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class default_action_discovery
     {
-        [Test]
+        [Fact]
         public void with_no_other_explicit_action_discovery()
         {
             var graph = BehaviorGraph.BuildEmptyGraph();
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Registration
             graph.ChainFor<MyEndpoints>(x => x.Go2()).ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void does_not_find_endpoints_with_an_explicit_action_discovery()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Registration
             graph.ChainFor<MyEndpoints>(x => x.Go2()).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void does_not_find_endpoints_with_an_explicit_action_discovery_policy()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Registration
             graph.ChainFor<MyEndpoints>(x => x.Go2()).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void will_find_endpoints_if_endpoint_is_explictly_specified_too()
         {
             var graph = BehaviorGraph.BuildFrom(x =>

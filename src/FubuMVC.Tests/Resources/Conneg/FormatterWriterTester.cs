@@ -1,16 +1,16 @@
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class FormatterWriterTester : InteractionContext<FormatterWriter<Address>>
     {
-        [Test]
+        [Fact]
         public void delegates_to_its_formatter_for_mimetypes()
         {
             MockFor<IFormatter>().Stub(x => x.MatchingMimetypes)
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             ClassUnderTest.Mimetypes.ShouldHaveTheSameElementsAs("text/json", "application/json");
         }
 
-        [Test]
+        [Fact]
         public void delegates_to_its_formatter_when_it_writes()
         {
             var address = new Address();

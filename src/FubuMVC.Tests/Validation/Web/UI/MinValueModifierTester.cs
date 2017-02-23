@@ -1,22 +1,22 @@
 ﻿using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web.UI;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class MinValueModifierTester : ValidationElementModifierContext<MinValueModifier>
     {
-        [Test]
+        [Fact]
         public void adds_the_min_data_attribute_for_min_value_rule()
         {
             var theRequest = ElementRequest.For(new TargetWithMinValue(), x => x.Value);
             tagFor(theRequest).Data("min").ShouldBe(10);
         }
 
-        [Test]
+        [Fact]
         public void no_data_attribute_when_rule_does_not_exist()
         {
             var theRequest = ElementRequest.For(new TargetWithNoMinValue(), x => x.Value);

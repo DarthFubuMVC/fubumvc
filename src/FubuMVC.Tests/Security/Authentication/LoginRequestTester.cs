@@ -1,19 +1,19 @@
 using FubuMVC.Core.Security.Authentication;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class LoginRequestTester
     {
-        [Test]
+        [Fact]
         public void status_is_not_authenticated_by_default()
         {
             new LoginRequest().Status.ShouldBe(LoginStatus.NotAuthenticated);
         }
 
-        [Test]
+        [Fact]
         public void setting_return_url_sets_url()
         {
             var loginRequest = new LoginRequest();

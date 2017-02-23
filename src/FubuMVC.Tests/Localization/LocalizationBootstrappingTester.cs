@@ -3,16 +3,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Localization.Basic;
 using FubuMVC.Core.Registration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class LocalizationBootstrappingTester
     {
-        [Test]
+        [Fact]
         public void service_registrations()
         {
             var registry = new FubuRegistry();
@@ -35,8 +35,7 @@ namespace FubuMVC.Tests.Localization
 
         private BehaviorGraph graphWithBasicLocalizationAsIs;
 
-        [SetUp]
-        public void SetUp()
+        public LocalizationBootstrappingTester()
         {
             var registry = new FubuRegistry();
             registry.Features.Localization.Enable(true);
@@ -45,7 +44,7 @@ namespace FubuMVC.Tests.Localization
         }
 
 
-        [Test]
+        [Fact]
         public void register_a_non_default_culture_info()
         {
             var registry = new FubuRegistry();

@@ -1,15 +1,15 @@
 ﻿using System;
 using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Runtime.Files
 {
-    [TestFixture]
+    
     public class ChangeSetTester
     {
 
-        [Test]
+        [Fact]
         public void has_changes_negative()
         {
             var set = new ChangeSet();
@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Runtime.Files
             set.HasChanges().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void has_changes_positive_with_any_changed()
         {
             var set = new ChangeSet();
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Runtime.Files
             set.HasChanges().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void has_changes_positive_with_any_deleted()
         {
             var set = new ChangeSet();
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Runtime.Files
             set.HasChanges().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void has_changes_positive_with_any_added()
         {
             var set = new ChangeSet();

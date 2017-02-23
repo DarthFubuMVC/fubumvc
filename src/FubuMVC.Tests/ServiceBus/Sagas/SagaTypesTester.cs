@@ -1,14 +1,14 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Sagas;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Sagas
 {
-    [TestFixture]
+    
     public class SagaTypesTester
     {
-        [Test]
+        [Fact]
         public void saga_types_gives_an_empty_guid_func_if_correlation_id_does_not_exist()
         {
             var types = new SagaTypes
@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             func(this).ShouldBe(Guid.Empty);
         }
 
-        [Test]
+        [Fact]
         public void saga_types_being_able_to_gimme_a_correlation_id_getter_from_the_message_type()
         {
             var types = new SagaTypes
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             func(message).ShouldBe(message.CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void saga_types_being_able_to_gimme_an_id_getter_for_the_state_object()
         {
             var types = new SagaTypes
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
 
         }
 
-        [Test]
+        [Fact]
         public void saga_types_matches_idiom()
         {
             new SagaTypes
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             }.MatchesStateIdAndMessageCorrelationIdIdiom().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void saga_types_does_not_match_idiom_because_of_state_type_not_having_id()
         {
             new SagaTypes
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             }.MatchesStateIdAndMessageCorrelationIdIdiom().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void saga_types_does_not_match_idiom_because_of_message_type_not_having_correlation_id()
         {
             new SagaTypes

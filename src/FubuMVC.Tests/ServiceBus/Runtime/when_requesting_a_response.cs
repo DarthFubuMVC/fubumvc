@@ -4,13 +4,13 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime
 {
-    [TestFixture]
+    
     public class when_requesting_a_response : InteractionContext<Core.ServiceBus.ServiceBus>
     {
         private RecordingEnvelopeSender theSender;
@@ -29,13 +29,13 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             theEnvelope = theSender.Sent.Single();
         }
 
-        [Test]
+        [Fact]
         public void the_envelope_is_sent_with_reply_requested_header()
         {
             theEnvelope.ReplyRequested.ShouldBe(typeof(Message2).Name);
         }
 
-        [Test]
+        [Fact]
         public void should_register_a_reply_listener()
         {
             var events = MockFor<IEventAggregator>();
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             events.AssertWasCalled(x => x.AddListener(expectedListener));
         }
 
-        [Test]
+        [Fact]
         public void sends_the_envelope_to_the_sender()
         {
             theEnvelope.ShouldNotBeNull();

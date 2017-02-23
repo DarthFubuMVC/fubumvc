@@ -8,7 +8,7 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
-using NUnit.Framework;
+using Xunit;
 using Serenity;
 using ServiceNode;
 using StoryTeller;

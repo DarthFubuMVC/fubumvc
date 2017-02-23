@@ -1,14 +1,14 @@
 ﻿using System;
 using LightningQueues;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class HeaderTranslationTester
     {
-        [Test]
+        [Fact]
         public void translates_max_attempts()
         {
             var message = new OutgoingMessage();
@@ -17,7 +17,7 @@ namespace FubuMVC.LightningQueues.Testing
             message.MaxAttempts.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void translates_deliver_by()
         {
             var now = DateTime.Now;
@@ -27,7 +27,7 @@ namespace FubuMVC.LightningQueues.Testing
             message.DeliverBy.ShouldBe(now);
         }
 
-        [Test]
+        [Fact]
         public void empty_when_headers_arent_present()
         {
             var message = new OutgoingMessage();

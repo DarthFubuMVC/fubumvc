@@ -5,19 +5,19 @@ using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class attribute_scanning_tester
     {
         private FieldRulesRegistry theRegistry;
         private ClassFieldValidationRules theRules;
 
-        [SetUp]
-        public void SetUp()
+
+        public attribute_scanning_tester()
         {
             theRegistry = new FieldRulesRegistry(new [] { new AttributeFieldValidationSource()},
                                                  new TypeDescriptorCache());
@@ -30,31 +30,31 @@ namespace FubuMVC.Tests.Validation.Fields
             return theRules.RulesFor(expression.ToAccessor());
         }
 
-        [Test]
+        [Fact]
         public void found_required_rule()
         {
             rulesFor(x => x.Name).Any(x => x is RequiredFieldRule).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void found_maximum_string_length_rule()
         {
             rulesFor(x => x.Name).OfType<MaximumLengthRule>().Single().Length.ShouldBe(45);
         }
 
-        [Test]
+        [Fact]
         public void found_greater_than_zero()
         {
             rulesFor(x => x.Age).Single().ShouldBeOfType<GreaterThanZeroRule>();
         }
 
-        [Test]
+        [Fact]
         public void found_greater_or_equal_to_zero_rule()
         {
             rulesFor(x => x.NumberOfChildren).Single().ShouldBeOfType<GreaterOrEqualToZeroRule>();
         }
 
-        [Test]
+        [Fact]
         public void found_collection_length_rule()
         {
             rulesFor(x => x.Names).Single().ShouldBeOfType<CollectionLengthRule>()

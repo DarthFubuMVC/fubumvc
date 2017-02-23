@@ -2,16 +2,16 @@
 using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.AspNet
 {
 
-    [TestFixture]
+    
     public class AspNetCurrentHttpRequestTester : InteractionContext<AspNetHttpRequest>
     {
-        [Test]
+        [Fact]
         public void full_url_should_return_Request_Url_property_value()
         {
             var request = MockRepository.GenerateStub<HttpRequestBase>();

@@ -4,14 +4,14 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Behaviors
 {
-	[TestFixture]
+	
 	public class InterceptExceptionBehaviorTester 
 	{
-		[Test]
+		[Fact]
 		public void should_invoke_inside_behavior()
 		{
 			var insideBehavior = new DoNothingBehavior();
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Behaviors
 			insideBehavior.Invoked.ShouldBeTrue();
 		}
 
-		[Test]
+		[Fact]
 		public void when_no_exception_is_thrown_none_should_be_handled()
 		{
 			var insideBehavior = new DoNothingBehavior();
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Behaviors
 			cut.HandledException.ShouldBeNull();
 		}
 
-		[Test]
+		[Fact]
 		public void invoke_should_throw_an_exception_when_no_inside_behavior_is_set()
 		{
 			var interceptExceptionBehavior = new TestInterceptExceptionBehavior<ArgumentException>();
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Behaviors
             Exception<FubuAssertionException>.ShouldBeThrownBy(interceptExceptionBehavior.Invoke);
 		}
 
-		[Test]
+		[Fact]
 		public void when_matching_exception_is_thrown_by_inside_behavior_it_should_be_handled()
 		{
 			var cut = new TestInterceptExceptionBehavior<ArgumentException>
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.Behaviors
 			cut.HandledException.ShouldBeOfType<ArgumentException>();
 		}
 
-		[Test]
+		[Fact]
 		public void when_exception_should_not_be_handled_the_handle_method_should_not_be_invoked()
 		{
 			var cut = new TestInterceptExceptionBehavior<ArgumentException>
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Behaviors
 			cut.HandledException.ShouldBeNull();
 		}
 
-		[Test]
+		[Fact]
 		public void when_non_matching_exception_is_thrown_should_handled_should_not_be_invoked()
 		{
 			var cut = new TestInterceptExceptionBehavior<ArgumentException>

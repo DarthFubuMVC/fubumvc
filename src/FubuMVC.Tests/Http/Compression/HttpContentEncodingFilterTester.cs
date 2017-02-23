@@ -6,13 +6,13 @@ using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Http.Compression
 {
-    [TestFixture]
+    
     public class HttpContentEncodingFilterTester : InteractionContext<HttpContentEncodingFilter>
     {
         private IHttpContentEncoding theEncoding;
@@ -39,13 +39,13 @@ namespace FubuMVC.Tests.Http.Compression
             ClassUnderTest.Filter(theArguments).ShouldBe(DoNext.Continue);
         }
 
-        [Test]
+        [Fact]
         public void sets_the_encoding_in_the_http_writer()
         {
             MockFor<IHttpResponse>().AssertWasCalled(x => x.UseEncoding(theEncoding));
         }
 
-        [Test]
+        [Fact]
         public void sets_the_content_encoding_header()
         {
             MockFor<IHttpResponse>().AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentEncoding, "gzip"));

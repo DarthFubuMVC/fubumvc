@@ -7,16 +7,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.UI
 {
-    [TestFixture]
+    
     public class ElementConventions_for_Partials_in_Loop_Tester : FubuPageExtensionMultiplePartialContext
     {
-        [Test]
+        [Fact]
         public void DisplayFor_in_partials_in_a_for_each_loop()
         {
             execute(page => page.DisplayFor(x => x.Name));
@@ -25,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.UI
         }
 
 
-        [Test]
+        [Fact]
         public void InputFor_in_partials_in_a_for_each_loop()
         {
             execute(page => page.InputFor(x => x.Name));
@@ -34,25 +34,18 @@ namespace FubuMVC.IntegrationTesting.UI
         }
     }
 
-    [TestFixture]
-    public class FubuPageExtensionMultiplePartialContext
+    
+    public class FubuPageExtensionMultiplePartialContext : IDisposable
     {
-        [TestFixtureSetUp]
-        public void StartServer()
+        public FubuPageExtensionMultiplePartialContext()
         {
+            theResult = string.Empty;
             _server = FubuRuntime.Basic();
         }
 
-        [TestFixtureTearDown]
-        public void StopServer()
+        public void Dispose()
         {
             _server.Dispose();
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            theResult = string.Empty;
         }
 
 

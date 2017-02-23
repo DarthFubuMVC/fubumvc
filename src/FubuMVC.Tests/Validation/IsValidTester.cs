@@ -2,32 +2,31 @@
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class IsValidTester
     {
         private ValidationContext theContext;
         private Accessor theAccessor;
 
-        [SetUp]
-        public void SetUp()
+        public IsValidTester()
         {
             theAccessor = ReflectionHelper.GetAccessor<IsValidTarget>(x => x.Name);
             theContext = ValidationContext.For(new object());
         }
 
-        [Test]
+        [Fact]
         public void invalid()
         {
             theContext.Notification.RegisterMessage(theAccessor, StringToken.FromKeyString("Test", "Test"));
             new IsValid().Matches(theAccessor, theContext).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void valid()
         {
             var otherAccessor = ReflectionHelper.GetAccessor<IsValidTarget>(x => x.Other);

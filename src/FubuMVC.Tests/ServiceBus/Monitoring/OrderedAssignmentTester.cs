@@ -4,12 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
-    [TestFixture]
+    
     public class OrderedAssignmentTester
     {
         public ITransportPeer route(params RiggedTransportPeer[] peers)
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             return task.Result;
         }
 
-        [Test]
+        [Fact]
         public void only_one_happy_path()
         {
             route(new RiggedTransportPeer("A", OwnershipStatus.OwnershipActivated))
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
                 .NodeId.ShouldBe("B");
         }
 
-        [Test]
+        [Fact]
         public void selects_the_first_good_peer_in_order()
         {
             route(
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
                 .NodeId.ShouldBe("A");
         }
 
-        [Test]
+        [Fact]
         public void passes_on_peer_that_does_not_know_the_subject()
         {
             route(
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
                 .NodeId.ShouldBe("B");
         }
 
-        [Test]
+        [Fact]
         public void passes_on_peer_that_fails_to_start_the_subject()
         {
             route(
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
                 .NodeId.ShouldBe("B");
         }
 
-        [Test]
+        [Fact]
         public void passes_on_peer_that_fails_to_start_the_subject_because_of_timeout()
         {
             route(
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
                 .NodeId.ShouldBe("B");
         }
 
-        [Test]
+        [Fact]
         public void returns_none_if_none_can_be_assigned()
         {
             route(

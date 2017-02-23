@@ -4,18 +4,17 @@ using System.Net;
 using FubuCore;
 using FubuMVC.Core.Http.Owin;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class OwnHttpWriterTester
     {
         private IDictionary<string, object> environment;
         private OwinHttpResponse response;
 
-        [SetUp]
-        public void beforeEach()
+        public OwnHttpWriterTester()
         {
             environment = new Dictionary<string, object>();
             environment.Add(OwinConstants.ResponseBodyKey, new MemoryStream());
@@ -23,7 +22,7 @@ namespace FubuMVC.Tests.Http.Owin
             response = new OwinHttpResponse(environment);
         }
 
-        [Test]
+        [Fact]
         public void can_write_multiple_values_for_the_same_header()
         {
             response.AppendHeader("X-1", "A");
@@ -34,7 +33,7 @@ namespace FubuMVC.Tests.Http.Owin
                 .Get("X-1").ShouldHaveTheSameElementsAs("A", "B");
         }
 
-        [Test]
+        [Fact]
         public void should_set_response_code()
         {
             response.WriteResponseCode(HttpStatusCode.UseProxy);
@@ -42,7 +41,7 @@ namespace FubuMVC.Tests.Http.Owin
             environment[OwinConstants.ResponseStatusCodeKey].ShouldBe(HttpStatusCode.UseProxy.As<int>());
         }
 
-        [Test]
+        [Fact]
         public void should_set_response_code_and_description()
         {
             const string description = "why u no make good request?";

@@ -3,22 +3,16 @@ using System.Collections.Generic;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class CurrentHttpRequestExtensionsTester
     {
-        private OwinHttpRequest theRequest;
+        private OwinHttpRequest theRequest = new OwinHttpRequest();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theRequest = new OwinHttpRequest();
-        }
-
-        [Test]
+        [Fact]
         public void is_get()
         {
             theRequest.HttpMethod("get");
@@ -31,7 +25,7 @@ namespace FubuMVC.Tests.Http
             theRequest.IsGet().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void is_head()
         {
             theRequest.HttpMethod("head");
@@ -44,7 +38,7 @@ namespace FubuMVC.Tests.Http
             theRequest.IsHead().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void is_post()
         {
             theRequest.HttpMethod("post");
@@ -58,7 +52,7 @@ namespace FubuMVC.Tests.Http
 
         }
 
-        [Test]
+        [Fact]
         public void is_put()
         {
             theRequest.HttpMethod("put");
@@ -71,7 +65,7 @@ namespace FubuMVC.Tests.Http
             theRequest.IsPut().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void relative_url()
         {
             theRequest.RelativeUrl("");
@@ -89,7 +83,7 @@ namespace FubuMVC.Tests.Http
 
         }
 
-        [Test]
+        [Fact]
         public void get_comma_separated_values_from_header()
         {
             new[] { "v1", "v2, v3", "\"v4, b\"", "v5, v6", "v7", }
@@ -102,14 +96,14 @@ namespace FubuMVC.Tests.Http
         }
 
 
-        [Test]
+        [Fact]
         public void etag_matches_with_no_values()
         {
             new string[0].EtagMatches("foo")
                 .ShouldBe(EtagMatch.None);
         }
 
-        [Test]
+        [Fact]
         public void etag_matches_with_wildcard()
         {
             new string[] {"a", "*", "b"}
@@ -117,7 +111,7 @@ namespace FubuMVC.Tests.Http
                 .ShouldBe(EtagMatch.Yes);
         }
 
-        [Test]
+        [Fact]
         public void etag_matches_positive()
         {
             new string[] {"a", "b", "foo"}
@@ -125,7 +119,7 @@ namespace FubuMVC.Tests.Http
                 .ShouldBe(EtagMatch.Yes);
         }
 
-        [Test]
+        [Fact]
         public void etag_matches_negative()
         {
             new string[] { "a", "b", "bar" }

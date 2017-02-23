@@ -4,16 +4,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Tests.StructureMap
 {
-    [TestFixture]
+    
     public class using_child_containers_for_isolated_overrides
     {
-        [Test]
+        [Fact]
         public void override_services()
         {
             var registry = new FubuRegistry();

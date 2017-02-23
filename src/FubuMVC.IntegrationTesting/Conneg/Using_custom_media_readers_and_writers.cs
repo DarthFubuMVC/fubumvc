@@ -6,14 +6,14 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
-    [TestFixture]
+    
     public class Using_custom_media_readers_and_writers
     {
-        [Test]
+        [Fact]
         public void use_a_custom_media_reader()
         {
             using (var host = FubuRuntime.Basic())
@@ -33,7 +33,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             }
         }
 
-        [Test]
+        [Fact]
         public void use_a_custom_projection_as_a_writer()
         {
             using (var host = FubuRuntime.Basic())

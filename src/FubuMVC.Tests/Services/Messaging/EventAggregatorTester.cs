@@ -1,25 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Services.Messaging
 {
-    [TestFixture]
-    public class EventAggregatorTester
+    
+    public class EventAggregatorTester : IDisposable
     {
         private RecordingListener theListener;
 
-        [TearDown]
-        public void Teardown()
-        {
-            GlobalMessageTracking.Stop();
-        }
-
-        [SetUp]
-        public void SetUp()
+        public EventAggregatorTester()
         {
             theListener = new RecordingListener();
             var hub = new MessagingHub();
@@ -29,7 +23,12 @@ namespace FubuMVC.Tests.Services.Messaging
             GlobalMessageTracking.Start(remoteListener);
         }
 
-        [Test]
+        public void Dispose()
+        {
+            GlobalMessageTracking.Stop();
+        }
+
+        [Fact]
         public void send_message_by_category()
         {
             GlobalMessageTracking.SendMessage("category1", "some message");

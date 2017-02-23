@@ -7,20 +7,19 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.Registration.Conventions;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration.Registration
 {
-    [TestFixture]
-    public class FubuPackageRegistry_Importing_Mechanics_Specs
+    
+    public class FubuPackageRegistry_Importing_Mechanics_Specs : IDisposable
     {
         private FubuRuntime _runtime;
         private BehaviorGraph behaviors;
         private BehaviorChain appChain;
         private BehaviorChain pakChain;
 
-        [SetUp]
-        public void SetUp()
+        public FubuPackageRegistry_Importing_Mechanics_Specs()
         {
             _runtime = FubuRuntime.For<ApplicationRegistry>();
             behaviors = _runtime.Get<BehaviorGraph>();
@@ -29,40 +28,40 @@ namespace FubuMVC.Tests.Registration.Registration
             pakChain = behaviors.ChainFor<PackageActions>(x => x.get_pak_action());
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             _runtime.Dispose();
         }
 
-        [Test]
+
+        [Fact]
         public void the_application_service_registrations_win()
         {
             _runtime.Get<IAppService>().ShouldBeOfType<AppService>();
         }
 
-        [Test]
+        [Fact]
         public void local_policy_in_the_main_app_is_only_applied_to_endpoints_in_the_main_app()
         {
             appChain.IsWrappedBy(typeof(LocalAppWrapper)).ShouldBeTrue();
             pakChain.IsWrappedBy(typeof(LocalAppWrapper)).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void local_policy_in_the_import_is_only_applied_to_endpoints_in_the_import()
         {
             appChain.IsWrappedBy(typeof(LocalPakWrapper)).ShouldBeFalse();
             pakChain.IsWrappedBy(typeof(LocalPakWrapper)).ShouldBeTrue(); 
         }
 
-        [Test]
+        [Fact]
         public void global_policy_applied_by_the_app_is_applied_to_all_chains()
         {
             appChain.IsWrappedBy(typeof(GlobalAppWrapper)).ShouldBeTrue();
             pakChain.IsWrappedBy(typeof(GlobalAppWrapper)).ShouldBeTrue(); 
         }
 
-        [Test]
+        [Fact]
         public void global_policy_applied_by_an_import_is_applied_to_all_chains()
         {
             appChain.IsWrappedBy(typeof(GlobalPakWrapper)).ShouldBeTrue();

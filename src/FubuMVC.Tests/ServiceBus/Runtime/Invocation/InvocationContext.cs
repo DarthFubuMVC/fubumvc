@@ -4,13 +4,13 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    public abstract class InvocationContext
+    public abstract class InvocationContext : IDisposable
     {
         private FubuRegistry theTransportRegistry;
         private Lazy<IChainInvoker> _invoker;
@@ -18,11 +18,9 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         protected IMessageCallback theCallback;
 
         private FubuRuntime theRuntime;
-            
-            
-            
-        [SetUp]
-        public void SetUp()
+
+
+        protected InvocationContext()
         {
             theTransportRegistry = new FubuRegistry();
             theTransportRegistry.ServiceBus.Enable(true);
@@ -42,14 +40,13 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theCallback = MockRepository.GenerateMock<IMessageCallback>();
 
             theContextIs();
-
         }
 
-        [TearDown]
-        public void Teardown()
+        public void Dispose()
         {
             theRuntime.Dispose();
         }
+
 
         protected virtual void theContextIs()
         {

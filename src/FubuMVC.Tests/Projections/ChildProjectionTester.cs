@@ -5,19 +5,19 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class ChildProjectionTester
     {
         private Projection<Parent> theProjection;
         private Parent theParent;
         private Lazy<IDictionary<string, object>> _dictionary;
 
-        [SetUp]
-        public void SetUp()
+
+        public ChildProjectionTester()
         {
             theProjection = new Projection<Parent>(DisplayFormatting.RawValues);
             theParent = new Parent();
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Projections
             });
         }
 
-        [Test]
+        [Fact]
         public void accessors()
         {
             var projection = new ChildProjection<Parent, Child>(x => x.Child, DisplayFormatting.RawValues);
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Projections
             }
         }
 
-        [Test]
+        [Fact]
         public void explicit_writing()
         {
             theParent.Child = new Child
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.Projections
             child["name"].ShouldBe("Jeremy");
         }
 
-        [Test]
+        [Fact]
         public void child_projection_when_the_child_is_null()
         {
             theParent.Child = null;
@@ -77,7 +77,7 @@ namespace FubuMVC.Tests.Projections
             theDictionary.ContainsKey("Child").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void child_projection_when_the_child_is_not_null()
         {
             theParent.Child = new Child{
@@ -93,7 +93,7 @@ namespace FubuMVC.Tests.Projections
             theDictionary.Child("Child")["Name"].ShouldBe("Jeremy");
         }
 
-        [Test]
+        [Fact]
         public void override_the_name_of_the_child()
         {
             theParent.Child = new Child
@@ -111,7 +111,7 @@ namespace FubuMVC.Tests.Projections
             theDictionary.Child("Different")["Name"].ShouldBe("Jeremy");
         }
 
-        [Test]
+        [Fact]
         public void define_the_child_projection_inline()
         {
             theProjection.Child(x => x.Child).Configure(x =>

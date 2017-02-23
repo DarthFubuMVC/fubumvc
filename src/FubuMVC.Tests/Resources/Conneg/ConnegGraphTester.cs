@@ -6,16 +6,16 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class ConnegGraphTester
     {
         private readonly ConnegGraph graph = ConnegGraph.Build(new BehaviorGraph { ApplicationAssembly = Assembly.GetExecutingAssembly() }).Result();
 
-        [Test]
+        [Fact]
         public void build_conneg_graph_for_the_app_domain()
         {;
 
@@ -31,13 +31,13 @@ namespace FubuMVC.Tests.Resources.Conneg
             graph.Readers.ShouldContain(typeof(Input2Reader));
         }
 
-        [Test]
+        [Fact]
         public void find_writers_for_resource_type()
         {
             graph.WriterTypesFor(typeof(Resource2)).ShouldHaveTheSameElementsAs(typeof(Resource2Writer1), typeof(Resource2Writer2), typeof(Resource2Writer3));
         }
 
-        [Test]
+        [Fact]
         public void find_readers_for_input_type()
         {
             graph.ReaderTypesFor(typeof (Input2)).Single()

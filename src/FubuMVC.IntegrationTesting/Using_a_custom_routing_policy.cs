@@ -5,14 +5,14 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting
 {
-    [TestFixture]
+    
     public class Using_a_custom_routing_policy
     {
-        [Test]
+        [Fact]
         public void can_happily_plug_in_an_alternative_route_policy()
         {
             FakeRoutePolicy.IWasCalled = false;

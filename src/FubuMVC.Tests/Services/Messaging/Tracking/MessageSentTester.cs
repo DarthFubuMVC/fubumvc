@@ -1,14 +1,14 @@
 ﻿using System;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Services.Messaging.Tracking
 {
-    [TestFixture]
+    
     public class MessageSentTester
     {
-        [Test]
+        [Fact]
         public void record_sent_message()
         {
             var message = new MyMessage
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             sent.Status.ShouldBe(MessageTrack.Sent);
         }
 
-        [Test]
+        [Fact]
         public void record_sent_message_with_id()
         {
             var message = new MyMessage
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             sent.Status.ShouldBe(MessageTrack.Sent);
         }
 
-        [Test]
+        [Fact]
         public void record_received_message()
         {
             var message = new MyMessage
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
             sent.Status.ShouldBe(MessageTrack.Received);
         }
 
-        [Test]
+        [Fact]
         public void record_received_message_with_explicit_id()
         {
             var message = new MyMessage

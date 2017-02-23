@@ -7,16 +7,16 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class ModelBindingErrorsTester : InteractionContext<ModelBindingErrors>
     {
-        [Test]
+        [Fact]
         public void should_place_problems_into_the_notification()
         {
             MockFor<IFubuRequest>().Stub(x => x.ProblemsFor<ValidationTarget>()).Return(problems());

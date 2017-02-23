@@ -5,20 +5,17 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.UI
 {
 
 
-    [TestFixture]
+    
     public class when_calling_link_variable
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public when_calling_link_variable()
         {
             _page = MockRepository.GenerateMock<IFubuPage>();
             _urls = new StubUrlRegistry();
@@ -29,13 +26,12 @@ namespace FubuMVC.Tests.UI
             //_urls.Stub(u => u.UrlFor(Arg<InputModel>.Is.NotNull)).Return("some url");
         }
 
-        #endregion
 
         private IFubuPage _page;
         private IUrlRegistry _urls;
         private InputModel _model;
 
-        [Test]
+        [Fact]
         public void should_return_formatted_link_variable()
         {
             _page.LinkVariable("variable", _model).ShouldBe("var {0} = '{1}';".ToFormat("variable",
@@ -43,7 +39,7 @@ namespace FubuMVC.Tests.UI
             _page.VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_return_formatted_link_variable_of_new_model()
         {
             _page.LinkVariable<InputModel>("variable").ShouldBe("var {0} = '{1}';".ToFormat("variable",

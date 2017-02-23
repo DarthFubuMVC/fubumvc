@@ -3,15 +3,15 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Tests.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class throws_descriptive_exception_if_no_incoming_lq_channel
     {
-        [Test]
+        [Fact]
         public void should_throw_invalid_transport_exception_because_there_are_no_incoming_lq_transports()
         {
             var message =

@@ -2,14 +2,14 @@
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Endpoints;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Diagnostics
 {
-    [TestFixture]
+    
     public class apply_authorization_rights_to_all_diagnostics_pages
     {
-        [Test]
+        [Fact]
         public void should_be_applied_to_all()
         {
             using (var runtime = FubuRuntime.For<AuthorizedRegistry>(_ => _.Mode = "development"))

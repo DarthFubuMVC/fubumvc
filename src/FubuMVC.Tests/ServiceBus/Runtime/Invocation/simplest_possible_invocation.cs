@@ -1,13 +1,13 @@
 ﻿using System.Linq;
-using NUnit.Framework;
+using Xunit;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class simplest_possible_invocation : InvocationContext
     {
-        [Test]
+        [Fact]
         public void single_message_for_single_handler_one()
         {
             handler<OneHandler, TwoHandler, ThreeHandler, FourHandler>();
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                                .ShouldMatch<OneHandler>(theMessage);
         }
 
-        [Test]
+        [Fact]
         public void single_message_for_single_handler_two()
         {
             handler<OneHandler, TwoHandler, ThreeHandler, FourHandler>();
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 
         }
 
-        [Test]
+        [Fact]
         public void single_message_for_single_handler_three()
         {
             handler<OneHandler, TwoHandler, ThreeHandler, FourHandler>();
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                                .ShouldMatch<ThreeHandler>(theMessage);
         }
 
-        [Test]
+        [Fact]
         public void single_message_for_single_handler_four()
         {
             handler<OneHandler, TwoHandler, ThreeHandler, FourHandler>();

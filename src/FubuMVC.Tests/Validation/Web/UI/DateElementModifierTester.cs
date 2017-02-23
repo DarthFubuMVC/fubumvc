@@ -2,27 +2,27 @@
 using FubuCore.Dates;
 using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Validation.Web.UI;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class DateElementModifierTester : ValidationElementModifierContext<DateElementModifier>
     {
-        [Test]
+        [Fact]
         public void adds_the_date_css_class_for_fubucore_date()
         {
             tagFor(ElementRequest.For<DateElementTarget>(x => x.FubuCoreDate)).HasClass("date").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void adds_the_date_css_class_for_DateTime()
         {
             tagFor(ElementRequest.For<DateElementTarget>(x => x.Date)).HasClass("date").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void no_date_for_other_types()
         {
             new DateElementModifier().Matches(ElementRequest.For<DateElementTarget>(x => x.NoDate)).ShouldBeFalse();

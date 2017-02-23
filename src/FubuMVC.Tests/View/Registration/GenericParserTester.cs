@@ -4,17 +4,16 @@ using System.Linq;
 using System.Reflection;
 using FubuMVC.Core.View.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.View.Registration
 {
-    [TestFixture]
+    
     public class GenericParserTester
     {
         private GenericParser ClassUnderTest;
 
-        [SetUp]
-        public void beforeEach()
+        public GenericParserTester()
         {
             var duplicatedGenericExtraAssembly = generateAssembly("namespace FubuMVC.Tests.View.Registration{public class DuplicatedGeneric<T>{} public class Duplicated{} }");
 
@@ -36,7 +35,7 @@ namespace FubuMVC.Tests.View.Registration
                 .CompiledAssembly;
         } 
 
-        [Test]
+        [Fact]
         public void should_return_null_when_type_is_not_in_assemblies()
         {
             ClassUnderTest = new GenericParser(new[] { typeof(String).Assembly });
@@ -48,7 +47,7 @@ namespace FubuMVC.Tests.View.Registration
             type.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void should_return_null_when_generic_argument_type_is_not_in_assemblies()
         {
             ClassUnderTest = new GenericParser(new[] { typeof(Bar).Assembly });
@@ -60,7 +59,7 @@ namespace FubuMVC.Tests.View.Registration
             type.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void should_parse_a_single_generic_argument()
         {
             const string typeName = "FubuMVC.Tests.View.Registration.Generic<FubuMVC.Tests.View.Registration.Baz>";
@@ -70,7 +69,7 @@ namespace FubuMVC.Tests.View.Registration
             type.ShouldBe(typeof(Generic<Baz>));
         }
 
-        [Test]
+        [Fact]
         public void should_parse_a_mutiple_generic_arguments()
         {
             const string typeName = "FubuMVC.Tests.View.Registration.Generic<FubuMVC.Tests.View.Registration.Baz, FubuMVC.Tests.View.Registration.Bar>";
@@ -80,7 +79,7 @@ namespace FubuMVC.Tests.View.Registration
             type.ShouldBe(typeof(Generic<Baz, Bar>));
         }
 
-        [Test]
+        [Fact]
         public void should_parse_a_mutiple_generic_arguments_across_different_assemblies()
         {
             const string typeName = "FubuMVC.Tests.View.Registration.Generic<FubuMVC.Tests.View.Registration.Baz, System.String>";
@@ -90,14 +89,14 @@ namespace FubuMVC.Tests.View.Registration
             type.ShouldBe(typeof(Generic<Baz, string>));
         }
 
-        [Test]
+        [Fact]
         public void should_detect_if_type_name_is_generic()
         {
             GenericParser.IsGeneric("System.String").ShouldBeFalse();
             GenericParser.IsGeneric("System.Collections.List<System.String>").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void finding_open_type_should_add_error_when_no_matching_type_is_found()
         {
             var typeDefinition = new GenericTypeDefinition {OpenTypeName = "NotFound", ArgumentTypeNames = new[] {"System.String"}};
@@ -108,7 +107,7 @@ namespace FubuMVC.Tests.View.Registration
             ClassUnderTest.ParseErrors.First().ShouldContain("No generic type matching");
         }
 
-        [Test]
+        [Fact]
         public void finding_open_type_should_add_error_when_multiple_matching_types_are_found()
         {
             var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Tests.View.Registration.DuplicatedGeneric`1", ArgumentTypeNames = new[] { "System.String" } };
@@ -119,7 +118,7 @@ namespace FubuMVC.Tests.View.Registration
             ClassUnderTest.ParseErrors.First().ShouldContain("More than one generic types matching");
         }
 
-        [Test]
+        [Fact]
         public void finding_generic_arguments_should_add_error_when_no_matching_type_is_found()
         {
             var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Tests.View.Registration.Generic`1", ArgumentTypeNames = new[] { "NOTFOUND" } };
@@ -130,7 +129,7 @@ namespace FubuMVC.Tests.View.Registration
             ClassUnderTest.ParseErrors.First().ShouldContain("No generic argument type matching");
         }
 
-        [Test]
+        [Fact]
         public void finding_generic_arguments_should_add_error_when_multiple_matching_types_are_found()
         {
             var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Tests.View.Registration.Generic`1", ArgumentTypeNames = new[] { "FubuMVC.Tests.View.Registration.Duplicated" } };

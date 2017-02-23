@@ -1,12 +1,12 @@
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class binding_against_form_data
     {
-        [Test]
+        [Fact]
         public void can_bind_to_form_post_data()
         {
             var formInput = new FormInput
@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         }
 
         // The following is really a test against Scenario
-        [Test]
+        [Fact]
         public void can_bind_to_form_post_data_defined_explicitly()
         {
             var formInput = new FormInput

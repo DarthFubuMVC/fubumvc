@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 
 namespace FubuMVC.IntegrationTesting
 {
-    [TestFixture]
+    
     public class map_files_are_whitelisted
     {
-        [Test]
+        [Fact]
         public void read_MAP_file()
         {
             TestHost.Scenario(_ =>

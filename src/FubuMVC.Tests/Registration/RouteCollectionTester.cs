@@ -4,12 +4,12 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class RouteCollectionTester
     {
         private readonly BehaviorGraph theGraph = BehaviorGraph.BuildFrom(_ =>
@@ -27,49 +27,49 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void all_routes()
         {
             assertHasRoutes(theGraph.Routes, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         }
 
-        [Test]
+        [Fact]
         public void gets()
         {
             assertHasRoutes(theGraph.Routes.Gets, 2, 7);
         }
 
-        [Test]
+        [Fact]
         public void heads()
         {
             assertHasRoutes(theGraph.Routes.Heads, 1, 6);
         }
 
-        [Test]
+        [Fact]
         public void posts()
         {
             assertHasRoutes(theGraph.Routes.Posts, 3, 8);
         }
 
-        [Test]
+        [Fact]
         public void puts()
         {
             assertHasRoutes(theGraph.Routes.Puts, 5, 10);
         }
 
-        [Test]
+        [Fact]
         public void deletes()
         {
             assertHasRoutes(theGraph.Routes.Deletes, 4, 9);
         }
 
-        [Test]
+        [Fact]
         public void resources()
         {
             assertHasRoutes(theGraph.Routes.Resources, 1, 2, 6, 7);
         }
 
-        [Test]
+        [Fact]
         public void commands()
         {
             assertHasRoutes(theGraph.Routes.Commands, 3, 4, 5, 8, 9, 10);

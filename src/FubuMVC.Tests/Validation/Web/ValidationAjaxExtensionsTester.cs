@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Validation.Web;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-	[TestFixture]
+	
 	public class ValidationAjaxExtensionsTester
 	{
-		[Test]
+		[Fact]
 		public void gets_and_sets_the_validation_origin()
 		{
 			var continuation = new AjaxContinuation();

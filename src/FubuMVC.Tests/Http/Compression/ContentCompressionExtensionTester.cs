@@ -7,14 +7,14 @@ using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Registration;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Compression
 {
-    [TestFixture]
+    
     public class ContentCompressionExtensionTester
     {
-        [Test]
+        [Fact]
         public void compresses_by_default()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Http.Compression
             chainHasFilter<MixedCompressionController>(graph, x => x.get_compressed()).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void excludes_class_level_do_not_compress_attribute()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Http.Compression
             chainHasFilter<NoCompressionController>(graph, x => x.get_stuff()).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void mixing_and_matching_default_compression()
         {
             var graph = BehaviorGraph.BuildFrom(x =>

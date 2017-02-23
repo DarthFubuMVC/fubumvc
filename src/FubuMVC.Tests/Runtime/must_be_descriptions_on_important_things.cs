@@ -12,14 +12,14 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class must_be_descriptions_on_important_things
     {
-        [Test]
+        [Fact]
         public void must_be_a_description_on_all_IActionSource_types()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void must_be_a_description_on_all_IUrlPolicy_types()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void must_be_a_description_on_all_ValueConverters()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void must_be_a_description_on_all_conversion_families()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void must_be_a_description_on_all_media_readers()
         {
             // IMediaWriter<T>
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void must_be_a_description_on_all_media_writers()
         {
             // IMediaWriter<T>
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void must_be_a_description_on_all_model_binders()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -113,7 +113,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void must_be_a_description_on_all_property_binders()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -126,7 +126,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void must_be_some_sort_of_description_on_every_BehaviorNode()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -138,7 +138,7 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void must_be_some_sort_of_description_on_every_IFormatter()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -150,7 +150,7 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void must_be_some_sort_of_description_on_every_IRecordedHttpOutput()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -162,7 +162,7 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void must_be_some_sort_of_description_on_every_iconverter_family()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -174,7 +174,7 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void must_be_some_sort_of_description_on_every_iconverterstrategy()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()

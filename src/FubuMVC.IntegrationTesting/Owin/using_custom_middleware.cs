@@ -6,13 +6,13 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
     using AppFunc = Func<IDictionary<string, object>, Task>;
 
-    [TestFixture]
+    
     public class using_custom_middleware
     {
         private FubuRuntime serverFor(Action<OwinSettings> action)
@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             return registry.ToRuntime();
         }
 
-        [Test]
+        [Fact]
         public void can_add_a_single_OWIN_middleware()
         {
             using (var server = serverFor(x => { x.AddMiddleware<JamesBondMiddleware>(); }))
@@ -37,7 +37,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             }
         }
 
-        [Test]
+        [Fact]
         public void use_anonymous_AppFunc_as_middleware()
         {
             AppFunc sillyHeader =
@@ -58,7 +58,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             }
         }
 
-        [Test]
+        [Fact]
         public void use_anonymous_wrapping_Func_AppFunc_AppFunc_as_middleware()
         {
             Func<AppFunc, AppFunc> middleware = inner =>
@@ -87,7 +87,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             }
         }
 
-        [Test]
+        [Fact]
         public void disposes_any_disposable_middleware_on_shutdown()
         {
             MiddlewareNode<SpecialDisposableMiddleware> node = null;

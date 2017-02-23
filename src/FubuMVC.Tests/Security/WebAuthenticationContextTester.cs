@@ -1,16 +1,13 @@
 using FubuMVC.Core.Security;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Web.Security
 {
-    [TestFixture]
+    
     public class WebAuthenticationContextTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public WebAuthenticationContextTester()
         {
             _actualUser = null;
             _actualRememberMe = null;
@@ -27,14 +24,13 @@ namespace FubuMVC.Tests.Web.Security
             };
         }
 
-        #endregion
 
         private WebAuthenticationContext _authSvc;
         private string _actualUser;
         private bool? _actualRememberMe;
         private bool _signOutCalled;
 
-        [Test]
+        [Fact]
         public void should_set_the_forms_auth_token_with_the_rememberMe_setting()
         {
             string username = "user";
@@ -45,7 +41,7 @@ namespace FubuMVC.Tests.Web.Security
             _actualRememberMe.Value.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void SignOut_should_signout_from_forms_auth()
         {
             _authSvc.SignOut();

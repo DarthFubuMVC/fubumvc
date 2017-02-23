@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 using FubuMVC.Core.Runtime.SessionState;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.SessionState
 {
-    [TestFixture]
+    
     public class RequestDataProviderTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void Setup_Test()
+        public RequestDataProviderTester()
         {
             _httpContext = MockRepository.GenerateMock<HttpContextBase>();
             _sessionState = MockRepository.GenerateMock<HttpSessionStateBase>();
@@ -28,14 +25,13 @@ namespace FubuMVC.Tests.SessionState
             };
         }
 
-        #endregion
 
         private HttpContextBase _httpContext;
         private HttpSessionStateBase _sessionState;
         private RequestDataProvider _requestDataProvider;
         private FlashViewModelForTesting _flashViewModelForTesting;
 
-        [Test]
+        [Fact]
         public void Should_be_able_to_load_model_when_Session_is_not_null()
         {
             _httpContext.Stub(x => x.Session).Return(_sessionState);
@@ -56,7 +52,7 @@ namespace FubuMVC.Tests.SessionState
             testing.Property3.ShouldBe(_flashViewModelForTesting.Property3);
         }
 
-        [Test]
+        [Fact]
         public void Should_be_able_to_store_model_when_Session_is_not_null()
         {
             _httpContext.Stub(x => x.Session).Return(_sessionState);
@@ -76,7 +72,7 @@ namespace FubuMVC.Tests.SessionState
             _sessionState.VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void Should_do_nothing_when_trying_to_set_the_SessionState_when_the_current_session_is_null()
         {
             _httpContext.Stub(x => x.Session).Return(null);
@@ -90,7 +86,7 @@ namespace FubuMVC.Tests.SessionState
             _httpContext.VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void Should_only_clear_all_flash_related_session_data()
         {
             _httpContext.Stub(x => x.Session).Return(_sessionState);
@@ -109,7 +105,7 @@ namespace FubuMVC.Tests.SessionState
             _sessionState.AssertWasCalled(x => x.Remove(RequestDataProvider.REQUESTDATA_PREFIX_KEY + "Property2"));
         }
 
-        [Test]
+        [Fact]
         public void Should_return_should_throw_when_a_property_was_not_found_in_the_session()
         {
             Exception<KeyNotFoundException>.ShouldBeThrownBy(() =>

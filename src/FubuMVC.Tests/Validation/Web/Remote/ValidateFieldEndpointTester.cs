@@ -5,13 +5,13 @@ using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.Remote;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.Remote
 {
-    [TestFixture]
+    
     public class ValidateFieldEndpointTester : InteractionContext<ValidateFieldEndpoint>
     {
         private RemoteRuleGraph theGraph;
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Validation.Web.Remote
             MockFor<IAjaxContinuationResolver>().Stub(x => x.Resolve(theNotification)).Return(theContinuation);
         }
 
-        [Test]
+        [Fact]
         public void builds_the_continuation()
         {
             ClassUnderTest.Validate(theInputModel).ShouldBeTheSameAs(theContinuation);

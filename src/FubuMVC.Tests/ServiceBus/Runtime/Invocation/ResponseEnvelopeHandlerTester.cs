@@ -1,15 +1,15 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class ResponseEnvelopeHandlerTester
     {
-        [Test]
+        [Fact]
         public void matches_positive()
         {
             var envelope = ObjectMother.Envelope();
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_negative()
         {
             var envelope = ObjectMother.Envelope();
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void handle()
         {
             // pretty simple.  Effectively just shuts things down.

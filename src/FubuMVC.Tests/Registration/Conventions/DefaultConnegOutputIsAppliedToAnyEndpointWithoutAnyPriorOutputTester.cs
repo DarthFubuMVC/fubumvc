@@ -4,11 +4,11 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class DefaultConnegOutputIsAppliedToAnyEndpointWithoutAnyPriorOutputTester
     {
         public class SomeInput
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             }
         }
 
-        [Test]
+        [Fact]
         public void applies_conneg()
         {
             var registry = new FubuRegistry();

@@ -1,20 +1,20 @@
+using System;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Localization;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
-    public class LocalizationManagerTester
+    
+    public class LocalizationManagerTester : IDisposable
     {
         private MockRepository _mocks;
         private ILocalizationDataProvider _provider;
 
-        [SetUp]
-        public void SetUp()
+        public LocalizationManagerTester()
         {
             _mocks = new MockRepository();
             _provider = _mocks.StrictMock<ILocalizationDataProvider>();
@@ -22,13 +22,13 @@ namespace FubuMVC.Tests.Localization
             LocalizationManager.Stub(_provider);
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             LocalizationManager.Stub();
         }
 
-        [Test]
+
+        [Fact]
         public void GetText_for_property()
         {
             PropertyInfo property = ReflectionHelper.GetProperty<DummyEntity>(c => c.SimpleProperty);
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Localization
             }
         }
 
-        [Test]
+        [Fact]
         public void GetText_for_property_by_expression()
         {
             PropertyInfo property = ReflectionHelper.GetProperty<DummyEntity>(c => c.SimpleProperty);
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.Localization
             }
         }
 
-        [Test]
+        [Fact]
         public void GetHeader_for_property()
         {
             PropertyInfo property = ReflectionHelper.GetProperty<DummyEntity>(c => c.SimpleProperty);
@@ -77,7 +77,7 @@ namespace FubuMVC.Tests.Localization
             }
         }
 
-        [Test]
+        [Fact]
         public void GetHeader_for_property_by_expression()
         {
             PropertyInfo property = ReflectionHelper.GetProperty<DummyEntity>(c => c.SimpleProperty);

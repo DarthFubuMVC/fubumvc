@@ -1,18 +1,17 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authentication.Windows;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Windows
 {
-    [TestFixture]
+    
     public class setup_with_windows_authentication
     {
         private BehaviorGraph theGraph;
 
-        [SetUp]
-        public void SetUp()
+        public setup_with_windows_authentication()
         {
             var registry = new FubuRegistry();
             registry.Import<ApplyWindowsAuthentication>();
@@ -20,7 +19,7 @@ namespace FubuMVC.Tests.Security.Authentication.Windows
             theGraph = BehaviorGraph.BuildFrom(registry);
         }
 
-        [Test]
+        [Fact]
         public void the_windows_action_call_is_registered()
         {
             theGraph.ChainFor<WindowsController>(x => x.Login(null)).ShouldNotBeNull();

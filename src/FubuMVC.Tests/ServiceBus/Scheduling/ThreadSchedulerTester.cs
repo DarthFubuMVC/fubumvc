@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core.ServiceBus.Scheduling;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Scheduling
 {
-    [TestFixture]
+    
     public class ThreadSchedulerTester
     {
-        [Test]
+        [Fact]
         public void can_schedule_work()
         {
             var ran = false;
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Scheduling
             }
         }
 
-        [Test]
+        [Fact]
         public void can_use_multiple_threads()
         {
             using (var scheduler = new ThreadScheduler(5))
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Scheduling
             }
         }
 
-        [Test]
+        [Fact]
         public void unstarted_threads_should_be_empty()
         {
             using (var scheduler = new ThreadScheduler(5))

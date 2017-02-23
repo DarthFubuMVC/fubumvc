@@ -2,8 +2,9 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
+using Xunit;
 
 namespace FubuMVC.Tests.Behaviors
 {
@@ -36,7 +37,7 @@ namespace FubuMVC.Tests.Behaviors
         }
     }
 
-    [TestFixture]
+    
     public class when_calling_Invoke_on_non_partial : non_partial_implementation_of_BasicBehavior
     {
         protected override void beforeEach()
@@ -45,14 +46,14 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void it_should_call_the_overriden_performInvoke_and_afterInsideBehavior()
         {
             MockFor<IDoSomethingBeforeInnerBehavior>().AssertWasCalled(x => x.Do());
             MockFor<IDoSomethingAfterInnerBehavior>().AssertWasCalled(x => x.Do());
         }
 
-        [Test]
+        [Fact]
         public void it_should_call_Invoke_on_the_inner_behavior()
         {
             InnerBehavior.AssertWasCalled(x => x.Invoke());
@@ -60,7 +61,7 @@ namespace FubuMVC.Tests.Behaviors
         }
     }
 
-    [TestFixture]
+    
     public class when_calling_InvokePartial_on_non_partial : non_partial_implementation_of_BasicBehavior
     {
         protected override void beforeEach()
@@ -69,14 +70,14 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.InvokePartial();
         }
 
-        [Test]
+        [Fact]
         public void it_should_not_call_the_overriden_performInvoke_nor_afterInsideBehavior()
         {
             MockFor<IDoSomethingBeforeInnerBehavior>().AssertWasNotCalled(x => x.Do());
             MockFor<IDoSomethingAfterInnerBehavior>().AssertWasNotCalled(x => x.Do());
         }
 
-        [Test]
+        [Fact]
         public void it_should_call_InvokePartial_on_the_inner_behavior()
         {
             InnerBehavior.AssertWasCalled(x => x.InvokePartial());
@@ -84,7 +85,7 @@ namespace FubuMVC.Tests.Behaviors
         }
     }
 
-    [TestFixture]
+    
     public class when_calling_Invoke_on_partial : partial_implementation_of_BasicBehavior
     {
         protected override void beforeEach()
@@ -93,14 +94,14 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void it_should_call_the_overriden_performInvoke_and_afterInsideBehavior()
         {
             MockFor<IDoSomethingBeforeInnerBehavior>().AssertWasCalled(x => x.Do());
             MockFor<IDoSomethingAfterInnerBehavior>().AssertWasCalled(x => x.Do());
         }
 
-        [Test]
+        [Fact]
         public void it_should_call_Invoke_on_the_inner_behavior()
         {
             InnerBehavior.AssertWasCalled(x => x.Invoke());
@@ -108,7 +109,7 @@ namespace FubuMVC.Tests.Behaviors
         }
     }
 
-    [TestFixture]
+    
     public class when_calling_InvokePartial_on_partial : partial_implementation_of_BasicBehavior
     {
         protected override void beforeEach()
@@ -121,14 +122,14 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.InvokePartial();
         }
 
-        [Test]
+        [Fact]
         public void it_should_call_the_overriden_performInvoke_and_afterInsideBehavior()
         {
             MockFor<IDoSomethingBeforeInnerBehavior>().AssertWasCalled(x => x.Do());
             MockFor<IDoSomethingAfterInnerBehavior>().AssertWasCalled(x => x.Do());
         }
 
-        [Test]
+        [Fact]
         public void it_should_call_InvokePartial_on_the_inner_behavior()
         {
             InnerBehavior.AssertWasCalled(x => x.InvokePartial());

@@ -12,16 +12,16 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.Tests.Diagnostics
 {
-    [TestFixture]
+    
     public class DiagnosticsSettings_apply_authorization_Tester
     {
-        [Test]
+        [Fact]
         public void authorization_rules_from_settings_are_applied()
         {
             var authorizedGraph = BehaviorGraph.BuildFrom(r =>
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Diagnostics
         }
     }
 
-    [TestFixture]
+    
     public class DiagnosticSettings_TraceLevel_Registration_Tester
     {
         private void withTraceLevel(TraceLevel level, Action<IContainer> action)
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Diagnostics
             }
         }
 
-        [Test]
+        [Fact]
         public void default_in_memory_instrumentation_registrations()
         {
             withTraceLevel(TraceLevel.Production, c =>
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.Diagnostics
             });
         }
 
-        [Test]
+        [Fact]
         public void verbose_registrations()
         {
             withTraceLevel(TraceLevel.Verbose, c =>
@@ -102,7 +102,7 @@ namespace FubuMVC.Tests.Diagnostics
             });
         }
 
-        [Test]
+        [Fact]
         public void production_registration()
         {
             withTraceLevel(TraceLevel.Production, c =>
@@ -123,7 +123,7 @@ namespace FubuMVC.Tests.Diagnostics
             });
         }
 
-        [Test]
+        [Fact]
         public void trace_level_is_none_registration()
         {
             withTraceLevel(TraceLevel.None, c =>

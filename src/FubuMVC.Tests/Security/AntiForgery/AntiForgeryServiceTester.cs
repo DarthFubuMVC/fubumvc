@@ -5,12 +5,12 @@ using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-    [TestFixture]
+    
     public class AntiForgeryServiceTester : InteractionContext<AntiForgeryService>
     {
         protected override void beforeEach()
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
                 .Stub(x => x.Serialize(default(AntiForgeryData))).IgnoreArguments().Return("Serialized!");
         }
 
-        [Test]
+        [Fact]
         public void should_decode_the_cookie_value()
         {
             var cookie = new Cookie("CookieName", HttpUtility.UrlEncode("Some Value11"));
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
                 .AssertWasCalled(x => x.Deserialize(HttpUtility.UrlDecode(cookie.Value)));
         }
 
-        [Test]
+        [Fact]
         public void should_return_form_token_from_cookie_data()
         {
             MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName()).Return("FormName");
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             formToken.TokenString.ShouldBe("Serialized!");
         }
 
-        [Test]
+        [Fact]
         public void should_set_cookie()
         {
             MockFor<IOutputWriter>().Expect(o => o.AppendCookie(default(Cookie))).IgnoreArguments();

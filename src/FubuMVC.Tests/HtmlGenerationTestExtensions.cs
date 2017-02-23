@@ -52,27 +52,27 @@ namespace FubuMVC.Tests
         //        if (attribute == null) return false;
         //        return (attribute.Value == requiredAttributeValue);
         //    });
-        //    if (element == null) Assert.Fail("Expected '{0}' to contain a {1} that has {2} = '{3}'.", node.OuterHtml, elementName, requiredAttributeName, requiredAttributeValue);
+        //    if (element == null) throw new Exception("Expected '{0}' to contain a {1} that has {2} = '{3}'.", node.OuterHtml, elementName, requiredAttributeName, requiredAttributeValue);
         //    return element;
         //}
 
         //public static HtmlTag ShouldHaveElementWithInnerText(this HtmlTag node, string elementName, string innerText)
         //{
         //    var element = node.AllChildNodes().FirstOrDefault(e => e.Name == elementName && e.InnerText.Trim() == innerText);
-        //    if (element == null) Assert.Fail("Expected '{0}' to contain a {1} that has innerText = '{2}'.", node.OuterHtml, elementName, innerText);
+        //    if (element == null) throw new Exception("Expected '{0}' to contain a {1} that has innerText = '{2}'.", node.OuterHtml, elementName, innerText);
         //    return element;
         //}
 
         //public static HtmlTag ShouldHaveElement(this HtmlTag node, string elementName)
         //{
         //    var element = node.AllChildNodes().FirstOrDefault(child => child.Name == elementName);
-        //    if (element == null) Assert.Fail("Expected '{0}' to contain <{1}> element.", node.OuterHtml, elementName);
+        //    if (element == null) throw new Exception("Expected '{0}' to contain <{1}> element.", node.OuterHtml, elementName);
         //    return element;
         //}
 
         //public static HtmlTag ShouldBeElement(this HtmlTag node, string elementName)
         //{
-        //    if (node.Name != elementName) Assert.Fail("Expected '{0}' to be <{1}> element.", node.OuterHtml, elementName);
+        //    if (node.Name != elementName) throw new Exception("Expected '{0}' to be <{1}> element.", node.OuterHtml, elementName);
         //    return node;
         //}
 
@@ -92,14 +92,14 @@ namespace FubuMVC.Tests
         //public static HtmlTag ShouldNotHaveElement(this HtmlTag node, Func<HtmlTag, bool> criteria)
         //{
         //    var element = node.AllChildNodes().FirstOrDefault(criteria);
-        //    if (element != null) Assert.Fail("Expected '{0}' to not have an element with specified the criteria.", node.OuterHtml);
+        //    if (element != null) throw new Exception("Expected '{0}' to not have an element with specified the criteria.", node.OuterHtml);
         //    return element;
         //}
 
         //public static HtmlTag ShouldNotHaveElement(this HtmlTag node, string elementName)
         //{
         //    var element = node.AllChildNodes().FirstOrDefault(child => child.Name == elementName);
-        //    if (element != null) Assert.Fail("Unexpected '{0}' element.", elementName);
+        //    if (element != null) throw new Exception("Unexpected '{0}' element.", elementName);
         //    return element;
         //}
 
@@ -112,14 +112,14 @@ namespace FubuMVC.Tests
         //public static HtmlTag ShouldNotHaveAttribute(this HtmlTag node, string attributeName)
         //{
         //    var attribute = node.Attributes[attributeName];
-        //    if (attribute != null) Assert.Fail("Element has unexpected attribute '{0}' with value '{1}'", attribute.Name, attribute.Value);
+        //    if (attribute != null) throw new Exception("Element has unexpected attribute '{0}' with value '{1}'", attribute.Name, attribute.Value);
         //    return node;
         //}
 
         //public static HtmlTag ShouldNotHaveAttributeValue(this HtmlTag node, string attributeName, string attributeValue)
         //{
         //    var attribute = node.Attributes[attributeName];
-        //    if (attribute != null && attribute.Value == attributeValue) Assert.Fail("Element has unexpected attribute '{0}' with value '{1}'", attribute.Name, attribute.Value);
+        //    if (attribute != null && attribute.Value == attributeValue) throw new Exception("Element has unexpected attribute '{0}' with value '{1}'", attribute.Name, attribute.Value);
         //    return node;
         //}
 
@@ -138,7 +138,7 @@ namespace FubuMVC.Tests
         //{
         //    var attribute = node.Attributes["class"];
 
-        //    if (attribute == null) Assert.Fail("Element does not have any CSS classes");
+        //    if (attribute == null) throw new Exception("Element does not have any CSS classes");
         //    attribute.Value.Split(' ').ShouldContain(className);
         //    return node;
         //}
@@ -146,7 +146,7 @@ namespace FubuMVC.Tests
         //public static HtmlAttribute ShouldHaveAttribute(this HtmlTag node, string attributeName)
         //{
         //    var attribute = node.Attributes[attributeName];
-        //    if (attribute == null) Assert.Fail("Element does not have attribute '{0}'", attributeName);
+        //    if (attribute == null) throw new Exception("Element does not have attribute '{0}'", attributeName);
         //    return attribute;
         //}
 
@@ -195,7 +195,7 @@ namespace FubuMVC.Tests
         //            var parseError = (HtmlParseError)error;
         //            errors += (String.IsNullOrEmpty(parseError.Reason) ? parseError.Code.ToString() : parseError.Reason) + Environment.NewLine;
         //        }
-        //        Assert.Fail("Invalid HTML: {0}{1}{2}", s, Environment.NewLine, errors);
+        //        throw new Exception("Invalid HTML: {0}{1}{2}", s, Environment.NewLine, errors);
         //    }
         //    return doc;
         //}

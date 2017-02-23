@@ -11,7 +11,7 @@ using FubuMVC.Core.Security.Authentication.Cookies;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication.Endpoints
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
         }
     }
 
-    [TestFixture]
+    
     public class when_going_to_the_login_screen_with_a_remembered_user : InteractionContext<LoginController>
     {
         private StubLoginCookies theCookies;
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             this.SetupAuthenticationService();
         }
 
-        [Test]
+        [Fact]
         public void does_nothing_if_there_is_no_remembered_user()
         {
             var request = new LoginRequest
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             request.RememberMe.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_not_set_the_remembered_user_name_if_there_is_already_a_different_name()
         {
             var request = new LoginRequest
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             request.RememberMe.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_set_the_remembered_user_name_on_the_login_request_if_it_is_not_already_set()
         {
             var request = new LoginRequest
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             request.RememberMe.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void UserName_should_set_itself_on_the_post_route_if_remember_me_is_true()
         {
             const string username = "fakeuser";
@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             request.UserName.ShouldBe(username);
         }
 
-        [Test]
+        [Fact]
         public void UserName_should_not_set_itself_on_the_post_route_if_remember_me_is_false()
         {
             const string username = "fakeuser";
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
         }
     }
 
-    [TestFixture]
+    
     public class LoginControllerTester : InteractionContext<LoginController>
     {
         private LoginRequest theRequest;
@@ -138,7 +138,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
         }
 
 
-        [Test]
+        [Fact]
         public void show_initial_screen_not_logged_out()
         {
             var request = new LoginRequest{Status = LoginStatus.NotAuthenticated};
@@ -148,7 +148,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             request.Message.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void show_initial_screen_when_the_user_is_locked_out()
         {
             var request = new LoginRequest();
@@ -161,7 +161,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
         }
 
 
-        [Test]
+        [Fact]
         public void uses_the_unknown_message_when_no_message_is_set()
         {
             theRequest.Status = LoginStatus.Failed;
@@ -174,7 +174,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             theRequest.Message.ShouldBe(LoginKeys.Unknown.ToString());
         }
 
-        [Test]
+        [Fact]
         public void leave_the_existing_message_if_failed()
         {
             theRequest.Status = LoginStatus.Failed;
@@ -187,7 +187,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
     }
 
 
-    [TestFixture]
+    
     public class when_running_in_a_get_that_is_not_locked_out : InteractionContext<LoginController>
     {
         private LoginRequest theLoginRequest;
@@ -205,13 +205,13 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             ClassUnderTest.get_login(theLoginRequest);
         }
 
-        [Test]
+        [Fact]
         public void the_status_is_still_not_authenticated()
         {
             theLoginRequest.Status.ShouldBe(LoginStatus.NotAuthenticated);
         }
 
-        [Test]
+        [Fact]
         public void should_not_even_try_to_authenticate()
         {
             MockFor<IAuthenticationService>().AssertWasNotCalled(x => x.Authenticate(null), x => x.IgnoreArguments());
@@ -220,7 +220,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
 
     }
 
-    [TestFixture]
+    
     public class when_running_in_a_get_that_is_locked_out : InteractionContext<LoginController>
     {
         private LoginRequest theLoginRequest;
@@ -240,13 +240,13 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             ClassUnderTest.get_login(theLoginRequest);
         }
 
-        [Test]
+        [Fact]
         public void the_status_should_be_locked_out()
         {
             theLoginRequest.Status.ShouldBe(LoginStatus.LockedOut);
         }
 
-        [Test]
+        [Fact]
         public void should_not_even_try_to_authenticate()
         {
             MockFor<IAuthenticationService>().AssertWasNotCalled(x => x.Authenticate(null), x => x.IgnoreArguments());
@@ -255,7 +255,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
 
     }
 
-    [TestFixture]
+    
     public class when_successfully_authenticating : InteractionContext<LoginController>
     {
         private LoginRequest theLoginRequest;
@@ -281,32 +281,32 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             theContinuation = ClassUnderTest.post_login(theLoginRequest);
         }
 
-        [Test]
+        [Fact]
         public void should_have_applied_history()
         {
             MockFor<ILoginAuditor>().AssertWasCalled(x => x.ApplyHistory(theLoginRequest));
         }
 
-        [Test]
+        [Fact]
         public void should_audit_the_request()
         {
             MockFor<ILoginAuditor>().AssertWasCalled(x => x.Audit(theLoginRequest));
         }
 
-        [Test]
+        [Fact]
         public void should_not_allow_the_inner_behavior_to_execute()
         {
             MockFor<IActionBehavior>().AssertWasNotCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void should_use_the_continuation_from_the_success_handler()
         {
             theContinuation.ShouldBeTheSameAs(successfulContinuation);
         }
     }
 
-    [TestFixture]
+    
     public class when_UNsuccessfully_authenticating : InteractionContext<LoginController>
     {
         private LoginRequest theLoginRequest;
@@ -328,26 +328,26 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             theContinuation = ClassUnderTest.post_login(theLoginRequest);
         }
 
-        [Test]
+        [Fact]
         public void should_have_applied_history()
         {
             MockFor<ILoginAuditor>().AssertWasCalled(x => x.ApplyHistory(theLoginRequest));
         }
 
 
-        [Test]
+        [Fact]
         public void should_audit_the_request()
         {
             MockFor<ILoginAuditor>().AssertWasCalled(x => x.Audit(theLoginRequest));
         }
 
-        [Test]
+        [Fact]
         public void should_not_signal_the_success_handler()
         {
             MockFor<ILoginSuccessHandler>().AssertWasNotCalled(x => x.LoggedIn(theLoginRequest));
         }
 
-        [Test]
+        [Fact]
         public void should_proceed_to_the_login_page()
         {
             theContinuation.AssertWasTransferedTo(theLoginRequest, "GET");

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Headers
 {
-    [TestFixture]
+    
     public class Headers_testing
     {
-        [Test]
+        [Fact]
         public void get_and_set_with_name_value_collection()
         {
             var values = new NameValueCollection();
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Headers
             values["c"].ShouldBe("3");
         }
 
-        [Test]
+        [Fact]
         public void name_value_has()
         {
             var values = new NameValueCollection();
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Headers
             headers.Has("c").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void get_keys_from_name_value_collection()
         {
             var values = new NameValueCollection();
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Headers
             headers.Keys().ShouldHaveTheSameElementsAs("a", "b", "c");
         }
 
-        [Test]
+        [Fact]
         public void get_and_set_with_dictionary()
         {
             var values = new Dictionary<string, string>{{"a", "1"}, {"b", "2"}};
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Headers
             values["c"].ShouldBe("3");
         }
 
-        [Test]
+        [Fact]
         public void dictionary_has()
         {
             var values = new Dictionary<string, string> { { "a", "1" }, { "b", "2" } };
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Headers
             headers.Has("c").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void to_name_values_for_dictionary()
         {
             var values = new Dictionary<string, string> { { "a", "1" }, { "b", "2" } };
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Headers
             collection["b"].ShouldBe("2");
         }
 
-        [Test]
+        [Fact]
         public void get_keys_from_dictionary()
         {
             var values = new Dictionary<string, string> { { "a", "1" }, { "b", "2" }, {"c", "3"} };

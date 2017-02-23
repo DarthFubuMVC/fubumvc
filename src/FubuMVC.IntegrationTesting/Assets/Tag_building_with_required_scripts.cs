@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    [TestFixture]
+    
     public class Tag_building_with_required_scripts : AssetIntegrationContext
     {
         public Tag_building_with_required_scripts()
@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             File("script6.js");
         }
 
-        [Test]
+        [Fact]
         public void should_write_the_scripts_that_are_queued()
         {
             var builder = TagBuilder();
@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting.Assets
                 .ShouldHaveTheSameElementsAs("/script1.js", "/script2.js", "/script3.js");
         }
 
-        [Test]
+        [Fact]
         public void should_not_write_the_same_script_twice()
         {
             var builder = TagBuilder();

@@ -1,21 +1,15 @@
 using System.Linq;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class EmailFieldRuleTester
     {
-        private EmailTarget theTarget;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theTarget = new EmailTarget();
-        }
+        private EmailTarget theTarget = new EmailTarget();
 
         private Notification theNotification
         {
@@ -31,13 +25,13 @@ namespace FubuMVC.Tests.Validation.Fields
             }
         }
 
-        [Test]
+        [Fact]
         public void default_token_is_email_key()
         {
             new EmailFieldRule().Token.ShouldBe(ValidationKeys.Email);
         }
 
-        [Test]
+        [Fact]
         public void no_message_if_email_is_valid()
         {
             AssertEmailValidationReturnsNoMessage("joel+paulus@arnold.com").ShouldBeTrue();
@@ -47,7 +41,7 @@ namespace FubuMVC.Tests.Validation.Fields
             AssertEmailValidationReturnsNoMessage("gmail+style@sub.domain.com").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void registers_message_if_email_is_invalid()
         {
             theTarget.Email = "something";
@@ -55,14 +49,14 @@ namespace FubuMVC.Tests.Validation.Fields
             messages.Single().StringToken.ShouldBe(ValidationKeys.Email);
         }
 
-        [Test]
+        [Fact]
         public void uppercase_letters_are_valid()
         {
             theTarget.Email = "Something@there.com";
             theNotification.MessagesFor<EmailTarget>(x => x.Email).Any().ShouldBeFalse();
         }
         
-        [Test]
+        [Fact]
         public void no_message_if_email_is_empty()
         {
             AssertEmailValidationReturnsNoMessage(string.Empty).ShouldBeTrue();

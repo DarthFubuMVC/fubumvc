@@ -3,29 +3,29 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class NotificationMessageTester
     {
-        [Test]
+        [Fact]
         public void create_by_string()
         {
             var message = new NotificationMessage("Some message");
             message.GetMessage().ShouldBe("Some message");
         }
 
-        [Test]
+        [Fact]
         public void get_message_without_subsitutions()
         {
             var message = new NotificationMessage(NotificationMessageKeys.NO_SUBSTITUTION);
             message.GetMessage().ShouldBe(NotificationMessageKeys.NO_SUBSTITUTION.ToString());
         }
 
-        [Test]
+        [Fact]
         public void get_message_with_substitutions()
         {
             var message = new NotificationMessage(NotificationMessageKeys.SUBSTITUTE_NAME_AND_AGE)
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Validation
             message.GetMessage().ShouldBe("Max is 7 years old");
         }
 
-        [Test]
+        [Fact]
         public void prepend_property()
         {
             var message = new NotificationMessage(ValidationKeys.Required);
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Validation
             prepended.StringToken.ShouldBe(ValidationKeys.Required);
         }
 
-        [Test]
+        [Fact]
         public void equality_check()
         {
             var token = StringToken.FromKeyString("Test", "1...2...3");
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Validation
             message1.ShouldBe(message2);
         }
 
-        [Test]
+        [Fact]
         public void equality_check_negative()
         {
             var token = StringToken.FromKeyString("Test", "1...2...3");

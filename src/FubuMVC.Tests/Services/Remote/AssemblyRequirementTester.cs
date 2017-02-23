@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Services.Remote;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Services.Remote
 {
-    [TestFixture]
+    
     public class AssemblyRequirementTester
     {
-        [Test]
+        [Fact]
         public void is_sem_ver_compatible()
         {
             AssemblyRequirement.IsSemVerCompatible("1.0", "1.1").ShouldBeTrue();

@@ -2,12 +2,12 @@
 using FubuMVC.Core.Validation;
 using FubuMVC.Tests.TestSupport;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class ValidatorTester : InteractionContext<Validator>
     {
         private SimpleModel theModel;
@@ -31,19 +31,19 @@ namespace FubuMVC.Tests.Validation
             theContext = theRecordingRule.Context;
         }
 
-        [Test]
+        [Fact]
         public void sets_the_target_type()
         {
             theContext.TargetType.ShouldBe(theModel.GetType());
         }
 
-        [Test]
+        [Fact]
         public void sets_the_type_resolver()
         {
             theContext.Resolver.ShouldBe(MockFor<ITypeResolver>());
         }
 
-        [Test]
+        [Fact]
         public void sets_the_service_locator()
         {
             theContext.ServiceLocator.ShouldBe(MockFor<IServiceLocator>());

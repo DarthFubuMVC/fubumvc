@@ -1,14 +1,14 @@
 ﻿using System.Net;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Continuations
 {
-    [TestFixture]
+    
     public class redirects_with_the_get
     {
-        [Test]
+        [Fact]
         public void the_FubuContinuation_Redirect_uses_GET_by_default()
         {
             TestHost.Scenario(_ =>
@@ -21,7 +21,7 @@ namespace FubuMVC.IntegrationTesting.Continuations
             });
         }
 
-        [Test]
+        [Fact]
         public void FubuContinuation_Redirect_honors_the_explicit_METHOD()
         {
             TestHost.Scenario(_ =>

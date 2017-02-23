@@ -1,23 +1,23 @@
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class StringWriterTester : InteractionContext<StringWriter>
     {
-        [Test]
+        [Fact]
         public void mime_type_is_only_text()
         {
             ClassUnderTest.Mimetypes
                 .ShouldHaveTheSameElementsAs(MimeType.Text.Value, MimeType.Html.Value);
         }
 
-        [Test]
+        [Fact]
         public void write()
         {
             var context = new MockedFubuRequestContext();

@@ -12,25 +12,20 @@ using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.UI;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-	[TestFixture]
+	
 	public class IntegratedValidationOptionsTester
 	{
-		private BehaviorGraph theGraph;
+		private BehaviorGraph theGraph = BehaviorGraph.BuildFrom(x =>
+        {
+            x.Actions.IncludeType<ValidationOptionsEndpoint>();
+            x.Features.Validation.Enable(true);
+        });
 
-		[SetUp]
-		public void SetUp()
-		{
-			theGraph = BehaviorGraph.BuildFrom(x =>
-			{
-				x.Actions.IncludeType<ValidationOptionsEndpoint>();
-			    x.Features.Validation.Enable(true);
-			});
-		}
 
 		private ValidationOptions theOptions
 		{
@@ -57,7 +52,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
 			};
 		}
 
-		[Test]
+		[Fact]
 		public void verify_the_fields()
 		{
 			theOptions.fields.ShouldHaveTheSameElementsAs(

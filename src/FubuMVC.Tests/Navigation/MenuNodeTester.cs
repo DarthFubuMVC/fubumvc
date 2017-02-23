@@ -8,15 +8,15 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class MenuNodeTester
     {
-		[Test]
+		[Fact]
 		public void set_data()
 		{
 			var node = new MenuNode(FakeKeys.Key9);
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Navigation
 			node["Test"].ShouldBe(value);
 		}
 
-		[Test]
+		[Fact]
 		public void get_data()
 		{
 			var node = new MenuNode(FakeKeys.Key9);
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Navigation
 			node.Get<Guid>("Test").ShouldBe(value);
 		}
 
-		[Test]
+		[Fact]
 		public void has_data()
 		{
 			var node = new MenuNode(FakeKeys.Key9);
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Navigation
 			node.Has("Test").ShouldBeTrue();
 		}
 
-        [Test]
+        [Fact]
         public void set_the_icon()
         {
             var node = new MenuNode(FakeKeys.Key9);
@@ -56,14 +56,14 @@ namespace FubuMVC.Tests.Navigation
             node.Icon().ShouldBe("something.png");
         }
 
-        [Test]
+        [Fact]
         public void un_authorized_state_is_hidden_by_default()
         {
             MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"))
                 .UnauthorizedState.ShouldBe(MenuItemState.Hidden);
         }
 
-        [Test]
+        [Fact]
         public void positive_case_of_setting_is_enabled_type()
         {
             var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Navigation
             node.IsEnabledBy().ShouldBe(typeof (FakeConditional));
         }
 
-        [Test]
+        [Fact]
         public void negative_case_of_setting_is_enabled_type()
         {
             var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Navigation
             });
         }
 
-        [Test]
+        [Fact]
         public void positive_case_of_setting_hide_if_type()
         {
             var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Navigation
             node.HideIfConditional.ShouldBe(typeof(FakeConditional));
         }
 
-        [Test]
+        [Fact]
         public void negative_case_of_setting_hide_if_type()
         {
             var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.Navigation
             });
         }
 
-        [Test]
+        [Fact]
         public void hide_if_is_never_by_default()
         {
             var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
@@ -117,7 +117,7 @@ namespace FubuMVC.Tests.Navigation
             node.Resolve(resolver);
         }
 
-        [Test]
+        [Fact]
         public void throws_if_the_chain_cannot_be_resolved_to_fail_fast()
         {
             var key = StringToken.FromKeyString("Something");
@@ -131,7 +131,7 @@ namespace FubuMVC.Tests.Navigation
             
         }
 
-        [Test]
+        [Fact]
         public void create_by_creator_of()
         {
             var key = StringToken.FromKeyString("Something");
@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.Navigation
             node.BehaviorChain.ShouldBeTheSameAs(chain);
         }
 
-        [Test]
+        [Fact]
         public void create_for_action()
         {
             var key = StringToken.FromKeyString("Something");
@@ -174,7 +174,7 @@ namespace FubuMVC.Tests.Navigation
             node.BehaviorChain.ShouldBeTheSameAs(chain1);
         }
 
-	    [Test]
+	    [Fact]
 	    public void create_for_action_with_lambda()
 	    {
 		    var key = StringToken.FromKeyString("Something");
@@ -183,7 +183,7 @@ namespace FubuMVC.Tests.Navigation
 			node.Category.ShouldBe("Test");
 	    }
 
-	    [Test]
+	    [Fact]
         public void create_for_input_where_it_is_null()
         {
             var key = StringToken.FromKeyString("Something");
@@ -208,7 +208,7 @@ namespace FubuMVC.Tests.Navigation
             node.BehaviorChain.ShouldBeTheSameAs(chain1);
         }
 
-		[Test]
+		[Fact]
 		public void create_for_input_with_lamba()
 		{
 			var key = StringToken.FromKeyString("Something");
@@ -217,7 +217,7 @@ namespace FubuMVC.Tests.Navigation
 			node.Category.ShouldBe("Test");
 		}
 
-        [Test]
+        [Fact]
         public void for_intput_with_model()
         {
             var key = StringToken.FromKeyString("Something");
@@ -243,7 +243,7 @@ namespace FubuMVC.Tests.Navigation
             node.BehaviorChain.ShouldBeTheSameAs(chain1);
         }
 
-        [Test]
+        [Fact]
         public void create_by_chain_by_itself()
         {
             var key = StringToken.FromKeyString("Something");
@@ -253,7 +253,7 @@ namespace FubuMVC.Tests.Navigation
             node.BehaviorChain.ShouldBeTheSameAs(chain);
         }
 
-        [Test]
+        [Fact]
         public void menu_type_when_it_is_just_a_node()
         {
             var node = new MenuNode(FakeKeys.Key5);
@@ -263,14 +263,14 @@ namespace FubuMVC.Tests.Navigation
             node.Resolve(null);
         }
 
-        [Test]
+        [Fact]
         public void menu_type_when_it_is_a_leaf()
         {
             var node = MenuNode.ForCreatorOf(FakeKeys.Key1, typeof (Address));
             node.Type.ShouldBe(MenuNodeType.Leaf);
         }
 
-        [Test]
+        [Fact]
         public void find_all_children()
         {
             var node1 = MenuNode.ForCreatorOf(FakeKeys.Key1, typeof(Address));

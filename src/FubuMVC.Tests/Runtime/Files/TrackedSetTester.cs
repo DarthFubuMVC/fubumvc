@@ -1,11 +1,11 @@
 ﻿using System;
 using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Runtime.Files
 {
-    [TestFixture]
+    
     public class TrackedSetTester
     {
         private readonly StubFubuFile file1 = new StubFubuFile("foo1", DateTime.Now);
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Runtime.Files
         private readonly StubFubuFile file6 = new StubFubuFile("foo6", DateTime.Now);
         private readonly StubFubuFile file7 = new StubFubuFile("foo7", DateTime.Now);
 
-        [Test]
+        [Fact]
         public void store_files_and_test_for_changes_with_no_changes()
         {
             var files = new IFubuFile[] {file1, file2, file3, file4, file5, file6, file7};
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Runtime.Files
             set.DetectChanges(files).HasChanges().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void find_deletes()
         {
             var files = new IFubuFile[] { file1, file2, file3, file4, file5, file6, file7 };
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Runtime.Files
 
         }
 
-        [Test]
+        [Fact]
         public void find_adds()
         {
             var files = new IFubuFile[] { file1, file2, file3, file4, file5 };

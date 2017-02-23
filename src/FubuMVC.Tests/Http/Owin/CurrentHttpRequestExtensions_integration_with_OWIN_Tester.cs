@@ -2,14 +2,14 @@
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class CurrentHttpRequestExtensions_integration_with_OWIN_Tester
     {
-        [Test]
+        [Fact]
         public void modified_since()
         {
             var time = new DateTime(2014, 1, 30, 12, 5, 6);
@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Http.Owin
                 .ShouldBe(time.ToUniversalTime());
         }
 
-        [Test]
+        [Fact]
         public void un_modified_since()
         {
             var time = new DateTime(2014, 1, 30, 12, 5, 6);
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Http.Owin
                 .ShouldBe(time.ToUniversalTime());
         }
 
-        [Test]
+        [Fact]
         public void if_match()
         {
             new OwinHttpRequest().IfMatch("a,b, c")
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Http.Owin
                 .ShouldHaveTheSameElementsAs("a", "b", "c");
         }
 
-        [Test]
+        [Fact]
         public void if_none_match()
         {
             new OwinHttpRequest().IfNoneMatch("a,b, c")
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Http.Owin
                 .ShouldHaveTheSameElementsAs("a", "b", "c");
         }
 
-        [Test]
+        [Fact]
         public void HttpMethodMatchesAny()
         {
             var request = new OwinHttpRequest().HttpMethod("POST");

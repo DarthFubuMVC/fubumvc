@@ -3,13 +3,13 @@ using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Certificates;
 using FubuMVC.Core.Security.Authentication.Saml2.Validation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
 {
-    [TestFixture]
+    
     public class CertificateValidationTester : InteractionContext<CertificateValidation>
     {
         private SamlResponse response;
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
             }
         }
 
-        [Test]
+        [Fact]
         public void logs_no_error_if_the_certificate_is_valid()
         {
 
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
             response.Errors.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void logs_error_if_certificate_does_not_match_issuer()
         {
             theCertificateValidationReturns = SamlValidationKeys.CannotMatchIssuer;
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
             response.Errors.Single().ShouldBe(new SamlError(SamlValidationKeys.CannotMatchIssuer));
         }
 
-        [Test]
+        [Fact]
         public void logs_error_if_certificate_is_invalid()
         {
             theCertificateValidationReturns = SamlValidationKeys.NoValidCertificates;

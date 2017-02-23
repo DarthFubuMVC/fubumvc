@@ -5,15 +5,15 @@ using System.Net;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Http
 {
-    [TestFixture]
+    
     public class reading_and_writing_http_headers_and_responses_with_OWIN
     {
-        [Test]
+        [Fact]
         public void read_values_from_the_response()
         {
             var request = new OwinRequest

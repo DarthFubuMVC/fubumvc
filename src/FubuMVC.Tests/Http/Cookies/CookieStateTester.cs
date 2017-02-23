@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Http.Cookies;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Http.Cookies
 {
-    [TestFixture]
+    
     public class CookieStateTester
     {
-        [Test]
+        [Fact]
         public void parse_with_one_value()
         {
             var state = CookieState.Parse("key", "1");
@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Http.Cookies
             state.Value.ShouldBe("1");
         }
 
-        [Test]
+        [Fact]
         public void parse_with_multiple_values()
         {
             var state = CookieState.Parse("key", "a=1");
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Http.Cookies
             state["a"].ShouldBe("1");
         }
 
-        [Test]
+        [Fact]
         public void parse_with_multiple_values_2()
         {
             var state = CookieState.Parse("key", "a=1&b=2&c=3");
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Http.Cookies
             state["c"].ShouldBe("3");
         }
 
-        [Test]
+        [Fact]
         public void silly_with_works()
         {
             var state = new CookieState("key").With("a", "1").With("b", "2");
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Http.Cookies
             state.ToString().ShouldBe(name + "=" + text);
         }
 
-        [Test]
+        [Fact]
         public void writing()
         {
             roundtrips("a", "1");

@@ -2,12 +2,12 @@
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
-    [TestFixture]
+    
     public class when_checking_the_status_of_owned_tasks : PersistentTaskControllerContext
     {
         /*
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
             settings.TaskAvailabilityCheckTimeout = 1.Minutes();
         }
 
-        [Test]
+        [Fact]
         public void happy_path_checks_all_subjects()
         {
             Task("foo://1").IsFullyFunctionalAndActive();
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
         }
 
 
-        [Test]
+        [Fact]
         public void some_tasks_fail_the_assert_available_check()
         {
             Task("foo://1").IsFullyFunctionalAndActive();
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
                 );
         }
 
-        [Test]
+        [Fact]
         public void some_tasks_are_unknown()
         {
             Task("foo://1").IsFullyFunctionalAndActive();
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
                 );
         }
 
-        [Test]
+        [Fact]
         public void some_tasks_are_inactive()
         {
             Task("foo://1").IsFullyFunctionalAndActive();

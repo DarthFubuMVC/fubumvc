@@ -11,12 +11,12 @@ using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.Remote;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class RemoteRuleGraphActivatorTester
     {
         private ValidationGraph theValidationGraph;
@@ -25,8 +25,7 @@ namespace FubuMVC.Tests.Validation.Web
         private RemoteRuleQuery theQuery;
         private RemoteRuleGraphActivator theActivator;
 
-        [SetUp]
-        public void SetUp()
+        public RemoteRuleGraphActivatorTester()
         {
             theBehaviorGraph = BehaviorGraph.BuildFrom(r =>
             {
@@ -43,7 +42,7 @@ namespace FubuMVC.Tests.Validation.Web
             theActivator.Activate(new ActivationLog(), new PerfTimer());
         }
 
-        [Test]
+        [Fact]
         public void fills_the_rules_in_the_rule_graph()
         {
             var rule = theRuleGraph.RulesFor(ReflectionHelper.GetAccessor<ActivatorTargetWithRemotes>(x => x.Username)).Single();

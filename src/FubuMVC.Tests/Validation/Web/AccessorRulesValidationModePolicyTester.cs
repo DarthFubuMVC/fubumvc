@@ -5,12 +5,12 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-	[TestFixture]
+	
 	public class AccessorRulesValidationModePolicyTester
 	{
 		private IServiceLocator services()
@@ -38,32 +38,32 @@ namespace FubuMVC.Tests.Validation.Web
 			return new AccessorRulesValidationModePolicy().Matches(services(), accessor);
 		}
 
-		[Test]
+		[Fact]
 		public void matches_requests_for_properties_with_live_validation()
 		{
 			matches(x => x.Live).ShouldBeTrue();
 		}
 
-		[Test]
+		[Fact]
 		public void matches_requests_for_properties_with_triggered_validation()
 		{
 			matches(x => x.Triggered).ShouldBeTrue();
 		}
 
-		[Test]
+		[Fact]
 		public void matches_requests_for_properties_with_no_validation_mode()
 		{
 			matches(x => x.Ignored).ShouldBeFalse();
 		}
 
-		[Test]
+		[Fact]
 		public void mode_is_determined_from_accessor_rules_live()
 		{
 			modeFor(x => x.Live).ShouldBe(ValidationMode.Live);
 		}
 
 
-		[Test]
+		[Fact]
 		public void mode_is_determined_from_accessor_rules_triggered()
 		{
 			modeFor(x => x.Triggered).ShouldBe(ValidationMode.Triggered);

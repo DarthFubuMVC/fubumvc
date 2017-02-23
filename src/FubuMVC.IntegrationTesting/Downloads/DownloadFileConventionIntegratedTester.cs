@@ -2,32 +2,22 @@
 using FubuMVC.Core.Downloads;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Downloads
 {
-    [TestFixture]
+    
     public class DownloadFileConventionIntegratedTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        private BehaviorGraph graph = BehaviorGraph.BuildFrom(x =>
         {
-            graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeType<DownloadTestController>();
+            x.Actions.IncludeType<DownloadTestController>();
 
-                x.Policies.Local.Add<DownloadFileConvention>();
-            });
-        }
+            x.Policies.Local.Add<DownloadFileConvention>();
+        });
 
-        #endregion
-
-        private BehaviorGraph graph;
-
-        [Test]
+        [Fact]
         public void should_apply_download_behavior_convention()
         {
             BehaviorNode behavior = graph.ChainFor<DownloadTestController>(x => x.Download()).Calls.First().Next;

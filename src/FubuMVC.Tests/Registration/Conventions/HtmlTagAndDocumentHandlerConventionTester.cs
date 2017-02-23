@@ -7,30 +7,20 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Ajax;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class HtmlTagAndDocumentHandlerConventionTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        private BehaviorGraph graph = BehaviorGraph.BuildFrom(x =>
         {
-            graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeType<TagController>();
-            });
-        }
+            x.Actions.IncludeType<TagController>();
+        });
 
-        #endregion
-
-        private BehaviorGraph graph;
-
-        [Test]
+        [Fact]
         public void action_that_returns_HtmlDocument_should_output_to_html()
         {
             var outputNode = graph.ChainFor<TagController>(x => x.BuildDoc()).Outputs.First().ShouldBeOfType<OutputNode>();
@@ -40,7 +30,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             outputNode.Writes(MimeType.Html).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void action_that_returns_HtmlTag_should_output_to_html()
         {
             var outputNode =

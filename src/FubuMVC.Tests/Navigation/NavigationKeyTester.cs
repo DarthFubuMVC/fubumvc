@@ -1,13 +1,13 @@
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class NavigationKeyTester
     {
-        [Test]
+        [Fact]
         public void equals_works()
         {
             new NavigationKey("one").ShouldBe(new NavigationKey("one"));
@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Navigation
             new NavigationKey("one").ShouldNotBe(new NavigationKey("two"));
         }
 
-        [Test]
+        [Fact]
         public void get_hash_code_is_predictable()
         {
             new NavigationKey("one").GetHashCode().ShouldBe(new NavigationKey("one").GetHashCode());

@@ -12,14 +12,14 @@ using FubuMVC.Core.ServiceBus.Web;
 using FubuMVC.LightningQueues;
 using FubuMVC.Tests.ServiceBus;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
 {
-    [TestFixture]
-    public class PublishingConfigurationIntegrationTester
+    
+    public class PublishingConfigurationIntegrationTester : IDisposable
     {
         private BehaviorGraph theGraph;
         private BehaviorChain chain;
@@ -27,8 +27,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         private Container container;
         private IServiceBus theServiceBus;
 
-        [SetUp]
-        public void SetUp()
+        public PublishingConfigurationIntegrationTester()
         {
             container = new Container();
             container.Inject(new TransportSettings
@@ -49,16 +48,14 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
             chain = theGraph.ChainFor<MessageOnePublisher>(x => x.post_message1(null));
 
             container.Inject(theServiceBus);
-        
         }
 
-        [TearDown]
-        public void Teardown()
+        public void Dispose()
         {
             theRuntime.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void end_to_end_test()
         {
             theRuntime.Scenario(_ =>
@@ -71,7 +68,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
             theServiceBus.AssertWasCalled(x => x.Send(new Message1()), x => x.IgnoreArguments());
         }
 
-        [Test]
+        [Fact]
         public void should_find_the_IEventPublishers_loaded_into_memory()
         {
             chain.ShouldNotBeNull();
@@ -79,19 +76,19 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
                 .ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void input_type_should_be_the_input_type_of_the_publisher_method()
         {
             chain.InputType().ShouldBe(typeof(Message1Input));
         }
 
-        [Test]
+        [Fact]
         public void resource_type_should_be_AjaxContinuation()
         {
             chain.ResourceType().ShouldBe(typeof(AjaxContinuation));
         }
 
-        [Test]
+        [Fact]
         public void should_be_a_PublishEvent_node_directly_after_the_publishing_action()
         {
             // diagnostics are in here now.

@@ -1,11 +1,11 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    [TestFixture]
+    
     public class asset_writing_headers_are_configurable : AssetIntegrationContext
     {
         public asset_writing_headers_are_configurable()
@@ -26,7 +26,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         }
 
 
-        [Test]
+        [Fact]
         public void writes_the_headers_and_content()
         {
             Scenario.Get.Url("/Foo.js");

@@ -1,12 +1,12 @@
 using FubuMVC.Core.Http.Cookies;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class binding_against_request_cookies
     {
-        [Test]
+        [Fact]
         public void can_bind_to_request_cookies()
         {
             var model = new CookieModel

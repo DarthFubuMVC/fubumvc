@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Logging;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Diagnostics
 {
-    [TestFixture]
+    
     public class MessageRecordListenerTester
     {
-        [Test]
+        [Fact]
         public void matches_on_message_record_types()
         {
             var listener = new MessageRecordListener(null);

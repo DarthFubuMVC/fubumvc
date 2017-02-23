@@ -1,14 +1,14 @@
 ﻿using System;
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-	[TestFixture]
+	
 	public class MenuItemTokenTester
 	{
-		[Test]
+		[Fact]
 		public void get_data()
 		{
 			var token = new MenuItemToken();
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Navigation
 			token.Get<Guid>("Test").ShouldBe(value);
 		}
 
-		[Test]
+		[Fact]
 		public void has_data()
 		{
 			var token = new MenuItemToken();
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Navigation
 			token.Has("Test").ShouldBeTrue();
 		}
 
-		[Test]
+		[Fact]
 		public void value_continuation_for_existing_value()
 		{
 			var token = new MenuItemToken();
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Navigation
 			token.Value<Guid>("key", x => x.ShouldBe(expected));
 		}
 
-		[Test]
+		[Fact]
 		public void value_continuation_for_non_existing_value()
 		{
 			var token = new MenuItemToken();

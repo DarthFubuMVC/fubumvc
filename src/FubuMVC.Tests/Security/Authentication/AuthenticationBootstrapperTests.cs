@@ -3,16 +3,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authentication;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class out_of_the_box_authentication_setup
     {
 
-        [Test]
+        [Fact]
         public void service_registrations()
         {
             var registry = new FubuRegistry();

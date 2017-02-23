@@ -2,13 +2,13 @@
 using System.Net;
 using System.Threading.Tasks;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
     public class handling_async_routes
     {
-        [Test]
+        [Fact]
         public void async_route_should_render()
         {
             TestHost.Scenario(_ =>
@@ -18,7 +18,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             });
         }
 
-        [Test]
+        [Fact]
         public void async_route_with_error_should_have_501_and_exception_message()
         {
             TestHost.Scenario(_ =>

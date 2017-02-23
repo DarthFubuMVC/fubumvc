@@ -1,24 +1,24 @@
 using System.Reflection.Emit;
 using FubuCore;
 using FubuMVC.Core.Ajax;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using System.Linq;
 
 namespace FubuMVC.Tests.Ajax
 {
-    [TestFixture]
+    
     public class AjaxContinuationTester
     {
         private AjaxContinuation theContinuation;
 
-        [SetUp]
-        public void SetUp()
+        public AjaxContinuationTester()
         {
             theContinuation = new AjaxContinuation();
         }
 
-        [Test]
+
+        [Fact]
         public void success_is_placed_into_the_dictionary()
         {
             theContinuation.Success = false;
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Ajax
             theContinuation.ToDictionary()["success"].As<bool>().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void refresh_is_placed_int_the_dictionary()
         {
             theContinuation.ShouldRefresh = false;
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Ajax
             theContinuation.ToDictionary()["refresh"].As<bool>().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void message_is_placed_into_the_dictionary_if_it_exists()
         {
             theContinuation.ToDictionary().ContainsKey("message").ShouldBeFalse();
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Ajax
             theContinuation.ToDictionary()["message"].ShouldBe("something");
         }
 
-        [Test]
+        [Fact]
         public void errors_are_only_written_to_the_dictionary_if_they_exist()
         {
             theContinuation.ToDictionary().ContainsKey("errors").ShouldBeFalse();
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.Ajax
                 .Single().message.ShouldBe("bad!");
         }
         
-        [Test]
+        [Fact]
         public void navigate_page_is_only_written_to_the_dictionary_if_it_exists()
         {
             theContinuation.ToDictionary().ContainsKey("navigatePage").ShouldBeFalse();
@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.Ajax
 
         }
 
-        [Test]
+        [Fact]
         public void Successful_builder_method()
         {
             var success = AjaxContinuation.Successful();
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Ajax
             success.Success.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void ForMessage_builder_method()
         {
             var continuation = AjaxContinuation.ForMessage("some message");
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Ajax
             continuation.Message.ShouldBe("some message");
         }
 
-        [Test]
+        [Fact]
         public void ForMessage_via_StringToken()
         {
             var token = new SomeMessage();
@@ -97,13 +97,13 @@ namespace FubuMVC.Tests.Ajax
             continuation.Message.ShouldBe(token.ToString());
         }
 
-        [Test]
+        [Fact]
         public void has_data_should_return_false_if_the_key_is_not_present()
         {
             theContinuation.HasData("keyThatIsNotInData").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void has_data_should_return_true_if_the_key_is_present()
         {
             theContinuation["keyThatIsInData"] = "foo";

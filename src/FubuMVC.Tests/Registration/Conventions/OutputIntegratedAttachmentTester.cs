@@ -11,28 +11,18 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Tests.Behaviors;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class OutputIntegratedAttachmentTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        private BehaviorGraph graph = BehaviorGraph.BuildFrom(x =>
         {
-            graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeType<JsonOutputAttachmentTesterController>();
-            });
-        }
-
-        #endregion
-
-        private BehaviorGraph graph;
+            x.Actions.IncludeType<JsonOutputAttachmentTesterController>();
+        });
 
 
         private BehaviorChain chainFor(Expression<Action<JsonOutputAttachmentTesterController>> expression)
@@ -45,7 +35,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             return graph.ChainFor(expression);
         }
 
-        [Test]
+        [Fact]
         public void automatically_output_methds_that_are_decorated_with_JsonEndpoint_to_json()
         {
             var behavior =
@@ -53,7 +43,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             behavior.ShouldBeOfType<OutputNode>().ResourceType.ShouldBe(typeof (ViewModel1));
         }
 
-        [Test]
+        [Fact]
         public void automatically_output_methods_that_return_string_as_text_if_there_is_not_output()
         {
             var behavior =
@@ -62,7 +52,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             behavior.ShouldBeOfType<OutputNode>().Writes(MimeType.Text).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void methods_that_do_not_take_in_a_json_message_should_not_have_a_json_deserialization_behavior()
         {
             chainFor(x => x.NotJson1(null)).Top.Any(x => x is InputNode).ShouldBeFalse();
@@ -70,7 +60,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             chainFor(x => x.NotJson3(null)).Top.Any(x => x is InputNode).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void methods_that_return_a_json_message_should_output_json()
         {
             var chain = chainFor(x => x.OutputJson1());

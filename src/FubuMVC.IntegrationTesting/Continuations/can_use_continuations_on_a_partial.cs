@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Continuations
 {
-    [TestFixture]
+    
     public class can_use_continuations_on_a_partial
     {
-        [Test]
+        [Fact]
         public void transfer_in_a_partial()
         {
             TestHost.Scenario(_ =>

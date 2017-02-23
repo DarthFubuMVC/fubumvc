@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.Security.Authentication;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class LogoutSuccessHandlerTester
     {
-        [Test]
+        [Fact]
         public void should_redirect_to_the_login_page()
         {
             new LogoutSuccessHandler().LoggedOut()

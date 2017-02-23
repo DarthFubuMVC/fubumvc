@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class FubuTransportRegistryActivationTester
     {
-        [Test]
+        [Fact]
         public void should_start_when_transport_disabled()
         {
             var registry = new FubuRegistry();

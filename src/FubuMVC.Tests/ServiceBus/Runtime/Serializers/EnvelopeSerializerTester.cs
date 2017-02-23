@@ -4,13 +4,13 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
-    [TestFixture]
+    
     public class EnvelopeSerializerTester : InteractionContext<EnvelopeSerializer>
     {
         private IMessageSerializer[] serializers;
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             };
         }
 
-        [Test]
+        [Fact]
         public void chooses_by_mimetype()
         {
             theEnvelope.ContentType = serializers[3].ContentType;
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             ClassUnderTest.Deserialize(theEnvelope).ShouldBeTheSameAs(o);
         }
 
-        [Test]
+        [Fact]
         public void throws_on_unknown_content_type()
         {
             theEnvelope.ContentType = "random/nonexistent";
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             }).Message.ShouldContain("random/nonexistent");
         }
         
-        [Test]
+        [Fact]
         public void throws_on_serialize_with_no_message()
         {
             Exception<InvalidOperationException>.ShouldBeThrownBy(() => {
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             }).Message.ShouldBe("No message on this envelope to serialize");
         }
 
-        [Test]
+        [Fact]
         public void throws_on_deserialize_with_no_data()
         {
             Exception<EnvelopeDeserializationException>.ShouldBeThrownBy(() =>
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             }).Message.ShouldBe("No data on this envelope to deserialize");
         }
 
-        [Test]
+        [Fact]
         public void throws_on_deserialize_of_bad_message()
         {
             Exception<EnvelopeDeserializationException>.ShouldBeThrownBy(() =>
@@ -85,7 +85,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             }).Message.ShouldBe("Message serializer has failed");
         }
 
-        [Test]
+        [Fact]
         public void select_serializer_uses_the_envelope_override_if_it_exists()
         {
             var node = new ChannelNode
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
                 .ShouldBeTheSameAs(serializers[3]);
         }
 
-        [Test]
+        [Fact]
         public void select_the_graph_default_in_the_absence_of_everything_else()
         {
             theGraph.DefaultContentType = serializers[4].ContentType;
@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 
         }
 
-        [Test]
+        [Fact]
         public void use_channel_node_default_content_type_if_it_exists_and_not_set_on_the_envelope()
         {
             theGraph.DefaultContentType = serializers[4].ContentType;
@@ -122,7 +122,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
                 .ShouldBeTheSameAs(serializers[1]);
         }
 
-        [Test]
+        [Fact]
         public void use_a_serializer_on_the_channel_node_as_the_default_if_content_type_is_not_explicitly_set()
         {
             theGraph.DefaultContentType = serializers[4].ContentType;
@@ -135,7 +135,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
                 .ShouldBeTheSameAs(node.DefaultSerializer);
         }
 
-        [Test]
+        [Fact]
         public void ask_for_a_content_type_that_does_not_exist()
         {
             theEnvelope.ContentType = "weird";

@@ -3,17 +3,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.View
 {
-    [TestFixture]
+    
     public class AutoImportModelNamespacesConventionTester
     {
         private FubuRegistry _registry;
 
-        [SetUp]
-        public void Setup()
+        public AutoImportModelNamespacesConventionTester()
         {
             _registry = new FubuRegistry();
             _registry.Policies.Local.Add<AutoImportModelNamespacesConvention>();
@@ -21,7 +20,7 @@ namespace FubuMVC.Tests.View
             _registry.Actions.IncludeType<FakeAction>();
         }
 
-        [Test]
+        [Fact]
         public void when_auto_import_is_true_namespaces_are_added()
         {
             var graph = BehaviorGraph.BuildFrom(_registry);
@@ -30,7 +29,7 @@ namespace FubuMVC.Tests.View
             commonViewNamespaces.Namespaces.ShouldContain(typeof(FakeAction).Namespace);
         }
 
-        [Test]
+        [Fact]
         public void when_auto_import_is_false_namespaces_are_not_added()
         {
             _registry.AlterSettings<CommonViewNamespaces>(x => x.DontAutoImportWhenNamespaceStartsWith("Fubu"));

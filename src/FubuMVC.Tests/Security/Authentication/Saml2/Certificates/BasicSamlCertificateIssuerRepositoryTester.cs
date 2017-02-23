@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Security.Authentication.Saml2.Certificates;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
 {
-    [TestFixture]
+    
     public class BasicSamlCertificateIssuerRepositoryTester
     {
-        [Test]
+        [Fact]
         public void find_by_issuer()
         {
             var issuers = new SamlCertificate[]
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Certificates
             repository.Find(issuers[2].Issuer).ShouldBeTheSameAs(issuers[2]);
         }
 
-        [Test]
+        [Fact]
         public void find_all_known()
         {
             var issuers = new SamlCertificate[]

@@ -1,11 +1,11 @@
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class writing_string_output
     {
-        [Test]
+        [Fact]
         public void can_write_strings_to_the_output()
         {
             TestHost.Scenario(_ =>

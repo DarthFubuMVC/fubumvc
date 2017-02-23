@@ -2,22 +2,22 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class FilterAttributeTester
     {
-        [Test]
+        [Fact]
         public void one_method_is_valid()
         {
             FilterAttribute.DetermineMethod(typeof (ValidFilter))
                            .Name.ShouldBe("Filter");
         }
 
-        [Test]
+        [Fact]
         public void no_public_methods_are_invalid()
         {
             Exception<InvalidActionFilterTypeException>.ShouldBeThrownBy(() => {
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Registration
             });
         }
 
-        [Test]
+        [Fact]
         public void multiple_public_methods_are_invalid()
         {
             Exception<InvalidActionFilterTypeException>.ShouldBeThrownBy(() =>
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Registration
             });
         }
 
-        [Test]
+        [Fact]
         public void private_methods_are_invalid()
         {
             Exception<InvalidActionFilterTypeException>.ShouldBeThrownBy(() =>
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Registration
             });
         }
 
-        [Test]
+        [Fact]
         public void adds_the_filter_before_the_action_call()
         {
             var graph = BehaviorGraph.BuildFrom(x => {

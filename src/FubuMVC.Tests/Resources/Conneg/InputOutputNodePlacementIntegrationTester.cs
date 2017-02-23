@@ -3,18 +3,17 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Security.Authorization;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class InputOutputNodePlacementIntegrationTester
     {
         private BehaviorGraph theGraph;
 
-        [SetUp]
-        public void SetUp()
+        public InputOutputNodePlacementIntegrationTester()
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<PlacementController>();
@@ -22,7 +21,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             theGraph = BehaviorGraph.BuildFrom(registry);
         }
 
-        [Test]
+        [Fact]
         public void input_is_first_even_with_authorization()
         {
             theGraph.ChainFor<PlacementController>(x => x.post_payload(null))
@@ -30,7 +29,7 @@ namespace FubuMVC.Tests.Resources.Conneg
                 .Next.ShouldBeOfType<AuthorizationNode>();
         }
 
-        [Test]
+        [Fact]
         public void output_is_last()
         {
             theGraph.ChainFor<PlacementController>(x => x.post_payload(null))

@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Validation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class ValidationCompilerTester
     {
-        [Test]
+        [Fact]
         public void picks_up_all_the_validation_registrations()
         {
             using (var runtime = FubuRuntime.Basic())

@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.Json;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Json
 {
-	[TestFixture]
+	
 	public class NewtonSoftJsonReaderTester : InteractionContext<NewtonSoftJsonReader>
 	{
 		private string theJson;
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Json
 			MockFor<IJsonSerializer>().Expect(x => x.Deserialize<ParentType>(theJson)).Return(theTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void just_delegates_to_the_json_serializer()
 		{
 			ClassUnderTest.Read<ParentType>().ShouldBe(theTarget);

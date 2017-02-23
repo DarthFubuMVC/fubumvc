@@ -6,12 +6,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Registration;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class PartialFactoryTester : InteractionContext<PartialFactory>
     {
         private BehaviorGraph graph;

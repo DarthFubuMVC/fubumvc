@@ -1,16 +1,16 @@
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class MenuItemAttributes_integrated_Tester
     {
 
-        [Test]
+        [Fact]
         public void puts_the_navigation_graph_in_the_right_order()
         {
             var registry = new FubuRegistry();

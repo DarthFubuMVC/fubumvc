@@ -8,13 +8,13 @@ using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests.ServiceBus;
 using FubuMVC.Tests.TestSupport;
 using LightningQueues;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
-    public class LightningQueuesIntegrationTester
+    
+    public class LightningQueuesIntegrationTester : IDisposable
     {
         private void SetupTransport(string uri, ChannelMode mode)
         {
@@ -33,8 +33,7 @@ namespace FubuMVC.LightningQueues.Testing
             transport.OpenChannels(graph);
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             queues.Dispose();
         }
@@ -44,7 +43,7 @@ namespace FubuMVC.LightningQueues.Testing
         private ChannelGraph graph;
         private ChannelNode node;
 
-        [Test]
+        [Fact]
         public void registers_a_reply_queue_corrected_to_the_machine_name()
         {
             SetupTransport("lq.tcp://localhost:2032/upstream", ChannelMode.DeliveryGuaranteed);
@@ -55,7 +54,7 @@ namespace FubuMVC.LightningQueues.Testing
             uri.Host.ToUpperInvariant().ShouldBe(Environment.MachineName.ToUpperInvariant());
         }
 
-        [Test]
+        [Fact]
         public void reply_uri_is_machine_specific_when_dns_address_is_used()
         {
             queues.Dispose();
@@ -65,7 +64,7 @@ namespace FubuMVC.LightningQueues.Testing
             uri.Host.ToUpperInvariant().ShouldBe(Environment.MachineName.ToUpperInvariant());
         }
 
-        [Test]
+        [Fact]
         public void send_a_message_and_get_it_back()
         {
             SetupTransport("lq.tcp://localhost:2032/upstream", ChannelMode.DeliveryGuaranteed);
@@ -91,7 +90,7 @@ namespace FubuMVC.LightningQueues.Testing
         }
 
 
-        [Test]
+        [Fact]
         public void send_a_message_and_get_it_back_non_persistent()
         {
             SetupTransport("lq.tcp://localhost:2032/upstream", ChannelMode.DeliveryFastWithoutGuarantee);

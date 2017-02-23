@@ -2,12 +2,12 @@
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class HandlerGraphTester
     {
         private HandlerGraph theGraph;
@@ -16,8 +16,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         private HandlerCall concreteCall3;
         private HandlerCall concreteCall4;
 
-        [SetUp]
-        public void SetUp()
+        public HandlerGraphTester()
         {
             theGraph = new HandlerGraph();
 
@@ -31,7 +30,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             concreteCall4 = HandlerCall.For<ConcreteHandler>(x => x.M4(null));
         }
 
-        [Test]
+        [Fact]
         public void add_a_handler_for_a_concrete_class_creates_a_new_chain()
         {
             theGraph.Add(concreteCall);
@@ -41,7 +40,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             call.ShouldNotBeTheSameAs(concreteCall);
         }
 
-        [Test]
+        [Fact]
         public void add_a_second_handler_for_a_concrete_class_appends_to_the_chain()
         {
             theGraph.Add(concreteCall);
@@ -63,7 +62,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
         }
 
-        [Test]
+        [Fact]
         public void add_a_different_input_type_adds_a_second_chain()
         {
             theGraph.Add(concreteCall);
@@ -77,7 +76,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .ShouldHaveTheSameElementsAs(typeof(Input), typeof(DifferentInput));
         }
 
-        [Test]
+        [Fact]
         public void interfaces_are_applied_correctly()
         {
             var general = HandlerCall.For<ConcreteHandler>(x => x.General(null));
@@ -100,7 +99,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                     .InputType().ShouldBe(typeof(IMessage));
         }
 
-        [Test]
+        [Fact]
         public void base_class_handlers_are_applied_correctly()
         {
             var baseHandler = HandlerCall.For<ConcreteHandler>(x => x.Base(null));
@@ -117,7 +116,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .Equals(baseHandler).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void merging_adds_a_chain_for_all_new_message_type()
         {
             theGraph.Add(concreteCall);
@@ -131,7 +130,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .ShouldHaveTheSameElementsAs(typeof(Input), typeof(DifferentInput));
         }
 
-        [Test]
+        [Fact]
         public void merging_matching_chains_merges_the_handlers_for_the_same_message()
         {
             theGraph.Add(concreteCall);
@@ -151,7 +150,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
         }
 
-        [Test]
+        [Fact]
         public void applies_general_action_from_imported_graph()
         {
             var general = HandlerCall.For<ConcreteHandler>(x => x.General(null));
@@ -177,7 +176,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
         }
 
-        [Test]
+        [Fact]
         public void compile_applies_modify_chain_attributes()
         {
             var specific1 = HandlerCall.For<ConcreteHandler>(x => x.Specific1(null));

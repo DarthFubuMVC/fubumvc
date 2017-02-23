@@ -4,13 +4,13 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class ServiceBus_Send_to_destination_Tester : InteractionContext<Core.ServiceBus.ServiceBus>
     {
         private Envelope theLastEnvelopeSent
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void sends_to_appropriate_destination()
         {
             var destination = new Uri("memory://blah");
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.ServiceBus
             theLastEnvelopeSent.Message.ShouldBeTheSameAs(message);
         }
 
-        [Test]
+        [Fact]
         public void sends_to_appropriate_destination_and_waits()
         {
             var destination = new Uri("memory://blah");

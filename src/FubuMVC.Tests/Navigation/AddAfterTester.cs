@@ -1,14 +1,14 @@
 using FubuCore;
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class AddAfterTester
     {
-        [Test]
+        [Fact]
         public void format_description()
         {
             var key = new NavigationKey("something");
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe("Insert '{0}' after 'parent'".ToFormat(key.ToLocalizationKey()));
         }
 
-        [Test]
+        [Fact]
         public void apply()
         {
             var dependency = MenuNode.Node("something");

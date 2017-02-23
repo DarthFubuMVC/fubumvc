@@ -1,35 +1,32 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Polling
 {
-    [TestFixture]
-    public class PollingJobRunImmediatelyIntegrationTester
+    
+    public class PollingJobRunImmediatelyIntegrationTester : IDisposable
     {
         private FubuRuntime theRuntime;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public PollingJobRunImmediatelyIntegrationTester()
         {
             ImmediateJob.Executed = DelayJob.Executed = DisabledJob.Executed = 0;
 
-            theRuntime = FubuRuntime.For<PollingImmediateRegistry>()
-                                      
-                                      ;
+            theRuntime = FubuRuntime.For<PollingImmediateRegistry>();
         }
 
-        [TestFixtureTearDown]
-        public void Teardown()
+        public void Dispose()
         {
             theRuntime.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void should_only_execute_ImmediateJob_now_and_interval_should_still_work()
         {
             DelayJob.Executed.ShouldBe(0);
@@ -39,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             ImmediateJob.Executed.ShouldBeGreaterThan(1);
         }
 
-        [Test]
+        [Fact]
         public void disabled_jobs_are_not_executed_or_started()
         {
             DisabledJob.Executed.ShouldBe(0);

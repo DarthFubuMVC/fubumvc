@@ -11,7 +11,7 @@ using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.UI
@@ -47,38 +47,38 @@ namespace FubuMVC.Tests.UI
         	Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_store_the_model()
         {
             MockFor<IFubuRequest>().AssertWasCalled(x => x.Set(typeof(PartialInputModel), theInput));
         }
 
-        [Test]
+        [Fact]
         public void should_have_tested_the_authorization()
         {
             MockFor<IAuthorizationPreviewService>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_partial_behavior()
         {
             theAction.AssertWasCalled(x => x.InvokePartial());
         }
 
-        [Test]
+        [Fact]
         public void should_record_on_the_outputwriter()
         {
             MockFor<IOutputWriter>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_return_recorded_output()
         {
             MockFor<IRecordedOutput>().AssertWasCalled(x => x.GetText());
         }
     }
 
-	[TestFixture]
+	
 	public class when_the_partial_request_is_authorized_by_object_with_model_binding : when_the_partial_request_is_authorized_by_object
 	{
 		protected override void Configure()
@@ -92,14 +92,14 @@ namespace FubuMVC.Tests.UI
 			ClassUnderTest.InvokeObject(theInput, true);
 		}
 
-		[Test]
+		[Fact]
 		public void should_bind_properties_on_the_input()
 		{
 			MockFor<ISetterBinder>().VerifyAllExpectations();
 		}
 	}
 
-	[TestFixture]
+	
 	public class when_the_partial_request_is_authorized_by_object_without_model_binding : when_the_partial_request_is_authorized_by_object
 	{
 		protected override void Configure()
@@ -112,14 +112,14 @@ namespace FubuMVC.Tests.UI
 			ClassUnderTest.InvokeObject(theInput, false);
 		}
 
-		[Test]
+		[Fact]
 		public void should_not_bind_properties_on_the_input()
 		{
 			MockFor<ISetterBinder>().AssertWasNotCalled(x => x.BindProperties(theInput.GetType(), theInput));
 		}
 	}
 
-	[TestFixture]
+	
 	public class when_the_partial_request_is_authorized_by_object_with_model_binding_unspecified : when_the_partial_request_is_authorized_by_object
 	{
 		protected override void Configure()
@@ -132,14 +132,14 @@ namespace FubuMVC.Tests.UI
 			ClassUnderTest.InvokeObject(theInput);
 		}
 
-		[Test]
+		[Fact]
 		public void should_not_bind_properties_on_the_input()
 		{
 			MockFor<ISetterBinder>().AssertWasNotCalled(x => x.BindProperties(theInput.GetType(), theInput));
 		}
 	}
 
-    [TestFixture]
+    
     public class when_the_partial_request_is_authorized : InteractionContext<PartialInvoker>
     {
         private PartialInputModel theInput;
@@ -169,25 +169,25 @@ namespace FubuMVC.Tests.UI
             ClassUnderTest.Invoke<PartialInputModel>();
         }
 
-        [Test]
+        [Fact]
         public void should_have_tested_the_authorization()
         {
             MockFor<IAuthorizationPreviewService>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_partial_behavior()
         {
             theAction.AssertWasCalled(x => x.InvokePartial());
         }
 
-        [Test]
+        [Fact]
         public void should_record_on_the_outputwriter()
         {
             MockFor<IOutputWriter>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_return_recorded_output()
         {
             MockFor<IRecordedOutput>().AssertWasCalled(x => x.GetText());
@@ -195,7 +195,7 @@ namespace FubuMVC.Tests.UI
     }
 
 
-    [TestFixture]
+    
     public class when_the_partial_request_is_not_authorized : InteractionContext<PartialInvoker>
     {
         private PartialInputModel theInput;
@@ -219,26 +219,26 @@ namespace FubuMVC.Tests.UI
             theOutput = ClassUnderTest.Invoke<PartialInputModel>();
         }
 
-        [Test]
+        [Fact]
         public void should_have_tested_the_authorization()
         {
             MockFor<IAuthorizationPreviewService>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_not_invoke_the_partial_behavior()
         {
             MockFor<IPartialFactory>().AssertWasNotCalled(x => x.BuildPartial(theChain));
             theAction.AssertWasNotCalled(x => x.InvokePartial());
         }
 
-        [Test]
+        [Fact]
         public void should_not_record_on_the_outputwriter()
         {
             MockFor<IOutputWriter>().AssertWasNotCalled(x => x.Record(theAction.InvokePartial));
         }
 
-        [Test]
+        [Fact]
         public void should_return_empty_result()
         {
             theOutput.ShouldBeEmpty();
@@ -246,7 +246,7 @@ namespace FubuMVC.Tests.UI
     }
 
 
-    [TestFixture]
+    
     public class when_the_partial_request_is_not_authorized_by_object : InteractionContext<PartialInvoker>
     {
         private PartialInputModel theInput;
@@ -270,39 +270,39 @@ namespace FubuMVC.Tests.UI
             theOutput = ClassUnderTest.InvokeObject(theInput);
         }
 
-        [Test]
+        [Fact]
         public void should_have_tested_the_authorization()
         {
             MockFor<IAuthorizationPreviewService>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_not_invoke_the_partial_behavior()
         {
             MockFor<IPartialFactory>().AssertWasNotCalled(x => x.BuildPartial(theChain));
             MockFor<IActionBehavior>().AssertWasNotCalled(x => x.InvokePartial());
         }
 
-        [Test]
+        [Fact]
         public void should_not_record_on_the_outputwriter()
         {
             MockFor<IOutputWriter>().AssertWasNotCalled(x => x.Record(theAction.InvokePartial));
         }
 
-        [Test]
+        [Fact]
         public void should_return_empty_result()
         {
             theOutput.ShouldBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void should_not_bind_properties_on_the_input()
         {
             MockFor<ISetterBinder>().AssertWasNotCalled(x => x.BindProperties(theInput.GetType(), theInput));
         }
     }
 
-    [TestFixture]
+    
     public class when_the_POST_partial_request_is_authorized : InteractionContext<PartialInvoker>
     {
         private PartialInputModel theInput;
@@ -332,25 +332,25 @@ namespace FubuMVC.Tests.UI
             ClassUnderTest.Invoke<PartialInputModel>("POST");
         }
 
-        [Test]
+        [Fact]
         public void should_have_tested_the_authorization()
         {
             MockFor<IAuthorizationPreviewService>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_partial_behavior()
         {
             theAction.AssertWasCalled(x => x.InvokePartial());
         }
 
-        [Test]
+        [Fact]
         public void should_record_on_the_outputwriter()
         {
             MockFor<IOutputWriter>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_return_recorded_output()
         {
             MockFor<IRecordedOutput>().AssertWasCalled(x => x.GetText());

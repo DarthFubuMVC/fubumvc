@@ -3,14 +3,14 @@ using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Partials
 {
-    [TestFixture]
+    
     public class invoke_as_html_in_endpoint
     {
-        [Test]
+        [Fact]
         public void get_the_partial_as_html_if_requested()
         {
             TestHost.Scenario(_ =>

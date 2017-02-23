@@ -1,33 +1,32 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.StructureMap.Diagnostics;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Diagnostics
 {
-    [TestFixture]
-    public class Bootstrapping_Integration_Testing
+    
+    public class Bootstrapping_Integration_Testing : IDisposable
     {
         private FubuRuntime runtime;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public Bootstrapping_Integration_Testing()
         {
             runtime = FubuRuntime.Basic(_ => _.Mode = "development");
 
             runtime.Get<FubuDiagnosticsEndpoint>().get__fubu();
         }
 
-        [TestFixtureTearDown]
-        public void TearDown()
+        public void Dispose()
         {
             runtime.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void find_the_routes_and_chains_from_extensions()
         {
             runtime.Behaviors.ChainFor<StructureMapFubuDiagnostics>(x => x.get_search_options())
@@ -37,7 +36,7 @@ namespace FubuMVC.Tests.Diagnostics
                 .ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void got_all_the_routes_in_the_diagnostic_javascript_router()
         {
             var routes = runtime.Get<DiagnosticJavascriptRoutes>();

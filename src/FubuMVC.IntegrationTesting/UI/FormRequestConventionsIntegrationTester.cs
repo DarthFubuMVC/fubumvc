@@ -6,27 +6,21 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.UI
 {
-    [TestFixture]
-    public class FormRequestConventionsIntegrationTester
+    
+    public class FormRequestConventionsIntegrationTester : IDisposable
     {
-        private FubuRuntime _server;
+        private FubuRuntime _server = FubuRuntime.Basic();
 
-        [TestFixtureSetUp]
-        public void StartServer()
-        {
-            _server = FubuRuntime.Basic();
-        }
-
-        [TestFixtureTearDown]
-        public void StopServer()
+        public void Dispose()
         {
             _server.Dispose();
         }
+
 
         private void runPage()
         {
@@ -37,7 +31,7 @@ namespace FubuMVC.IntegrationTesting.UI
             });
         }
 
-        [Test]
+        [Fact]
         public void by_model_input()
         {
             var input = new FormInput {Name = "Scooby"};
@@ -48,7 +42,7 @@ namespace FubuMVC.IntegrationTesting.UI
             FormRequestEndpoint.LastTag.ToString().ShouldBe("<form method=\"post\" action=\"/form/Scooby\">");
         }
 
-        [Test]
+        [Fact]
         public void by_controller_method()
         {
             FormRequestEndpoint.Source = page => page.FormFor<FormRequestEndpoint>(x => x.post_update_target(null));
@@ -58,7 +52,7 @@ namespace FubuMVC.IntegrationTesting.UI
             FormRequestEndpoint.LastTag.ToString().ShouldBe("<form method=\"post\" action=\"/update/target\">");
         }
 
-        [Test]
+        [Fact]
         public void by_model_type()
         {
             FormRequestEndpoint.Source = page => page.FormFor<PostedData>();

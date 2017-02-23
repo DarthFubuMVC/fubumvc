@@ -7,20 +7,19 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Polling
 {
-    [TestFixture]
-    public class PollingJobIntegrationTester
+    
+    public class PollingJobIntegrationTester : IDisposable
     {
         private IContainer container;
         private FubuRuntime theRuntime;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public PollingJobIntegrationTester()
         {
             OneJob.Executed = TwoJob.Executed = ThreeJob.Executed = 0;
 
@@ -32,13 +31,13 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             Wait.Until(() => ThreeJob.Executed > 10, timeoutInMilliseconds: 6000);
         }
 
-        [TestFixtureTearDown]
-        public void Teardown()
+        public void Dispose()
         {
             theRuntime.Dispose();
         }
 
-        [Test]
+
+        [Fact]
         public void the_polling_job_chains_are_tagged_for_no_tracing()
         {
             var graph = theRuntime.Get<BehaviorGraph>();
@@ -47,7 +46,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             chains.Each(x => x.IsTagged(BehaviorChain.NoTracing).ShouldBeTrue());
         }
 
-        [Test]
+        [Fact]
         public void there_are_polling_jobs_registered()
         {
             // The polling job for delayed messages & one for the expired listeners are registered by default.
@@ -60,7 +59,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
                 .ShouldBe(8);
         }
 
-        [Test]
+        [Fact]
         public void should_have_executed_all_the_jobs_several_times()
         {
             OneJob.Executed.ShouldBeGreaterThan(10);
@@ -68,7 +67,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             ThreeJob.Executed.ShouldBeGreaterThan(10);
         }
 
-        [Test]
+        [Fact]
         public void
             should_have_executed_one_more_than_two_and_two_more_than_three_because_of_the_polling_interval_differences()
         {
@@ -76,7 +75,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             TwoJob.Executed.ShouldBeGreaterThan(ThreeJob.Executed);
         }
 
-        [Test]
+        [Fact]
         public void jobs_that_are_not_disabled_should_be_active()
         {
             var pollingJobs = theRuntime.Get<IPollingJobs>();
@@ -84,7 +83,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             pollingJobs.IsActive<ThreeJob>().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void disabled_job_should_not_be_active()
         {
             var pollingJobs = theRuntime.Get<IPollingJobs>();
@@ -92,7 +91,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
                 .IsActive<DisabledJob>().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void nonexistent_job_is_not_active()
         {
             var pollingJobs = theRuntime.Get<IPollingJobs>();
@@ -205,12 +204,12 @@ namespace FubuMVC.Tests.ServiceBus.Polling
 
         public void Failed(Guid id, IJob job, Exception ex)
         {
-            Assert.Fail("Got an exception for {0}\n{1}", job, ex);
+            throw new Exception($"Got an exception for {job}\n{ex}");
         }
 
         public void FailedToSchedule(Type jobType, Exception exception)
         {
-            Assert.Fail("Failed to schedule {0}\n{1}", jobType, exception);
+            throw new Exception($"Failed to schedule {jobType}\n{exception}");
         }
     }
 }

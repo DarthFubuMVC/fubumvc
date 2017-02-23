@@ -1,21 +1,15 @@
 ﻿using System.Linq;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class MaxValueFieldRuleTester
     {
-        private MaxValueTarget theTarget;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theTarget = new MaxValueTarget();
-        }
+        private MaxValueTarget theTarget = new MaxValueTarget();
 
         private Notification theNotification
         {
@@ -31,13 +25,13 @@ namespace FubuMVC.Tests.Validation.Fields
             }
         }
 
-		[Test]
+		[Fact]
 		public void uses_the_default_token()
 		{
 			new MaxValueFieldRule(0).Token.ShouldBe(ValidationKeys.MaxValue);
 		}
 
-        [Test]
+        [Fact]
         public void registers_a_message_when_the_value_is_greater_than_max()
         {
             theTarget.Value = 6;
@@ -45,21 +39,21 @@ namespace FubuMVC.Tests.Validation.Fields
             messages.Single().StringToken.ShouldBe(ValidationKeys.MaxValue);
         }
 
-        [Test]
+        [Fact]
         public void no_message_when_equal_to_max()
         {
             theTarget.Value = 5;
             theNotification.MessagesFor<MaxValueTarget>(x => x.Value).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void no_message_when_less_than_max()
         {
             theTarget.Value = 1;
             theNotification.MessagesFor<MaxValueTarget>(x => x.Value).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void renders_the_substitutions()
         {
             theTarget.Value = 7;

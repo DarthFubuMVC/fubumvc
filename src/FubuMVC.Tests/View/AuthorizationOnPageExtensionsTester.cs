@@ -3,14 +3,14 @@ using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.View;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.UI
 {
-    [TestFixture]
+    
     public class ReadOnlyIfNotAuthorizedTester
     {
-        [Test]
+        [Fact]
         public void do_nothing_to_a_div()
         {
             var tag = new HtmlTag("div").Authorized(false)
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.UI
             
         }
 
-        [Test]
+        [Fact]
         public void do_nothing_to_a_link_that_is_authorized()
         {
             var tag = new HtmlTag("a").Authorized(true)
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.UI
             tag.TagName().ShouldBe("a");
         }
 
-        [Test]
+        [Fact]
         public void change_an_unauthorized_link_to_a_span_and_authorize_the_span()
         {
             var tag = new HtmlTag("a").Authorized(false)
@@ -42,37 +42,36 @@ namespace FubuMVC.Tests.UI
         }
     }
 
-    [TestFixture]
+    
     public class RequiresAccessToTester
     {
-        [SetUp]
-        public void SetUp()
+        public RequiresAccessToTester()
         {
             PrincipalRoles.SetCurrentRolesForTesting("a", "b");
         }
 
-        [Test]
+        [Fact]
         public void positive_case_starting_from_authorized()
         {
             new HtmlTag("a").Authorized(true).RequiresAccessTo("a", "b")
                 .Authorized().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void positive_case_starting_from_not_authorized()
         {
             new HtmlTag("a").Authorized(false).RequiresAccessTo("a", "b")
                 .Authorized().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void negative_case_starting_from_authorized()
         {
             new HtmlTag("a").Authorized(true).RequiresAccessTo("not a current role of this user")
                 .Authorized().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void negative_case_starting_from_not_authorized()
         {
             new HtmlTag("a").Authorized(false).RequiresAccessTo("not a current role of this user")
@@ -80,24 +79,24 @@ namespace FubuMVC.Tests.UI
         }
     }
 
-    [TestFixture]
+    
     public class ReadOnlyTester
     {
-        [Test]
+        [Fact]
         public void sets_the_disabled_attribute()
         {
             new HtmlTag("a").ReadOnly()
                 .Attr("disabled").ShouldBe("disabled");
         }
 
-        [Test]
+        [Fact]
         public void set_the_disabled_attribute_if_the_condition_is_true()
         {
             new HtmlTag("a").ReadOnly(true)
                 .Attr("disabled").ShouldBe("disabled");
         }
 
-        [Test]
+        [Fact]
         public void do_not_set_the_disabled_attribute_if_the_condition_is_not_true()
         {
             new HtmlTag("a").ReadOnly(false).HasAttr("disabled").ShouldBeFalse();

@@ -1,15 +1,15 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Registration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Registration
 {
-    [TestFixture]
+    
     public class FuncBuilderTester
     {
-        [Test]
+        [Fact]
         public void can_compile_getter()
         {
             var sample = new SampleClass {Message = "Success!"};
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Registration
             result.ShouldBe(sample.Message);
         }
 
-        [Test]
+        [Fact]
         public void can_compile_setter()
         {
             var message = "Success!";

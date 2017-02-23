@@ -1,14 +1,14 @@
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class SimpleValueSource
     {
-        [Test]
+        [Fact]
         public void retrieve_value_by_accessor()
         {
             var target = new SimpleValues<SimpleClass>(new SimpleClass{

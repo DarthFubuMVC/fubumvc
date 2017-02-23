@@ -2,15 +2,15 @@
 using System.Linq;
 using FubuMVC.Core.ServiceBus.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime
 {
-    [TestFixture]
+    
     public class EnvelopeModifierTester
     {
-        [Test]
+        [Fact]
         public void abstract_modifier_is_actually_useful()
         {
             FakeEnvelopeModifier.Modified.Clear();

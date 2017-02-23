@@ -3,14 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using FubuMVC.Core.Services.Messaging;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Services.Messaging
 {
-    [TestFixture]
+    
     public class RemoteListenerTester
     {
-        [Test]
+        [Fact]
         public void can_wait_for_a_condition()
         {
             var hub = new MessagingHub();

@@ -3,22 +3,17 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class DictionaryMediaNodeTester
     {
-        private DictionaryMediaNode theNode;
+        private DictionaryMediaNode theNode = new DictionaryMediaNode();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theNode = new DictionaryMediaNode();
-        }
 
-        [Test]
+        [Fact]
         public void set_an_attribute_writes_to_the_dictionary()
         {
             theNode.SetAttribute("key", "value");
@@ -26,7 +21,7 @@ namespace FubuMVC.Tests.Projections
             theNode.Values["key"].ShouldBe("value");
         }
 
-        [Test]
+        [Fact]
         public void add_child_adds_a_dictionary_to_the_dictionary()
         {
             theNode.AddChild("child").SetAttribute("color", "red");
@@ -35,13 +30,13 @@ namespace FubuMVC.Tests.Projections
                 ["color"].ShouldBe("red");
         }
 
-        [Test]
+        [Fact]
         public void add_list_returns_a_node_list()
         {
             theNode.AddList("nodes").ShouldBeOfType<DictionaryMediaNodeList>();
         }
 
-        [Test]
+        [Fact]
         public void add_children_to_a_list()
         {
             var list = theNode.AddList("nodes");

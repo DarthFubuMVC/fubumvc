@@ -6,21 +6,15 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class LambdaFieldValidationSourceTester
     {
         private LambdaFieldValidationSource theSource = null;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theSource = null;
-        }
 
         private IEnumerable<IFieldValidationRule> rulesFor(Expression<Func<LambdaFieldValidationSourceTarget, object>> expression)
         {
@@ -28,7 +22,7 @@ namespace FubuMVC.Tests.Validation.Fields
             return registry.RulesFor<LambdaFieldValidationSourceTarget>(expression);
         }
 
-        [Test]
+        [Fact]
         public void invoke_lambda_source_without_specifying_a_filter_should_throw_exception()
         {
             theSource = new LambdaFieldValidationSource(new RequiredFieldRule());
@@ -37,7 +31,7 @@ namespace FubuMVC.Tests.Validation.Fields
                 .Message.ShouldBe("Missing filter on validation convention");
         }
 
-        [Test]
+        [Fact]
         public void register_simple_rules_by_filter()
         {
             theSource = new LambdaFieldValidationSource(new RequiredFieldRule());
@@ -48,7 +42,7 @@ namespace FubuMVC.Tests.Validation.Fields
             rulesFor(x => x.Address2).Single().ShouldBeOfType<RequiredFieldRule>();
         }
 
-        [Test]
+        [Fact]
         public void register_simple_rules_by_property_type()
         {
             theSource = new LambdaFieldValidationSource(new GreaterThanZeroRule());
@@ -60,7 +54,7 @@ namespace FubuMVC.Tests.Validation.Fields
         }
 
 
-        [Test]
+        [Fact]
         public void register_simple_rules_by_property_type_filter()
         {
             theSource = new LambdaFieldValidationSource(new GreaterThanZeroRule());
@@ -71,7 +65,7 @@ namespace FubuMVC.Tests.Validation.Fields
             rulesFor(x => x.Age).Single().ShouldBeOfType<GreaterThanZeroRule>();
         }
 
-        [Test]
+        [Fact]
         public void register_simple_rules_by_rule_func()
         {
             theSource = new LambdaFieldValidationSource(a =>

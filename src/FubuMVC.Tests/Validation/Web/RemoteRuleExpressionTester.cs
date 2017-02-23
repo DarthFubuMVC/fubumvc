@@ -3,19 +3,18 @@ using System.Linq;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.Remote;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class RemoteRuleExpressionTester
     {
         private RemoteRuleExpression theExpression;
         private IList<IRemoteRuleFilter> theFilters;
 
-        [SetUp]
-        public void SetUp()
+        public RemoteRuleExpressionTester()
         {
             theFilters = new List<IRemoteRuleFilter>();
             theExpression = new RemoteRuleExpression(theFilters);
@@ -31,21 +30,21 @@ namespace FubuMVC.Tests.Validation.Web
             get { return theFilters.Single(); }
         }
 
-        [Test]
+        [Fact]
         public void finds_with_generic()
         {
             theExpression.FindWith<RemoteRuleAttributeFilter>();
             theFilter.ShouldBeOfType<RemoteRuleAttributeFilter>();
         }
 
-        [Test]
+        [Fact]
         public void finds_with_custom()
         {
             theExpression.FindWith(new RemoteFieldValidationRuleFilter());
             theFilter.ShouldBeOfType<RemoteFieldValidationRuleFilter>();
         }
 
-        [Test]
+        [Fact]
         public void include_specific_rule_type()
         {
             theExpression.Include<RequiredFieldRule>();
@@ -53,7 +52,7 @@ namespace FubuMVC.Tests.Validation.Web
             matches(new GreaterThanZeroRule()).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void include_rule_lambda()
         {
             theExpression.IncludeIf(rule => rule is GreaterThanZeroRule);

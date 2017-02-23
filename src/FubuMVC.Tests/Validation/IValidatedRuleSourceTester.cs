@@ -3,23 +3,18 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Validation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class IValidatedRuleSourceTester
     {
-        private IValidator theValidator;
+        private IValidator theValidator = Validator.BasicValidator();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theValidator = Validator.BasicValidator();
-        }
 
-        [Test]
+        [Fact]
         public void validator_should_call_through_to_validate_method()
         {
             theValidator.Validate(new ValidatedClass { IsValid = true }).IsValid().ShouldBeTrue();
@@ -31,15 +26,15 @@ namespace FubuMVC.Tests.Validation
         }
     }
 
-    [TestFixture]
+    
     public class when_building_the_description_for_a_self_validating_class_rule
     {
         private Type theType;
         private SelfValidatingClassRule theRule;
         private Description theDescription;
 
-        [SetUp]
-        public void SetUp()
+
+        public when_building_the_description_for_a_self_validating_class_rule()
         {
             theType = typeof (ValidatedClass);
             theRule = new SelfValidatingClassRule(theType);
@@ -47,7 +42,7 @@ namespace FubuMVC.Tests.Validation
             theDescription = Description.For(theRule);
         }
 
-        [Test]
+        [Fact]
         public void sets_the_short_description()
         {
             theDescription.ShortDescription.ShouldBe("Self Validating Rule: {0}.Validate".ToFormat(theType.Name));

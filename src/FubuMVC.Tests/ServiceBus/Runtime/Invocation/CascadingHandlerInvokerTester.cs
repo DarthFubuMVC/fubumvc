@@ -3,12 +3,12 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class CascadingHandlerInvokerTester : InteractionContext<CascadingHandlerInvoker<ITargetHandler,Input,Output>>
     {
         private Input theInput;
@@ -34,26 +34,26 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_handler_method()
         {
             VerifyCallsFor<ITargetHandler>();
         }
 
-        [Test]
+        [Fact]
         public void records_the_output_back_to_outgoing_messages()
         {
             MockFor<IInvocationContext>().AssertWasCalled(x => x.EnqueueCascading(expectedOutput));
         }
 
-        [Test]
+        [Fact]
         public void continues_on_to_the_inside_behavior()
         {
             MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());
         }
     }
 
-    [TestFixture]
+    
     public class CascadingHandlerInvoker_with_base_class_Tester : InteractionContext<CascadingHandlerInvoker<ITargetHandler, Input, Output>>
     {
         private SpecialInput theInput;
@@ -79,19 +79,19 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_controller_method()
         {
             VerifyCallsFor<ITargetHandler>();
         }
 
-        [Test]
+        [Fact]
         public void records_the_output_back_to_outgoing_messages()
         {
             MockFor<IInvocationContext>().AssertWasCalled(x => x.EnqueueCascading(expectedOutput));
         }
 
-        [Test]
+        [Fact]
         public void continues_on_to_the_inside_behavior()
         {
             MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());

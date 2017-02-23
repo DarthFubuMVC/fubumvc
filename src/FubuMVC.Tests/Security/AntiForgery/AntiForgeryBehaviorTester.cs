@@ -4,12 +4,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-    [TestFixture]
+    
     public class when_validator_passes : InteractionContext<AntiForgeryBehavior>
     {
         protected override void beforeEach()
@@ -20,20 +20,20 @@ namespace FubuMVC.Tests.Security.AntiForgery
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_next()
         {
             ClassUnderTest.InsideBehavior.AssertWasCalled(b => b.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void should_not_write_to_output()
         {
             MockFor<IOutputWriter>().AssertWasNotCalled(o => o.WriteResponseCode(HttpStatusCode.InternalServerError));
         }
     }
 
-    [TestFixture]
+    
     public class when_validator_fails : InteractionContext<AntiForgeryBehavior>
     {
         protected override void beforeEach()
@@ -44,13 +44,13 @@ namespace FubuMVC.Tests.Security.AntiForgery
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_not_invoke_next()
         {
             ClassUnderTest.InsideBehavior.AssertWasNotCalled(b => b.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void should_not_write_to_output()
         {
             MockFor<IOutputWriter>().AssertWasCalled(o => o.WriteResponseCode(HttpStatusCode.InternalServerError));

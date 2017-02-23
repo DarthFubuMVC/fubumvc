@@ -1,23 +1,17 @@
 ﻿using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.UI;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class ValidationNodeTester
     {
-        private ValidationNode theValidationNode;
+        private ValidationNode theValidationNode = new ValidationNode();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theValidationNode = new ValidationNode();
-        }
-
-        [Test]
+        [Fact]
         public void no_duplicates()
         {
             var s1 = MockRepository.GenerateStub<IRenderingStrategy>();
@@ -26,7 +20,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theValidationNode.ShouldHaveTheSameElementsAs(s1);
         }
 
-        [Test]
+        [Fact]
         public void clears_the_strategies()
         {
             var s1 = MockRepository.GenerateStub<IRenderingStrategy>();
@@ -40,7 +34,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theValidationNode.ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void defaults()
         {
             var strategies = ValidationNode.Default();

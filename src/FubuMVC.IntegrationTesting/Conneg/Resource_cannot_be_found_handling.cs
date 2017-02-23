@@ -1,12 +1,12 @@
 ﻿using System.Net;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
-    [TestFixture]
+    
     public class Resource_cannot_be_found_handling 
     {
-        [Test]
+        [Fact]
         public void the_resource_not_found_handler_should_kick_in()
         {
             TestHost.Scenario(_ =>

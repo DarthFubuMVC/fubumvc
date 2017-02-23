@@ -1,11 +1,11 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.SessionState;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.SessionState
 {
-    [TestFixture]
+    
     public class when_storing_flash : the_flash_provider
     {
         protected override void beforeEach()
@@ -17,30 +17,30 @@ namespace FubuMVC.Tests.SessionState
             _flash.Flash(model);
         }
 
-        [Test]
+        [Fact]
         public void should_json_serialize_model()
         {
             _session.Get<string>(FlashProvider.FLASH_KEY).ShouldContain("\"PropInt\":99");
         }
 
-        [Test]
+        [Fact]
         public void should_store_model_in_session()
         {
             _session.Get<string>(FlashProvider.FLASH_KEY).ShouldNotBeNull();
         }
     }
 
-    [TestFixture]
+    
     public class when_retrieving_empty_flash : the_flash_provider
     {
-        [Test]
+        [Fact]
         public void should_return_null()
         {
             _flash.Retrieve<TestInputModel>().ShouldBeNull();
         }
     }
 
-    [TestFixture]
+    
     public class when_retrieving_flash_data : the_flash_provider
     {
         protected override void beforeEach()
@@ -52,14 +52,14 @@ namespace FubuMVC.Tests.SessionState
             _flash.Flash(model);
         }
 
-        [Test]
+        [Fact]
         public void should_clear_flash_data()
         {
             _flash.Retrieve<TestInputModel>();
             _flash.Retrieve<TestInputModel>().ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void should_return_value()
         {
             _flash.Retrieve<TestInputModel>().PropInt.ShouldBe(99);
@@ -71,8 +71,7 @@ namespace FubuMVC.Tests.SessionState
         protected FlashProvider _flash;
         protected BasicSessionState _session;
 
-        [SetUp]
-        public void SetUp()
+        protected the_flash_provider()
         {
             _session = new BasicSessionState();
             _flash = new FlashProvider

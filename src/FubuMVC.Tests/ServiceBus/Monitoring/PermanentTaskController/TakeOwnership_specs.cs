@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
-    [TestFixture]
+    
     public class when_taking_ownership_successfully : PersistentTaskControllerContext
     {
         private const string theSubjectUriString = "good://1";
@@ -31,37 +31,37 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 
             if (timeouts.Any())
             {
-                Assert.Fail("Has timeouts somehow!\n" + timeouts.Select(x => x.ToString()).Join("\n"));
+                throw new Exception("Has timeouts somehow!\n" + timeouts.Select(x => x.ToString()).Join("\n"));
             }
         }
 
-        [Test]
+        [Fact]
         public void should_return_OwnershipActivated()
         {
             theTask.Result.ShouldBe(OwnershipStatus.OwnershipActivated);
         }
 
-        [Test]
+        [Fact]
         public void activates_the_task()
         {
             Task(theSubjectUriString).IsActive.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void logs_the_activation()
         {
             LoggedMessageForSubject<TookOwnershipOfPersistentTask>(theSubjectUriString);
         }
 
         
-        [Test]
+        [Fact]
         public void persists_the_new_ownership()
         {
             theCurrentNode.OwnedTasks.ShouldContain(theSubjectUriString.ToUri());
         }
     }
 
-    [TestFixture]
+    
     public class when_taking_ownership_unsuccessfully : PersistentTaskControllerContext
     {
         private const string theSubjectUriString = "bad://1";
@@ -76,20 +76,20 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
             theTask.Wait();
         }
 
-        [Test]
+        [Fact]
         public void should_return_Exception()
         {
             theTask.Result.ShouldBe(OwnershipStatus.Exception);
         }
 
 
-        [Test]
+        [Fact]
         public void logs_the_activation_failure()
         {
             LoggedMessageForSubject<TaskActivationFailure>(theSubjectUriString);
         }
 
-        [Test]
+        [Fact]
         public void does_not_persist_the_new_ownership()
         {
             theCurrentNode.OwnedTasks.ShouldNotContain(theSubjectUriString.ToUri());
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 
 
 
-    [TestFixture]
+    
     public class when_trying_to_take_ownership_of_an_already_active_task : PersistentTaskControllerContext
     {
         private const string theSubjectUriString = "good://1";
@@ -114,17 +114,17 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
             theTask.Wait();
         }
 
-        [Test]
+        [Fact]
         public void should_return_OwnershipActivated()
         {
             theTask.Result.ShouldBe(OwnershipStatus.AlreadyOwned);
         }
     }
 
-    [TestFixture]
+    
     public class when_trying_to_take_ownership_of_an_unknown_task : PersistentTaskControllerContext
     {
-        [Test]
+        [Fact]
         public void should_return_Unknown()
         {
             var task = theController.TakeOwnership("unknown://1".ToUri());

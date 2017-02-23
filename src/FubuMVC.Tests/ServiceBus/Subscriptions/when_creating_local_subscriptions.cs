@@ -6,12 +6,12 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
+    
     public class when_creating_local_subscriptions
     {
         public BusSettings theSettings = InMemoryTransport.ToInMemory<BusSettings>();
@@ -19,8 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         private Uri theLocalReplyUri;
         private IEnumerable<Subscription> theSubscriptions;
 
-        [SetUp]
-        public void SetUp()
+        public when_creating_local_subscriptions()
         {
             theGraph = new ChannelGraph { Name = "FooNode" };
 
@@ -37,21 +36,21 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             theSubscriptions = requirement.Determine(theSettings, theGraph);
         }
 
-        [Test]
+        [Fact]
         public void should_set_the_receiver_uri_to_the_reply_uri_of_the_matching_transport()
         {
             theSubscriptions.First().Receiver
                 .ShouldBe(theLocalReplyUri);
         }
 
-        [Test]
+        [Fact]
         public void sets_the_node_name_from_the_channel_graph()
         {
             theSubscriptions.Select(x => x.NodeName).Distinct()
                 .Single().ShouldBe(theGraph.Name);
         }
 
-        [Test]
+        [Fact]
         public void should_set_the_source_uri_to_the_requested_source_from_settings()
         {
             theSubscriptions.First().Source
@@ -59,7 +58,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
 
         }
 
-        [Test]
+        [Fact]
         public void should_add_a_subscription_for_each_type()
         {
             theSubscriptions.Select(x => x.MessageType)

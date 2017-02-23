@@ -5,11 +5,11 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Scenarios;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    public class AssetIntegrationContext
+    public class AssetIntegrationContext : IDisposable
     {
         public static readonly string Folder = "Assets" + Guid.NewGuid();
         public static readonly IFileSystem fileSystem = new FileSystem();
@@ -23,11 +23,6 @@ namespace FubuMVC.IntegrationTesting.Assets
         public string Mode = null;
         protected Scenario Scenario;
 
-        public AssetIntegrationContext()
-        {
-            _applicationDirectory = _directory = Folder.AppendPath(Application).ToFullPath();
-        }
-
         public AssetGraph AllAssets
         {
             get { return _allAssets.Value; }
@@ -39,9 +34,10 @@ namespace FubuMVC.IntegrationTesting.Assets
             get { return _host.Get<IAssetFinder>(); }
         }
 
-        [TestFixtureSetUp]
-        public void FixtureSetUp()
+        public AssetIntegrationContext()
         {
+            _applicationDirectory = _directory = Folder.AppendPath(Application).ToFullPath();
+
             fileSystem.DeleteDirectory(Folder);
             fileSystem.CreateDirectory(Folder);
 
@@ -59,7 +55,11 @@ namespace FubuMVC.IntegrationTesting.Assets
             _host = runtime;
 
             _allAssets = new Lazy<AssetGraph>(() => { return runtime.Get<IAssetFinder>().FindAll(); });
+
+            Scenario = new Scenario(_host);
         }
+
+
 
         private FubuRegistry determineRegistry()
         {
@@ -67,22 +67,11 @@ namespace FubuMVC.IntegrationTesting.Assets
             return registryType == null ? new FubuRegistry() : Activator.CreateInstance(registryType).As<FubuRegistry>();
         }
 
-        [TestFixtureTearDown]
-        public void FixtureTeardown()
+        public void Dispose()
         {
             _host.SafeDispose();
             fileSystem.DeleteDirectory(Folder);
-        }
 
-        [SetUp]
-        public void SetUp()
-        {
-            Scenario = new Scenario(_host);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
             Scenario.As<IDisposable>().Dispose();
         }
 

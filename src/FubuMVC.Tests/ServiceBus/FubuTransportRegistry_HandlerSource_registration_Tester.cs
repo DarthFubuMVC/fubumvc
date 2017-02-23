@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class FubuTransportRegistry_HandlerSource_registration_Tester
     {
-        [Test]
+        [Fact]
         public void can_register_a_handler_source_by_explicit_config()
         {
             using (var runtime = FubuRuntime.BasicBus(x =>
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void extra_handler_sources_are_additive()
         {
             using (var runtime = FubuRuntime.BasicBus(x => { x.Handlers.Include<RandomThing>(); }))

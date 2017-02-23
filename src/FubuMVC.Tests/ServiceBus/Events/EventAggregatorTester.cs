@@ -4,21 +4,20 @@ using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Events
 {
-    [TestFixture]
+    
     public class EventAggregatorTester
     {
         private EventAggregator events;
         private StubMessage1Handler handler;
         private RecordingLogger recordingLogger;
 
-        [SetUp]
-        public void SetUp()
+        public EventAggregatorTester()
         {
             recordingLogger = new RecordingLogger();
 
@@ -28,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             events.AddListener(handler);
         }
 
-        [Test]
+        [Fact]
         public void simple_handlers_registered()
         {
             var theMessage = new Message1();
@@ -39,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             handler.Message.ShouldBeTheSameAs(theMessage);
         }
 
-        [Test]
+        [Fact]
         public void send_message_to_all_listeners_for_a_message_type()
         {
             var listener1 = new StubListener<Message1>();
@@ -67,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             listener4.LastMessage.ShouldBeTheSameAs(message2);
         }
 
-        [Test]
+        [Fact]
         public void listeners_can_fail_one_at_a_time()
         {
             var listener1 = new StubListener<Message1>();
@@ -96,7 +95,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             listener4.LastMessage.ShouldBeTheSameAs(message2);
         }
 
-        [Test]
+        [Fact]
         public void exposes_all_the_listeners()
         {
             var listener1 = new StubListener<Message1>();
@@ -111,7 +110,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             listeners.Length.ShouldBe(intersection.Length);
         }
 
-        [Test]
+        [Fact]
         public void send_message_that_creates_on_the_fly()
         {
             var listener1 = new StubListener<Message1>();
@@ -125,7 +124,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             listener1.LastMessage.ShouldBeOfType<Message1>();
         }
 
-        [Test]
+        [Fact]
         public void remove_listener()
         {
             var listener1 = new StubListener<Message1>();
@@ -145,7 +144,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             listener5.AssertWasNotCalled(x => x.Handle(message1));
         }
 
-        [Test]
+        [Fact]
         public void prune_expired_listeners_based_on_the_expired_property()
         {
             var listener1 = new StubListener<Message1>();
@@ -175,7 +174,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             events.Listeners.ShouldContain(listener7);
         }
 
-        [Test]
+        [Fact]
         public void prune_expired_listeners_based_on_time()
         {
             var now = DateTime.Today.AddHours(5);

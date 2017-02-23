@@ -1,32 +1,32 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class client_message_mechanics_Tester
     {
-        [Test]
+        [Fact]
         public void is_client_message_false_with_no_att_or_base_class_match()
         {
             GetType().IsClientMessage().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void is_client_message_true_when_derived_from_client_message()
         {
             typeof(ClientA).IsClientMessage().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void is_client_message_with_att()
         {
             typeof(ClientC).IsClientMessage().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void get_message_name()
         {
             typeof (ClientA).GetMessageName().ShouldBe("a");
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests
             typeof (NotClient).GetMessageName().ShouldBe("not-client");
         }
 
-        [Test]
+        [Fact]
         public void chain_is_aggregated_chain()
         {
             BehaviorChain.For<ChainTarget>(x => x.get_B(null)).IsAggregatedChain().ShouldBeTrue();

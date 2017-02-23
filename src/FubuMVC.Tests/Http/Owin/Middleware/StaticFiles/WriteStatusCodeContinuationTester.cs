@@ -1,15 +1,15 @@
 ﻿using System.Net;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
 {
-    [TestFixture]
+    
     public class WriteStatusCodeContinuationTester
     {
-        [Test]
+        [Fact]
         public void writes_the_status_code_and_reason()
         {
             var writer = MockRepository.GenerateMock<IHttpResponse>();

@@ -5,17 +5,17 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Certificates;
 using FubuMVC.Core.Security.Authentication.Saml2.Validation;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class SamlResponseValidationRulesRegistrationTester
     {
-        [Test]
+        [Fact]
         public void require_signatures_is_true()
         {
             using (var runtime = FubuRuntime.Basic(_ =>
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             }
         }
 
-        [Test]
+        [Fact]
         public void require_signatures_is_false()
         {
             using (var runtime = FubuRuntime.Basic(_ =>
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
 
         }
 
-        [Test]
+        [Fact]
         public void require_certificate_is_true()
         {
             using (var runtime = FubuRuntime.Basic(_ =>
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             }
         }
 
-        [Test]
+        [Fact]
         public void require_certificate_is_false()
         {
             using (var runtime = FubuRuntime.Basic(_ =>
@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
 
         }
 
-        [Test]
+        [Fact]
         public void enforce_response_timespan_is_true()
         {
             using (var runtime = FubuRuntime.Basic(_ =>
@@ -131,7 +131,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             _.Services.SetServiceIfNone<ISamlCertificateRepository>(samlCertificateRepository);
         }
 
-        [Test]
+        [Fact]
         public void require_conditional_timespan_is_false()
         {
             using (var runtime = FubuRuntime.Basic(_ =>

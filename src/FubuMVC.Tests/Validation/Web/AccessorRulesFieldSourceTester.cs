@@ -3,12 +3,12 @@ using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class AccessorRulesFieldSourceTester
     {
         private AccessorRules theRules;
@@ -17,8 +17,7 @@ namespace FubuMVC.Tests.Validation.Web
         private Accessor a2;
         private Accessor a3;
 
-        [SetUp]
-        public void SetUp()
+        public AccessorRulesFieldSourceTester()
         {
             theRules = new AccessorRules();
             a1 = accessor(x => x.Prop1);
@@ -37,7 +36,7 @@ namespace FubuMVC.Tests.Validation.Web
             return ReflectionHelper.GetAccessor(expression);
         }
 
-        [Test]
+        [Fact]
         public void gets_the_rules_by_accessor()
         {
             theSource.RulesFor(a1.InnerProperty).ShouldHaveTheSameElementsAs(new RequiredFieldRule());

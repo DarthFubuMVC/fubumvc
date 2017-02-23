@@ -4,15 +4,15 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
+    
     public class TransportNodeTester
     {
-        [Test]
+        [Fact]
         public void use_the_explicit_control_queue_if_it_exists()
         {
             var graph = new ChannelGraph
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             node.ControlChannel.ShouldBe("memory://1".ToUri());
         }
 
-        [Test]
+        [Fact]
         public void fallback_to_the_first_incoming_channel_for_control_queue_if_no_explicit_control_queue_exists()
         {
             var graph = new ChannelGraph
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             node.ControlChannel.ShouldBe("memory://localhost/replies".ToUri());
         }
 
-        [Test]
+        [Fact]
         public void build_with_channel_graph_sets_the_id_to_the_node_id()
         {
             var graph = new ChannelGraph
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             node.Id.ShouldBe(graph.NodeId);
         }
 
-        [Test]
+        [Fact]
         public void blow_up_if_no_reply_channels()
         {
             var graph = new ChannelGraph
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             }).Message.ShouldBe("At least one reply channel is required");
         }
 
-        [Test]
+        [Fact]
         public void create_a_transport_node_from_a_channel_graph()
         {
             var graph = new ChannelGraph

@@ -9,49 +9,48 @@ using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Assets
 {
-    [TestFixture]
+    
     public class AssetSettingsTester
     {
         private IStaticFileRule theRule;
         private static readonly string PublicFolder = AppDomain.CurrentDomain.BaseDirectory
             .ParentDirectory().ParentDirectory().AppendPath("public");
 
-        [SetUp]
-        public void SetUp()
+        public AssetSettingsTester()
         {
             theRule = new AssetSettings().As<IStaticFileRule>();
         }
 
-        [Test]
+        [Fact]
         public void public_folder_is_public()
         {
             new AssetSettings().PublicFolder.ShouldBe("public");
         }
 
-        [Test]
+        [Fact]
         public void mode_is_anywhere_by_default()
         {
             new AssetSettings().Mode.ShouldBe(SearchMode.Anywhere);
         }
 
-        [Test]
+        [Fact]
         public void version_should_be_null_by_default()
         {
             new AssetSettings().Version.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void exclusions_includes_node_modules()
         {
             var settings = new AssetSettings();
             settings.Exclusions.ShouldStartWith("node_modules/*");
         }
 
-        [Test]
+        [Fact]
         public void add_exclusions()
         {
             var settings = new AssetSettings();
@@ -61,27 +60,27 @@ namespace FubuMVC.Tests.Assets
             settings.CreateAssetSearch().Exclude.ShouldBe("node_modules/*;something.js;node-content");
         }
 
-        [Test]
+        [Fact]
         public void can_write_javascript_files()
         {
             theRule.IsAllowed(new FubuFile("foo.js")).ShouldBe(AuthorizationRight.Allow);
             theRule.IsAllowed(new FubuFile("foo.coffee")).ShouldBe(AuthorizationRight.Allow);
         }
 
-        [Test]
+        [Fact]
         public void can_write_css()
         {
             theRule.IsAllowed(new FubuFile("bar.css")).ShouldBe(AuthorizationRight.Allow);
         }
 
-        [Test]
+        [Fact]
         public void can_write_htm_or_html()
         {
             theRule.IsAllowed(new FubuFile("bar.htm")).ShouldBe(AuthorizationRight.Allow);
             theRule.IsAllowed(new FubuFile("bar.html")).ShouldBe(AuthorizationRight.Allow);
         }
 
-        [Test]
+        [Fact]
         public void can_write_images()
         {
             theRule.IsAllowed(new FubuFile("bar.jpg")).ShouldBe(AuthorizationRight.Allow);
@@ -90,19 +89,19 @@ namespace FubuMVC.Tests.Assets
             theRule.IsAllowed(new FubuFile("bar.png")).ShouldBe(AuthorizationRight.Allow);
         }
 
-        [Test]
+        [Fact]
         public void none_if_the_mime_type_is_not_recognized()
         {
             theRule.IsAllowed(new FubuFile("bar.nonexistent")).ShouldBe(AuthorizationRight.None);
         }
 
-        [Test]
+        [Fact]
         public void none_if_not_an_asset_file_or_html()
         {
             theRule.IsAllowed(new FubuFile("bar.txt")).ShouldBe(AuthorizationRight.None);
         }
 
-        [Test]
+        [Fact]
         public void default_static_file_rules()
         {
             new AssetSettings().StaticFileRules
@@ -119,7 +118,7 @@ namespace FubuMVC.Tests.Assets
             return owinSettings.DetermineStaticFileRights(file);
         }
 
-        [Test]
+        [Fact]
         public void assert_static_rights()
         {
             forFile("foo.txt").ShouldBe(AuthorizationRight.None);
@@ -129,7 +128,7 @@ namespace FubuMVC.Tests.Assets
             forFile("foo.bmp").ShouldBe(AuthorizationRight.Allow);
         }
 
-        [Test]
+        [Fact]
         public void headers_in_production_mode()
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = ""))
@@ -145,7 +144,7 @@ namespace FubuMVC.Tests.Assets
 
         }
 
-        [Test]
+        [Fact]
         public void no_headers_in_development_mode()
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
@@ -155,7 +154,7 @@ namespace FubuMVC.Tests.Assets
             }
         }
 
-        [Test]
+        [Fact]
         public void determine_the_public_folder_with_no_version()
         {
             new FileSystem().CreateDirectory(
@@ -170,7 +169,7 @@ namespace FubuMVC.Tests.Assets
                 .ShouldBe(PublicFolder);
         }
 
-        [Test]
+        [Fact]
         public void determine_the_public_folder_with_a_non_null_but_nonexistent_version()
         {
             new FileSystem().CreateDirectory(
@@ -185,7 +184,7 @@ namespace FubuMVC.Tests.Assets
                 .ShouldBe(PublicFolder.ToFullPath());
         }
 
-        [Test]
+        [Fact]
         public void determine_the_public_folder_when_the_version_does_exist()
         {
             new FileSystem().CreateDirectory(
@@ -205,7 +204,7 @@ namespace FubuMVC.Tests.Assets
                 .ShouldBe(expectedPath);
         }
 
-        [Test]
+        [Fact]
         public void default_allowable_mimetypes_includes_fonts()
         {
             var settings = new AssetSettings();
@@ -218,19 +217,19 @@ namespace FubuMVC.Tests.Assets
             search.Include.ShouldContain(".woff2");
         }
 
-        [Test]
+        [Fact]
         public void template_destination_by_default_should_be_underscore_templates()
         {
             new AssetSettings().TemplateDestination.ShouldBe("_templates");
         }
 
-        [Test]
+        [Fact]
         public void the_default_cultures_for_templates_is_only_en_US_because_MURICA()
         {
             new AssetSettings().TemplateCultures.ShouldHaveTheSameElementsAs("en-US");
         }
 
-        [Test]
+        [Fact]
         public void default_content_files()
         {
             var settings = new AssetSettings();
@@ -241,36 +240,36 @@ namespace FubuMVC.Tests.Assets
         }
     }
 
-    [TestFixture]
+    
     public class when_creating_the_default_search
     {
         private readonly FileSet search = new AssetSettings().CreateAssetSearch();
 
-        [Test]
+        [Fact]
         public void exclude_should_include_node_modules()
         {
             search.Exclude.ShouldBe("node_modules/*");
         }
 
-        [Test]
+        [Fact]
         public void should_be_deep()
         {
             search.DeepSearch.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_look_for_js_files()
         {
             search.Include.ShouldContain("*.js");
         }
 
-        [Test]
+        [Fact]
         public void should_look_for_css_files()
         {
             search.Include.ShouldContain("*.css");
         }
 
-        [Test]
+        [Fact]
         public void should_include_all_file_types_registered_as_images()
         {
             search.Include.ShouldContain("*.bmp");
@@ -280,7 +279,7 @@ namespace FubuMVC.Tests.Assets
             search.Include.ShouldContain("*.jpeg");
         }
 
-        [Test]
+        [Fact]
         public void find_files_for_public_folder_only()
         {
             var registry = new FubuRegistry();
@@ -295,7 +294,7 @@ namespace FubuMVC.Tests.Assets
             }
         }
 
-        [Test]
+        [Fact]
         public void find_files_for_public_folder_with_version()
         {
             var registry = new FubuRegistry();
@@ -314,10 +313,10 @@ namespace FubuMVC.Tests.Assets
         }
     }
 
-    [TestFixture]
+    
     public class when_creating_a_file_watcher_manifest
     {
-        [Test]
+        [Fact]
         public void set_the_public_folder_if_in_that_mode()
         {
             var settings = new AssetSettings
@@ -332,7 +331,7 @@ namespace FubuMVC.Tests.Assets
                 AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().AppendPath("public").Replace('\\', '/'));
         }
 
-        [Test]
+        [Fact]
         public void no_public_folder_if_in_anywhere_mode()
         {
             var settings = new AssetSettings
@@ -343,7 +342,7 @@ namespace FubuMVC.Tests.Assets
             settings.CreateFileWatcherManifest(FubuApplicationFiles.ForDefault()).PublicAssetFolder.ShouldBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void adds_content_extensions()
         {
             var settings = new AssetSettings();
@@ -356,7 +355,7 @@ namespace FubuMVC.Tests.Assets
             manifest.ContentMatches.ShouldContain(".html");
         }
 
-        [Test]
+        [Fact]
         public void adds_all_the_default_asset_extensions()
         {
             var settings = new AssetSettings();
@@ -369,7 +368,7 @@ namespace FubuMVC.Tests.Assets
             manifest.AssetExtensions.ShouldContain(".bmp");
         }
 
-        [Test]
+        [Fact]
         public void adds_the_user_supplied_extensions()
         {
             var settings = new AssetSettings();

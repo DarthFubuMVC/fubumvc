@@ -1,15 +1,15 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class ChannelGraph_has_to_be_a_StructureMap_singleton
     {
-        [Test]
+        [Fact]
         public void must_be_a_singleton()
         {
             using (var runtime = FubuRuntime.BasicBus()

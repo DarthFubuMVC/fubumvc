@@ -5,26 +5,25 @@ using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Hypermedia;
 using FubuMVC.Core.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Resources.Hypermedia
 {
-    [TestFixture]
+    
     public class LinkSourceTester
     {
         private Site theSubject;
         private SimpleValues<Site> theTarget;
         private StubUrlRegistry theUrls;
 
-        [SetUp]
-        public void SetUp()
+        public LinkSourceTester()
         {
             theSubject = new Site();
             theTarget = new SimpleValues<Site>(theSubject);
             theUrls = new StubUrlRegistry();
         }
 
-        [Test]
+        [Fact]
         public void create_a_link_if_the_filter_passes()
         {
             var link = new LinkSource<Site>((t, urls) => "http://site.com")
@@ -35,7 +34,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
                 .ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void do_not_create_a_link_if_the_filter_fails()
         {
             var link = new LinkSource<Site>((t, urls) => "http://site.com")
@@ -45,7 +44,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
                 .Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void do_not_create_a_link_if_the_filter_fails_by_target_matches()
         {
             theSubject.IsObsolete = true;
@@ -57,7 +56,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
                 .Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void do_not_create_a_link_if_the_filter_fails_by_IfEquals()
         {
             theSubject.Name = "Jeremy";
@@ -70,7 +69,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
         }
 
 
-        [Test]
+        [Fact]
         public void do_create_a_link_if_the_filter_succeeds_by_IfEquals()
         {
             theSubject.Name = "Jeremy";
@@ -82,7 +81,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
                 .Any().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void do_not_create_a_link_if_the_filter_fails_by_IfNotEquals()
         {
             theSubject.Name = "Jeremy";
@@ -95,7 +94,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
         }
 
 
-        [Test]
+        [Fact]
         public void do_create_a_link_if_the_filter_succeeds_by_IfNotEquals()
         {
             theSubject.Name = "Jeremy";
@@ -107,7 +106,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
                 .Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void create_a_link_with_just_the_url_from_the_target()
         {
             var source = new LinkSource<Site>((t, urls) => "http://site.com");
@@ -120,7 +119,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             link.Title.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void create_a_link_with_just_the_url_from_the_target_with_a_relationship_type()
         {
             var source = new LinkSource<Site>((t, urls) => "http://site.com")
@@ -135,7 +134,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
         }
 
 
-        [Test]
+        [Fact]
         public void create_a_link_with_just_the_url_from_the_target_with_a_title()
         {
             var token = "the title";

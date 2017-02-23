@@ -2,13 +2,13 @@
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class LightningQueuesTransport_disabled_behavior_Tester : InteractionContext<LightningQueuesTransport>
     {
         private LightningQueueSettings theSettings;
@@ -19,7 +19,7 @@ namespace FubuMVC.LightningQueues.Testing
             Services.Inject(theSettings);
         }
 
-        [Test]
+        [Fact]
         public void have_channels_and_not_set_to_disabled()
         {
             theSettings.DisableIfNoChannels = false;
@@ -30,7 +30,7 @@ namespace FubuMVC.LightningQueues.Testing
         }
 
 
-        [Test]
+        [Fact]
         public void disable_if_settings_disabled_is_true()
         {
             theSettings.DisableIfNoChannels = false;
@@ -40,7 +40,7 @@ namespace FubuMVC.LightningQueues.Testing
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void not_disabled_if_disabling_on_no_channels_is_on_but_there_are_channels()
         {
             theSettings.DisableIfNoChannels = true;
@@ -51,7 +51,7 @@ namespace FubuMVC.LightningQueues.Testing
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void disable_if_there_are_no_channels()
         {
             theSettings.DisableIfNoChannels = true;
@@ -63,10 +63,10 @@ namespace FubuMVC.LightningQueues.Testing
         }
     }
 
-    [TestFixture]
+    
     public class Start_with_LightningQueues_module_but_no_channels
     {
-        [Test]
+        [Fact]
         public void do_not_blow_up()
         {
             var registry = new FubuRegistry();
@@ -83,7 +83,7 @@ namespace FubuMVC.LightningQueues.Testing
             }
         }
 
-        [Test]
+        [Fact]
         public void does_blow_up_if_not_opted_into_the_disable_behavior()
         {
             var registry = new FubuRegistry();

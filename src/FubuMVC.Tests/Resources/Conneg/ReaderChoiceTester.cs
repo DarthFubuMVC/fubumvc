@@ -1,14 +1,14 @@
 using FubuCore.Descriptions;
 using FubuMVC.Core.Resources.Conneg;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class ReaderChoiceTester
     {
-        [Test]
+        [Fact]
         public void get_the_description_if_the_reader_is_null()
         {
             var choice = new ReaderChoice("text/json", null);
@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             description.Title.ShouldBe("Unable to select a reader for content-type 'text/json'");
         }
 
-        [Test]
+        [Fact]
         public void get_the_description_if_the_reader_is_not_null()
         {
             var choice = new ReaderChoice("text/json", new ClassWithTitle());

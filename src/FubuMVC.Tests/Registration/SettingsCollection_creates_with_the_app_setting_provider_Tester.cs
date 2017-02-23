@@ -3,14 +3,14 @@ using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class SettingsCollection_creates_with_the_app_setting_provider_Tester
     {
-        [Test]
+        [Fact]
         public void pulls_value_from_config()
         {
             // look at FubuMVC.Tests.dll.config

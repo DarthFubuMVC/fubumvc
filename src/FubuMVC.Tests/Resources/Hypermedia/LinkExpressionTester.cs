@@ -2,14 +2,14 @@ using FubuCore;
 using FubuMVC.Core.Resources.Hypermedia;
 using FubuMVC.Core.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Resources.Hypermedia
 {
-    [TestFixture]
+    
     public class LinkExpressionTester
     {
-        [Test]
+        [Fact]
         public void create_a_link()
         {
             var expression = new LinkExpression(x => x.UrlFor(new SomeLinkInput()))

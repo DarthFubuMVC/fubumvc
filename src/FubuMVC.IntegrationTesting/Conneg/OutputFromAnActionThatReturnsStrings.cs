@@ -1,14 +1,14 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
-    [TestFixture]
+    
     public class OutputFromAnActionThatReturnsStrings 
     {
 
-        [Test]
+        [Fact]
         public void action_that_returns_a_string_should_be_formatted_as_plain_text()
         {
             TestHost.Scenario(_ =>
@@ -19,7 +19,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void action_that_returns_a_string_from_a_method_that_should_be_html()
         {
             TestHost.Scenario(_ =>
@@ -30,7 +30,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void action_marked_with_html_endpoint_should_be_written_as_html()
         {
             TestHost.Scenario(_ =>
@@ -41,7 +41,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void action_marked_with_html_endpoint_that_returns_string_still_returns_text_when_text_is_requested()
         {
             TestHost.Scenario(_ =>

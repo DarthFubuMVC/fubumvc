@@ -5,15 +5,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {
-    [TestFixture]
+    
     public class RoutedChainTester
     {
-        [Test]
+        [Fact]
         public void adds_the_authentication_node_if_it_exists()
         {
             var registry = new FubuRegistry();

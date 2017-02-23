@@ -2,26 +2,25 @@
 using FubuCore;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Security.Authentication.Saml2;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class EnvironmentTestExtensionsTester
     {
         private IServiceLocator theServices;
         private IActivationLog theLog;
 
-        [SetUp]
-        public void SetUp()
+        public EnvironmentTestExtensionsTester()
         {
             theServices = MockRepository.GenerateMock<IServiceLocator>();
             theLog = new ActivationLog();
         }
 
-        [Test]
+        [Fact]
         public void verify_test_extensions_everything_happy()
         {
             var theFoo = new Foo();
@@ -35,7 +34,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theLog.FullTraceText().ShouldContain("Using {0} for {1}".ToFormat(typeof(Foo).FullName, typeof(IFoo).FullName));
         }
 
-        [Test]
+        [Fact]
         public void verify_test_extensions_failure()
         {
             var exception = new NotImplementedException();
@@ -48,7 +47,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theLog.FullTraceText().ShouldContain("Could not resolve " + typeof(IFoo).FullName);
         }
 
-        [Test]
+        [Fact]
         public void verify_any_happy_path()
         {
             var theFoo = new Foo();
@@ -59,7 +58,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theLog.Success.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void verify_any_empty()
         {
             var services = new InMemoryServiceLocator();
@@ -70,7 +69,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theLog.FullTraceText().ShouldContain("No implementations of {0} are registered".ToFormat(typeof(IFoo).FullName));
         }
 
-        [Test]
+        [Fact]
         public void verify_any_blows_up()
         {
             var exception = new NotImplementedException();

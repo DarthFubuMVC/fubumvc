@@ -2,19 +2,19 @@ using System;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class AdvancedNavigationRegistryInsertingTester
     {
         private Lazy<NavigationGraph> _graph = null;
         private NavigationRegistry registry;
 
-        [SetUp]
-        public void SetUp()
+
+        public AdvancedNavigationRegistryInsertingTester()
         {
             registry = new NavigationRegistry();
             _graph = new Lazy<NavigationGraph>(() => {
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Navigation
             }
         }
 
-        [Test]
+        [Fact]
         public void insert_after_by_string()
         {
             registry.ForMenu("Root");
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldHaveTheSameElementsAs("One", "Two");
         }
 
-        [Test]
+        [Fact]
         public void insert_after_by_token()
         {
             registry.ForMenu("Root");
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldHaveTheSameElementsAs("Key1", "Key2");
         }
 
-        [Test]
+        [Fact]
         public void insert_after_by_mixed()
         {
             registry.ForMenu("Root");
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldHaveTheSameElementsAs("Key1", "Key2");
         }
 
-        [Test]
+        [Fact]
         public void insert_before_by_string()
         {
             registry.InsertBefore["Two"] = MenuNode.Node("One");
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldHaveTheSameElementsAs("One", "Two");
         }
 
-        [Test]
+        [Fact]
         public void insert_before_by_token()
         {
             registry.InsertBefore["Two"] = MenuNode.Node(FakeKeys.Key9);

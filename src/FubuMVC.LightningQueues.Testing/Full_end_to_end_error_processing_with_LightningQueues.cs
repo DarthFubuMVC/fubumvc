@@ -10,22 +10,21 @@ using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Tests.ServiceBus;
 using FubuMVC.Tests.TestSupport;
 using LightningQueues;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
-    public class Full_end_to_end_error_processing_with_LightningQueues
+    
+    public class Full_end_to_end_error_processing_with_LightningQueues : IDisposable
     {
         private FubuRuntime _runtime;
         private IServiceBus theServiceBus;
         private Queue _queueManager;
         private OneMessage message1;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public Full_end_to_end_error_processing_with_LightningQueues()
         {
             TestMessageRecorder.Clear();
 
@@ -54,13 +53,13 @@ namespace FubuMVC.LightningQueues.Testing
             theServiceBus.Send(message1);
         }
 
-        [TestFixtureTearDown]
-        public void TearDown()
+        public void Dispose()
         {
             _runtime.Dispose();
         }
 
-        [Test]
+
+        [Fact]
         public async Task requeues_then_moves_to_error_queue()
         {
             Wait.Until(() => TestMessageRecorder.HasProcessed(message1)).ShouldBeTrue();

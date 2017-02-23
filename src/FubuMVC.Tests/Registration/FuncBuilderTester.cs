@@ -2,24 +2,14 @@ using System;
 using System.Reflection;
 using FubuMVC.Core.Registration.Routes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class FuncBuilderTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-            type = typeof (PropertyTarget);
-        }
-
-        #endregion
-
-        private Type type;
+        private Type type = typeof(PropertyTarget);
 
         public class PropertyTarget
         {
@@ -43,7 +33,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void one_in_one_out()
         {
             MethodInfo method = type.GetMethod("OneInOneOut");
@@ -51,7 +41,7 @@ namespace FubuMVC.Tests.Registration
             func(new PropertyTarget(), 123).ShouldBe("123");
         }
 
-        [Test]
+        [Fact]
         public void one_in_zero_out()
         {
             MethodInfo method = type.GetMethod("OneInZeroOut");
@@ -64,7 +54,7 @@ namespace FubuMVC.Tests.Registration
             target.LastCallToGo.ShouldBe("last name");
         }
 
-        [Test]
+        [Fact]
         public void zero_in_one_out()
         {
             MethodInfo method = type.GetMethod("ZeroInOneOut");

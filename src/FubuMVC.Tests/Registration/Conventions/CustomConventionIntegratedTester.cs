@@ -3,31 +3,21 @@ using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class CustomConventionIntegratedTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        private BehaviorGraph graph = BehaviorGraph.BuildFrom(x =>
         {
-            graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeType<JsonOutputAttachmentTesterController>();
+            x.Actions.IncludeType<JsonOutputAttachmentTesterController>();
 
-                x.Policies.Local.Add<TestCustomConvention>();
-            });
-        }
+            x.Policies.Local.Add<TestCustomConvention>();
+        });
 
-        #endregion
-
-        private BehaviorGraph graph;
-
-        [Test]
+        [Fact]
         public void should_apply_custom_conventions()
         {
             var behavior =

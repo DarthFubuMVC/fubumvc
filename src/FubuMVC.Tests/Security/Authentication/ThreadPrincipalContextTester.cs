@@ -2,14 +2,14 @@ using System.Security.Principal;
 using System.Threading;
 using FubuMVC.Core.Security.Authentication;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class ThreadPrincipalContextTester
     {
-        [Test]
+        [Fact]
         public void set_the_principal()
         {
             var principal = new GenericPrincipal(new GenericIdentity("somebody"), new string[0]);
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Security.Authentication
             
         }
 
-        [Test]
+        [Fact]
         public void get_the_principal()
         {
             var principal = new GenericPrincipal(new GenericIdentity("somebody"), new string[0]);

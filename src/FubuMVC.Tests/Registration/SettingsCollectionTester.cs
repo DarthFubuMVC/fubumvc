@@ -1,30 +1,24 @@
 using System.Threading;
 using FubuMVC.Core.Registration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {
 
 
-    [TestFixture]
+    
     public class SettingsCollection_without_a_parent_Tester
     {
-        private SettingsCollection theSettings;
+        private SettingsCollection theSettings = new SettingsCollection();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theSettings = new SettingsCollection();
-        }
-
-        [Test]
+        [Fact]
         public void get_can_happily_create_the_default()
         {
             theSettings.Get<FakeSettings>().ShouldBe(new FakeSettings());
         }
 
-        [Test]
+        [Fact]
         public void can_completely_replace_the_settings()
         {
             theSettings.Replace(new FakeSettings {Name = "Lindsey", Hometown = "San Antonio"});
@@ -32,7 +26,7 @@ namespace FubuMVC.Tests.Registration
             theSettings.Get<FakeSettings>().ShouldBe(new FakeSettings {Name = "Lindsey", Hometown = "San Antonio"});
         }
 
-        [Test]
+        [Fact]
         public void can_alter_the_settings_without_replacing_it()
         {
             var original = theSettings.Get<FakeSettings>();
@@ -47,7 +41,7 @@ namespace FubuMVC.Tests.Registration
             theSettings.Get<FakeSettings>().Name.ShouldBe("Max");
         }
 
-        [Test]
+        [Fact]
         public void has_explicit_test()
         {
             theSettings.HasExplicit<FakeSettings>().ShouldBeFalse();

@@ -1,14 +1,14 @@
 ﻿using System;
 using FubuCore;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    [TestFixture]
+    
     public class UriExtensionsTester
     {
-        [Test]
+        [Fact]
         public void uses_machinename_over_localhost()
         {
             var testUri = new Uri("lq.tcp://localhost:5150/blah/test?querystring=value");

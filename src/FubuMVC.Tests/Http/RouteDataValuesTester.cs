@@ -1,19 +1,18 @@
 using System.Web.Routing;
 using FubuCore.Binding.Values;
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class RouteDataValuesTester
     {
         private RouteDataValues theValues;
 
-        [SetUp]
-        public void SetUp()
+        public RouteDataValuesTester()
         {
             var data = new RouteData();
             data.Values.Add("a", 1);
@@ -22,19 +21,19 @@ namespace FubuMVC.Tests.Http
             theValues = new RouteDataValues(data);
         }
 
-        [Test]
+        [Fact]
         public void got_the_provenance()
         {
             theValues.Provenance.ShouldBe(RequestDataSource.Route.ToString());
         }
 
-        [Test]
+        [Fact]
         public void get_value()
         {
             theValues.Get("a").ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void has()
         {
             theValues.Has("a").ShouldBeTrue();
@@ -42,7 +41,7 @@ namespace FubuMVC.Tests.Http
             theValues.Has("c").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void write_report()
         {
             var report = MockRepository.GenerateMock<IValueReport>();

@@ -2,12 +2,12 @@
 using System.Linq;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
-    [TestFixture]
+    
     public class TaskHealthResponseTester
     {
         private readonly Uri subject1 = "foo://1".ToUri();
@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         private readonly Uri subject3 = "foo://3".ToUri();
         private readonly Uri subject4 = "foo://4".ToUri();
 
-        [Test]
+        [Fact]
         public void add_missing_subjects_no_change()
         {
             var response = new TaskHealthResponse
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             response.Tasks.Count().ShouldBe(4);
         }
 
-        [Test]
+        [Fact]
         public void add_missing_subjects_with_gaps()
         {
             var response = new TaskHealthResponse
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
             response.Tasks.ShouldContain(new PersistentTaskStatus(subject3, HealthStatus.Inactive));
         }
 
-        [Test]
+        [Fact]
         public void build_for_errors()
         {
             var response = TaskHealthResponse.ErrorFor(new[] {subject1, subject2, subject3, subject4});

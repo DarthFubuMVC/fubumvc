@@ -3,19 +3,18 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
 {
-    [TestFixture]
+    
     public class RespondTester
     {
         private Message1 theMessage;
         private Envelope theOriginalEnvelope;
 
-        [SetUp]
-        public void SetUp()
+        public RespondTester()
         {
             theMessage = new Message1();
             theOriginalEnvelope = new Envelope
@@ -24,14 +23,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             };
         }
 
-        [Test]
+        [Fact]
         public void respond_gets_the_message_on_the_new_envelope()
         {
             Respond.With(theMessage).CreateEnvelope(theOriginalEnvelope)
                 .Message.ShouldBeTheSameAs(theMessage);
         }
 
-        [Test]
+        [Fact]
         public void with_headers()
         {
             var response = Respond.With(theMessage).WithHeader("A", "1").WithHeader("B", "2");
@@ -45,7 +44,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             response.ToString().ShouldContain("B='2'");
         }
 
-        [Test]
+        [Fact]
         public void to_sender()
         {
             var response = Respond.With(theMessage).ToSender();
@@ -56,7 +55,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             response.ToString().ShouldContain("respond to sender");
         }
 
-        [Test]
+        [Fact]
         public void to_destination()
         {
             var uri = "lq://bar".ToUri();
@@ -69,7 +68,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             response.ToString().ShouldContain("Destination=" + uri);
         }
 
-        [Test]
+        [Fact]
         public void delayed_until()
         {
             var time = DateTime.Today.ToUniversalTime();
@@ -81,7 +80,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
 
         }
 
-        [Test]
+        [Fact]
         public void delay_by()
         {
             var now = DateTime.UtcNow;
@@ -95,14 +94,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
             (envelope.ExecutionTime < now.AddMinutes(6)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void assert_was_sent_back_to_sender_happy_path()
         {
             Respond.With(new Message1()).ToSender()
                 .AssertWasSentBackToSender();
         }
 
-        [Test]
+        [Fact]
         public void assert_was_sent_back_to_sender_sad_path()
         {
             Exception<Exception>.ShouldBeThrownBy(() => {

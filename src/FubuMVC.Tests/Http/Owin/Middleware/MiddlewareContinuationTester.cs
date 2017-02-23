@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FubuMVC.Core.Http.Owin.Middleware;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin.Middleware
 {
-    [TestFixture]
+    
     public class MiddlewareContinuationTester
     {
         private static IDictionary<string, object> theEnvironment;
@@ -19,13 +19,12 @@ namespace FubuMVC.Tests.Http.Owin.Middleware
             return theInnerTask;
         };
 
-        [SetUp]
-        public void SetUp()
+        public MiddlewareContinuationTester()
         {
             theEnvironment = new Dictionary<string, object>();
         }
 
-        [Test]
+        [Fact]
         public void no_action_and_stop()
         {
             MiddlewareContinuation.StopHere()
@@ -33,7 +32,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware
                 .ShouldNotBeTheSameAs(theInnerTask);
         }
 
-        [Test]
+        [Fact]
         public void an_action_and_stop()
         {
             var wasCalled = false;
@@ -47,7 +46,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware
             wasCalled.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void no_action_and_continue()
         {
             MiddlewareContinuation.Continue()
@@ -55,7 +54,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware
                 .ShouldBeTheSameAs(theInnerTask);
         }
 
-        [Test]
+        [Fact]
         public void an_action_and_continue()
         {
             var wasCalled = false;

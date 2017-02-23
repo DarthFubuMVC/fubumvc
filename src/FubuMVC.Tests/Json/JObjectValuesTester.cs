@@ -3,12 +3,12 @@ using System.Linq;
 using FubuCore.Binding;
 using FubuMVC.Core.Json;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Json
 {
-    [TestFixture]
+    
     public class JObjectValuesTester
     {
         private JObjectValues valuesFor(string json)
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Json
             return new JObjectValues(json);
         }
 
-        [Test]
+        [Fact]
         public void has()
         {
             var values = valuesFor("{a:1, b:2, c:3}");
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Json
             values.Has("e").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void get()
         {
             var values = valuesFor("{a:'1', b:2, c:3}");
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Json
             values.Get("c").ShouldBe("3");
         }
 
-        [Test]
+        [Fact]
         public void has_child()
         {
             var values = valuesFor("{child1:'1', child2:{a:'1', b:'2'}}");
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Json
             values.HasChild("child2").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void get_child()
         {
             var values = valuesFor("{child1:'1', child2:{a:'1', b:'2'}}");
@@ -62,14 +62,14 @@ namespace FubuMVC.Tests.Json
             child.Get("b").ShouldBe("2");
         }
 
-        [Test]
+        [Fact]
         public void get_children_with_no_children_is_an_empty_array()
         {
             var values = valuesFor("{child1:'1', child2:{a:'1', b:'2'}}");
             values.GetChildren("different").Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void get_children_with_values()
         {
             var values = valuesFor("{children:[{a:'1'}, {a: '2'}, {a:'3'}]}");
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Json
             children.Select(x => x.Get("a")).ShouldHaveTheSameElementsAs("1", "2", "3");
         }
 
-        [Test]
+        [Fact]
         public void value_positive()
         {
             var values = valuesFor("{a:1, b:2, c:3}");
@@ -95,14 +95,14 @@ namespace FubuMVC.Tests.Json
             }));
         }
 
-        [Test]
+        [Fact]
         public void value_negative()
         {
             var values = valuesFor("{a:1, b:2, c:3}");
 
             values.Value("nonexistent", v =>
             {
-                Assert.Fail("Should not call me");
+                throw new Exception("Should not call me");
             }).ShouldBeFalse();
         }
     }

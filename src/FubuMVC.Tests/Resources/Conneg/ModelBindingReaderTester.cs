@@ -1,22 +1,22 @@
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class ModelBindingReaderTester : InteractionContext<ModelBindingReader<Address>>
     {
-        [Test]
+        [Fact]
         public void mime_types()
         {
             ClassUnderTest.Mimetypes.ShouldHaveTheSameElementsAs(MimeType.HttpFormMimetype, MimeType.MultipartMimetype);
         }
 
-        [Test]
+        [Fact]
         public void read_just_forces_ifuburequest_to_read()
         {
             var address = new Address();

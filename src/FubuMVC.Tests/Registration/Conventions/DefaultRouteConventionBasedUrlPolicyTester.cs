@@ -6,24 +6,24 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class DefaultRouteConventionBasedUrlPolicyTester
     {
         private MethodInfo _method;
         private DefaultRouteConventionBasedUrlPolicy _policy;
 
-        [SetUp]
-        public void SetUp()
+
+        public DefaultRouteConventionBasedUrlPolicyTester()
         {
             _method = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(null));
             _policy = new DefaultRouteConventionBasedUrlPolicy();
         }
 
-        [Test]
+        [Fact]
         public void integrated_test()
         {
             var graph = BehaviorGraph.BuildFrom(r =>
@@ -34,14 +34,14 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph.ChainFor<HomeEndpoint>(x => x.Index()).As<RoutedChain>().Route.Pattern.ShouldBe("");
         }
 
-        [Test]
+        [Fact]
         public void should_build_a_route_definition_from_the_action_call()
         {
             var call = new ActionCall(typeof(HomeEndpoint), _method);
             _policy.Build(call).ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void should_match_the_home_endpoint_index_method()
         {
             var index = ReflectionHelper.GetMethod<HomeEndpoint>(c => c.Index());
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             _policy.Matches(call).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_not_match_another_method()
         {
             var anotherMethod = ReflectionHelper.GetMethod<HomeEndpoint>(c => c.Action());
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             _policy.Matches(call).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_not_match_another_controller()
         {
             var anotherMethod = ReflectionHelper.GetMethod<AnotherEndpoint>(c => c.Index());

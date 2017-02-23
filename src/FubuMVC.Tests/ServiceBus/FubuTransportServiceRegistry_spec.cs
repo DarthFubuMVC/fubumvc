@@ -13,16 +13,16 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.ServiceBus.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class FubuTransportServiceRegistry_spec
     {
-        [Test]
+        [Fact]
         public void service_registrations()
         {
             using (var runtime = FubuRuntime.BasicBus())
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.ServiceBus
         
 
 
-        [Test]
+        [Fact]
         public void use_synchronous_event_aggregator_if_in_testing_mode()
         {
             using (var runtime = FubuRuntime.BasicBus(x => x.Mode = "testing"))
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.ServiceBus
         }
 
 
-        [Test]
+        [Fact]
         public void service_registrations_when_mode_is_testing()
         {
 
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.ServiceBus
 
 
 
-        [Test]
+        [Fact]
         public void service_registrations_when_not_in_testing_mode()
         {
 
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void synchronous_event_aggregator_is_used_in_testing_mode()
         {
             using (var runtime = FubuRuntime.Basic(_ =>
@@ -118,7 +118,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void TransportCleanupActivator_is_registered_if_FubuTransport_testing_mode_is_on()
         {
             using (var runtime = FubuRuntime.Basic(_ =>

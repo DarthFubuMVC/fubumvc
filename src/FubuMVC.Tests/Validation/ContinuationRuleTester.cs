@@ -1,23 +1,17 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Validation;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class ContinuationRuleTester
     {
-        private IValidator _provider;
+        private IValidator _provider = Validator.BasicValidator();
 
-        [SetUp]
-        public void SetUp()
-        {
-            _provider = Validator.BasicValidator();
-        }
-
-        [Test]
+        [Fact]
         public void should_validate_properties_on_ancillary_models_marked_as_continue()
         {
             var model = new CompositeModelWithAttribute {Contact = new ContactModel()};

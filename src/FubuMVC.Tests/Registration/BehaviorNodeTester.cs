@@ -4,20 +4,19 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class when_querying_a_behavior_node_for_has_after
     {
         private Wrapper node1;
         private Wrapper node2;
         private Wrapper node3;
 
-        [SetUp]
-        public void SetUp()
+        public when_querying_a_behavior_node_for_has_after()
         {
             node1 = new Wrapper(typeof(FakeJsonBehavior));
             node2 = new Wrapper(typeof(FakeJsonBehavior));
@@ -27,7 +26,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void find_the_follower_positive()
         {
             var found = MockRepository.GenerateMock<Action<BehaviorNode>>();
@@ -44,7 +43,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void find_the_follower_positive_2()
         {
             var found = MockRepository.GenerateMock<Action<BehaviorNode>>();
@@ -62,7 +61,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void find_the_follower_negative()
         {
             var found = MockRepository.GenerateMock<Action<BehaviorNode>>();

@@ -4,11 +4,11 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class UrlExtensionsTester
     {
         public class TestObject
@@ -18,7 +18,7 @@ namespace FubuMVC.Tests
             public bool Boolean { get; set; }
         }
 
-        [Test]
+        [Fact]
         public void UrlEncode_should_encode_string()
         {
             string test = "encode test";

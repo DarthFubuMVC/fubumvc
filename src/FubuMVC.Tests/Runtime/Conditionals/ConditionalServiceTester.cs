@@ -5,15 +5,15 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Behaviors.Conditional
 {
-    [TestFixture]
+    
     public class ConditionalServiceTester : InteractionContext<ConditionalService>
     {
-        [Test]
+        [Fact]
         public void throw_argument_out_of_range_if_passing_in_a_not_conditional_type()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
@@ -22,21 +22,21 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             });
         }
 
-        [Test]
+        [Fact]
         public void always_is_true()
         {
             ClassUnderTest.IsTrue(typeof(Always))
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void never_is_false()
         {
             ClassUnderTest.IsTrue(typeof(Never))
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void is_true_positive()
         {
             MockFor<IServiceLocator>().Stub(x => x.GetInstance(typeof(Always)))
@@ -44,14 +44,14 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         }
 
 
-        [Test]
+        [Fact]
         public void is_true_negative()
         {
             MockFor<IServiceLocator>().Stub(x => x.GetInstance(typeof(Never)))
                 .Return(new Never());
         }
 
-        [Test]
+        [Fact]
         public void is_true_test_is_memoized()
         {
             var condition = MockRepository.GenerateMock<IConditional>();

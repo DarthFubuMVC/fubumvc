@@ -9,24 +9,16 @@ using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.Behaviors;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using TestPackage1.FakeControllers;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class TypeScanningIntegratedTester
     {
-        #region Setup/Teardown
 
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        #endregion
-
-        [Test]
+        [Fact]
         public void pick_up_behaviors_from_another_assembly()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -51,7 +43,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 });
         }
 
-        [Test]
+        [Fact]
         public void pick_up_behaviors_from_this_assembly()
         {
             var graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
@@ -60,7 +52,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph.Chains.OfType<RoutedChain>().Where(x => x.Calls.Any()).Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
         }
 
-        [Test]
+        [Fact]
         public void TypeMethodPolicyTester()
         {
             var filter = new CompositeFilter<MethodInfo>();

@@ -8,16 +8,16 @@ using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.ServiceBus.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Instrumentation
 {
-    [TestFixture]
+    
     public class ChainExecutionLogTester
     {
-        [Test]
+        [Fact]
         public void trace_on_parent()
         {
             var log = new StubbedChainExecutionLog();
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             trace.Duration.ShouldBe(75);
         }
 
-        [Test]
+        [Fact]
         public void logging_sets_the_request_time_and_activity_at_parent()
         {
             var log = new StubbedChainExecutionLog();
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             log.Steps.Single().Activity.ShouldBe(log.Activity);
         }
 
-        [Test]
+        [Fact]
         public void start_and_step_a_subject()
         {
             var subject1 = MockRepository.GenerateMock<ISubject>();
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             log.Activity.Nested[0].Nested[0].End.ShouldBe(333);
         }
 
-        [Test]
+        [Fact]
         public void deep_activity_logging()
         {
             var subject1 = MockRepository.GenerateMock<ISubject>();
@@ -110,7 +110,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         }
 
 
-        [Test]
+        [Fact]
         public void log_exception_once()
         {
             var subject1 = MockRepository.GenerateMock<ISubject>();
@@ -136,7 +136,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
                 .Single().ExceptionText.ShouldBe(ex.ToString());
         }
 
-        [Test]
+        [Fact]
         public void has_exception()
         {
             var log = new StubbedChainExecutionLog();
@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             log.HadException.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void record_headers_from_http_request()
         {
             var dict = new Dictionary<string, object>();
@@ -178,7 +178,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             log.Request["owin.ResponseReasonPhrase"].ShouldBe(10);
         }
 
-        [Test]
+        [Fact]
         public void record_envelope_headers()
         {
             var envelope = new Envelope();

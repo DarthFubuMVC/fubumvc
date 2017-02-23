@@ -3,11 +3,11 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class child_and_enumerable_children_sourced_by_services
     {
         private readonly Party theParty =
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Projections
             return node.Values;
         }
 
-        [Test]
+        [Fact]
         public void inline_child()
         {
             var projection = new Projection<Party>();
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Projections
             leader["LastName"].ShouldBe("Al'Thor");
         }
 
-        [Test]
+        [Fact]
         public void use_predefined_projection_for_the_child()
         {
             var projection = new Projection<Party>();
@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.Projections
             leader["last"].ShouldBe("Al'Thor");
         }
 
-        [Test]
+        [Fact]
         public void use_inline_enumerable_found_by_service()
         {
             var projection = new Projection<Party>();
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Projections
             heros.ElementAt(2)["LastName"].ShouldBe("Aybara");
         }
 
-        [Test]
+        [Fact]
         public void use_pre_defined_projection_for_each_leaf_of_enumerable()
         {
             var projection = new Projection<Party>();

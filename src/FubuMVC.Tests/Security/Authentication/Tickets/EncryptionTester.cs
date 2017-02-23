@@ -1,21 +1,15 @@
 using FubuMVC.Core.Security.Authentication.Tickets;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authentication.Tickets
 {
-    [TestFixture]
+    
     public class EncryptionTester
     {
-        private Encryptor theEncryptor;
+        private Encryptor theEncryptor = new Encryptor(new EncryptionSettings());
 
-        [SetUp]
-        public void SetUp()
-        {
-            theEncryptor = new Encryptor(new EncryptionSettings());
-        }
-
-        [Test]
+        [Fact]
         public void is_predictable()
         {
             var plain = "the rain in spain";
@@ -27,7 +21,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
             encrypted1.ShouldBe(encrypted2);
         }
 
-        [Test]
+        [Fact]
         public void can_round_trip()
         {
             var plain = "the rain in spain";

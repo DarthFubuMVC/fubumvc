@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuMVC.Core;
 using Marten;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Marten.Tests
@@ -22,16 +22,15 @@ namespace FubuMVC.Marten.Tests
         }
     }
 
-    [TestFixture]
+    
     public class wires_up_marten_into_fubumvc_app_Tests
     {
-        [Test, Explicit]
         public void set_up_connection_string()
         {
             ConnectionSource.SetConnectionString("Host=localhost;Username=postgres;Password=jasper;Database=marten_test");
         }
 
-        [Test]
+        [Fact]
         public void should_wire_up_document_store_into_application()
         {
             using (var runtime = FubuRuntime.For<MartenApp>())
@@ -48,7 +47,7 @@ namespace FubuMVC.Marten.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void command_logging_in_prod_mode()
         {
 
@@ -63,7 +62,7 @@ namespace FubuMVC.Marten.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void command_logging_in_dev_mode()
         {
             var app = new MartenApp {Mode = "Development"};
@@ -79,7 +78,7 @@ namespace FubuMVC.Marten.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void querysession_is_wired_up()
         {
             using (var runtime = FubuRuntime.For<MartenApp>())
@@ -102,7 +101,7 @@ namespace FubuMVC.Marten.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void documentsession_is_wired_up()
         {
             using (var runtime = FubuRuntime.For<MartenApp>())
@@ -125,7 +124,7 @@ namespace FubuMVC.Marten.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void use_the_transactional_behavior_policy()
         {
             var registry = new MartenApp();
@@ -155,7 +154,7 @@ namespace FubuMVC.Marten.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void use_transaction()
         {
             using (var runtime = FubuRuntime.For<MartenApp>())
@@ -172,7 +171,7 @@ namespace FubuMVC.Marten.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void use_complete_reset()
         {
             using (var runtime = FubuRuntime.For<MartenApp>())

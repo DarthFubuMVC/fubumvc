@@ -4,16 +4,16 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime
 {
-    [TestFixture]
+    
     public class EnvelopeTester
     {
-        [Test]
+        [Fact]
         public void has_a_correlation_id_by_default()
         {
             new Envelope().CorrelationId.ShouldNotBeNull();
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             new Envelope().CorrelationId.ShouldNotBe(new Envelope().CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void does_not_override_an_existing_correlation_id()
         {
             var headers = new NameValueHeaders();
@@ -35,14 +35,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.CorrelationId.ShouldBe("FOO");
         }
 
-        [Test]
+        [Fact]
         public void will_assign_a_new_correlation_id_if_none_in_headers()
         {
             new Envelope(new NameValueHeaders()).CorrelationId
                 .IsEmpty().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void default_values_for_original_and_parent_id_are_null()
         {
             var parent = new Envelope
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             parent.ParentId.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void original_message_creating_child_envelope()
         {
             var parent = new Envelope
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             child.ParentId.ShouldBe(parent.CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void parent_that_is_not_original_creating_child_envelope()
         {
             var parent = new Envelope
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             child.ParentId.ShouldBe(parent.CorrelationId);
         }
 
-        [Test]
+        [Fact]
         public void if_reply_requested_header_exists_in_parent_and_matches_the_message_type()
         {
             var parent = new Envelope
@@ -111,7 +111,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void if_reply_requested_header_exists_in_parent_and_does_NOT_match_the_message_type()
         {
             var parent = new Envelope
@@ -130,7 +130,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             child.Destination.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void do_not_set_destination_or_response_if_requested_header_does_not_exist_in_parent()
         {
             var parent = new Envelope
@@ -150,7 +150,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             child.Destination.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void source_property()
         {
             var envelope = new Envelope();
@@ -164,7 +164,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.Source.ShouldBe(uri);
         }
 
-        [Test]
+        [Fact]
         public void reply_uri_property()
         {
             var envelope = new Envelope();
@@ -179,7 +179,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void content_type()
         {
             var envelope = new Envelope();
@@ -191,7 +191,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.ContentType.ShouldBe("text/xml");
         }
 
-        [Test]
+        [Fact]
         public void original_id()
         {
             var envelope = new Envelope();
@@ -204,7 +204,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.OriginalId.ShouldBe(originalId);
         }
 
-        [Test]
+        [Fact]
         public void ParentId()
         {
             var envelope = new Envelope();
@@ -217,7 +217,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.ParentId.ShouldBe(parentId);
         }
 
-        [Test]
+        [Fact]
         public void ResponseId()
         {
             var envelope = new Envelope();
@@ -230,7 +230,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.ResponseId.ShouldBe(responseId);
         }
 
-        [Test]
+        [Fact]
         public void destination_property()
         {
             var envelope = new Envelope();
@@ -244,7 +244,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.Destination.ShouldBe(uri);
         }
 
-        [Test]
+        [Fact]
         public void received_at_property()
         {
             var envelope = new Envelope();
@@ -258,7 +258,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.ReceivedAt.ShouldBe(uri);
         }
 
-        [Test]
+        [Fact]
         public void reply_requested()
         {
             var envelope = new Envelope();
@@ -273,7 +273,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.ReplyRequested.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void ack_requested()
         {
             var envelope = new Envelope();
@@ -288,13 +288,13 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.Headers.Has(Envelope.AckRequestedKey).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void execution_time_is_null_by_default()
         {
             new Envelope().ExecutionTime.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void execution_time_set_and_get()
         {
             var time = DateTime.Today.AddHours(8).ToUniversalTime();
@@ -305,7 +305,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.ExecutionTime.ShouldBe(time);
         }
 
-        [Test]
+        [Fact]
         public void nulling_out_the_execution_time()
         {
             var time = DateTime.Today.AddHours(8).ToUniversalTime();
@@ -318,7 +318,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.ExecutionTime.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void use_serializer()
         {
             var envelope = new Envelope
@@ -335,7 +335,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.Message.ShouldBeTheSameAs(theExpectedMessage);
         }
 
-        [Test]
+        [Fact]
         public void to_token()
         {
             var envelope = new Envelope
@@ -352,7 +352,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             token.Data.ShouldBe(envelope.Data);
         }
 
-        [Test]
+        [Fact]
         public void attempts()
         {
             var envelope = new Envelope();
@@ -363,7 +363,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             envelope.Attempts.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void cloning_an_envelope()
         {
             var envelope = new Envelope();

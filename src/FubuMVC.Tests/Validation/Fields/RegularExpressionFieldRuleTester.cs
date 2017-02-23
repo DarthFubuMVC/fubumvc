@@ -1,21 +1,15 @@
 ﻿using System.Linq;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-	[TestFixture]
+	
 	public class RegularExpressionFieldRuleTester
 	{
-		private RegExTarget theTarget;
-
-		[SetUp]
-		public void SetUp()
-		{
-			theTarget = new RegExTarget();
-		}
+		private RegExTarget theTarget = new RegExTarget();
 
 		private Notification theNotification
 		{
@@ -31,13 +25,13 @@ namespace FubuMVC.Tests.Validation.Fields
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void uses_the_default_token()
 		{
 			new RegularExpressionFieldRule("[a-zA-Z0-9]+$").Token.ShouldBe(ValidationKeys.RegEx);
 		}
 
-		[Test]
+		[Fact]
 		public void registers_a_message_when_the_expression_does_not_match()
 		{
 			theTarget.Value = "hello//";
@@ -45,14 +39,14 @@ namespace FubuMVC.Tests.Validation.Fields
 			messages.Single().StringToken.ShouldBe(ValidationKeys.RegEx);
 		}
 
-		[Test]
+		[Fact]
 		public void no_message_when_the_expression_matches()
 		{
 			theTarget.Value = "hello";
 			theNotification.MessagesFor<RegExTarget>(x => x.Value).Any().ShouldBeFalse();
 		}
 
-		[Test]
+		[Fact]
 		public void no_message_when_the_value_is_empty()
 		{
 			theTarget.Value = "";

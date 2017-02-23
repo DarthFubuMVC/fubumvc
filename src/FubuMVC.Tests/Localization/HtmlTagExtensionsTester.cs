@@ -3,20 +3,19 @@ using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class HtmlTagExtensionsTester
     {
-        [SetUp]
-        public void SetUp()
+        public HtmlTagExtensionsTester()
         {
             LocalizationManager.Stub("en-US");
         }
 
-        [Test]
+        [Fact]
         public void set_localized_tag_text_by_string_token()
         {
             var token = StringToken.FromKeyString("KEY", "the text of this string token");
@@ -24,7 +23,7 @@ namespace FubuMVC.Tests.Localization
                 .Text().ShouldBe(token.ToString());
         }
 
-        [Test]
+        [Fact]
         public void set_localized_attr_value_by_string_token()
         {
             var token = StringToken.FromKeyString("KEY", "the text of this string token");
@@ -33,7 +32,7 @@ namespace FubuMVC.Tests.Localization
                 .Attr("title").ShouldBe(token.ToString());
         }
 
-        [Test]
+        [Fact]
         public void set_the_text_by_localized_StringToken()
         {
             var token = StringToken.FromKeyString("KEY", "the localized string");

@@ -5,12 +5,12 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Core.Urls;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
 {
-    public class AuthenticationHarness
+    public class AuthenticationHarness : IDisposable
     {
         private IContainer theContainer;
         private FubuRuntime server;
@@ -29,8 +29,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
             get { return Container.GetInstance<BehaviorGraph>(); }
         }
 
-        [SetUp]
-        public void AuthenticationSetup()
+        public AuthenticationHarness()
         {
             var registry = new FubuRegistry();
             configure(registry);
@@ -48,8 +47,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
             server.Scenario(scenario);
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             server.Dispose();
         }

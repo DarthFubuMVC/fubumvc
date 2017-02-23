@@ -4,16 +4,16 @@ using System.Net;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class HttpRequestHeadersTester
     {
-        [Test]
+        [Fact]
         public void smoke_test_of_the_name_lookup()
         {
             HttpRequestHeaders.HeaderNameFor(HttpRequestHeader.Warning)
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Http
                 .ShouldBe("If-None-Match");
         }
 
-        [Test]
+        [Fact]
         public void naming_strategy_positive()
         {
             var propertyInfo = ReflectionHelper.GetProperty<ETagDto>(x => x.IfModifiedSince);
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Http
                 .ShouldBe("If-Modified-Since");
         }
 
-        [Test]
+        [Fact]
         public void naming_strategy_negative_is_a_passthru()
         {
             // Not sure what a null will do to us in the model binding,

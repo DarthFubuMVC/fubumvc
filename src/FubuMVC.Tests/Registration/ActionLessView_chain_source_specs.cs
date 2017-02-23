@@ -3,15 +3,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Urls;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class ActionLessView_chain_source_specs
     {
-        [Test]
+        [Fact]
         public void classes_marked_as_ViewSubject_are_partials()
         {
             using (var runtime = FubuRuntime.Basic())

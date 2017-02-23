@@ -1,17 +1,17 @@
 using System.Linq;
 using FubuMVC.Core.Navigation;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class MenuItemAttributeTester
     {
         private readonly BehaviorChain theChain = new BehaviorChain();
 
-        [Test]
+        [Fact]
         public void title_as_just_text()
         {
             var key = new MenuItemAttribute("some title").Title;
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Navigation
             
         }
 
-        [Test]
+        [Fact]
         public void title_as_key_and_default_text()
         {
             var key = new MenuItemAttribute("SomeTitle", "some title").Title;
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Navigation
             key.ShouldBeOfType<NavigationKey>();
         }
 
-        [Test]
+        [Fact]
         public void build_registration_for_add_before()
         {
             var registration = new MenuItemAttribute("something"){
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Navigation
             registration.Matcher.ShouldBe(new ByName("else"));
         }
 
-        [Test]
+        [Fact]
         public void build_registration_for_add_after()
         {
             var registration = new MenuItemAttribute("something")
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Navigation
             registration.Matcher.ShouldBe(new ByName("else"));
         }
 
-        [Test]
+        [Fact]
         public void build_registration_for_add_to()
         {
             var registration = new MenuItemAttribute("something")

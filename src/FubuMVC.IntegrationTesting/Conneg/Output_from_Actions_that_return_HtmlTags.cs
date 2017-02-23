@@ -1,13 +1,13 @@
 using FubuMVC.Core.Runtime;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
-    [TestFixture]
+    
     public class Output_from_Actions_that_return_HtmlTags
     {
-        [Test]
+        [Fact]
         public void getting_text_from_an_HtmlTag_action()
         {
             TestHost.Scenario(_ =>
@@ -18,7 +18,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             });
         }
 
-        [Test]
+        [Fact]
         public void getting_text_from_an_HtmlDocument_action()
         {
             TestHost.Scenario(_ =>

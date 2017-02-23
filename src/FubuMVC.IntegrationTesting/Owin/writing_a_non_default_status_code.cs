@@ -1,13 +1,13 @@
 using System.Net;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class writing_a_non_default_status_code
     {
-        [Test]
+        [Fact]
         public void can_write_a_different_status_code()
         {
             TestHost.Scenario(_ =>

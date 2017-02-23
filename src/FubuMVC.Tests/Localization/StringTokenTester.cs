@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Localization;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class StringTokenTester
     {
-        [Test]
+        [Fact]
         public void equals_is_namespace_aware()
         {
             var token1 = StringToken.FromKeyString("something");
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Localization
             token3.ShouldNotBe(token6);
         }
 
-        [Test]
+        [Fact]
         public void GetHashCode_depends_on_the_localization_key()
         {
             var token1 = StringToken.FromKeyString("something");
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Localization
             token3.GetHashCode().ShouldNotBe(token6.GetHashCode());
         }
 
-        [Test]
+        [Fact]
         public void from_type_just_uses_type_name()
         {
             var token = StringToken.FromType<StringTokenTester>();
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Localization
             token.DefaultValue.ShouldBe(GetType().Name);
         }
 
-        [Test]
+        [Fact]
         public void from_type_just_uses_type_name_2()
         {
             var token = StringToken.FromType(GetType());
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Localization
             token.DefaultValue.ShouldBe(GetType().Name);
         }
 
-        [Test]
+        [Fact]
         public void two_instances_with_the_same_key_should_equal_equal_each_other()
         {
             var x = buildCommonToken();
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Localization
             x.ShouldBe(y);
         }
 
-        [Test]
+        [Fact]
         public void two_instances_with_the_same_key_should_be_considered_the_same_for_hashing_purposes()
         {
             var x = buildCommonToken();
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.Localization
             dict.ContainsKey(y).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_render_to_string_from_localization_when_condition_is_true()
         {
             var mocks = new MockRepository();
@@ -122,7 +122,7 @@ namespace FubuMVC.Tests.Localization
             }
         }
 
-        [Test]
+        [Fact]
         public void should_render_to_string_as_empty_when_condition_is_false()
         {
             buildCommonToken()
@@ -130,7 +130,7 @@ namespace FubuMVC.Tests.Localization
                 .ShouldBe(string.Empty);
         }
 
-        [Test]
+        [Fact]
         public void should_implicitly_convert_to_string()
         {
             var mocks = new MockRepository();
@@ -158,7 +158,7 @@ namespace FubuMVC.Tests.Localization
             return StringToken.FromKeyString(key, "default");
         }
 
-        [Test]
+        [Fact]
         public void find_by_type()
         {
             StringToken.Find(typeof (TargetKey), "One").ShouldBeTheSameAs(TargetKey.One);

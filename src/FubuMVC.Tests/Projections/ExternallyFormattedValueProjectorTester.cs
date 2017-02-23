@@ -3,14 +3,14 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class ExternallyFormattedValueProjectorTester
     {
-        [Test]
+        [Fact]
         public void accessors()
         {
             var accessor = ReflectionHelper.GetAccessor<ExternalFormatTarget>(x => x.Name);

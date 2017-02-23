@@ -3,28 +3,22 @@ using System.IO.Compression;
 using FubuCore;
 using FubuMVC.Core.Http.Compression;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Compression
 {
-    [TestFixture]
+    
     public class DeflateEncodingTester
     {
-        private DeflateHttpContentEncoding theEncoding;
+        private DeflateHttpContentEncoding theEncoding = new DeflateHttpContentEncoding();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theEncoding = new DeflateHttpContentEncoding();
-        }
-
-        [Test]
+        [Fact]
         public void matches_gzip()
         {
             theEncoding.MatchingEncoding.ShouldBe(ContentEncoding.Deflate);
         }
 
-        [Test]
+        [Fact]
         public void compresses_the_stream_using_deflate()
         {
             var original = "Testing...".AsStream().As<MemoryStream>();

@@ -1,13 +1,13 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Navigation;
 using FubuMVC.Core.Registration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class NavigationServiceRegistry_specification
     {
         private void registeredTypeIs<TService, TImplementation>()
@@ -24,19 +24,19 @@ namespace FubuMVC.Tests.Navigation
         }
 
 
-        [Test]
+        [Fact]
         public void menu_state_service_is_registered()
         {
             registeredTypeIs<IMenuStateService, MenuStateService>();
         }
 
-        [Test]
+        [Fact]
         public void navigation_service_is_registered()
         {
             registeredTypeIs<INavigationService, NavigationService>();
         }
 
-        [Test]
+        [Fact]
         public void menu_resolver()
         {
             registeredTypeIs<IMenuResolver, MenuResolverCache>();

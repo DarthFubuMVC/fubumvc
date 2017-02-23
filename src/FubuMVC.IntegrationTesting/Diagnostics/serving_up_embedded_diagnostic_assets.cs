@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Diagnostics
 {
-    [TestFixture]
+    
     public class serving_up_embedded_diagnostic_assets
     {
-        [Test]
+        [Fact]
         public void can_deliver_up_embedded_diagnostic_asset()
         {
             TestHost.Scenario(_ =>

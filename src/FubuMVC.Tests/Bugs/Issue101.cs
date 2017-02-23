@@ -2,14 +2,14 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Bugs
 {
-    [TestFixture]
+    
     public class Issue101
     {
-        [Test]
+        [Fact]
         public void should_throw_an_exception_if_the_result_is_not_unique()
         {
             var call1 = ActionCall.For<Issue101Endpoint>(x => x.get_hello());

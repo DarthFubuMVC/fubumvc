@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
+    
     public class Subscription_matches_tester
     {
-        [Test]
+        [Fact]
         public void fuzzy_matches()
         {
             var subscription = Subscription.For<Message1>();

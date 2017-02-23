@@ -8,12 +8,12 @@ using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-    [TestFixture]
+    
     public class AntiForgeryValidatorTester : InteractionContext<AntiForgeryValidator>
     {
         private AntiForgeryData _cookieToken;
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
         }
 
 
-        [Test]
+        [Fact]
         public void should_not_validate_with_incorrect_user()
         {
             SetupIdentity(true, "DifferentUser");
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             ClassUnderTest.Validate("Salty").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_not_validate_with_nonmatching_token_values()
         {
             SetupIdentity(true, "User");
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
         }
 
 
-        [Test]
+        [Fact]
         public void should_not_validate_with_unauthenticated_user()
         {
             SetupIdentity(false, "User");
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             ClassUnderTest.Validate("Salty").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_not_validate_without_cookie_token()
         {
             SetupIdentity(true, "User");
@@ -105,7 +105,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             ClassUnderTest.Validate("Salty").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_not_validate_without_form_token()
         {
             SetupIdentity(true, "User");
@@ -114,7 +114,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             ClassUnderTest.Validate("Salty").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_validate_with_correct_request_data()
         {
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity("User"), null);
@@ -125,7 +125,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             ClassUnderTest.Validate("Salty").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_validate_with_correct_request_data_from_header()
         {
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity("User"), null);

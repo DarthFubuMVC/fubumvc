@@ -10,14 +10,14 @@ using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.View.Attachment
 {
-    [TestFixture]
+    
     public class ViewExclusionTester
     {
-        [Test]
+        [Fact]
         public void do_not_use_the_excluded_views()
         {
             var registry = new FubuRegistry();

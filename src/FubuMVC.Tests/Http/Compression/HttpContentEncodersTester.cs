@@ -1,19 +1,18 @@
 using FubuMVC.Core.Http.Compression;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Compression
 {
-    [TestFixture]
+    
     public class HttpContentEncodersTester
     {
         private IHttpContentEncoding e1;
         private IHttpContentEncoding e2;
         private HttpContentEncoders theEncoders;
 
-        [SetUp]
-        public void SetUp()
+        public HttpContentEncodersTester()
         {
             e1 = MockRepository.GenerateStub<IHttpContentEncoding>();
             e2 = MockRepository.GenerateStub<IHttpContentEncoding>();
@@ -24,19 +23,20 @@ namespace FubuMVC.Tests.Http.Compression
             theEncoders = new HttpContentEncoders(new[] { e1, e2 });
         }
 
-        [Test]
+
+        [Fact]
         public void simple_match_on_first()
         {
             theEncoders.MatchFor("gzip, deflate").ShouldBe(e1);
         }
 
-        [Test]
+        [Fact]
         public void match_on_last()
         {
             theEncoders.MatchFor("unknown, deflate").ShouldBe(e2);
         }
 
-        [Test]
+        [Fact]
         public void no_match_returns_passthrough()
         {
             theEncoders.MatchFor("unknown1, unknown2").ShouldBeOfType<HttpContentEncoders.PassthroughEncoding>();

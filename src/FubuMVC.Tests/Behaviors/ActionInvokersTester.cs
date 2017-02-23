@@ -4,12 +4,12 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Behaviors
 {
-    [TestFixture]
+    
     public class execute_one_in_one_out : InteractionContext<OneInOneOutActionInvoker<ITargetController, Input, Output>>
     {
         private Input theInput;
@@ -31,20 +31,20 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_have_stored_the_resulting_data_in_the_fubu_request()
         {
             MockFor<IFubuRequest>().AssertWasCalled(x => x.Set(expectedOutput));
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_controller_method()
         {
             VerifyCallsFor<ITargetController>();
         }
     }
 
-    [TestFixture]
+    
     public class execute_one_in_zero_out : InteractionContext<OneInZeroOutActionInvoker<ITargetController, Input>>
     {
         private Input theInput;
@@ -61,14 +61,14 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_controller_method()
         {
             MockFor<ITargetController>().AssertWasCalled(x => x.OneInZeroOut(theInput));
         }
     }
 
-    [TestFixture]
+    
     public class execute_zero_in_one_out : InteractionContext<ZeroInOneOutActionInvoker<ITargetController, Output>>
     {
         private Output expectedOutput;
@@ -85,20 +85,20 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_execute_the_controller_action()
         {
             VerifyCallsFor<ITargetController>();
         }
 
-        [Test]
+        [Fact]
         public void should_have_stored_the_resulting_data_in_the_fubu_request()
         {
             MockFor<IFubuRequest>().AssertWasCalled(x => x.Set(expectedOutput));
         }
     }
 
-    [TestFixture]
+    
     public class execute_zero_in_one_out_async : InteractionContext<ZeroInOneOutActionInvoker<ITargetController, Task<Output>>>
     {
         private Task<Output> expectedOutput;
@@ -115,20 +115,20 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_execute_the_controller_action()
         {
             VerifyCallsFor<ITargetController>();
         }
 
-        [Test]
+        [Fact]
         public void should_have_stored_the_resulting_task_in_the_fubu_request()
         {
             MockFor<IFubuRequest>().AssertWasCalled(x => x.Set(expectedOutput));
         }
     }
 
-    [TestFixture]
+    
     public class execute_one_in_one_out_no_result_async : InteractionContext<OneInOneOutActionInvoker<ITargetController, Input, Task>>
     {
         private Input theInput;
@@ -148,14 +148,14 @@ namespace FubuMVC.Tests.Behaviors
             ClassUnderTest.Invoke();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_controller_method()
         {
             MockFor<ITargetController>().AssertWasCalled(x => x.OneInZeroOutAsync(theInput));
         }
 
 
-        [Test]
+        [Fact]
         public void should_have_stored_the_resulting_task_in_the_fubu_request()
         {
             MockFor<IFubuRequest>().AssertWasCalled(x => x.Set(expectedOutput));

@@ -1,15 +1,15 @@
 ﻿using FubuMVC.Core.Localization;
 using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Validation.Web.UI;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class LocalizationLabelModifierTester : ValidationElementModifierContext<LocalizationLabelModifier>
     {
-        [Test]
+        [Fact]
         public void adds_the_localized_label_data_attribute()
         {
             var theRequest = ElementRequest.For(new TargetModel(), x => x.FirstName);

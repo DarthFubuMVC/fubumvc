@@ -8,22 +8,18 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class AsyncContinueWithHandlerConventionTester
     {
-        private BehaviorGraph graph;
+        private BehaviorGraph graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeType<TestControllerForAsync>());
 
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeType<TestControllerForAsync>());
-        }
 
-        [Test]
+
+        [Fact]
         public void should_attach_async_node_to_actions_that_return_a_task_with_result()
         {
             graph.ChainFor<TestControllerForAsync>(x => x.ActionWithInputWithOutputAsync(null))
@@ -31,7 +27,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_attach_async_node_to_actions_that_return_a_task_with_no_result()
         {
             graph.ChainFor<TestControllerForAsync>(x => x.ActionWithInputNoOutputAsync(null))
@@ -39,7 +35,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_not_attach_async_node_to_actions_that_return_no_task()
         {
             graph.ChainFor<TestControllerForAsync>(x => x.NotAsync()).Top
@@ -47,7 +43,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void the_actions_that_return_task_with_continuation_should_have_async_node_then_continuation_node()
         {
             graph.ChainFor<TestControllerForAsync>(x => x.ActionWithContinuationAsync())

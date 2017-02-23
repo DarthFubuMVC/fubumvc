@@ -7,13 +7,13 @@ using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Cookies
 {
-    [TestFixture]
+    
     public class CookieValueTester : InteractionContext<CookieValue>
     {
         private ISystemTime time;
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Http.Cookies
             theCookieValue = new CookieValue(theName, time, cookies, writer);
         }
 
-        [Test]
+        [Fact]
         public void erase()
         {
             var now = DateTime.Today.AddHours(8).ToUniversalTime();
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Http.Cookies
             writer.LastCookie.Expires.ShouldBe(new DateTimeOffset(now.AddYears(-1)));
         }
 
-        [Test]
+        [Fact]
         public void write_value()
         {
             var now = DateTime.Today.AddHours(8).ToUniversalTime();

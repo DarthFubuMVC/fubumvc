@@ -7,20 +7,21 @@ using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Encryption;
 using FubuMVC.Core.Security.Authentication.Saml2.Validation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class when_trying_to_apply_with_no_saml : InteractionContext<SamlAuthenticationStrategy>
     {
         private InMemoryRequestData theRequestData;
         private AuthResult theResult;
 
         protected override void beforeEach()
-        {            theRequestData = new InMemoryRequestData();
+        {
+            theRequestData = new InMemoryRequestData();
             Services.Inject<IRequestData>(theRequestData);
 
             Services.PartialMockTheClassUnderTest();
@@ -32,13 +33,13 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theResult = ClassUnderTest.TryToApply();
         }
 
-        [Test]
+        [Fact]
         public void does_not_try_to_process_any_saml()
         {
             ClassUnderTest.VerifyAllExpectations();
         }
         
-        [Test]
+        [Fact]
         public void the_result_is_just_false()
         {
             theResult.Continuation.ShouldBeNull();
@@ -46,7 +47,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
         }
     }
 
-    [TestFixture]
+    
     public class when_try_to_apply_with_saml_response : InteractionContext<SamlAuthenticationStrategy>
     {
         private AuthResult theDirectoryResult;
@@ -74,20 +75,20 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theResult = ClassUnderTest.TryToApply();
         }
 
-        [Test]
+        [Fact]
         public void should_have_processed_the_saml_xml()
         {
             ClassUnderTest.VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_return_the_result_from_the_director()
         {
             theResult.ShouldBeTheSameAs(theDirectoryResult);
         }
     }
 
-    [TestFixture]
+    
     public class when_try_to_apply_with_saml_response_and_saml_fails : InteractionContext<SamlAuthenticationStrategy>
     {
         private AuthResult theDirectoryResult;
@@ -119,32 +120,32 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             theResult = ClassUnderTest.TryToApply();
         }
 
-        [Test]
+        [Fact]
         public void should_have_processed_the_saml_xml()
         {
             ClassUnderTest.VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_mark_the_authentication_attempt_as_a_failure()
         {
             MockFor<ISamlDirector>().AssertWasCalled(x => x.FailedUser());
         }
 
-        [Test]
+        [Fact]
         public void logs_teh_exception()
         {
             MockFor<ILogger>().AssertWasCalled(x => x.Error("Saml Response handling failed", theException));
         }
 
-        [Test]
+        [Fact]
         public void should_return_the_result_from_the_director()
         {
             theResult.ShouldBeTheSameAs(theDirectoryResult);
         }
     }
 
-    [TestFixture]
+    
     public class when_processing_the_saml_xml : InteractionContext<SamlAuthenticationStrategy>
     {
         private ISamlValidationRule[] theRules;
@@ -167,7 +168,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             ClassUnderTest.ProcessSamlResponseXml(theXml);
         }
 
-        [Test]
+        [Fact]
         public void should_run_all_the_validation_rules()
         {
             theRules.Each(rule => {
@@ -175,7 +176,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             });
         }
 
-        [Test]
+        [Fact]
         public void uses_the_first_saml_response_handler_that_matches()
         {
             var theDirector = MockFor<ISamlDirector>();
@@ -188,7 +189,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
         }
     }
 
-    [TestFixture]
+    
     public class when_processing_the_saml_xml_and_no_handler_matches : InteractionContext<SamlAuthenticationStrategy>
     {
         private ISamlValidationRule[] theRules;
@@ -210,7 +211,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             ClassUnderTest.ProcessSamlResponseXml(theXml);
         }
 
-        [Test]
+        [Fact]
         public void should_run_all_the_validation_rules()
         {
             theRules.Each(rule =>
@@ -219,7 +220,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             });
         }
 
-        [Test]
+        [Fact]
         public void fails_gracefully()
         {
             MockFor<ISamlDirector>().AssertWasCalled(x => x.FailedUser());

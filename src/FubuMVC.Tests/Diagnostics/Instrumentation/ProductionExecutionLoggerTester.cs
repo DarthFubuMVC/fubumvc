@@ -2,15 +2,15 @@
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Diagnostics.Instrumentation
 {
-    [TestFixture]
+    
     public class ProductionExecutionLoggerTester : InteractionContext<ProductionExecutionLogger>
     {
-        [Test]
+        [Fact]
         public void record()
         {
             var log = MockFor<IChainExecutionLog>();
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             MockFor<IExecutionLogStorage>().AssertWasCalled(x => x.Store(log));
         }
 
-        [Test]
+        [Fact]
         public void record_for_envelope()
         {
             var log = MockFor<IChainExecutionLog>();

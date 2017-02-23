@@ -4,7 +4,7 @@ using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap.Pipeline;
 using TestPackage1.FakeControllers;
 
@@ -23,13 +23,10 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
-    [TestFixture]
+    
     public class when_moving_a_node_to_first_in_the_chain
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public when_moving_a_node_to_first_in_the_chain()
         {
             theChain = new BehaviorChain();
 
@@ -44,14 +41,13 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.ShouldHaveTheSameElementsAs(node1, node2, node3);
         }
 
-        #endregion
 
         private BehaviorChain theChain;
         private StubNode node1;
         private StubNode node2;
         private StubNode node3;
 
-        [Test]
+        [Fact]
         public void move_first_1()
         {
             node1.MoveToFront();
@@ -60,7 +56,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.ShouldHaveTheSameElementsAs(node1, node2, node3);
         }
 
-        [Test]
+        [Fact]
         public void move_first_2()
         {
             node2.MoveToFront();
@@ -68,7 +64,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.ShouldHaveTheSameElementsAs(node2, node1, node3);
         }
 
-        [Test]
+        [Fact]
         public void move_first_3()
         {
             node3.MoveToFront();
@@ -78,19 +74,10 @@ namespace FubuMVC.Tests.Registration.Nodes
     }
 
 
-    [TestFixture]
+    
     public class BehaviorChainTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        #endregion
-
-        [Test]
+        [Fact]
         public void adding_a_node_to_the_end_sets_the_chain_on_the_node()
         {
             var chain = new BehaviorChain();
@@ -102,7 +89,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
 
-        [Test]
+        [Fact]
         public void add_a_route_alias()
         {
             var chain = new RoutedChain("something/else");
@@ -113,14 +100,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.AdditionalRoutes.ShouldHaveTheSameElementsAs(alias);
         }
 
-        [Test]
+        [Fact]
         public void key()
         {
             var chain = new RoutedChain("something/else");
             chain.Key.ShouldBe(chain.Title().GetHashCode());
         }
 
-        [Test]
+        [Fact]
         public void append_with_no_behaviors()
         {
             var chain = new BehaviorChain();
@@ -131,7 +118,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.Top.ShouldBeTheSameAs(wrapper);
         }
 
-        [Test]
+        [Fact]
         public void appending_a_node_also_sets_the_previous()
         {
             var chain = new BehaviorChain();
@@ -150,7 +137,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
 
-        [Test]
+        [Fact]
         public void appending_a_node_also_sets_the_previous_2()
         {
             var chain = new BehaviorChain();
@@ -170,19 +157,19 @@ namespace FubuMVC.Tests.Registration.Nodes
             wrapper.ParentChain().ShouldBeTheSameAs(chain);
         }
 
-        [Test]
+        [Fact]
         public void building_input_node_without_an_input_type_blows_up()
         {
             Exception<InvalidOperationException>.ShouldBeThrownBy(() => { new BehaviorChain().Input.ShouldBeNull(); });
         }
 
-        [Test]
+        [Fact]
         public void building_output_node_without_an_output_type_blows_up()
         {
             Exception<InvalidOperationException>.ShouldBeThrownBy(() => { new BehaviorChain().Output.ShouldBeNull(); });
         }
 
-        [Test]
+        [Fact]
         public void calls_finds_all_calls_underneath_the_chain()
         {
             var chain = new BehaviorChain();
@@ -196,14 +183,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.Calls.Contains(call2).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void find_the_chain_when_the_parent_is_null_should_be_null()
         {
             var node = new Wrapper(typeof (FakeJsonBehavior));
             node.ParentChain().ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void find_the_parent_chain_when_the_chain_is_the_immediate_parent()
         {
             var chain = new BehaviorChain();
@@ -212,7 +199,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             node.ParentChain().ShouldBeTheSameAs(chain);
         }
 
-        [Test]
+        [Fact]
         public void find_the_parent_from_deep_in_behavior_chain()
         {
             var chain = new BehaviorChain();
@@ -228,7 +215,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             node3.ParentChain().ShouldBeTheSameAs(chain);
         }
 
-        [Test]
+        [Fact]
         public void has_input_depends_on_the_input_node_now()
         {
             var chain = new BehaviorChain();
@@ -241,14 +228,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.HasReaders().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void has_input_initial()
         {
             new BehaviorChain().HasReaders()
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void has_output_depends_on_the_output_node_now()
         {
             var chain = new BehaviorChain();
@@ -261,7 +248,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.HasOutput().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void has_output_initial()
         {
             new BehaviorChain().HasOutput()
@@ -269,7 +256,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
 
-        [Test]
+        [Fact]
         public void insert_before_on_a_node()
         {
             var chain = new BehaviorChain();
@@ -288,7 +275,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             wrapper.Previous.ShouldBeTheSameAs(wrapper2);
         }
 
-        [Test]
+        [Fact]
         public void lazy_creation_of_the_input_node_after_having_an_action()
         {
             var chain = new BehaviorChain();
@@ -302,7 +289,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             o1.ShouldBeTheSameAs(o3);
         }
 
-        [Test]
+        [Fact]
         public void lazy_creation_of_the_output_node_after_having_an_action()
         {
             var chain = new BehaviorChain();
@@ -316,7 +303,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             o1.ShouldBeTheSameAs(o3);
         }
 
-        [Test]
+        [Fact]
         public void prepend_with_an_existing_top_behavior()
         {
             var chain = new BehaviorChain();
@@ -330,7 +317,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             wrapper.Next.ShouldBeTheSameAs(call);
         }
 
-        [Test]
+        [Fact]
         public void prepend_with_no_behaviors()
         {
             var chain = new BehaviorChain();
@@ -341,7 +328,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.Top.ShouldBeTheSameAs(wrapper);
         }
 
-        [Test]
+        [Fact]
         public void removing_a_node_maintains_the_link_between_its_predecessor_and_successor()
         {
             var node1 = new Wrapper(typeof (FakeJsonBehavior));
@@ -357,7 +344,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             node3.Previous.ShouldBeTheSameAs(node1);
         }
 
-        [Test]
+        [Fact]
         public void removing_a_node_without_a_predecessor_sets_its_successor_to_the_front()
         {
             var node1 = new Wrapper(typeof (FakeJsonBehavior));
@@ -371,7 +358,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             node2.Previous.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void replacing_a_node_should_disconnect_the_node_being_replaced()
         {
             var node1 = new Wrapper(typeof (FakeJsonBehavior));
@@ -387,7 +374,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
 
-        [Test]
+        [Fact]
         public void replacing_a_node_should_set_the_new_nodes_predecessor_and_successor()
         {
             var node1 = new Wrapper(typeof (FakeJsonBehavior));
@@ -404,7 +391,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             node3.Previous.ShouldBeTheSameAs(newNode);
         }
 
-        [Test]
+        [Fact]
         public void replacing_a_node_without_a_predecessor_should_set_the_new_node_to_the_front()
         {
             var node1 = new Wrapper(typeof (FakeJsonBehavior));
@@ -418,22 +405,12 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
-    [TestFixture]
+    
     public class BehaviorChainMatchesCategoryOrHttpMethodTester
     {
-        #region Setup/Teardown
+        private RoutedChain theChain = new RoutedChain("something");
 
-        [SetUp]
-        public void SetUp()
-        {
-            theChain = new RoutedChain("something");
-        }
-
-        #endregion
-
-        private RoutedChain theChain;
-
-        [Test]
+        [Fact]
         public void negative_on_category()
         {
             theChain.UrlCategory.Category = "else";
@@ -441,7 +418,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.MatchesCategoryOrHttpMethod("something").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void positive_on_category()
         {
             theChain.UrlCategory.Category = "something";
@@ -449,7 +426,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.MatchesCategoryOrHttpMethod("something").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void postive_on_http_verb()
         {
             theChain.UrlCategory.Category = "something";
@@ -464,10 +441,10 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
-    [TestFixture]
+    
     public class BehaviorChain_determination_of_the_input_type
     {
-        [Test]
+        [Fact]
         public void uses_the_first_may_have_input_with_non_null()
         {
             var chain = new BehaviorChain();
@@ -484,13 +461,10 @@ namespace FubuMVC.Tests.Registration.Nodes
     }
 
 
-    [TestFixture]
+    
     public class BehaviorChain_determination_of_the_resource_type
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public BehaviorChain_determination_of_the_resource_type()
         {
             theChain = new BehaviorChain();
 
@@ -499,14 +473,13 @@ namespace FubuMVC.Tests.Registration.Nodes
             ints = new FakeOutputNode(typeof (int));
         }
 
-        #endregion
 
         private BehaviorChain theChain;
         private FakeOutputNode strings;
         private FakeOutputNode none;
         private FakeOutputNode ints;
 
-        [Test]
+        [Fact]
         public void gets_the_last_resource_type()
         {
             theChain.AddToEnd(none);
@@ -516,7 +489,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.ResourceType().ShouldBe(typeof (int));
         }
 
-        [Test]
+        [Fact]
         public void gets_the_last_resource_type_2()
         {
             theChain.AddToEnd(strings);
@@ -526,7 +499,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.ResourceType().ShouldBe(typeof (int));
         }
 
-        [Test]
+        [Fact]
         public void has_resource_type()
         {
             theChain.HasResourceType().ShouldBeFalse();
@@ -542,14 +515,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.HasResourceType().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void in_the_abscence_of_any_criteria_resource_type_is_null()
         {
             theChain.ResourceType().ShouldBeNull();
         }
 
 
-        [Test]
+        [Fact]
         public void override_the_resource_type()
         {
             theChain.ResourceType(typeof (DateTime));
@@ -622,10 +595,10 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
-    [TestFixture]
+    
     public class BehaviorChain_tagging_behavior_Tester
     {
-        [Test]
+        [Fact]
         public void is_tagged()
         {
             var chain = new BehaviorChain();

@@ -2,21 +2,16 @@ using System.Linq;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class RequiredFieldRuleTester
     {
-        private AddressModel theTarget;
+        private AddressModel theTarget = new AddressModel();
 
-        [SetUp]
-        public void SetUp()
-        {
-            theTarget = new AddressModel();
-        }
 
         private Notification theNotification
         {
@@ -32,20 +27,20 @@ namespace FubuMVC.Tests.Validation.Fields
             }
         }
 
-		[Test]
+		[Fact]
 		public void defaults_to_required_key()
 		{
 			new RequiredFieldRule().Token.ShouldBe(ValidationKeys.Required);
 		}
 
-        [Test]
+        [Fact]
         public void no_message_if_property_is_valid()
         {
             theTarget.Address1 = "1234 Test Lane";
             theNotification.MessagesFor<AddressModel>(x => x.Address1).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void registers_message_if_string_value_is_empty()
         {
             theTarget.Address1 = "";
@@ -53,7 +48,7 @@ namespace FubuMVC.Tests.Validation.Fields
             messages.Single().StringToken.ShouldBe(ValidationKeys.Required);
         }
 
-        [Test]
+        [Fact]
         public void registers_message_if_value_is_null()
         {
             theTarget.Address1 = null;

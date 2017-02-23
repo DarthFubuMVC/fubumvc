@@ -1,13 +1,13 @@
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class ByNameTester
     {
-        [Test]
+        [Fact]
         public void matches_by_key_alone()
         {
             var key = new NavigationKey("something");
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Navigation
             matcher.Matches(key).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_by_localizer_key()
         {
             var key = new NavigationKey("something");
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Navigation
             matcher.Matches(key).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void negative_test_by_localization_key()
         {
             var key = new NavigationKey("something");
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Navigation
             matcher.Matches(key).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void negative_test_by_key_alone()
         {
             var key = new NavigationKey("something");
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Navigation
             matcher.Matches(key).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void default_key()
         {
             var matcher = new ByName("something");

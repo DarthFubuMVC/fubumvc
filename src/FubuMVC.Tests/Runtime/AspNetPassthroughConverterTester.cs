@@ -5,11 +5,11 @@ using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class AspNetPassthroughConverterTester
     {
         private bool matches(Expression<Func<FakeModel, object>> expression)
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
-        [Test]
+        [Fact]
         public void matches_positive()
         {
             matches(x => x.File).ShouldBeTrue();
@@ -27,13 +27,13 @@ namespace FubuMVC.Tests.Runtime
             matches(x => x.Wrapper).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_negative()
         {
             matches(x => x.Name).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void builds_a_pass_thru_converter()
         {
             var property = ReflectionHelper.GetProperty<FakeModel>(x => x.File);

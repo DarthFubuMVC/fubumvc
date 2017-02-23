@@ -5,15 +5,15 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class CompositeContinuationConfigurationTester
     {
-        [Test]
+        [Fact]
         public void should_place_composite_error_handler()
         {
             var registry = new FubuRegistry();

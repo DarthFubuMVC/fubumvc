@@ -6,15 +6,15 @@ using FubuMVC.Core.Runtime.Aggregation;
 using Shouldly;
 using HtmlTags;
 using Newtonsoft.Json;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Aggregation
 {
-    [TestFixture]
+    
     public class aggregator_integration_tester
     {
-        [Test]
+        [Fact]
         public void aggregate_can_use_a_query()
         {
             TestHost.Scenario(_ =>
@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             });
         }
 
-        [Test]
+        [Fact]
         public void aggregate_by_resource_type()
         {
             TestHost.Scenario(_ =>
@@ -43,7 +43,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         }
 
 
-        [Test]
+        [Fact]
         public void aggregate_selection_by_input_type()
         {
             TestHost.Scenario(_ =>
@@ -57,7 +57,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             });
         }
 
-        [Test]
+        [Fact]
         public void aggregate_selection_by_method()
         {
             TestHost.Scenario(_ =>
@@ -72,7 +72,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         }
 
 
-        [Test]
+        [Fact]
         public void can_still_call_a_data_action_independently()
         {
             TestHost.Scenario(_ =>
@@ -86,7 +86,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             });
         }
 
-        [Test]
+        [Fact]
         public void client_message_cache_knows_its_chains()
         {
             var cache = TestHost.Service<IClientMessageCache>();
@@ -119,7 +119,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 );
         }
 
-        [Test]
+        [Fact]
         public void find_chain_by_message_type()
         {
             var cache = TestHost.Service<IClientMessageCache>();
@@ -127,7 +127,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             cache.FindChain("resource-4").ResourceType().ShouldBe(typeof (AggregationEndpoint.Resource4));
         }
 
-        [Test]
+        [Fact]
         public void aggregated_request_with_an_input_type()
         {
             var container = TestHost.Service<IContainer>();
@@ -150,7 +150,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             }
         }
 
-        [Test]
+        [Fact]
         public void aggregate_request_through_the_initial_endpoint()
         {
             var container = TestHost.Service<IContainer>();
@@ -176,7 +176,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             }
         }
 
-        [Test]
+        [Fact]
         public void use_aggregated_query_reader()
         {
             var query = new AggregatedQuery();
@@ -201,7 +201,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             readQuery.queries[3].query.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void run_aggregated_query_through_http_endpoint()
         {
             var query = new AggregatedQuery();
@@ -228,7 +228,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             });
         }
 
-        [Test]
+        [Fact]
         public void passes_corellation_id_through_http_endpoint()
         {
             var data = JsonUtil.ToJson(new
@@ -268,7 +268,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             });
         }
 
-        [Test]
+        [Fact]
         public void reads_corellation_id_in_aggregated_query_reader()
         {
             var json = JsonUtil.ToJson(new
@@ -298,7 +298,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             readQuery.queries[0].correlationId.ShouldBe("123");
         }
 
-        [Test]
+        [Fact]
         public void reads_query_without_corellation_id_in_aggregated_query_reader()
         {
             var json = JsonUtil.ToJson(new

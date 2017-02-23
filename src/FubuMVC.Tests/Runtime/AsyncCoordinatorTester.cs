@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class AsyncCoordinatorTester : InteractionContext<AsyncCoordinator>
     {
         protected override void beforeEach()
@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Runtime
             Services.Inject(typeof(IExceptionHandler), new HandleInvalidOperationException());
         }
 
-        [Test]
+        [Fact]
         public void when_an_error_is_handled_complete_is_called()
         {
             MockFor<IRequestCompletion>().Expect(x => x.Complete());
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Runtime
             VerifyCallsFor<IRequestCompletion>();
         }
 
-        [Test]
+        [Fact]
         public void when_an_error_is_not_handled_complete_with_errors_is_called()
         {
             MockFor<IRequestCompletion>()
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Runtime
             VerifyCallsFor<IRequestCompletion>();
         }
 
-        [Test]
+        [Fact]
         public void when_no_errors_occur_complete_is_called()
         {
             MockFor<IRequestCompletion>().Expect(x => x.Complete());
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Runtime
             VerifyCallsFor<IRequestCompletion>();
         }
 
-        [Test]
+        [Fact]
         public void when_multiple_errors_occur_and_not_all_are_handled_complete_with_errors_is_called()
         {
             MockFor<IRequestCompletion>()

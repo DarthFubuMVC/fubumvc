@@ -1,15 +1,15 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class envelope_handlers_are_registered_in_the_right_order
     {
-        [Test]
+        [Fact]
         public void the_order()
         {
             using (var runtime = FubuRuntime.For<Defaults>())

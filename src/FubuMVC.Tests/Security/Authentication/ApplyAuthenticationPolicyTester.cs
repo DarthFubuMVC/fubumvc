@@ -5,14 +5,14 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authentication;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class ApplyAuthenticationPolicyTester
     {
-        [Test]
+        [Fact]
         public void prepends_the_authentication_node()
         {
             var thePolicy = new ApplyAuthenticationPolicy();
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Security.Authentication
             chain.First().ShouldBeOfType<AuthenticationFilterNode>();
         }
 
-        [Test]
+        [Fact]
         public void uses_the_filter()
         {
             var thePolicy = new ApplyAuthenticationPolicy();

@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Http;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Http
 {
-    [TestFixture]
+    
     public class compression_testing
     {
-        [Test]
+        [Fact]
         public void retrieves_the_gzip_compressed_content()
         {
             TestHost.Scenario(_ =>
@@ -20,7 +20,7 @@ namespace FubuMVC.IntegrationTesting.Http
             });
         }
 
-        [Test]
+        [Fact]
         public void retrieves_the_deflate_compressed_content()
         {
             TestHost.Scenario(_ =>

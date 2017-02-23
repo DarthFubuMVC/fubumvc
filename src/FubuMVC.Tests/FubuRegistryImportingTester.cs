@@ -11,24 +11,20 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Registration.Conventions;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class FubuRegistryImportingTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public FubuRegistryImportingTester()
         {
             parent = new FubuRegistry();
             import = new FubuRegistry();
         }
 
-        #endregion
 
         private FubuRegistry parent;
         private FubuRegistry import;
@@ -141,7 +137,7 @@ namespace FubuMVC.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void adds_chains_from_import_with_a_prefix()
         {
             import.Actions.IncludeType<Action1>();
@@ -154,7 +150,7 @@ namespace FubuMVC.Tests
             graph.ChainFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldBe("import/a/m2");
         }
 
-        [Test]
+        [Fact]
         public void adds_chains_from_import_without_prefix()
         {
             import.Actions.IncludeType<Action1>();
@@ -166,7 +162,7 @@ namespace FubuMVC.Tests
             graph.ChainFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldBe("a/m2");
         }
 
-        [Test]
+        [Fact]
         public void apply_policy_to_import_only_applies_to_the_chains_in_the_imported_registry()
         {
             import.Actions.IncludeType<Action1>();
@@ -192,7 +188,7 @@ namespace FubuMVC.Tests
         }
 
 
-        [Test]
+        [Fact]
         public void apply_policy_to_parent_only_applies_to_the_chains_in_the_imported_registry_and_the_parent()
         {
             import.Actions.IncludeType<Action1>();

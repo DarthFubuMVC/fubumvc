@@ -9,16 +9,16 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.IntegrationTesting.ServiceBus
 {
-    [TestFixture]
+    
     public class Delayed_Processing_Job_Registration_Tester
     {
-        [Test]
+        [Fact]
         public void the_delayed_processing_polling_job_is_registered()
         {
             using (var runtime = FubuRuntime.For<DelayedRegistry>())

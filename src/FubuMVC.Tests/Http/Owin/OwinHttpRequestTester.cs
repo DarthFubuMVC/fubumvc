@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core.Http.Owin;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin
 {
-    [TestFixture]
+    
     public class OwinHttpRequestTester
     {
         private Dictionary<string, string[]> headers;
         private OwinHttpRequest request;
 
-        [SetUp]
-        public void SetUp()
+        public OwinHttpRequestTester()
         {
             headers = new Dictionary<string, string[]>();
 
@@ -22,7 +21,7 @@ namespace FubuMVC.Tests.Http.Owin
             request = new OwinHttpRequest(dict);
         }
 
-        [Test]
+        [Fact]
         public void server_root_round_trip()
         {
             request.FullUrl("http://server/foo/bar");
@@ -32,7 +31,7 @@ namespace FubuMVC.Tests.Http.Owin
         }
 
 
-        [Test]
+        [Fact]
         public void server_root_round_trip_with_querystring()
         {
             request.FullUrl("http://server/foo/bar?foo=bar");
@@ -41,13 +40,13 @@ namespace FubuMVC.Tests.Http.Owin
             request.RelativeUrl().ShouldBe("foo/bar?foo=bar");
         }
 
-        [Test]
+        [Fact]
         public void has_negative()
         {
             request.HasHeader("a").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void has_positive()
         {
             headers.Add("a", new string[]{"1", "2"});
@@ -56,7 +55,7 @@ namespace FubuMVC.Tests.Http.Owin
             request.HasHeader("A").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void get()
         {
             headers.Add("a", new string[] { "1", "2" });

@@ -6,18 +6,17 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class AllowRoleAttributeTester
     {
         private BehaviorGraph graph;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public AllowRoleAttributeTester()
         {
             graph = BehaviorGraph.BuildFrom(x =>
             {
@@ -38,7 +37,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph.ChainFor(method).Top.Any(x => x is AuthorizationNode).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_be_no_roles_on_method_actions_with_no_attribute_when_the_controller_has_not_attributes()
         {
             shouldBeNoRolesFor<AllowRoleController>(x => x.M1());
@@ -46,19 +45,19 @@ namespace FubuMVC.Tests.Registration.Conventions
             shouldBeNoRolesFor<AllowRoleController>(x => x.M5());
         }
 
-        [Test]
+        [Fact]
         public void handle_one_role_for_a_method()
         {
             rolesFor<AllowRoleController>(x => x.M3()).ShouldHaveTheSameElementsAs("R3");
         }
 
-        [Test]
+        [Fact]
         public void handle_multiple_roles_for_a_method()
         {
             rolesFor<AllowRoleController>(x => x.M2()).ShouldHaveTheSameElementsAs("R1", "R2");
         }
 
-        [Test]
+        [Fact]
         public void roles_with_an_attribute_on_the_handler_class_itself()
         {
             rolesFor<AllowRoleController2>(x => x.M1()).ShouldHaveTheSameElementsAs("R1", "R2");

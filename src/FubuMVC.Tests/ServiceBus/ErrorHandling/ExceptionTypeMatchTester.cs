@@ -1,14 +1,14 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
-    [TestFixture]
+    
     public class ExceptionTypeMatchTester
     {
-        [Test]
+        [Fact]
         public void matches_by_type()
         {
             var match = new ExceptionTypeMatch<NotImplementedException>();

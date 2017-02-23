@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
-    [TestFixture]
+    
     public class EnvelopeSerializerIntegratedTester
     {
         private IMessageSerializer[] messageSerializers;
@@ -14,16 +14,16 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
         private Address theAddress;
         private ChannelGraph theGraph;
 
-        [SetUp]
-        public void SetUp()
+        public EnvelopeSerializerIntegratedTester()
         {
             messageSerializers = new IMessageSerializer[]
-            {new BinarySerializer(), new BasicJsonMessageSerializer(), new XmlMessageSerializer()};
+{new BinarySerializer(), new BasicJsonMessageSerializer(), new XmlMessageSerializer()};
             theGraph = new ChannelGraph();
             theSerializer = new EnvelopeSerializer(theGraph, messageSerializers);
 
-            theAddress = new Address {City = "Jasper", State = "Missouri"};
+            theAddress = new Address { City = "Jasper", State = "Missouri" };
         }
+
 
         private void assertRoundTrips(int index)
         {
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             envelope.Message.ShouldBe(theAddress);
         }
 
-        [Test]
+        [Fact]
         public void can_round_trip_with_each_serializer_type()
         {
             assertRoundTrips(0);
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             assertRoundTrips(2);
         }
 
-        [Test]
+        [Fact]
         public void happily_chooses_the_default_content_type_for_the_graph_if_none_is_on_the_envelope()
         {
             var envelope = new Envelope()

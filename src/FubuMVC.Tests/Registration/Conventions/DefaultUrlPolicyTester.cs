@@ -7,12 +7,12 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.PathBased;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
-    [TestFixture]
+    
     public class DefaultUrlPolicyTester
     {
 
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             return new DefaultUrlPolicy().Build(call);
         }
 
-        [Test]
+        [Fact]
         public void build_route_for_endpoint_method()
         {
             var route = routeFor<SomethingEndpoint>(x => x.Go(null));
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
-        [Test]
+        [Fact]
         public void build_route_for_endpoints_method()
         {
             var route = routeFor<SomethingEndpoints>(x => x.Go(null));
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
-        [Test]
+        [Fact]
         public void build_route_for_controller_method()
         {
             var route = routeFor<SomethingController>(x => x.Go(null));
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
-        [Test]
+        [Fact]
         public void build_route_for_Get_method()
         {
             var route = routeFor<SomethingEndpoint>(x => x.Get());
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             route.AllowedHttpMethods.Single().ShouldBe("GET");
         }
 
-        [Test]
+        [Fact]
         public void build_route_for_get_method_with_input()
         {
             var route = routeFor<SomethingEndpoints>(x => x.Get(null));
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             route.AllowedHttpMethods.Single().ShouldBe("GET");
         }
 
-        [Test]
+        [Fact]
         public void resource_path()
         {
             var route = routeFor<SomethingEndpoint>(x => x.Write(null));

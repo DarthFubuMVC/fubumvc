@@ -7,21 +7,15 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class ClassValidationRulesTester
     {
-        private ClassValidationRules<ClassValidationRulesTarget> theRules;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theRules = new ClassValidationRules<ClassValidationRulesTarget>();
-        }
+        private ClassValidationRules<ClassValidationRulesTarget> theRules = new ClassValidationRules<ClassValidationRulesTarget>();
 
         private IEnumerable<IFieldValidationRule> rulesFor(Expression<Func<ClassValidationRulesTarget, object>> expression)
         {
@@ -40,14 +34,14 @@ namespace FubuMVC.Tests.Validation
             return graph.Sources.SelectMany(source => source.RulesFor(typeof(ClassValidationRulesTarget)));
         }
 
-        [Test]
+        [Fact]
         public void no_rules()
         {
             rulesFor(x => x.Name).Any().ShouldBeFalse();
             rulesFor(x => x.Address1).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void register_a_single_required_rule()
         {
             theRules.Require(x => x.Name);
@@ -55,7 +49,7 @@ namespace FubuMVC.Tests.Validation
             rulesFor(x => x.Name).Single().ShouldBeOfType<RequiredFieldRule>();
         }
 
-        [Test]
+        [Fact]
         public void register_a_single_required_rule_with_a_conditional()
         {
             theRules.Require(x => x.Province).If(x => x.Country == "Canada");
@@ -70,7 +64,7 @@ namespace FubuMVC.Tests.Validation
             conditionalRule.Condition.Matches(null, ValidationContext.For(new ClassValidationRulesTarget() { Country = "Canada" })).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void register_multiple_required_rules()
         {
             theRules.Require(x => x.Name, x => x.Address1);
@@ -79,7 +73,7 @@ namespace FubuMVC.Tests.Validation
             rulesFor(x => x.Address1).Single().ShouldBeOfType<RequiredFieldRule>();
         }
 
-        [Test]
+        [Fact]
         public void register_maximum_length()
         {
             theRules.Property(x => x.Name).MaximumLength(19);
@@ -87,7 +81,7 @@ namespace FubuMVC.Tests.Validation
                 .Length.ShouldBe(19);
         }
 
-        [Test]
+        [Fact]
         public void register_maximum_length_conditionally()
         {
             var filter = FieldRuleCondition.For<ClassValidationRulesTarget>(x => x.Country == "Canada");
@@ -98,27 +92,27 @@ namespace FubuMVC.Tests.Validation
                 .Length.ShouldBe(19);
         }
 
-        [Test]
+        [Fact]
         public void register_greater_than_zero()
         {
             theRules.Property(x => x.Age).GreaterThanZero();
             rulesFor(x => x.Age).Single().ShouldBeOfType<GreaterThanZeroRule>();
         }
 
-        [Test]
+        [Fact]
         public void register_greater_or_equal_to_zero()
         {
             theRules.Property(x => x.Age).GreaterOrEqualToZero();
             rulesFor(x => x.Age).Single().ShouldBeOfType<GreaterOrEqualToZeroRule>();
         }
 
-        [Test]
+        [Fact]
         public void register_required_for_a_single_property()
         {
             theRules.Property(x => x.Name).Required();
         }
 
-        [Test]
+        [Fact]
         public void register_multiple_rules_for_a_single_property()
         {
             theRules.Property(x => x.Name).Required().MaximumLength(10);
@@ -129,7 +123,7 @@ namespace FubuMVC.Tests.Validation
             nameRules.ShouldContain(new MaximumLengthRule(10));
         }
 
-        [Test]
+        [Fact]
         public void register_class_level_rule_by_type()
         {
             theRules.Register<SimpleClassLevelRule>();
@@ -138,7 +132,7 @@ namespace FubuMVC.Tests.Validation
             classLevelRules.Any(x => x is SimpleClassLevelRule).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void register_class_level_rule_by_instance()
         {
             theRules.Register(new ComplexClassLevelRule<ClassValidationRulesTarget>(x => x.Province, x => x.Country));
@@ -147,7 +141,7 @@ namespace FubuMVC.Tests.Validation
             classLevelRules.Any(x => x is ComplexClassLevelRule<ClassValidationRulesTarget>);
         }
 
-		[Test]
+		[Fact]
 		public void configure_a_field_equality_rule()
 		{
 			var myToken = StringToken.FromKeyString("MyKeys:MyToken", "Passwords must match");

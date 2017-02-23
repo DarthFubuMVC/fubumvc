@@ -5,19 +5,18 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration.Querying
 {
-    [TestFixture]
+    
     public class ChainResoluationCacheRootAt 
     {
         private ChainResolutionCache theCache;
         private RouteDefinition theRouteDefinitionAlias;
 
-        [SetUp]
-        public void SetUp()
+        public ChainResoluationCacheRootAt()
         {
             theCache = new ChainResolutionCache(setupActions());
         }
@@ -39,7 +38,7 @@ namespace FubuMVC.Tests.Registration.Querying
             return BehaviorGraph.BuildFrom(registry);
         }
 
-        [Test]
+        [Fact]
         public void roots_route_aliases()
         {
             theCache.RootAt("localhost");

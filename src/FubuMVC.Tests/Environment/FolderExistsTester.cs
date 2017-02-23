@@ -3,14 +3,14 @@ using FubuCore;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Environment;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Environment
 {
-    [TestFixture]
+    
     public class FolderExistsTester
     {
-        [Test]
+        [Fact]
         public void positive_test()
         {
             new FileSystem().CreateDirectory("foo");
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Environment
             log.FullTraceText().ShouldContain("Folder 'foo' exists");
         }
 
-        [Test]
+        [Fact]
         public void negative_test()
         {
             var log = new ActivationLog();
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Environment
             log.FullTraceText().ShouldContain("Folder '{0}' does not exist!".ToFormat(folder));
         }
 
-        [Test]
+        [Fact]
         public void positive_test_with_generic()
         {
             new FileSystem().CreateDirectory("foo");
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Environment
             log.FullTraceText().ShouldContain("Folder 'foo' defined by FileSettings.Folder exists");
         }
 
-        [Test]
+        [Fact]
         public void negative_test_with_settings()
         {
             var log = new ActivationLog();

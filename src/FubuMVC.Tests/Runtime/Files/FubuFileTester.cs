@@ -1,24 +1,24 @@
 using System;
 using System.IO;
 using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using Rhino.Mocks;
 using FubuCore;
 
 namespace FubuMVC.Tests.Runtime.Files
 {
-    [TestFixture]
+    
     public class FubuFileTester
     {
-        [Test]
+        [Fact]
         public void read_contents()
         {
             var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"));
             file.ReadContents().Trim().ShouldBe("some text from a.txt");
         }
 
-        [Test]
+        [Fact]
         public void read_lines()
         {
             var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"));
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Runtime.Files
             action.AssertWasCalled(x => x.Invoke("some text from a.txt"));
         }
 
-        [Test]
+        [Fact]
         public void read_contents_by_stream()
         {
             var wasCalled = false;
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Runtime.Files
             wasCalled.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void length()
         {
             new FileSystem().WriteStringToFile("ghostbusters.txt", "Who you gonna call?");
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Runtime.Files
                 .Length().ShouldBe(19);
         }
 
-        [Test]
+        [Fact]
         public void last_modified()
         {
             var now = DateTime.UtcNow;
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Runtime.Files
                 .ShouldBeLessThan(1);
         }
 
-        [Test]
+        [Fact]
         public void etag_is_predictable()
         {
             new FileSystem().WriteStringToFile("ghostbusters.txt", "Who you gonna call?");
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Runtime.Files
             etag1.ShouldBe(etag3);
         }
 
-        [Test]
+        [Fact]
         public void etag_changes_on_file_changes()
         {
             new FileSystem().WriteStringToFile("ghostbusters.txt", "Who you gonna call?");

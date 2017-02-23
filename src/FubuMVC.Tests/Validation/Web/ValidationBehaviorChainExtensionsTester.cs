@@ -1,15 +1,15 @@
 ﻿using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Validation.Web;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-    [TestFixture]
+    
     public class ValidationBehaviorChainExtensionsTester
     {
-        [Test]
+        [Fact]
         public void finds_the_validation_node()
         {
             var stub = new StubValidationBehaviorNode
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Validation.Web
             chain.ValidationNode().ShouldBe(stub.Validation);
         }
 
-        [Test]
+        [Fact]
         public void returns_empty_if_no_validation_node_exists()
         {
             var chain = new BehaviorChain();

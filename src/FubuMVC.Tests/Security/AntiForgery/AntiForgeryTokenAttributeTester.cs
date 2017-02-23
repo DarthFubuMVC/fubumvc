@@ -2,16 +2,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.AntiForgery;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-    [TestFixture]
+    
     public class AntiForgeryTokenAttributeTester
     {
 
 
-        [Test]
+        [Fact]
         public void should_put_an_anti_forgery_token_on_the_chain()
         {
             var registry = new FubuRegistry();

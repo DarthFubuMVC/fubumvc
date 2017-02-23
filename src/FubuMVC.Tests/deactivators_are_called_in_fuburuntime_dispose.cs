@@ -2,15 +2,15 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class deactivators_are_called_in_fuburuntime_dispose
     {
-        [Test]
+        [Fact]
         public void disposing_the_fubu_runtime_should_run_all_the_deactivators()
         {
             FakeDeactivator.Messages.Clear();

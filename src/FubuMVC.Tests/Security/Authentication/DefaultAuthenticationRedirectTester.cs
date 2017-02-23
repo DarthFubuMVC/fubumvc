@@ -2,21 +2,21 @@
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-	[TestFixture]
+	
 	public class DefaultAuthenticationRedirectTester : InteractionContext<DefaultAuthenticationRedirect>
 	{
-		[Test]
+		[Fact]
 		public void always_matches()
 		{
 			ClassUnderTest.Applies().ShouldBeTrue();
 		}
 
-	    [Test]
+	    [Fact]
 	    public void redirects_to_the_login_page()
 	    {
 	        var relativeUrl = "/something";

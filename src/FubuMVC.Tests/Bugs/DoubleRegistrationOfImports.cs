@@ -4,23 +4,17 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 using Shouldly;
 using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Bugs
 {
-    [TestFixture]
+    
     public class DoubleRegistrationOfImports
     {
-        [SetUp]
-        public void SetUp()
-        {
-            
-        }
-
-        [Test]
+        [Fact]
         public void an_extension_is_only_applied_once()
         {
             OneExtension.Applied = TwoExtension.Applied = ThreeExtension.Applied = 0;
@@ -38,7 +32,7 @@ namespace FubuMVC.Tests.Bugs
             ThreeExtension.Applied.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void a_fubu_package_registry_is_only_imported_once()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -55,7 +49,7 @@ namespace FubuMVC.Tests.Bugs
             actions.ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void do_not_allow_second_import_to_be_processed()
         {
             // SubModule2 tries to import SubModule1 with the same url prefix
@@ -71,7 +65,7 @@ namespace FubuMVC.Tests.Bugs
             actions.ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void policies_will_only_be_applied_once()
         {
             SpecialPolicy.Applied = 0;

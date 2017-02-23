@@ -5,43 +5,42 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authorization;
 using Rhino.Mocks;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authorization
 {
-    [TestFixture]
+    
     public class AllowRoleTester
     {
-        [SetUp]
-        public void SetUp()
+        public AllowRoleTester()
         {
             var principal = new GenericPrincipal(new GenericIdentity("somebody"), new string[] { "a", "b" });
             Thread.CurrentPrincipal = principal;
         }
 
-        [Test]
+        [Fact]
         public void positive_test_for_a_role_that_is_in_the_current_principal()
         {
             new AllowRole("a").RightsFor(null).ShouldBe(AuthorizationRight.Allow);
         }
 
-        [Test]
+        [Fact]
         public void negative_test_for_a_role_that_is_not_in_the_current_principal()
         {
             new AllowRole("not in principal").RightsFor(null).ShouldBe(AuthorizationRight.None);
         }
     }
 
-    [TestFixture]
+    
     public class MustBeAuthenticatedTester
     {
-        [Test]
+        [Fact]
         public void no_principal_no_authorization()
         {
             MustBeAuthenticated.DetermineRights(null).ShouldBe(AuthorizationRight.Deny);
         }
 
-        [Test]
+        [Fact]
         public void not_authenticated_principal()
         {
             var principal = MockRepository.GenerateMock<IPrincipal>();
@@ -52,7 +51,7 @@ namespace FubuMVC.Tests.Security.Authorization
             MustBeAuthenticated.DetermineRights(principal).ShouldBe(AuthorizationRight.Deny);
         }
 
-        [Test]
+        [Fact]
         public void is_authenticated()
         {
             var principal = MockRepository.GenerateMock<IPrincipal>();
@@ -63,7 +62,7 @@ namespace FubuMVC.Tests.Security.Authorization
             MustBeAuthenticated.DetermineRights(principal).ShouldBe(AuthorizationRight.Allow);
         }
 
-        [Test]
+        [Fact]
         public void attribute_places_the_rule()
         {
             var chain = BehaviorChain.For<MustBeAuthenticatedTester>(x => x.Go());

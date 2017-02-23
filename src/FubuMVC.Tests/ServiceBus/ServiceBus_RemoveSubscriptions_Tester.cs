@@ -5,13 +5,13 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class ServiceBus_RemoveSubscriptions_Tester : InteractionContext<Core.ServiceBus.ServiceBus>
     {
         private IList<Envelope> TheEnvelopesSent
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void sends_subscriptions_removed()
         {
             var local = new Uri("memory://node1");

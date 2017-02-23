@@ -1,14 +1,14 @@
 using FubuMVC.Core;
 using FubuMVC.Core.ServerSentEvents;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServerSentEvents
 {
-    [TestFixture]
+    
     public class ServicesRegistrationTester
     {
-        [Test]
+        [Fact]
         public void register_services()
         {
             var registry = new FubuRegistry();

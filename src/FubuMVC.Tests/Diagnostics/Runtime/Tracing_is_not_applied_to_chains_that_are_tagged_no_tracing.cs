@@ -3,15 +3,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
-    [TestFixture]
+    
     public class Tracing_is_not_applied_to_chains_that_are_tagged_no_tracing
     {
-        [Test]
+        [Fact]
         public void not_applied_when_no_tracing_tag_is_on_the_chain()
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))

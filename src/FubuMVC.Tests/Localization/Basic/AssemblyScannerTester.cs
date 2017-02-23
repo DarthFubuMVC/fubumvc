@@ -4,20 +4,19 @@ using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Localization.Basic;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization.Basic
 {
-    [TestFixture]
+    
     public class AssemblyScannerTester
     {
         private InMemoryLocalizationStorage theStorage;
         private AssemblyScanner theScanner;
         private CultureInfo theCulture;
 
-        [SetUp]
-        public void SetUp()
+        public AssemblyScannerTester()
         {
             theCulture = new CultureInfo("en-GB");
             theStorage = new InMemoryLocalizationStorage();
@@ -27,13 +26,13 @@ namespace FubuMVC.Tests.Localization.Basic
 
         }
 
-        [Test]
+        [Fact]
         public void the_default_culture_should_be_en_US()
         {
             theScanner.DefaultCulture.ShouldBe(new CultureInfo("en-US"));
         }
 
-        [Test]
+        [Fact]
         public void scan_string_token_class_that_is_all_missing_and_for_the_default_culture()
         {
             theScanner.DefaultCulture = theCulture;
@@ -49,7 +48,7 @@ namespace FubuMVC.Tests.Localization.Basic
         }
 
 
-        [Test]
+        [Fact]
         public void scan_string_token_class_that_is_all_missing_for_a_different_culture_than_the_default()
         {
             theScanner.ScanStringTokenType(typeof(AssemblyScannerTokens));
@@ -62,7 +61,7 @@ namespace FubuMVC.Tests.Localization.Basic
 "));
         }
 
-        [Test]
+        [Fact]
         public void scan_string_token_class_when_some_are_not_missing()
         {
             theStorage.Add(theCulture, "A", "a-something");
@@ -78,7 +77,7 @@ namespace FubuMVC.Tests.Localization.Basic
 "));
         }
 
-        [Test]
+        [Fact]
         public void scan_using_a_localized_property_implementation()
         {
             theScanner.DefaultCulture = theCulture;

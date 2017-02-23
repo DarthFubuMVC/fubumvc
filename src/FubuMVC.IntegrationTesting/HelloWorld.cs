@@ -4,7 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http.Hosting;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -18,10 +18,10 @@ public class HomeEndpoint
     }
 }
 
-    [TestFixture]
+    
     public class RunHelloWorld
     {
-        [Test]
+        [Fact]
         public void start_and_run()
         {
             // Bootstrap a basic FubuMVC applications

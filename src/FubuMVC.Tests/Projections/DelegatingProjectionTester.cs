@@ -3,22 +3,22 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class DelegatingProjectionTester
     {
-        [Test]
+        [Fact]
         public void accessors()
         {
             var projection = new DelegatingProjection<ProjectionModel, FakeProjector>();
             projection.Accessors().ShouldHaveTheSameElementsAs(new FakeProjector().Accessors());
         }
 
-        [Test]
+        [Fact]
         public void creates_and_delegates_to_another_projection()
         {
             var context = MockRepository.GenerateMock<IProjectionContext<ProjectionModel>>();
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Projections
             FakeProjector.theNode.ShouldBeTheSameAs(theNode);
         }
 
-        [Test]
+        [Fact]
         public void include_inside_a_projection()
         {
             var context = MockRepository.GenerateMock<IProjectionContext<ProjectionModel>>();

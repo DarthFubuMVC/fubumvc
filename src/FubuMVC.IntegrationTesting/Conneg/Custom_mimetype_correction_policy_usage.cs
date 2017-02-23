@@ -2,14 +2,14 @@
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
-    [TestFixture]
+    
     public class Custom_mimetype_correction_policy_usage
     {
-        [Test]
+        [Fact]
         public void use_the_custom_mimetype_correction()
         {
             TestHost.Scenario<RegistryWithCustomMimetypeCorrection>(_ =>

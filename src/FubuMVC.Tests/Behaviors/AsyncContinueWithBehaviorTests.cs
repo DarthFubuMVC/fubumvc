@@ -6,12 +6,12 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Runtime;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Behaviors
 {
-    [TestFixture]
+    
     public class async_with_output_no_errors : InteractionContext<AsyncContinueWithBehavior<Output>>
     {
         private Output expectedOutput;
@@ -37,13 +37,13 @@ namespace FubuMVC.Tests.Behaviors
             waitHandle.WaitOne(TimeSpan.FromSeconds(1)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_have_stored_the_task_result_in_the_fubu_request()
         {
             MockFor<IFubuRequest>().AssertWasCalled(x => x.Set(expectedOutput));
         }
 
-        [Test]
+        [Fact]
         public void should_call_inner_behavior()
         {
             MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Behaviors
 
     
 
-    [TestFixture]
+    
     public class async_with_output_throws_error : InteractionContext<AsyncContinueWithBehavior<Output>>
     {
         private Output expectedOutput;
@@ -78,20 +78,20 @@ namespace FubuMVC.Tests.Behaviors
             waitHandle.WaitOne(TimeSpan.FromSeconds(1)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_not_have_stored_the_task_result_in_the_fubu_request()
         {
             MockFor<IFubuRequest>().AssertWasNotCalled(x => x.Set(expectedOutput));
         }
 
-        [Test]
+        [Fact]
         public void should_not_call_inner_behavior()
         {
             MockFor<IActionBehavior>().AssertWasNotCalled(x => x.Invoke());
         }
     }
 
-    [TestFixture]
+    
     public class async_with_no_output_throws_error : InteractionContext<AsyncContinueWithBehavior>
     {
         protected override void beforeEach()
@@ -115,14 +115,14 @@ namespace FubuMVC.Tests.Behaviors
             waitHandle.WaitOne(TimeSpan.FromSeconds(1)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_not_call_inner_behavior()
         {
             MockFor<IActionBehavior>().AssertWasNotCalled(x => x.Invoke());
         }
     }
 
-    [TestFixture]
+    
     public class async_with_no_output_no_errors : InteractionContext<AsyncContinueWithBehavior>
     {
         protected override void beforeEach()
@@ -146,7 +146,7 @@ namespace FubuMVC.Tests.Behaviors
             waitHandle.WaitOne(TimeSpan.FromSeconds(1)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_call_inner_behavior()
         {
             MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());

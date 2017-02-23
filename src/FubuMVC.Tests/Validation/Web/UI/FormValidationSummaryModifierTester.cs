@@ -9,13 +9,13 @@ using FubuMVC.Core.Validation.Web;
 using FubuMVC.Core.Validation.Web.UI;
 using FubuMVC.Tests.TestSupport;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class FormValidationSummaryModifierTester : InteractionContext<FormValidationSummaryModifier>
     {
         private BehaviorGraph theGraph;
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             MockFor<IPartialInvoker>().Stub(x => x.Invoke<ValidationSummary>()).Return(theValidationSummary);
         }
 
-        [Test]
+        [Fact]
         public void no_summary_if_the_summary_strategy_is_not_registered()
         {
             theRequest.Chain.ValidationNode().Clear();
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theRequest.CurrentTag.Children[0].TagName().ShouldBe("input");
         }
 
-        [Test]
+        [Fact]
         public void prepends_the_validation_summary()
         {
             ClassUnderTest.Modify(theRequest);

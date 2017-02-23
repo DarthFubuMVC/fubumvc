@@ -5,17 +5,16 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests
 {
-    [TestFixture]
+    
     public class UrlAliasAttributeTester
     {
         private BehaviorGraph theGraph;
 
-        [SetUp]
-        public void SetUp()
+        public UrlAliasAttributeTester()
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<RouteAliasController>();
@@ -23,7 +22,7 @@ namespace FubuMVC.Tests
             theGraph = BehaviorGraph.BuildFrom(registry);
         }
 
-        [Test]
+        [Fact]
         public void adds_the_route_aliases()
         {
             var route1 = new RouteDefinition("something/else");

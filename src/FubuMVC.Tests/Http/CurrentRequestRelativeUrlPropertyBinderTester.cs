@@ -4,34 +4,28 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Tests.Urls;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
+    
     public class CurrentRequestRelativeUrlPropertyBinderTester
     {
-        private CurrentRequestRelativeUrlPropertyBinder binder;
+        private CurrentRequestRelativeUrlPropertyBinder binder = new CurrentRequestRelativeUrlPropertyBinder();
 
-        [SetUp]
-        public void SetUp()
-        {
-            binder = new CurrentRequestRelativeUrlPropertyBinder();
-        }
-
-        [Test]
+        [Fact]
         public void should_match_on_correct_property_name()
         {
             binder.Matches(ReflectionHelper.GetProperty<RelativeUrlModel>(f => f.RelativeUrl)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_not_match_on_other_name()
         {
             binder.Matches(ReflectionHelper.GetProperty<RelativeUrlModel>(f => f.Blah)).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_populate_relativeurl_from_current_http_request()
         {
 

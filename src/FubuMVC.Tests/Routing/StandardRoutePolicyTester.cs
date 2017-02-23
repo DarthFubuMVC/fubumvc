@@ -13,21 +13,20 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Routing
 {
-    [TestFixture]
+    
     public class StandardRoutePolicyTester
     {
         private IEnumerable<Guid> _actionIds;
         private IEnumerable<Route> _routes;
         private IServiceFactory theFactory;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public StandardRoutePolicyTester()
         {
             theFactory = MockRepository.GenerateMock<IServiceFactory>();
 
@@ -36,7 +35,8 @@ namespace FubuMVC.Tests.Routing
             _routes = new StandardRoutePolicy().BuildRoutes(graph, theFactory).Cast<Route>();
         }
 
-        [Test]
+
+        [Fact]
         public void DetermineInvoker_for_asynchronous_actions()
         {
             var chain = BehaviorChain.For<Action3>(x => x.M1Async());
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Routing
             StandardRoutePolicy.DetermineInvoker(theFactory, chain).ShouldBeOfType<BehaviorInvoker>();
         }
 
-        [Test]
+        [Fact]
         public void DetermineInvoker_for_synchronous_actions()
         {
             var chain = BehaviorChain.For<Action2>(x => x.M1());
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Routing
             StandardRoutePolicy.DetermineInvoker(theFactory, chain).ShouldBeOfType<BehaviorInvoker>();
         }
 
-        [Test]
+        [Fact]
         public void DetermineHandlerSource_for_synchronous_and_no_session()
         {
             var chain = BehaviorChain.For<Action2>(x => x.M1());
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Routing
                 .ShouldBeOfType<SessionlessSynchronousHttpHandlerSource>();
         }
 
-        [Test]
+        [Fact]
         public void DetermineHandlerSource_for_synchronous_with_session()
         {
             var chain = BehaviorChain.For<Action2>(x => x.M1());
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Routing
                 .ShouldBeOfType<SynchronousHttpHandlerSource>();
         }
 
-        [Test]
+        [Fact]
         public void DetermineHandlerSource_for_asynch_and_sessionless()
         {
             var chain = BehaviorChain.For<Action3>(x => x.M1Async());
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Routing
                 .ShouldBeOfType<SessionlessAsynchronousHttpHandlerSource>();
         }
 
-        [Test]
+        [Fact]
         public void DetermineHandlerSource_for_async_and_requires_session()
         {
             var chain = BehaviorChain.For<Action3>(x => x.M1Async());
@@ -94,20 +94,20 @@ namespace FubuMVC.Tests.Routing
                 .ShouldBeOfType<AsynchronousHttpHandlerSource>();
         }
         
-        [Test]
+        [Fact]
         public void it_builds_routes_for_all_actions()
         {
             (_routes.Count() >= _actionIds.Count())
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void it_assigns_routehandler_on_route()
         {
             _routes.Each(r => r.RouteHandler.ShouldBeOfType<FubuRouteHandler>());
         }
 
-        [Test]
+        [Fact]
         public void builds_additional_routes_for_each_behavior_chain()
         {
 
@@ -115,7 +115,7 @@ namespace FubuMVC.Tests.Routing
             _routes.Any(x => x.Url.Equals("prefixed/a/m1", StringComparison.OrdinalIgnoreCase)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void orders_additional_routes_by_rank_as_well()
         {
             _routes.Last().Url.ShouldBe("foo/{Name}");

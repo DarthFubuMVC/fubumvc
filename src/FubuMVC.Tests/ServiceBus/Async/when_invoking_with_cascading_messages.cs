@@ -4,12 +4,12 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.ServiceBus.Async
 {
-    [TestFixture]
+    
     public class when_invoking_with_cascading_messages : InteractionContext<CascadingAsyncHandlerInvoker<when_invoking_with_cascading_messages.TaskAction, Message1, Message2>>
     {
         private Task<Message2> theTask;
@@ -35,19 +35,19 @@ namespace FubuMVC.Tests.ServiceBus.Async
 
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_inner_behavior()
         {
             MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void should_call_the_method_on_the_action_class()
         {
             MockFor<TaskAction>().VerifyAllExpectations();
         }
 
-        [Test]
+        [Fact]
         public void should_register_the_returned_task_with_async_handling_for_tracking()
         {
             MockFor<IAsyncHandling>().AssertWasCalled(x => x.Push(theTask));

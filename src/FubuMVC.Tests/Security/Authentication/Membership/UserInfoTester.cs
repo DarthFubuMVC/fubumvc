@@ -1,14 +1,14 @@
 ﻿using System.Linq;
 using FubuMVC.Core.Security.Authentication.Membership;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authentication.Membership
 {
-    [TestFixture]
+    
     public class UserInfoTester
     {
-        [Test]
+        [Fact]
         public void get_and_set()
         {
             var foo = new Foo {Name = "Scooby"};
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership
             user.Get<Bar>().ShouldBeTheSameAs(bar);
         }
 
-        [Test]
+        [Fact]
         public void add_roles()
         {
             var user = new UserInfo();

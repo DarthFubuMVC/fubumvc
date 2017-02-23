@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.ServiceBus.Runtime.Routing;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Routing
 {
-    [TestFixture]
+    
     public class NamespaceRuleTester
     {
-        [Test]
+        [Fact]
         public void positive_test()
         {
             var rule = NamespaceRule.For<Red.Message1>();
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Routing
             rule.Matches(typeof(Red.Message3)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void negative_test()
         {
             var rule = NamespaceRule.For<Red.Message1>();

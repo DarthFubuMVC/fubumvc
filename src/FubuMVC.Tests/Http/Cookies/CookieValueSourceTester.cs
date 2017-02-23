@@ -1,13 +1,14 @@
-﻿using FubuMVC.Core.Http;
+﻿using System;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Cookies
 {
-    [TestFixture]
+    
     public class CookieValueSourceTester : InteractionContext<CookieValueSource>
     {
         private ICookies inner;
@@ -17,13 +18,13 @@ namespace FubuMVC.Tests.Http.Cookies
             inner = MockFor<ICookies>();
         }
 
-        [Test]
+        [Fact]
         public void provenance_has_to_be_cookies()
         {
             ClassUnderTest.Provenance.ShouldBe(RequestDataSource.Cookie.ToString());
         }
 
-        [Test]
+        [Fact]
         public void has_delegates()
         {
             ClassUnderTest.Has("a").ShouldBeFalse();
@@ -34,7 +35,7 @@ namespace FubuMVC.Tests.Http.Cookies
             ClassUnderTest.Has("b").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void get_with_single_value()
         {
             var cookie = new Cookie("a", "1");
@@ -45,15 +46,15 @@ namespace FubuMVC.Tests.Http.Cookies
             ClassUnderTest.Get("a").ShouldBe("1");
         }
 
-        [Test]
+        [Fact]
         public void value_with_miss()
         {
             ClassUnderTest.Value("a", v => {
-                Assert.Fail("should not be called");
+                throw new Exception("should not be called");
             }).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void value_with_single_value_hit()
         {
             var cookie = new Cookie("a", "1");
@@ -71,7 +72,7 @@ namespace FubuMVC.Tests.Http.Cookies
             wasCalled.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void value_that_hits_but_not_deterministic()
         {
             var cookie = new Cookie("a");
@@ -80,7 +81,7 @@ namespace FubuMVC.Tests.Http.Cookies
 
             ClassUnderTest.Value("a", v =>
             {
-                Assert.Fail("should not be called");
+                throw new Exception("should not be called");
             }).ShouldBeFalse();
         }
 

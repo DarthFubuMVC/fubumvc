@@ -5,21 +5,20 @@ using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class DeserializationFailureContinuationTester
     {
         private EnvelopeDeserializationException theException;
         private TestEnvelopeContext theContext;
         private Envelope theEnvelope;
 
-        [SetUp]
-        public void SetUp()
+        public DeserializationFailureContinuationTester()
         {
             theException = new EnvelopeDeserializationException("foo");
             theContext = new TestEnvelopeContext();
@@ -31,13 +30,13 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                 .Execute(theEnvelope, theContext);
         }
 
-        [Test]
+        [Fact]
         public void should_move_the_envelope_to_the_error_queue()
         {
             theEnvelope.Callback.AssertWasCalled(x => x.MoveToErrors(new ErrorReport(theEnvelope, theException)));
         }
 
-        [Test]
+        [Fact]
         public void should_log_the_exception()
         {
             var report = theContext.RecordedLogs.ErrorMessages.Single()
@@ -46,7 +45,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             report.ExceptionText.ShouldBe(theException.ToString());
         }
 
-        [Test]
+        [Fact]
         public void should_send_a_failure_ack()
         {
             theContext.RecordedOutgoing.FailureAcknowledgementMessage.ShouldBe("Deserialization failed");

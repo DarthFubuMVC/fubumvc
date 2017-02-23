@@ -3,11 +3,11 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
 {
-    [TestFixture]
+    
     public class aliasing_assets : AssetIntegrationContext
     {
         public aliasing_assets()
@@ -28,13 +28,13 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             }
         }
 
-        [Test]
+        [Fact]
         public void asset_graph_stores_aliases()
         {
             Assets.FindAsset("bar").Url.ShouldBe("Folder1/Foo.js");
         }
 
-        [Test]
+        [Fact]
         public void alias_is_not_found_sad_path()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(
@@ -42,7 +42,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
                 .Message.ShouldContain("No asset file named 'nonexistent.js' can be found");
         }
 
-        [Test]
+        [Fact]
         public void aliases_are_applied_at_bootstrapping_time()
         {
             Assets.FindAsset("foo").Url.ShouldBe("Folder1/Foo.js");

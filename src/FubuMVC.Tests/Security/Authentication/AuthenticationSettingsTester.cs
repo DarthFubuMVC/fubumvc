@@ -5,21 +5,21 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.Security.Authorization;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class AuthenticationSettingsTester
     {
-        [Test]
+        [Fact]
         public void disabled_by_default()
         {
             new AuthenticationSettings().Enabled.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void do_not_exclude_diagnostics_chains_by_default()
         {
             var chain = DiagnosticChain.For<AboutFubuDiagnostics>(_ => _.get_about());
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Security.Authentication
 
         }
 
-        [Test]
+        [Fact]
         public void exclude_diagnostics_when_explicitly_chosen()
         {
             var chain = DiagnosticChain.For<AboutFubuDiagnostics>(_ => _.get_about());
@@ -42,21 +42,21 @@ namespace FubuMVC.Tests.Security.Authentication
         }
 
 
-        [Test]
+        [Fact]
         public void membership_status_is_enabled_by_default()
         {
             new AuthenticationSettings().MembershipEnabled
                 .ShouldBe(MembershipStatus.Enabled);
         }
 
-        [Test]
+        [Fact]
         public void excludes_is_always_false_with_no_exclusions()
         {
             var settings = new AuthenticationSettings();
             settings.ShouldBeExcluded(new RoutedChain("foo")).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void automatically_excludes_the_NotAuthenticated_attribute()
         {
             var chain = new RoutedChain("foo");
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.Security.Authentication
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void apply_a_custom_exclusion()
         {
             var chain = new RoutedChain("foo");
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Security.Authentication
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void apply_a_custome_exclusion_and_it_does_not_apply_to_login_page()
         {
             var settings = new AuthenticationSettings();
@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.Security.Authentication
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void exclude_by_default_if_the_input_type_is_marked_as_NotAuthenticated()
         {
             var chain = new RoutedChain("bar");
@@ -107,7 +107,7 @@ namespace FubuMVC.Tests.Security.Authentication
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void exclude_by_default_actions_marked_as_pass_through()
         {
             var chain = new RoutedChain("foo");

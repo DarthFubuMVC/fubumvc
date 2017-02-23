@@ -2,15 +2,15 @@
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Polling;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Polling
 {
-    [TestFixture]
+    
     public class JobTimeoutTester
     {
-        [Test]
+        [Fact]
         public void run_to_completion_within_the_time()
         {
             var timeout = new JobTimeout(5.Seconds());
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             job.Finished.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void run_over_the_allowed_time()
         {
             var timeout = new JobTimeout(1.Seconds());

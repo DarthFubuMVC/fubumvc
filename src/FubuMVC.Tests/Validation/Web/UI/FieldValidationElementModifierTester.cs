@@ -4,13 +4,13 @@ using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web.UI;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-    [TestFixture]
+    
     public class FieldValidationElementModifierTester
     {
         private ElementRequest theRequest;
@@ -19,8 +19,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
 
         private IFieldValidationModifier theFieldModifier;
 
-        [SetUp]
-        public void SetUp()
+        public FieldValidationElementModifierTester()
         {
             theRequest = ElementRequest.For<FieldValidationModifierTarget>(x => x.Name);
             theModifier = new FieldValidationElementModifier();
@@ -35,13 +34,13 @@ namespace FubuMVC.Tests.Validation.Web.UI
             theRequest.Attach(theServices);
         }
 
-        [Test]
+        [Fact]
         public void always_matches()
         {
             theModifier.Matches(null).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void runs_the_modifier_against_the_field_rules()
         {
             theModifier.Modify(theRequest);

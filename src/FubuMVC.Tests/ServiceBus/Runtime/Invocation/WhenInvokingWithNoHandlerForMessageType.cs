@@ -4,18 +4,18 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class WhenInvokingWithNoHandlerForMessageType : InteractionContext<HandlerPipeline>
     {
 
 
-        [Test]
+        [Fact]
         public void should_move_message_to_error_queue()
         {
             using (var runtime = FubuRuntime.BasicBus(x =>

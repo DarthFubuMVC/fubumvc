@@ -1,23 +1,17 @@
 ﻿using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Core.Validation.Web.UI;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web.UI
 {
-	[TestFixture]
+	
 	public class ElementLocalizationMessagesTester
 	{
-		private ElementLocalizationMessages theMessages;
+		private ElementLocalizationMessages theMessages = new ElementLocalizationMessages();
 
-		[SetUp]
-		public void SetUp()
-		{
-			theMessages = new ElementLocalizationMessages();
-		}
-
-		[Test]
+		[Fact]
 		public void adds_the_rules()
 		{
 			theMessages.Add(new RequiredFieldRule());

@@ -1,13 +1,13 @@
 ﻿using FubuMVC.Core.Security.Authentication.Windows;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Windows
 {
-    [TestFixture]
+    
     public class DefaultWindowsPrincipalHandlerTester
     {
-        [Test]
+        [Fact]
         public void authenticated_has_to_return_true()
         {
             new DefaultWindowsPrincipalHandler().Authenticated(null).ShouldBeTrue();

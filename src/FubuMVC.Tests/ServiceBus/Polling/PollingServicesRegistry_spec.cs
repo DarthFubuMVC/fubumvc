@@ -1,15 +1,15 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Polling
 {
-    [TestFixture]
+    
     public class PollingServicesRegistry_spec
     {
-        [Test]
+        [Fact]
         public void service_registrations()
         {
             using (var runtime = FubuRuntime.BasicBus())

@@ -10,12 +10,12 @@ using FubuMVC.Core.Urls;
 using FubuMVC.Tests.Registration;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Continuations
 {
-    [TestFixture]
+    
     public class ContinuationHandlerTester : InteractionContext<ContinuationHandler>
     {
         private StubUrlRegistry urls;
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Continuations
         }
 
 
-        [Test]
+        [Fact]
         public void redirect_with_string_assumes_that_it_is_a_url()
         {
             ClassUnderTest.RedirectTo("some url");
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Continuations
             MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl("some url"));
         }
 
-        [Test]
+        [Fact]
         public void redirect_with_object_and_category()
         {
             var urlTarget = new UrlTarget();
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Continuations
             MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl(expectedUrl));
         }
 
-        [Test]
+        [Fact]
         public void redirect_to_call_with_category()
         {
             var actionCall = ActionCall.For<FakeEndpoint>(x => x.SayHello());
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Continuations
             MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl(expectedUrl));
         }
 
-        [Test]
+        [Fact]
         public void transfer_to_with_category_and_input_model()
         {
             var foo = new Foo();
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.Continuations
 
         }
 
-        [Test]
+        [Fact]
         public void transfer_to_with_category_and_action_call()
         {
             var actionCall = ActionCall.For<FakeEndpoint>(x => x.SayHello());
@@ -127,7 +127,7 @@ namespace FubuMVC.Tests.Continuations
         protected abstract void theContextIs();
     }
 
-    [TestFixture]
+    
     public class finding_the_fubu_continuation : InteractionContext<ContinuationHandler>
     {
         private InMemoryFubuRequest theRequest;
@@ -143,7 +143,7 @@ namespace FubuMVC.Tests.Continuations
             Services.Inject<IFubuRequest>(theRequest);
         }
 
-        [Test]
+        [Fact]
         public void find_the_continuation_if_there_is_a_redirectable()
         {
             var redirectable = new StubRedirectable(){RedirectTo = FubuContinuation.NextBehavior()};
@@ -152,7 +152,7 @@ namespace FubuMVC.Tests.Continuations
             ClassUnderTest.FindContinuation().ShouldBeTheSameAs(redirectable.RedirectTo);
         }
 
-        [Test]
+        [Fact]
         public void if_the_redirectable_does_not_have_a_continuation_assume_NextBehavior()
         {
             theRequest.Set(new StubRedirectable{RedirectTo = null});
@@ -160,7 +160,7 @@ namespace FubuMVC.Tests.Continuations
             ClassUnderTest.FindContinuation().AssertWasContinuedToNextBehavior();
         }
 
-        [Test]
+        [Fact]
         public void find_the_continuation_without_the_presence_of_an_IRedirectable()
         {
             ClassUnderTest.FindContinuation().ShouldBeTheSameAs(theContinuation);
@@ -175,7 +175,7 @@ namespace FubuMVC.Tests.Continuations
         }
     }
 
-    [TestFixture]
+    
     public class when_ending_with_a_status_code : ContinuationHandlerContext
     {
         protected override void theContextIs()
@@ -183,13 +183,13 @@ namespace FubuMVC.Tests.Continuations
             ClassUnderTest.EndWithStatusCode(HttpStatusCode.NotModified);
         }
 
-        [Test]
+        [Fact]
         public void the_inside_behavior_should_not_be_invoked()
         {
             theInsideBehavior.AssertWasNotCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void the_status_code_should_be_written_to_the_output_writer()
         {
             MockFor<IOutputWriter>().WriteResponseCode(HttpStatusCode.NotModified);
@@ -199,7 +199,7 @@ namespace FubuMVC.Tests.Continuations
 
 
 
-    [TestFixture]
+    
     public class when_the_continuation_redirects_to_a_destination_object : ContinuationHandlerContext
     {
         private InputModel input;
@@ -215,21 +215,21 @@ namespace FubuMVC.Tests.Continuations
             ProcessContinuation(FubuContinuation.RedirectTo(input));
         }
 
-        [Test]
+        [Fact]
         public void redirect_to_the_url_from_url_registry()
         {
             VerifyCallsFor<IUrlRegistry>();
             MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl(theUrl));
         }
 
-        [Test]
+        [Fact]
         public void should_not_invoke_the_inner_behavior()
         {
             theInsideBehavior.AssertWasNotCalled(x => x.Invoke());
         }
     }
 
-    [TestFixture]
+    
     public class when_the_continuation_redirects_to_a_string : ContinuationHandlerContext
     {
         private string theUrl;
@@ -241,20 +241,20 @@ namespace FubuMVC.Tests.Continuations
             ProcessContinuation(FubuContinuation.RedirectTo(theUrl));
         }
 
-        [Test]
+        [Fact]
         public void invokes_output_writer_with_the_new_url()
         {
             MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl(theUrl));
         }
 
-        [Test]
+        [Fact]
         public void should_not_invoke_the_inner_behavior()
         {
             theInsideBehavior.AssertWasNotCalled(x => x.Invoke());
         }
     }
 
-    [TestFixture]
+    
     public class when_the_continuation_redirects_to_an_action_call : ContinuationHandlerContext
     {
         private string theUrl;
@@ -271,13 +271,13 @@ namespace FubuMVC.Tests.Continuations
         }
 
 
-        [Test]
+        [Fact]
         public void should_not_invoke_the_inner_behavior()
         {
             theInsideBehavior.AssertWasNotCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void should_redirect_to_the_url_for_the_specified_continuation()
         {
             VerifyCallsFor<IUrlRegistry>();
@@ -286,7 +286,7 @@ namespace FubuMVC.Tests.Continuations
     }
 
 
-    [TestFixture]
+    
     public class when_transferring_to_a_destination_object : ContinuationHandlerContext
     {
         private IActionBehavior partial;
@@ -308,32 +308,32 @@ namespace FubuMVC.Tests.Continuations
             ProcessContinuation(FubuContinuation.TransferTo(input));
         }
 
-        [Test]
+        [Fact]
         public void find_the_partial_behavior_by_the_destination_object()
         {
             VerifyCallsFor<IPartialFactory>();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_partial_behavior()
         {
             partial.AssertWasCalled(x => x.InvokePartial());
         }
 
-        [Test]
+        [Fact]
         public void should_not_invoke_the_inner_behavior()
         {
             theInsideBehavior.AssertWasNotCalled(x => x.Invoke());
         }
 
-        [Test]
+        [Fact]
         public void should_register_the_destination_object_into_the_fubu_request()
         {
             MockFor<IFubuRequest>().AssertWasCalled(x => x.SetObject(input));
         }
     }
 
-    [TestFixture]
+    
     public class when_transferring_to_an_action_call : ContinuationHandlerContext
     {
         private ActionCall call;
@@ -354,19 +354,19 @@ namespace FubuMVC.Tests.Continuations
         }
 
 
-        [Test]
+        [Fact]
         public void find_the_partial_behavior_by_the_destination_object()
         {
             VerifyCallsFor<IPartialFactory>();
         }
 
-        [Test]
+        [Fact]
         public void should_invoke_the_partial_behavior()
         {
             partial.AssertWasCalled(x => x.InvokePartial());
         }
 
-        [Test]
+        [Fact]
         public void should_not_invoke_the_inner_behavior()
         {
             theInsideBehavior.AssertWasNotCalled(x => x.Invoke());

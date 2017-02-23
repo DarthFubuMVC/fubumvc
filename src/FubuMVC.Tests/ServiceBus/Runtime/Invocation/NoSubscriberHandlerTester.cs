@@ -2,20 +2,19 @@
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class when_handling_a_message
     {
         private TestEnvelopeContext theContext;
         private Envelope theEnvelope;
 
-        [SetUp]
-        public void SetUp()
+        public when_handling_a_message()
         {
             theContext = new TestEnvelopeContext();
             theEnvelope = ObjectMother.Envelope();
@@ -23,20 +22,20 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             new NoSubscriberHandler().Execute(theEnvelope, theContext);
         }
 
-        [Test]
+        [Fact]
         public void should_mark_the_dequeue_as_successful()
         {
             theEnvelope.Callback.AssertWasCalled(x => x.MarkSuccessful());
         }
 
-        [Test]
+        [Fact]
         public void should_have_sent_a_failure_ack()
         {
             theContext.RecordedOutgoing.FailureAcknowledgementMessage
                 .ShouldBe("No subscriber");
         }
 
-        [Test]
+        [Fact]
         public void should_log_a_message_for_there_being_no_handler()
         {
             var log = theContext.RecordedLogs.InfoMessages.OfType<NoHandlerForMessage>()

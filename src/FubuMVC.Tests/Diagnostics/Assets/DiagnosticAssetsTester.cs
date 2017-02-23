@@ -6,22 +6,17 @@ using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Diagnostics.Assets
 {
-    [TestFixture]
+    
     public class DiagnosticAssetsTester
     {
-        private DiagnosticAssetsCache theAssets;
+        private DiagnosticAssetsCache theAssets = new DiagnosticAssetsCache(new BehaviorGraph { PackageAssemblies = new Assembly[0] });
 
-        [SetUp]
-        public void SetUp()
-        {
-            theAssets = new DiagnosticAssetsCache(new BehaviorGraph{PackageAssemblies = new Assembly[0]});
-        }
 
-        [Test]
+        [Fact]
         public void reads_embedded_diagnostic_files_for_an_assembly()
         {
             theAssets.For("bootstrap.min.css").ShouldNotBeNull();
@@ -29,7 +24,7 @@ namespace FubuMVC.Tests.Diagnostics.Assets
             theAssets.For("master.css").ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void embedded_file_captures_the_mime_type()
         {
             var file = theAssets.For("master.css");
@@ -38,7 +33,7 @@ namespace FubuMVC.Tests.Diagnostics.Assets
         }
 
 
-        [Test]
+        [Fact]
         public void embedded_file_captures_the_version()
         {
             var file = theAssets.For("master.css");
@@ -46,7 +41,7 @@ namespace FubuMVC.Tests.Diagnostics.Assets
             file.Version.ShouldBe(typeof(IActionBehavior).Assembly.GetName().Version.ToString());
         }
 
-        [Test]
+        [Fact]
         public void embedded_file_can_read_contents()
         {
             var file = theAssets.For("master.css");

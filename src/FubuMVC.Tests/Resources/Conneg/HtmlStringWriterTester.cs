@@ -3,13 +3,13 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {
-    [TestFixture]
+    
     public class HtmlStringWriterTester : InteractionContext<HtmlStringWriter<HtmlTag>>
     {
         private HtmlTag theTag;
@@ -19,14 +19,14 @@ namespace FubuMVC.Tests.Resources.Conneg
             theTag = new HtmlTag("div");
         }
 
-        [Test]
+        [Fact]
         public void the_only_mime_type_is_html()
         {
             ClassUnderTest.Mimetypes.Single()
                 .ShouldBe(MimeType.Html.Value);
         }
 
-        [Test]
+        [Fact]
         public void writing_should_write_the_to_string_of_the_target()
         {
             var context = new MockedFubuRequestContext(Services.Container);

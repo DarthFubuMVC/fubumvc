@@ -1,25 +1,24 @@
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class FieldValidationQueryTester
     {
         private FieldValidationQuery _query;
 
-        [SetUp]
-        public void setup()
+        public FieldValidationQueryTester()
         {
             var registry = new FieldRulesRegistry(new[] {new AttributeFieldValidationSource()},
                                                   new TypeDescriptorCache());
             _query = new FieldValidationQuery(registry);
         }
 
-        [Test]
+        [Fact]
         public void should_find_basic_rules()
         {
             _query
@@ -27,7 +26,7 @@ namespace FubuMVC.Tests.Validation.Fields
                 .ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void should_have_basic_rules()
         {
             _query
@@ -35,7 +34,7 @@ namespace FubuMVC.Tests.Validation.Fields
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_continue_and_find_rules_for_ancillary_objects()
         {
             _query
@@ -43,7 +42,7 @@ namespace FubuMVC.Tests.Validation.Fields
                 .ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void should_continue_and_find_rules_for_nested__continued_ancillary_objects()
         {
             _query
@@ -51,7 +50,7 @@ namespace FubuMVC.Tests.Validation.Fields
                 .ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void should_not_get_rules_for_ancillary_objects_without_a_continue_validation()
         {
             _query
@@ -59,7 +58,7 @@ namespace FubuMVC.Tests.Validation.Fields
                 .ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void should_not_get_rules_for_nested_ancillary_objects_without_a_continue_validation()
         {
             _query
@@ -67,7 +66,7 @@ namespace FubuMVC.Tests.Validation.Fields
                 .ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void should_call_continuation_for_rules()
         {
             var found = false;
@@ -77,7 +76,7 @@ namespace FubuMVC.Tests.Validation.Fields
             found.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_not_get_rules_for_ancillary_objects_in_collection()
         {
             _query

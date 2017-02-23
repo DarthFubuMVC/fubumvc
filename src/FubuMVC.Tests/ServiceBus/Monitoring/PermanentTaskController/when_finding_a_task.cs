@@ -1,10 +1,10 @@
 ﻿using FubuMVC.Core.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
-    [TestFixture]
+    
     public class when_finding_a_task : PersistentTaskControllerContext
     {
         private FakePersistentTask existingSubject1;
@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
             existingSubject2 = sources["bar"].AddTask("b");
         }
 
-        [Test]
+        [Fact]
         public void happy_path()
         {
             theController.FindTask(existingSubject1.Subject)
@@ -29,14 +29,14 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 
         }
 
-        [Test]
+        [Fact]
         public void sad_path_unknown_protocol()
         {
             theController.FindTask("wrong://1".ToUri())
                 .ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void sad_path_unknown_subject_for_the_task()
         {
             theController.FindTask("foo://wrong".ToUri())

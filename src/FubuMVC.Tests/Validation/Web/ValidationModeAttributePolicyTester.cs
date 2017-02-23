@@ -4,12 +4,12 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Web;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Web
 {
-	[TestFixture]
+	
 	public class ValidationModeAttributePolicyTester
 	{
 		private Accessor accessorFor<T>(Expression<Func<T, object>> expression)
@@ -23,31 +23,31 @@ namespace FubuMVC.Tests.Validation.Web
 			return new ValidationModeAttributePolicy().Matches(new InMemoryServiceLocator(), accessor);
 		}
 
-		[Test]
+		[Fact]
 		public void matches_accessors_for_properties_with_live_validation_attribute()
 		{
 			matches<ValidationModeAttributeTarget>(x => x.Live).ShouldBeTrue();
 		}
 
-		[Test]
+		[Fact]
 		public void matches_accessors_for_properties_with_triggered_validation_attribute()
 		{
 			matches<ValidationModeAttributeTarget>(x => x.Triggered).ShouldBeTrue();
 		}
 
-		[Test]
+		[Fact]
 		public void matches_accessors_for_properties_belonging_to_a_class_with_validation_attribute()
 		{
 			matches<ClassLevelValidationModeAttributeTarget>(x => x.Property).ShouldBeTrue();
 		}
 
-		[Test]
+		[Fact]
 		public void matches_accessors_for_properties_with_no_validation_mode_attributes()
 		{
 			matches<ValidationModeAttributeTarget>(x => x.Ignored).ShouldBeFalse();
 		}
 
-		[Test]
+		[Fact]
 		public void mode_is_determined_from_live_attribute()
 		{
 			var accessor = accessorFor<ValidationModeAttributeTarget>(x => x.Live);
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Validation.Web
 		}
 
 
-		[Test]
+		[Fact]
 		public void mode_is_determined_from_triggered_attribute()
 		{
 			var accessor = accessorFor<ValidationModeAttributeTarget>(x => x.Triggered);
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.Validation.Web
 				.ShouldBe(ValidationMode.Triggered);
 		}
 
-		[Test]
+		[Fact]
 		public void mode_is_determined_from_class_level_attribute()
 		{
 			var accessor = accessorFor<ClassLevelValidationModeAttributeTarget>(x => x.Property);

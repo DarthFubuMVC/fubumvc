@@ -4,12 +4,12 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Tickets;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication.Tickets
 {
-    [TestFixture]
+    
     public class when_marking_authentication : InteractionContext<TicketAuthenticationSession>
     {
         private string theUserName;
@@ -32,19 +32,19 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
                 [0][0].As<AuthenticationTicket>();
         }
 
-        [Test]
+        [Fact]
         public void the_ticket_should_have_the_user_name()
         {
             theResultingTicket.UserName.ShouldBe(theUserName);
         }
 
-        [Test]
+        [Fact]
         public void last_accessed_should_be_now()
         {
             theResultingTicket.LastAccessed.ShouldBe(UtcSystemTime);
         }
 
-        [Test]
+        [Fact]
         public void expiration_is_now_plus_the_expiration_in_minutes_from_settings()
         {
             var expirationTime = UtcSystemTime.AddMinutes(30);
@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
     }
 
 
-    [TestFixture]
+    
     public class TicketAuthenticationSession_IsExpired_Tester : InteractionContext<TicketAuthenticationSession>
     {
         private AuthenticationSettings theSettings;
@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
             theTicket = new AuthenticationTicket();
         }
 
-        [Test]
+        [Fact]
         public void absolute_expiration()
         {
             theSettings.SlidingExpiration = false;
@@ -85,7 +85,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
 
         }
 
-        [Test]
+        [Fact]
         public void sliding_expiration()
         {
             theSettings.SlidingExpiration = true;
@@ -106,7 +106,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
     }
 
 
-    [TestFixture]
+    
     public class finding_a_currently_authenticated_user_when_there_is_none : InteractionContext<TicketAuthenticationSession>
     {
         protected override void beforeEach()
@@ -114,7 +114,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
             MockFor<ITicketSource>().Stub(x => x.CurrentTicket()).Return(null);
         }
 
-        [Test]
+        [Fact]
         public void should_return_the_null()
         {
             ClassUnderTest.PreviouslyAuthenticatedUser().ShouldBeNull();
@@ -122,7 +122,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
     }
 
 
-    [TestFixture]
+    
     public class finding_a_currently_authenticated_user_that_is_not_expired : InteractionContext<TicketAuthenticationSession>
     {
         private AuthenticationTicket theTicket;
@@ -139,14 +139,14 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
             ClassUnderTest.Stub(x => x.IsExpired(theTicket)).Return(false);
         }
 
-        [Test]
+        [Fact]
         public void should_return_the_username_of_the_current_logged_in_user()
         {
             ClassUnderTest.PreviouslyAuthenticatedUser().ShouldBe(theTicket.UserName);
         }
     }
 
-    [TestFixture]
+    
     public class finding_a_currently_authenticated_user_that_is_expired : InteractionContext<TicketAuthenticationSession>
     {
         private AuthenticationTicket theTicket;
@@ -165,13 +165,13 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
             ClassUnderTest.Stub(x => x.IsExpired(theTicket)).Return(true);
         }
 
-        [Test]
+        [Fact]
         public void should_return_the_null()
         {
             ClassUnderTest.PreviouslyAuthenticatedUser().ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void should_delete_the_existing_ticket()
         {
             ClassUnderTest.PreviouslyAuthenticatedUser();
@@ -180,7 +180,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
     }
 
 
-    [TestFixture]
+    
     public class when_marking_a_ticket_as_accessed : InteractionContext<TicketAuthenticationSession>
     {
         private AuthenticationTicket theTicket;
@@ -195,13 +195,13 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
             ClassUnderTest.MarkAccessed();
         }
 
-        [Test]
+        [Fact]
         public void should_set_the_last_accessed_time_to_now()
         {
             theTicket.LastAccessed.ShouldBe(UtcSystemTime);
         }
 
-        [Test]
+        [Fact]
         public void should_persist_the_ticket()
         {
             MockFor<ITicketSource>().AssertWasCalled(x => x.Persist(theTicket));

@@ -6,28 +6,22 @@ using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.ServiceBus.Docs.Basics;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Hosting
 {
-    [TestFixture]
-    public class fuburuntime_scenario_support_Tester
+    
+    public class fuburuntime_scenario_support_Tester : IDisposable
     {
-        private FubuRuntime host;
+        private FubuRuntime host = FubuRuntime.Basic();
 
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            host = FubuRuntime.Basic();
-        }
-
-        [TestFixtureTearDown]
-        public void TearDown()
+        public void Dispose()
         {
             host.SafeDispose();
         }
 
-        [Test]
+
+        [Fact]
         public void invoke_a_simple_string_endpoint()
         {
             host.Scenario(_ =>
@@ -42,7 +36,6 @@ namespace FubuMVC.Tests.Http.Hosting
             return Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => { host.Scenario(configuration); });
         }
 
-        [Test, Explicit]
         public void examples()
         {
 host.Scenario(_ =>
@@ -81,7 +74,7 @@ host.Scenario(_ =>
 });
         }
 
-        [Test]
+        [Fact]
         public void using_scenario_with_string_text_and_relative_url()
         {
             host.Scenario(x => { x.Get.Url("memory/hello"); })
@@ -89,7 +82,7 @@ host.Scenario(_ =>
             ;
         }
 
-        [Test]
+        [Fact]
         public void using_scenario_with_controller_expression()
         {
             host.Scenario(x =>
@@ -100,7 +93,7 @@ host.Scenario(_ =>
             ;
         }
 
-        [Test]
+        [Fact]
         public void using_scenario_with_input_model()
         {
             host.Scenario(x => { x.Get.Input(new InMemoryInput {Color = "Red"}); })
@@ -114,7 +107,7 @@ host.Scenario(_ =>
         }
 
 
-        [Test]
+        [Fact]
         public void using_scenario_with_input_model_as_marker()
         {
             host.Scenario(x => { x.Get.Input<MarkerInput>(); })
@@ -122,7 +115,7 @@ host.Scenario(_ =>
             ;
         }
 
-        [Test]
+        [Fact]
         public void using_scenario_with_ContentShouldContain_declaration_happy_path()
         {
             host.Scenario(x =>
@@ -133,7 +126,7 @@ host.Scenario(_ =>
         }
 
 
-        [Test]
+        [Fact]
         public void using_scenario_with_ContentShouldContain_declaration_sad_path()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -148,7 +141,7 @@ host.Scenario(_ =>
             ex.Message.ShouldContain("The response body does not contain expected text \"wrong text\"");
         }
 
-        [Test]
+        [Fact]
         public void using_scenario_with_ContentShouldNotContain_declaration_happy_path()
         {
             host.Scenario(x =>
@@ -158,7 +151,7 @@ host.Scenario(_ =>
             });
         }
 
-        [Test]
+        [Fact]
         public void using_scenario_with_ContentShouldNotContain_declaration_sad_path()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -173,7 +166,7 @@ host.Scenario(_ =>
             ex.Message.ShouldContain("The response body should not contain text \"just the marker\"");
         }
 
-        [Test]
+        [Fact]
         public void using_scenario_with_StatusCodeShouldBe_happy_path()
         {
             host.Scenario(x =>
@@ -183,7 +176,7 @@ host.Scenario(_ =>
             });
         }
 
-        [Test]
+        [Fact]
         public void using_scenario_with_StatusCodeShouldBe_sad_path()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -198,7 +191,7 @@ host.Scenario(_ =>
             ex.Message.ShouldContain("Expected status code 500 (InternalServerError), but was 200");
         }
 
-        [Test]
+        [Fact]
         public void single_header_value_is_positive()
         {
             host.Scenario(x =>
@@ -210,7 +203,7 @@ host.Scenario(_ =>
             });
         }
 
-        [Test]
+        [Fact]
         public void single_header_value_is_negative_with_the_wrong_value()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -226,7 +219,7 @@ host.Scenario(_ =>
             ex.Message.ShouldContain("Expected a single header value of 'Foo'='Bar', but the actual value was 'NotBar'");
         }
 
-        [Test]
+        [Fact]
         public void single_header_value_is_negative_with_the_too_many_values()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -243,7 +236,7 @@ host.Scenario(_ =>
                 "Expected a single header value of 'Foo'='Bar', but the actual values were 'NotBar', 'AnotherBar'");
         }
 
-        [Test]
+        [Fact]
         public void single_header_value_is_negative_because_there_are_no_values()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -260,7 +253,7 @@ host.Scenario(_ =>
                 "Expected a single header value of 'Foo'='Bar', but no values were found on the response");
         }
 
-        [Test]
+        [Fact]
         public void should_have_on_non_null_header_value_happy_path()
         {
             host.Scenario(x =>
@@ -270,7 +263,7 @@ host.Scenario(_ =>
             });
         }
 
-        [Test]
+        [Fact]
         public void should_have_one_non_null_value_sad_path()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -285,7 +278,7 @@ host.Scenario(_ =>
             ex.Message.ShouldContain("Expected a single header value of 'Foo', but no values were found on the response");
         }
 
-        [Test]
+        [Fact]
         public void should_have_on_non_null_value_sad_path_with_too_many_values()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -301,7 +294,7 @@ host.Scenario(_ =>
                 "Expected a single header value of 'Foo', but found multiple values on the response: 'Bar1', 'Bar2'");
         }
 
-        [Test]
+        [Fact]
         public void header_should_not_be_written_happy_path()
         {
             host.Scenario(x =>
@@ -311,7 +304,7 @@ host.Scenario(_ =>
             });
         }
 
-        [Test]
+        [Fact]
         public void header_should_not_be_written_sad_path_with_values()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -326,7 +319,7 @@ host.Scenario(_ =>
             ex.Message.ShouldContain("Expected no value for header 'Foo', but found values 'Bar1', 'Bar2'");
         }
 
-        [Test]
+        [Fact]
         public void exact_content_happy_path()
         {
             host.Scenario(x =>
@@ -337,7 +330,7 @@ host.Scenario(_ =>
             });
         }
 
-        [Test]
+        [Fact]
         public void exact_content_sad_path()
         {
             var e = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
@@ -353,7 +346,7 @@ host.Scenario(_ =>
             e.Message.ShouldContain("Expected the content to be 'the wrong content'");
         }
 
-        [Test]
+        [Fact]
         public void content_type_should_be_happy_path()
         {
             host.Scenario(_ =>
@@ -364,7 +357,7 @@ host.Scenario(_ =>
             });
         }
 
-        [Test]
+        [Fact]
         public void content_type_sad_path()
         {
             var ex = fails(_ =>
@@ -378,7 +371,7 @@ host.Scenario(_ =>
                 "Expected a single header value of 'Content-Type'='text/json', but the actual value was 'text/plain'");
         }
 
-        [Test]
+        [Fact]
         public void happily_blows_up_on_an_unexpected_500()
         {
             var ex = fails(_ => { _.Get.Action<InMemoryEndpoint>(x => x.get_wrong_status_code()); });

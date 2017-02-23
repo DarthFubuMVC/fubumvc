@@ -2,14 +2,14 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class FullStackConfigurationIntegrationTester
     {
-        [Test]
+        [Fact]
         public void has_all_the_chains_we_expect()
         {
             using (var runtime = FubuRuntime.For<MyFirstTransport>())
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        [Test]
+        [Fact]
         public void has_all_the_chains_we_expect_through_FubuApplication()
         {
             using (var runtime = FubuRuntime.For<MyFirstTransport>())

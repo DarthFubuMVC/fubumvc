@@ -3,19 +3,18 @@ using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
 {
-    [TestFixture]
+    
     public class WriteFileHeadContinuation_should_only_write_the_content_type_if_that_status_is_200
     {
         private FubuFile theFile;
         private IHttpResponse theResponse;
 
-        [SetUp]
-        public void SetUp()
+        public WriteFileHeadContinuation_should_only_write_the_content_type_if_that_status_is_200()
         {
             new FileSystem().WriteStringToFile("foo.txt", "some text");
             theFile = new FubuFile("foo.txt");
@@ -24,7 +23,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             
         }
 
-        [Test]
+        [Fact]
         public void do_write_content_length_for_200()
         {
             new WriteFileHeadContinuation(theResponse, theFile, HttpStatusCode.OK)
@@ -33,7 +32,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             theResponse.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, theFile.Length().ToString()));
         }
 
-        [Test]
+        [Fact]
         public void do_not_write_lenght_for_anything_but_200()
         {
             new WriteFileHeadContinuation(theResponse, theFile, HttpStatusCode.SeeOther)
@@ -44,14 +43,13 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
     }
 
 
-    [TestFixture]
+    
     public class when_writing_the_file_headers
     {
         private FubuFile theFile;
         private IHttpResponse theResponse;
 
-        [SetUp]
-        public void SetUp()
+        public when_writing_the_file_headers()
         {
             new FileSystem().WriteStringToFile("foo.txt", "some text");
             theFile = new FubuFile("foo.txt");
@@ -66,19 +64,19 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             theResponse.AssertWasCalled(x => x.AppendHeader(key, value));
         }
 
-        [Test]
+        [Fact]
         public void should_write_the_content_type()
         {
             assertHeaderValueWasWritten(HttpResponseHeaders.ContentType, "text/plain");
         }
 
-        [Test]
+        [Fact]
         public void should_write_the_last_modified_header()
         {
             assertHeaderValueWasWritten(HttpResponseHeaders.LastModified, theFile.LastModified().ToString("r"));
         }
 
-        [Test]
+        [Fact]
         public void should_write_the_quoted_etag()
         {
             assertHeaderValueWasWritten(HttpResponseHeaders.ETag, theFile.Etag().Quoted());

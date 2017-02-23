@@ -1,21 +1,15 @@
 using System.Linq;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class RangeLengthFieldRuleTester
     {
-        private RangeLengthTarget theTarget;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theTarget = new RangeLengthTarget();
-        }
+        private RangeLengthTarget theTarget = new RangeLengthTarget();
 
         private Notification theNotification
         {
@@ -31,13 +25,13 @@ namespace FubuMVC.Tests.Validation.Fields
             }
         }
 
-		[Test]
+		[Fact]
 		public void uses_the_default_token()
 		{
 			new RangeLengthFieldRule(0, 0).Token.ShouldBe(ValidationKeys.RangeLength);
 		}
 
-        [Test]
+        [Fact]
         public void registers_a_message_when_the_length_is_less_than_min()
         {
             theTarget.Value = "1234";
@@ -45,28 +39,28 @@ namespace FubuMVC.Tests.Validation.Fields
             messages.Single().StringToken.ShouldBe(ValidationKeys.RangeLength);
         }
 
-        [Test]
+        [Fact]
         public void no_message_when_equal_to_min()
         {
             theTarget.Value = "12345";
             theNotification.MessagesFor<RangeLengthTarget>(x => x.Value).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void no_message_when_greater_than_min_and_less_than_max()
         {
             theTarget.Value = "123456789";
             theNotification.MessagesFor<RangeLengthTarget>(x => x.Value).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void no_message_when_equal_to_max()
         {
             theTarget.Value = "1234567890";
             theNotification.MessagesFor<RangeLengthTarget>(x => x.Value).Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void registers_a_message_when_the_length_is_greater_than_max()
         {
             theTarget.Value = "12345678910";
@@ -74,7 +68,7 @@ namespace FubuMVC.Tests.Validation.Fields
             messages.Single().StringToken.ShouldBe(ValidationKeys.RangeLength);
         }
 
-        [Test]
+        [Fact]
         public void renders_the_substitutions()
         {
             theTarget.Value = "1234";

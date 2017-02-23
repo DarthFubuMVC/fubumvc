@@ -5,15 +5,15 @@ using FubuMVC.Core.Json;
 using Shouldly;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Json
 {
 
-    [TestFixture]
+    
      public class respects_the_injected_settings_in_serialization
      {
-        [Test]
+        [Fact]
         public void round_trip_with_camel_casing()
         {
             var settings = new JsonSerializerSettings
@@ -36,17 +36,16 @@ namespace FubuMVC.Tests.Json
     }
 
 
-	[TestFixture]
+	
 	public class when_deserializing_an_object
 	{
 		private NewtonSoftJsonSerializer theSerializer;
 		private string theInput;
 		private ParentType theObject;
 
-		[SetUp]
-		public void SetUp()
-		{
-			var locator = new InMemoryServiceLocator();
+	    public when_deserializing_an_object()
+	    {
+            var locator = new InMemoryServiceLocator();
 			var objectConverter = new ObjectConverter(locator, new ConverterLibrary(new[] {new StatelessComplexTypeConverter()}));
 			locator.Add<IObjectConverter>(objectConverter);
 
@@ -58,7 +57,7 @@ namespace FubuMVC.Tests.Json
 			theObject = theSerializer.Deserialize<ParentType>(theInput);
 		}
 
-		[Test]
+		[Fact]
 		public void uses_the_object_converter()
 		{
 			theObject.Name.ShouldBe("Test");

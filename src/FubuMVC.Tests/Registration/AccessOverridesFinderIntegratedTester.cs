@@ -3,15 +3,15 @@ using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class AccessOverridesFinderIntegratedTester
     {
-        [Test]
+        [Fact]
         public void accessor_rules_mechanics()
         {
             using (var runtime = FubuRuntime.Basic())

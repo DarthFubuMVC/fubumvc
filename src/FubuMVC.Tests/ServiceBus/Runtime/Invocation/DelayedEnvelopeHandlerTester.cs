@@ -4,16 +4,16 @@ using FubuCore.Dates;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
-    [TestFixture]
+    
     public class DelayedEnvelopeHandlerTester
     {
-        [Test]
+        [Fact]
         public void matches_positive()
         {
             var systemTime = SystemTime.Default();
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             handler.Matches(envelope).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_negative_with_no_execution_time_header()
         {
             var systemTime = SystemTime.Default();
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             handler.Matches(envelope).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void matches_negative_when_the_execution_time_is_in_the_past()
         {
             var systemTime = SystemTime.Default();
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             handler.Matches(envelope).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void execute_happy_path()
         {
             var context = new TestEnvelopeContext();
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                   .Envelope.ShouldBe(envelope.ToToken());
         }
 
-        [Test]
+        [Fact]
         public void execute_sad_path()
         {
             var context = new TestEnvelopeContext();

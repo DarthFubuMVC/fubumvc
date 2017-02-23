@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using FubuMVC.Tests.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime
 {
-    [TestFixture]
+    
     public class generic_handlers_are_called_for_messages_that_match : InvocationContext
     {
-        [Test]
+        [Fact]
         public void generic_handler_is_applied_at_end()
         {
             handler<OneHandler, TwoHandler, ThreeHandler, GenericHandler>();

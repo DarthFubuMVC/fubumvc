@@ -5,7 +5,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 using StructureMap.Pipeline;
 
@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 {
 
 
-    [TestFixture]
+    
     public class ReorderBehaviorsPolicyTester
     {
         private BehaviorGraph graph;
@@ -21,8 +21,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         private ReorderBehaviorsPolicy policy;
         private IList<BehaviorNode> nodes;
 
-        [SetUp]
-        public void SetUp()
+        public ReorderBehaviorsPolicyTester()
         {
             graph = new BehaviorGraph();
             lastChain = graph.AddChain();
@@ -58,7 +57,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
 
-        [Test]
+        [Fact]
         public void do_nothing_to_a_chain_if_the_order_is_correct()
         {
             addNode<Node1>();
@@ -73,7 +72,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             orderedNodes[2].ShouldBeOfType<Node3>();
         }
 
-        [Test]
+        [Fact]
         public void reorder_nodes_if_the_order_is_incorrect()
         {
             addNode<Node2>();
@@ -90,7 +89,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
 
-        [Test]
+        [Fact]
         public void reorder_nodes_if_the_order_is_incorrect_2()
         {
             addNode<Node2>();
@@ -105,7 +104,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             orderedNodes[2].ShouldBeOfType<Node3>();
         }
 
-        [Test]
+        [Fact]
         public void reorder_by_wrappers_positive()
         {
             addNode<Node1>();
@@ -120,7 +119,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             orderedNodes[2].ShouldBeOfType<Node2>();
         }
 
-        [Test]
+        [Fact]
         public void reorder_by_wrappers_positive_2()
         {
             
@@ -139,7 +138,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
 
-        [Test]
+        [Fact]
         public void reorder_by_wrappers_negative()
         {
             addWrapper<Wrapper1>();

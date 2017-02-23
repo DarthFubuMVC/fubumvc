@@ -7,17 +7,17 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication.Cookies;
 using FubuMVC.Core.Security.Authentication.Tickets;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
 {
-    [TestFixture]
+    
     public class authenticated_request_against_an_authenticated_route : AuthenticationHarness
     {
 
 
-        [Test]
+        [Fact]
         public void login_with_default_credentials_and_retrieve_a_resource()
         {
             // create the auth ticket

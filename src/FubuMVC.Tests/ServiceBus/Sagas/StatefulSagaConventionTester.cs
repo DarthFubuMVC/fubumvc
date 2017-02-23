@@ -7,7 +7,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Sagas;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using StructureMap.Pipeline;
@@ -15,10 +15,10 @@ using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Sagas
 {
-    [TestFixture]
+    
     public class StatefulSagaConventionTester
     {
-        [Test]
+        [Fact]
         public void is_saga_handler_positive()
         {
             StatefulSagaConvention.IsSagaHandler(HandlerCall.For<SimpleSagaHandler>(x => x.Start(null)))
@@ -31,21 +31,21 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void is_saga_handler_negative()
         {
             StatefulSagaConvention.IsSagaHandler(HandlerCall.For<SimpleHandler<OneMessage>>(x => x.Handle(null)))
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void is_saga_chain_is_false_for_regular_behavior_chain()
         {
             StatefulSagaConvention.IsSagaChain(new BehaviorChain())
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void is_saga_chain_is_false_for_handler_chain_with_no_saga_handlers()
         {
             var call = HandlerCall.For<SimpleHandler<OneMessage>>(x => x.Handle(null));
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void is_saga_chain_is_true_for_handler_chain_with_a_saga_handler()
         {
             var call = HandlerCall.For<SimpleSagaHandler>(x => x.Last(null));
@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void to_saga_types_for_a_handler_call()
         {
             var call = HandlerCall.For<SimpleSagaHandler>(x => x.Last(null));
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         }
 
 
-        [Test]
+        [Fact]
         public void no_registered_storage_and_matches_the_idiom_so_use_in_memory_cache()
         {
             var types = new SagaTypes
@@ -94,7 +94,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
                                   .ReturnedType.ShouldBe(typeof (InMemorySagaRepository<MySagaState, SagaMessageOne>));
         }
 
-        [Test]
+        [Fact]
         public void use_matching_storage_to_build_the_repository()
         {
             var types = new SagaTypes
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
                                   .ShouldBeTheSameAs(def);
         }
 
-        [Test]
+        [Fact]
         public void use_matching_storage_to_build_the_repository_2()
         {
             var types = new SagaTypes
@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         }
 
 
-        [Test]
+        [Fact]
         public void use_matching_storage_to_build_the_repository_3()
         {
             var types = new SagaTypes
@@ -173,7 +173,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
                                   .ShouldBeTheSameAs(def);
         }
 
-        [Test]
+        [Fact]
         public void unable_to_determine_a_saga_repository_blows_up()
         {
             Exception<SagaRepositoryUnresolvableException>.ShouldBeThrownBy(() => {
@@ -186,10 +186,10 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         }
     }
 
-    [TestFixture]
+    
     public class when_using_a_custom_saga_storage
     {
-        [Test]
+        [Fact]
         public void use_the_special_storage_just_fine()
         {
             using (var runtime = FubuRuntime.BasicBus(x => x.ServiceBus.SagaStorage<SpecialSagaStorage>()))

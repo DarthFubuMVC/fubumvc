@@ -1,19 +1,19 @@
 using FubuMVC.Core.Localization;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Localization
 {
-    [TestFixture]
+    
     public class StringTokenToLocalizationKeyTester
     {
-        [Test]
+        [Fact]
         public void localization_key_includes_the_namespace_if_it_exists()
         {
             NoNamespaceStringToken.Key1.ToLocalizationKey().Key1.ShouldBe("Key1");
         }
 
-        [Test]
+        [Fact]
         public void localization_key_with_namespace()
         {
             StringTokenWithNamespace.Key1.ToLocalizationKey().Key1.ShouldBe("NS1:Key1");

@@ -10,12 +10,12 @@ using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Routes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using FubuMVC.Tests;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class RouteDefinitionTester
     {
         public class QueryStringTarget
@@ -59,20 +59,20 @@ namespace FubuMVC.Tests.Registration
             }
         }
 
-        [Test]
+        [Fact]
         public void can_calculate_rank_without_input_if_there_are_substitutions()
         {
             var route = new RouteDefinition("{Client}/foo");
             route.Rank.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void session_state_requirement_is_null_by_default_signifying_that_it_should_use_the_default()
         {
             new RouteDefinition("something").SessionStateRequirement.ShouldBeNull(); // this actually matters
         }
 
-        [Test]
+        [Fact]
         public void get_route_pattern_with_querystring_parameters_when_there_are_no_values()
         {
             var route = RouteBuilder.Build(typeof (QueryStringTarget), "route");
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldBe("route");
         }
 
-        [Test]
+        [Fact]
         public void get_route_pattern_with_an_IMakeMyOwnUrl()
         {
             var maker = new MyOwnUrlMaker("something/else");
@@ -90,14 +90,14 @@ namespace FubuMVC.Tests.Registration
             route.CreateUrlFromInput(maker).ShouldBe("folder/something/else");
         }
 
-        [Test]
+        [Fact]
         public void by_default_input_type_returns_null()
         {
             var routeDefinition = new RouteDefinition("");
             routeDefinition.Input.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void to_string_by_default_gets_pattern()
         {
             const string pattern = "some/pattern";
@@ -105,7 +105,7 @@ namespace FubuMVC.Tests.Registration
             routeDefinition.ToString().ShouldBe(pattern);
         }
 
-        [Test]
+        [Fact]
         public void shouldd_not_add_duplicate_input()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
@@ -115,14 +115,14 @@ namespace FubuMVC.Tests.Registration
             url.RouteParameters.ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void to_string_gets_pattern_and_type_full_name()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
             url.ToString().ShouldBe("{0} --> {1}".ToFormat(url.Parent.Pattern, typeof(SampleViewModel).FullName));
         }
 
-        [Test]
+        [Fact]
         public void create_default_value_for_a_route()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
@@ -133,7 +133,7 @@ namespace FubuMVC.Tests.Registration
             route.Defaults["InPath"].ShouldBe("something");
         }
 
-        [Test]
+        [Fact]
         public void create_two_default_values_for_a_route()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void create_url_for_a_route_with_two_parameters()
         {
             var url = new RouteInput<SampleViewModel>("my/sample/{InPath}/{AlsoInPath}");
@@ -157,7 +157,7 @@ namespace FubuMVC.Tests.Registration
             url.Parent.ToRoute().Url.ShouldBe("my/sample/{InPath}/{AlsoInPath}");
         }
 
-        [Test]
+        [Fact]
         public void create_url_will_escape_the_url()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
@@ -169,7 +169,7 @@ namespace FubuMVC.Tests.Registration
             }).ShouldBe("test/edit/some%20text");
         }
 
-        [Test]
+        [Fact]
         public void create_url_will_escape_the_url_with_parameters()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
@@ -181,7 +181,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/some%20text");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
@@ -193,7 +193,7 @@ namespace FubuMVC.Tests.Registration
             }).ShouldBe("test/edit/5");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_parameters()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
@@ -205,7 +205,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/5");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_encoded_variable()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
@@ -217,7 +217,7 @@ namespace FubuMVC.Tests.Registration
             }).ShouldBe("test/edit/abc%2Fdef%26ghi%3Djkl");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_default_value_for_optional_input()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
@@ -231,7 +231,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldEndWith("test/edit/a");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_default_value_for_optional_input_with_parameters()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
@@ -245,7 +245,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldEndWith("test/edit/a");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_default_value_for_required_input()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
@@ -259,7 +259,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldEndWith("test/edit/a");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_default_value_for_required_input_by_parameters()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
@@ -273,7 +273,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldEndWith("test/edit/a");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_no_default_value_specified_for_optional_input()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
@@ -285,7 +285,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_no_default_value_specified_for_optional_input_by_parameters()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
@@ -298,7 +298,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldEndWith("test/edit/default");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_no_default_value_specified_for_required_input()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
@@ -307,7 +307,7 @@ namespace FubuMVC.Tests.Registration
             Exception<FubuException>.ShouldBeThrownBy(() => url.CreateUrlFromInput(new SampleViewModelWithInputs()));
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_input_model_and_no_default_value_specified_for_required_input_by_parameters()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
@@ -316,7 +316,7 @@ namespace FubuMVC.Tests.Registration
             Exception<FubuException>.ShouldBeThrownBy(() => url.CreateUrlFromParameters(new RouteParameters()));
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_multiple_variables_in_path()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}/{AlsoInPath}");
@@ -330,7 +330,7 @@ namespace FubuMVC.Tests.Registration
             }).ShouldBe("test/edit/5/some%20text");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_multiple_variables_in_path_by_parameters()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}/{AlsoInPath}");
@@ -344,7 +344,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/5/some%20text");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_encoded_variables_in_path_by_parameters()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}/{AlsoInPath}");
@@ -358,7 +358,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/5/abc%2Fdef%26ghi%3Djkl");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_multiple_variables_in_querystring()
         {
             var url = new RouteInput<SampleViewModel>("/my/sample/path");
@@ -378,7 +378,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldBe("/my/sample/path?InQueryString=query&AlsoInQueryString=alsoquery");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_null_input_model_and_no_default_value_specified_for_optional_input()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
@@ -390,7 +390,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void create_url_with_null_input_model_and_no_default_value_specified_for_optional_input_with_parameters()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
@@ -403,7 +403,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldEndWith("test/edit/default");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_null_input_model_and_no_default_value_specified_for_required_input()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
@@ -412,7 +412,7 @@ namespace FubuMVC.Tests.Registration
             Exception<FubuException>.ShouldBeThrownBy(() => url.CreateUrlFromInput(null));
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_null_input_model_and_no_default_value_specified_for_required_input_with_parameters()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
@@ -421,7 +421,7 @@ namespace FubuMVC.Tests.Registration
             Exception<FubuException>.ShouldBeThrownBy(() => url.CreateUrlFromParameters(null));
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_querystring_and_inputmodel()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
@@ -435,7 +435,7 @@ namespace FubuMVC.Tests.Registration
             }).ShouldBe("test/edit/5?InQueryString=query");
         }
 
-        [Test]
+        [Fact]
         public void will_not_use_query_string_if_there_is_no_value()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
@@ -449,7 +449,7 @@ namespace FubuMVC.Tests.Registration
             }).ShouldBe("test/edit/5");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_querystring_and_inputmodel_with_parameters()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
@@ -463,7 +463,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/5?InQueryString=query");
         }
 
-        [Test]
+        [Fact]
         public void create_url_with_variables_in_querystring()
         {
             var url = new RouteInput<SampleViewModel>("/my/sample/path");
@@ -476,7 +476,7 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void create_url_with_variables_in_querystring_with_parameters()
         {
             var url = new RouteInput<SampleViewModel>("/my/sample/path");
@@ -488,7 +488,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromParameters(parameters).ShouldBe("/my/sample/path?InQueryString=query");
         }
 
-        [Test]
+        [Fact]
         public void does_not_create_default_for_a_simple_parameter()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
@@ -498,7 +498,7 @@ namespace FubuMVC.Tests.Registration
             route.Defaults.Count().ShouldBe(0);
         }
 
-        [Test]
+        [Fact]
         public void prepend_to_route()
         {
             var route = new RouteDefinition("my/sample");
@@ -507,7 +507,7 @@ namespace FubuMVC.Tests.Registration
             route.Pattern.ShouldBe("area/my/sample");
         }
 
-        [Test]
+        [Fact]
         public void prepend_to_route_takes_care_of_stupid_trailing_leading_slashes()
         {
             var route = new RouteDefinition("my/sample");
@@ -516,7 +516,7 @@ namespace FubuMVC.Tests.Registration
             route.Pattern.ShouldBe("area/my/sample");
         }
 
-        [Test]
+        [Fact]
         public void route_input_should_substitute_method()
         {
             SingleProperty accessor = SingleProperty.Build<SampleViewModel>(x => x.InPath);
@@ -529,7 +529,7 @@ namespace FubuMVC.Tests.Registration
             routeInput.Substitute(viewModel, "test/edit/{InPath}").ShouldBe("test/edit/5");
         }
 
-        [Test]
+        [Fact]
         public void should_have_one_default_value_for_a_route_and_does_not_include_querystring_in_route()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
@@ -542,7 +542,7 @@ namespace FubuMVC.Tests.Registration
             route.Defaults.Count().ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void should_have_one_default_value_for_route()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
@@ -554,7 +554,7 @@ namespace FubuMVC.Tests.Registration
             route.Defaults.Count().ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void should_not_have_constraints_by_default()
         {
             var url = new RouteDefinition("my/sample");
@@ -564,14 +564,14 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void no_http_method_constraints_on_startup()
         {
             var route = new RouteDefinition("something");
             route.GetHttpMethodConstraints().Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void add_http_method_constraint()
         {
             var route = new RouteDefinition("something");
@@ -580,7 +580,7 @@ namespace FubuMVC.Tests.Registration
             route.GetHttpMethodConstraints().ShouldHaveTheSameElementsAs("GET");
         }
 
-        [Test]
+        [Fact]
         public void add_http_method_constraint_multiple_times()
         {
             var route = new RouteDefinition("something");
@@ -590,7 +590,7 @@ namespace FubuMVC.Tests.Registration
             route.GetHttpMethodConstraints().ShouldHaveTheSameElementsAs("GET");
         }
 
-        [Test]
+        [Fact]
         public void add_multiple_http_constraints()
         {
             var route = new RouteDefinition("something");
@@ -600,7 +600,7 @@ namespace FubuMVC.Tests.Registration
             route.GetHttpMethodConstraints().ShouldHaveTheSameElementsAs("GET", "POST");
         }
 
-        [Test]
+        [Fact]
         public void add_multiple_http_method_constraint_multiple_times()
         {
             var route = new RouteDefinition("something");
@@ -612,14 +612,14 @@ namespace FubuMVC.Tests.Registration
             route.GetHttpMethodConstraints().ShouldHaveTheSameElementsAs("GET", "POST");
         }
 
-        [Test]
+        [Fact]
         public void create_route_with_no_http_constraints()
         {
             var route = new RouteDefinition("something").ToRoute();
             route.Constraints.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void create_route_with_http_constraints()
         {
             var route = new RouteDefinition("something");
@@ -631,14 +631,14 @@ namespace FubuMVC.Tests.Registration
                 .AllowedMethods.ShouldHaveTheSameElementsAs("GET", "POST");
         }
 
-        [Test]
+        [Fact]
         public void responds_to_get_with_no_constraints()
         {
             var route = new RouteDefinition("something");
             route.RespondsToMethod("GET").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void responds_to_get_if_GET_is_explicitly_allowed()
         {
             var route = new RouteDefinition("something");
@@ -647,7 +647,7 @@ namespace FubuMVC.Tests.Registration
             route.RespondsToMethod("GET").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_respond_to_get_if_http_methods_are_explicitly_defined_and_get_is_not_allowed()
         {
             var route = new RouteDefinition("something");
@@ -655,7 +655,7 @@ namespace FubuMVC.Tests.Registration
             route.RespondsToMethod("GET").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void default_value_syntax_for_urlpattern_produces_correct_route()
         {
             var parent = new RouteDefinition("my/sample/{InPath:hello}/{AlsoInPath:world}");
@@ -666,7 +666,7 @@ namespace FubuMVC.Tests.Registration
             Regex.Match(route.Url, @":\w+").Success.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void describing_itself_session_state()
         {
             var route = new RouteDefinition("something");
@@ -681,13 +681,13 @@ namespace FubuMVC.Tests.Registration
                 SessionStateRequirement.RequiresSessionState.ToString());
         }
 
-        [Test]
+        [Fact]
         public void describing_itself_gets_the_title()
         {
             Description.For(new RouteDefinition("something")).Title.ShouldBe("Route:  something");
         }
 
-        [Test]
+        [Fact]
         public void describe_itself_adds_child_for_RouteInput()
         {
             var route = RouteBuilder.Build(typeof (BigModel), "big/{Name}/{State}");

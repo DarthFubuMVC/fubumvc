@@ -5,20 +5,20 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class when_using_the_default_authorization_policy
     {
         private BehaviorGraph graph;
         private BehaviorChain goChain;
         private BehaviorChain moveChain;
 
-        [SetUp]
-        public void SetUp()
+
+        public when_using_the_default_authorization_policy()
         {
             var registry = new FubuRegistry(x => {
                 x.Actions.IncludeClassesSuffixedWithController();
@@ -36,13 +36,13 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-        [Test]
+        [Fact]
         public void do_not_attach_the_authorization_node_if_there_are_no_authorization_rules_for_a_chain()
         {
             moveChain.Top.Any(x => x is AuthorizationNode).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void do_attach_the_authorization_node_if_there_is_an_explicit_authorization_rule_for_a_chain()
         {
             goChain.ShouldContain(goChain.Authorization.As<AuthorizationNode>());

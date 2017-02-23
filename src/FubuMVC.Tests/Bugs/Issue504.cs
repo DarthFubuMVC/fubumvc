@@ -2,15 +2,15 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Bugs
 {
-    [TestFixture]
+    
     public class Issue504
     {
-        [Test]
+        [Fact]
         public void the_url_prefix_of_a_fubu_package_registry_should_be_respected()
         {
             var registry = new FubuRegistry();

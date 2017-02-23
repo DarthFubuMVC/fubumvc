@@ -4,16 +4,16 @@ using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.Registration;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Instrumentation
 {
-    [TestFixture]
+    
     public class BehaviorTracerTester : InteractionContext<FubuMVC.Core.Diagnostics.Instrumentation.BehaviorTracer>
     {
-        [Test]
+        [Fact]
         public void when_the_inner_behavior_runs_cleanly()
         {
             var node = Wrapper.For<FakeBehavior>();
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
 
         }
 
-        [Test]
+        [Fact]
         public void when_the_inner_behavior_throws_an_exception()
         {
             var node = Wrapper.For<FakeBehavior>();

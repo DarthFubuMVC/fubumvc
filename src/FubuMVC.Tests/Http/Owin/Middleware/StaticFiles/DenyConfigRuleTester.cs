@@ -3,14 +3,14 @@ using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
 {
-    [TestFixture]
+    
     public class DenyConfigRuleTester
     {
-        [Test]
+        [Fact]
         public void deny_config_files_period()
         {
             var theRule = new DenyConfigRule();
@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             theRule.IsAllowed(new FubuFile("foo.asset.config")).ShouldBe(AuthorizationRight.Deny);
         }
 
-        [Test]
+        [Fact]
         public void no_opinion_about_anything_else()
         {
             var theRule = new DenyConfigRule();

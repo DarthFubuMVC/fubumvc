@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class FubuTransportRegistryTester
     {
-        [Test]
+        [Fact]
         public void able_to_derive_the_node_name_from_fubu_transport_registry_name()
         {
             using (var runtime = FubuRuntime.For<CustomTransportRegistry>())
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             }
         }
 
-        [Test]
+        [Fact]
         public void can_set_the_node_name_programmatically()
         {
             var registry = new FubuRegistry {NodeName = "MyNode"};

@@ -3,15 +3,15 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.Security.Authorization
 {
-    [TestFixture]
+    
     public class AuthorizationCheckPolicyTester
     {
-        [Test]
+        [Fact]
         public void delegate_to_the_check()
         {
             FakeCheck.Rights = AuthorizationRight.Allow;

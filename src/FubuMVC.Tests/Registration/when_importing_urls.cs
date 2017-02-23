@@ -7,7 +7,7 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -41,13 +41,10 @@ namespace FubuMVC.Tests.Registration
         public int Age { get; set; }
     }
 
-    [TestFixture]
+    
     public class when_importing_urls
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        public when_importing_urls()
         {
             registry1 = new FubuRegistry();
             registry1.Actions.IncludeType<RegistryImportEndpoint>();
@@ -66,13 +63,12 @@ namespace FubuMVC.Tests.Registration
             graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2, new PerfTimer()).Result());
         }
 
-        #endregion
 
         private BehaviorGraph graph2;
         private FubuRegistry registry1;
         private RegistryImport theImport;
 
-        [Test]
+        [Fact]
         public void should_have_all_the_routes_from_the_imported_graph()
         {
             graph2.Routes.Any(x => x.GetRoutePattern() == "area1/method1/{Name}/{Age}").ShouldBeTrue();
@@ -80,7 +76,7 @@ namespace FubuMVC.Tests.Registration
             graph2.Routes.Any(x => x.GetRoutePattern() == "area1/method3/{Name}/{Age}").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_have_imported_the_behavior_chains_without_routes()
         {
             graph2.ChainFor<RegistryImportEndpoint>(x => x.GoPartial(null))

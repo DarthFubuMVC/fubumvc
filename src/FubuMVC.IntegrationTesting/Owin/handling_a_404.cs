@@ -1,13 +1,13 @@
 using System.Net;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class handling_a_404
     {
-        [Test]
+        [Fact]
         public void get_response_for_non_existent_route()
         {
             TestHost.Scenario(_ =>

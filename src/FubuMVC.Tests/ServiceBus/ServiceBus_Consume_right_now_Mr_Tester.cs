@@ -1,16 +1,16 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    
     public class ServiceBus_Consume_right_now_Tester
     {
-        [Test]
+        [Fact]
         public void send_now_is_handled_right_now()
         {
 

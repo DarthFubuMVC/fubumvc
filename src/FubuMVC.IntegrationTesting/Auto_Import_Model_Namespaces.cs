@@ -1,14 +1,14 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.View;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting
 {
-    [TestFixture]
+    
     public class Auto_Import_Model_Namespaces
     {
-        [Test]
+        [Fact]
         public void has_all_the_namespaces_for_the_input_and_output_models()
         {
             using (var runtime = FubuRuntime.Basic())

@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class TemplateValueTester
     {
-        [Test]
+        [Fact]
         public void equals_other_value()
         {
             var theTemplate = TemplateValue.For("Test", "123");
             theTemplate.ShouldBe(TemplateValue.For("Test", "123"));
         }
 
-        [Test]
+        [Fact]
         public void does_not_equal_value()
         {
             var theTemplate = TemplateValue.For("Test", "123");
@@ -24,10 +24,10 @@ namespace FubuMVC.Tests.Validation
         }
     }
 
-    [TestFixture]
+    
     public class TemplateValueCollectionTester
     {
-        [Test]
+        [Fact]
         public void gets_the_values()
         {
             var values = new List<TemplateValue>
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Validation
             collection.ShouldHaveTheSameElementsAs(values);
         }
 
-        [Test]
+        [Fact]
         public void gets_the_values_from_the_static_builder()
         {
             var v1 = TemplateValue.For("FirstName", "Joel");
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Validation
             collection.ShouldHaveTheSameElementsAs(v1, v2);
         }
 
-        [Test]
+        [Fact]
         public void adds_the_value()
         {
             var v1 = TemplateValue.For("FirstName", "Joel");
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Validation
             collection.ShouldHaveTheSameElementsAs(v1, v2);
         }
 
-        [Test]
+        [Fact]
         public void only_adds_the_value_once()
         {
             var v1 = TemplateValue.For("FirstName", "Joel");
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.Validation
             collection.ShouldHaveTheSameElementsAs(v1);
         }
 
-        [Test]
+        [Fact]
         public void equality_check()
         {
             var v1 = TemplateValue.For("FirstName", "Joel");
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Validation
             collection1.ShouldBe(collection2);
         }
 
-        [Test]
+        [Fact]
         public void equality_check_negative()
         {
             var v1 = TemplateValue.For("FirstName", "Joel");
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.Validation
             collection1.ShouldNotBe(collection2);
         }
 
-        [Test]
+        [Fact]
         public void builds_the_dictionary()
         {
             var v1 = TemplateValue.For("FirstName", "Joel");
@@ -111,10 +111,10 @@ namespace FubuMVC.Tests.Validation
         }
     }
 
-    [TestFixture]
+    
     public class TemplateTester
     {
-        [Test]
+        [Fact]
         public void renders_the_template()
         {
             var theValue = TemplateValue.For("field", "FirstName");
@@ -123,7 +123,7 @@ namespace FubuMVC.Tests.Validation
             theTemplate.Render().ShouldBe("FirstName is required");
         }
 
-        [Test]
+        [Fact]
         public void equality_check()
         {
             var theValue = TemplateValue.For("field", "FirstName");
@@ -135,7 +135,7 @@ namespace FubuMVC.Tests.Validation
             template1.ShouldBe(template2);
         }
 
-        [Test]
+        [Fact]
         public void equality_check_negative()
         {
             var theValue = TemplateValue.For("field", "FirstName");

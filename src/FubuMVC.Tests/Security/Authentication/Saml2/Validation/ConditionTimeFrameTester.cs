@@ -3,27 +3,25 @@ using FubuCore;
 using FubuCore.Dates;
 using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Validation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
 {
-    [TestFixture]
+    
     public class ConditionTimeFrameTester
     {
         private SystemTime systemTime   ;
         private ConditionTimeFrame theCondition;
         // INVALID IS
         // if (now < notBefore || now >= notOnOrAfter)
-
-        [SetUp]
-        public void SetUp()
+        public ConditionTimeFrameTester()
         {
             systemTime = SystemTime.AtLocalTime("0800".ToTime());
             theCondition = new ConditionTimeFrame(systemTime);
         }
 
-        [Test]
+        [Fact]
         public void valid()
         {
             var response = new SamlResponse
@@ -39,7 +37,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
             response.Errors.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void invalid_because_it_is_before_the_not_before()
         {
             var response = new SamlResponse
@@ -55,7 +53,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
             response.Errors.Single().ShouldBe(new SamlError(SamlValidationKeys.TimeFrameDoesNotMatch));
         }
 
-        [Test]
+        [Fact]
         public void invalid_because_it_is_equal_to_the_after_time()
         {
             var response = new SamlResponse
@@ -71,7 +69,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
             response.Errors.Single().ShouldBe(new SamlError(SamlValidationKeys.TimeFrameDoesNotMatch));
         }
 
-        [Test]
+        [Fact]
         public void invalid_because_it_is_after_to_the_after_time()
         {
             var response = new SamlResponse

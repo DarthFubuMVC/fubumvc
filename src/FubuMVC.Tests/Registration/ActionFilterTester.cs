@@ -2,18 +2,17 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
+    
     public class ActionFilterTester
     {
         private BehaviorGraph theGraph;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+        public ActionFilterTester()
         {
             theGraph = BehaviorGraph.BuildFrom(r => {
                 r.Actions.IncludeType<SomeEndpoint>();
@@ -25,7 +24,8 @@ namespace FubuMVC.Tests.Registration
             });
         }
 
-        [Test]
+
+        [Fact]
         public void the_filter_does_not_count_toward_input_or_resource_type()
         {
             var chain = theGraph.ChainFor<SomeEndpoint>(x => x.get_something(null));
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Registration
             chain.ResourceType().ShouldBe(typeof (RealOutput));
         }
 
-        [Test]
+        [Fact]
         public void still_get_the_continuation_director_behind_the_action_filter()
         {
             var chain = theGraph.ChainFor<SomeEndpoint>(x => x.get_something(null));
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldBeOfType<ContinuationNode>();
         }
 
-        [Test]
+        [Fact]
         public void does_not_impact_a_normal_action_call()
         {
             var chain = theGraph.ChainFor<SomeEndpoint>(x => x.get_somewhere(null));

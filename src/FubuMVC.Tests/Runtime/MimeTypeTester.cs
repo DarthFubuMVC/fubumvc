@@ -1,52 +1,52 @@
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Runtime
 {
-    [TestFixture]
+    
     public class MimeTypeTester
     {
-        [Test]
+        [Fact]
         public void find_default_extension_for_javascript()
         {
             MimeType.Javascript.DefaultExtension().ShouldBe(".js");
         }
 
-        [Test]
+        [Fact]
         public void find_default_extension_for_css()
         {
             MimeType.Css.DefaultExtension().ShouldBe(".css");
         }
 
-        [Test]
+        [Fact]
         public void find_default_extension_for_truetype_font()
         {
             MimeType.TrueTypeFont.DefaultExtension().ShouldBe(".ttf");
         }
 
-        [Test]
+        [Fact]
         public void determine_mime_type_from_name_for_js()
         {
             MimeType.MimeTypeByFileName("file.coffee.js")
                 .ShouldBe(MimeType.Javascript);
         }
 
-        [Test]
+        [Fact]
         public void determine_mime_type_from_name_for_css()
         {
             MimeType.MimeTypeByFileName("style.css")
                 .ShouldBe(MimeType.Css);
         }
 
-        [Test]
+        [Fact]
         public void determine_mime_type_from_name_for_truetype_font()
         {
             MimeType.MimeTypeByFileName("somefont.ttf")
                 .ShouldBe(MimeType.TrueTypeFont);
         }
 
-        [Test]
+        [Fact]
         public void determine_mime_type_for_an_extension_that_has_been_added()
         {
             MimeType.Javascript.AddExtension(".coffee");
@@ -56,14 +56,14 @@ namespace FubuMVC.Tests.Runtime
             MimeType.MimeTypeByFileName("file.scss").ShouldBe(MimeType.Css);
         }
 
-        [Test]
+        [Fact]
         public void can_return_null_for_a_totally_unrecognized_extension()
         {
             MimeType.MimeTypeByFileName("foo.657878XXXXXX")
                 .ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void mimetype_from_extended_extension_set()
         {
             MimeType.MimeTypeByFileName("foo.323")

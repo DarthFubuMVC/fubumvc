@@ -1,36 +1,36 @@
 ﻿using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using TestMessages.ScenarioSupport;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class HandlerChainTester
     {
 
-        [Test]
+        [Fact]
         public void normal_handler_chains_are_not_polling_jobs()
         {
             new HandlerChain().IsPollingJob().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void the_default_number_of_maximum_attempts_is_1()
         {
             new HandlerChain().MaximumAttempts.ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void HandlerChain_cannot_be_marked_as_partial_only_because_it_knocks_out_diagnostic_tracing()
         {
             new HandlerChain().IsPartialOnly.ShouldBeFalse();
         }
 
 
-        [Test]
+        [Fact]
         public void is_async_negative()
         {
             var chain = new HandlerChain();
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         
         }
 
-        [Test]
+        [Fact]
         public void is_async_positive()
         {
             var chain = new HandlerChain();

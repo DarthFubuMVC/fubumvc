@@ -1,14 +1,14 @@
 ﻿using System.Threading;
 using FubuMVC.Core.Security.Authentication.Membership;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class FubuPrincipalTester
     {
-        [Test]
+        [Fact]
         public void is_in_role_will_delegate()
         {
             var principal = new FubuPrincipal(new UserInfo{UserName = "somebody"}, role => role == "A");
@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Security.Authentication
             principal.IsInRole("B").ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void there_is_an_identity()
         {
             var principal = new FubuPrincipal(new UserInfo
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Security.Authentication
             principal.Identity.Name.ShouldBe("something");
         }
 
-        [Test]
+        [Fact]
         public void current_is_hooked_up()
         {
             var principal = new FubuPrincipal(new UserInfo
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Security.Authentication
             FubuPrincipal.Current.ShouldBeTheSameAs(principal);
         }
 
-        [Test]
+        [Fact]
         public void set_current()
         {
             FubuPrincipal.SetCurrent(user => {

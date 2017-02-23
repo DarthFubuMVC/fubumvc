@@ -4,19 +4,18 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
-    [TestFixture]
+    
     public class ApplyTracingIntegrationTesting
     {
         private RoutedChain chain1;
         private BehaviorChain chain2;
 
-        [SetUp]
-        public void SetUp()
+        public ApplyTracingIntegrationTesting()
         {
             var registry = new FubuRegistry();
             registry.Configure(graph =>
@@ -39,7 +38,8 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             BehaviorGraph.BuildFrom(registry);
         }
 
-        [Test]
+
+        [Fact]
         public void do_nothing_if_tracing_is_off()
         {
             var registry = new FubuRegistry();
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             notTracedGraph.Chains.SelectMany(x => x).Any(x => x is BehaviorTracerNode).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void full_chain()
         {
             chain1.ElementAt(0).ShouldBeOfType<BehaviorTracerNode>();
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             chain1.ElementAt(3).ShouldBeOfType<Wrapper>();
         }
 
-        [Test]
+        [Fact]
         public void partial_chain_should_not_have_diagnostic_behavior()
         {
             chain2.ElementAt(0).ShouldBeOfType<BehaviorTracerNode>();

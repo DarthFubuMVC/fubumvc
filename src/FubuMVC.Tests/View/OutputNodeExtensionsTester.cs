@@ -6,24 +6,24 @@ using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.View
 {
-    [TestFixture]
+    
     public class OutputNodeExtensionsTester
     {
 
 
-        [Test]
+        [Fact]
         public void has_view_is_false_when_it_is_empty()
         {
             var node = new OutputNode(typeof(Address));
             node.HasView().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void has_view_is_positive_with_always()
         {
             var node = new OutputNode(typeof(Address));
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.View
             node.HasView().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void has_view_positive_with_different_conditional()
         {
             var condition = new FakeConditional();

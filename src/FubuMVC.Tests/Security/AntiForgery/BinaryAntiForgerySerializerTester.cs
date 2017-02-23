@@ -2,11 +2,11 @@ using System;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-    [TestFixture]
+    
     public class BinaryAntiForgerySerializerTester : InteractionContext<BinaryAntiForgerySerializer>
     {
         public class TestEncoder : IAntiForgeryEncoder
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
         }
 
 
-        [Test]
+        [Fact]
         public void deserialization_is_asp_compatible()
         {
             string aspSerialized = "CFRoZSBTYWx0CVRoZSBWYWx1ZQBAik+Cb80IDFRoZSBVc2VybmFtZQ==";
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             deserialized.Value.ShouldBe(token.Value);
         }
 
-        [Test]
+        [Fact]
         public void serialization_and_deserialization_match()
         {
             var token = new AntiForgeryData
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
         }
 
 
-        [Test]
+        [Fact]
         public void serialization_is_asp_compatible()
         {
             const string aspSerialized = "CFRoZSBTYWx0CVRoZSBWYWx1ZQBAik+Cb80IDFRoZSBVc2VybmFtZQ==";

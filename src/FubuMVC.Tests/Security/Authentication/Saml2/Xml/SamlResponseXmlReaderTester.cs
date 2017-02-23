@@ -4,19 +4,18 @@ using System.Xml;
 using FubuCore;
 using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Xml;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
 {
-    [TestFixture]
+    
     public class SamlResponseXmlReaderTester
     {
         private SamlResponseXmlReader theReader;
         private SamlResponse theResponse;
 
-        [SetUp]
-        public void SetUp()
+        public SamlResponseXmlReaderTester()
         {
             var xml = new FileSystem().ReadStringFromFile("sample.xml");
             theReader = new SamlResponseXmlReader(xml);
@@ -24,44 +23,44 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
             theResponse = theReader.Read();
         }
 
-        [Test]
+        [Fact]
         public void reads_the_destination()
         {
             theResponse.Destination.ShouldBe("https://qa2.online.com/qa2/sso/saml".ToUri());
         }
 
-        [Test]
+        [Fact]
         public void reads_the_id()
         {
             theResponse.Id.ShouldBe("A5092bc640a235880200023f80002aa33");
         }
 
-        [Test]
+        [Fact]
         public void reads_the_issue_instant()
         {
             theResponse.IssueInstant.ShouldBe(XmlConvert.ToDateTimeOffset("2012-11-01T18:16:04Z"));
         }
 
-        [Test]
+        [Fact]
         public void read_the_issuer()
         {
             theResponse.Issuer.ShouldBe(new Uri("urn:idp:fakecompany:nbpartgenoutbds20:uat").ToString());
         }
 
-        [Test]
+        [Fact]
         public void read_the_status_of_the_response_if_it_is_success()
         {
             theResponse.Status.ShouldBe(SamlStatus.Success);
         }
 
-        [Test]
+        [Fact]
         public void can_read_the_condition_group_time_constraints()
         {
             theResponse.Conditions.NotBefore.ShouldBe(XmlConvert.ToDateTimeOffset("2012-11-01T18:13:04Z"));
             theResponse.Conditions.NotOnOrAfter.ShouldBe(XmlConvert.ToDateTimeOffset("2012-11-01T18:19:04Z"));
         }
 
-        [Test]
+        [Fact]
         public void can_read_audience_restriction()
         {
             var audienceRestricution = theResponse.Conditions.Conditions
@@ -72,7 +71,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
                                 .ShouldBe(new Uri("https://qa2.online.com/qa2/sso/saml").ToString());
         }
 
-        [Test]
+        [Fact]
         public void can_read_the_subject_name()
         {
             theResponse.Subject.Name.ShouldBe(new SamlName
@@ -83,14 +82,14 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
             });
         }
 
-        [Test]
+        [Fact]
         public void can_read_the_subject_confirmation_method()
         {
             theResponse.Subject.Confirmations.Single()
                        .Method.ShouldBe("urn:oasis:names:tc:SAML:2.0:cm:bearer".ToUri());
         }
 
-        [Test]
+        [Fact]
         public void subject_confirmation_data()
         {
             var data = theResponse.Subject.Confirmations.Single()
@@ -101,20 +100,20 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
 
         }
 
-        [Test]
+        [Fact]
         public void has_the_attributes()
         {
             theResponse.Attributes.Get("ClientId").ShouldBe("000012345");
             theResponse.Attributes.Get("CustomerId").ShouldBe("001010111");
         }
 
-        [Test]
+        [Fact]
         public void can_read_the_certificates()
         {
             theResponse.Certificates.Any().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void reads_the_basic_authentication_properties()
         {
             theResponse.Authentication.Instant.ShouldBe(XmlConvert.ToDateTimeOffset("2012-11-01T18:15:47Z"));
@@ -123,14 +122,14 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Xml
 
         }
 
-        [Test]
+        [Fact]
         public void reads_the_authentication_context()
         {
             theResponse.Authentication.DeclarationReference
                        .ShouldBe("urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport".ToUri());
         }
         
-        [Test]
+        [Fact]
         public void reads_the_authentication_class_context()
         {
             theResponse.Authentication.ClassReference

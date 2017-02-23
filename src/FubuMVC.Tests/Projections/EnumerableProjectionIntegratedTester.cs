@@ -8,19 +8,18 @@ using FubuMVC.Core;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Hypermedia;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.Projections
 {
-    [TestFixture]
+    
     public class EnumerableProjectionIntegratedTester
     {
         private Parent theParent;
         private IProjectionRunner runner;
 
-        [SetUp]
-        public void SetUp()
+        public EnumerableProjectionIntegratedTester()
         {
             theParent = new Parent
             {
@@ -41,7 +40,7 @@ namespace FubuMVC.Tests.Projections
             }
         }
 
-        [Test]
+        [Fact]
         public void accessors()
         {
             var projection = EnumerableProjection<Parent, Child>.For(x => x.Children);
@@ -59,7 +58,7 @@ namespace FubuMVC.Tests.Projections
             return node.Element;
         }
 
-        [Test]
+        [Fact]
         public void write_with_inline_projection()
         {
             var projection = new Projection<Parent>(DisplayFormatting.RawValues);
@@ -71,7 +70,7 @@ namespace FubuMVC.Tests.Projections
                 "<root><Children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></Children></root>");
         }
 
-        [Test]
+        [Fact]
         public void write_with_precanned_child_projection_with_defaults()
         {
             var projection = new Projection<Parent>(DisplayFormatting.RawValues);
@@ -83,7 +82,7 @@ namespace FubuMVC.Tests.Projections
                 "<root><Children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></Children></root>");
         }
 
-        [Test]
+        [Fact]
         public void write_with_precanned_child_projection_overwrite_node()
         {
             var projection = new Projection<Parent>(DisplayFormatting.RawValues);
@@ -95,7 +94,7 @@ namespace FubuMVC.Tests.Projections
                 "<root><children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></children></root>");
         }
 
-        [Test]
+        [Fact]
         public void write_with_precanned_child_projection_overwrite_leaf_name()
         {
             var projection = new Projection<Parent>(DisplayFormatting.RawValues);

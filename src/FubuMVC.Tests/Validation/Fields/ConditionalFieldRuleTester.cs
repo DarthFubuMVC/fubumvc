@@ -1,19 +1,18 @@
 using FubuCore.Reflection;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Validation.Fields
 {
-    [TestFixture]
+    
     public class ConditionalFieldRuleTester
     {
         private IFieldValidationRule theInnerRule;
         private ConditionalFieldRule<ConditionalFieldRuleTester> theConditionalRule;
 
-        [SetUp]
-        public void SetUp()
+        public ConditionalFieldRuleTester()
         {
             var condition = FieldRuleCondition.For<ConditionalFieldRuleTester>(x => x.Matches);
             
@@ -21,7 +20,7 @@ namespace FubuMVC.Tests.Validation.Fields
             theConditionalRule = new ConditionalFieldRule<ConditionalFieldRuleTester>(condition, theInnerRule);
         }
 
-        [Test]
+        [Fact]
         public void execute_the_inner_rule_if_the_condition_is_met()
         {
             Matches = true;
@@ -34,7 +33,7 @@ namespace FubuMVC.Tests.Validation.Fields
             theInnerRule.AssertWasCalled(x => x.Validate(accessor, context));
         }
 
-        [Test]
+        [Fact]
         public void should_not_execute_the_inner_rule_if_the_condition_is_not_met()
         {
             Matches = false;

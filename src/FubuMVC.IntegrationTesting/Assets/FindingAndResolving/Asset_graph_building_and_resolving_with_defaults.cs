@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
 {
-    [TestFixture]
+    
     public class Asset_graph_building_and_resolving_with_defaults : AssetIntegrationContext
     {
         public Asset_graph_building_and_resolving_with_defaults()
@@ -37,28 +37,28 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             File("image.gif");
         }
 
-        [Test]
+        [Fact]
         public void all_relative_paths_are_canonical()
         {
             AllAssets.Assets.All(x => !x.File.RelativePath.Contains('\\'))
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void finds_js_files()
         {
             AllAssets.Assets.Any(x => x.Url == "MyLib.js").ShouldBeTrue();
             AllAssets.Assets.Any(x => x.Url == "bottle2.js").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void finds_css_files()
         {
             AllAssets.Assets.Any(x => x.Url == "Content/styles/MyStyles.css").ShouldBeTrue();
             AllAssets.Assets.Any(x => x.Url == "BottleB.css").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void finds_image_files()
         {
             AllAssets.Assets.Any(x => x.Url == "image.bmp").ShouldBeTrue();
@@ -67,7 +67,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         }
 
 
-        [Test]
+        [Fact]
         public void file_construction_in_the_application_root()
         {
             var asset = Assets.FindAsset("MyLib.js");
@@ -78,7 +78,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             asset.Filename.ShouldBe("MyLib.js");
         }
 
-        [Test]
+        [Fact]
         public void file_construction_in_a_child_folder_of_the_application()
         {
             var asset = Assets.FindAsset("Content/styles/MyStyles.css");
@@ -89,7 +89,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             asset.Filename.ShouldBe("MyStyles.css");
         }
 
-        [Test]
+        [Fact]
         public void search_by_filename_only()
         {
             Assets.FindAsset("bottle1.js").Url.ShouldBe("Content/scripts/bottle1.js");
@@ -98,14 +98,14 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             Assets.FindAsset("bottle1.js").Url.ShouldBe("Content/scripts/bottle1.js");
         }
 
-        [Test]
+        [Fact]
         public void search_by_full_path()
         {
             Assets.FindAsset("Content/scripts/bottle1.js")
                 .Url.ShouldBe("Content/scripts/bottle1.js");
         }
 
-        [Test]
+        [Fact]
         public void search_by_part_of_the_path()
         {
             Assets.FindAsset("folder1/bottle1A.js")

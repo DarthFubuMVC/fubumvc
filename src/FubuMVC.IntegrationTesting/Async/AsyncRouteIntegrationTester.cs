@@ -7,17 +7,16 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Async
 {
-    [TestFixture]
-    public class AsyncRouteIntegrationTester
+    
+    public class AsyncRouteIntegrationTester : IDisposable
     {
         private FubuRuntime _server;
 
-        [SetUp]
-        public void SetUp()
+        public AsyncRouteIntegrationTester()
         {
             var registry = new FubuRegistry(x =>
             {
@@ -29,13 +28,12 @@ namespace FubuMVC.IntegrationTesting.Async
             _server = registry.ToRuntime();
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             _server.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void when_invoke_chain_with_earlyReturnBehavior_then_httpResponse_should_complete()
         {
             var responseTask = Task.Factory.StartNew(() => _server.Scenario(x =>

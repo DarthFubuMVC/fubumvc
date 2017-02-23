@@ -1,15 +1,15 @@
 ﻿using FubuCore;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.ServiceBus.Async
 {
-    [TestFixture]
+    
     public class AsyncChainExecutionContinuationTester
     {
-        [Test]
+        [Fact]
         public void executing()
         {
             var envelope = ObjectMother.Envelope();

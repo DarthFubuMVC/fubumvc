@@ -11,21 +11,20 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using SpecificationExtensions = Shouldly.SpecificationExtensions;
 using FubuCore;
 
 namespace FubuMVC.Tests.Resources.PathBased
 {
-    [TestFixture]
+    
     public class ResourcePathBinderTester
     {
         private Dictionary<string, string> theRouteValues;
         private StandardModelBinder theBinder;
         private RequestData theRequestData;
 
-        [SetUp]
-        public void SetUp()
+        public ResourcePathBinderTester()
         {
             theBinder = new StandardModelBinder(new BindingRegistry(), new TypeDescriptorCache());
 
@@ -57,28 +56,28 @@ namespace FubuMVC.Tests.Resources.PathBased
         }
 
 
-        [Test]
+        [Fact]
         public void matches_subclass_of_resource_path()
         {
             new ResourcePathBinder().Matches(typeof(SpecialPath))
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void matches_ResourcePath_itself()
         {
             new ResourcePathBinder().Matches(typeof(ResourcePath))
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_match_on_a_non_resource_path_class()
         {
             new ResourcePathBinder().Matches(GetType())
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void bind_with_one_part()
         {
             theRouteValues.Add("Part0", "file.js");
@@ -86,7 +85,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             findPathByBinding().Path.ShouldBe("file.js");
         }
 
-        [Test]
+        [Fact]
         public void bind_with_two_parts()
         {
             
@@ -96,7 +95,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             findPathByBinding().Path.ShouldBe("f1/file.js");
         }
 
-        [Test]
+        [Fact]
         public void bind_with_three_parts()
         {
 
@@ -107,7 +106,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             findPathByBinding().Path.ShouldBe("f1/f2/file.js");
         }
 
-        [Test]
+        [Fact]
         public void bind_with_four_parts()
         {
 
@@ -119,7 +118,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             findPathByBinding().Path.ShouldBe("f1/f2/f3/file.js");
         }
 
-        [Test]
+        [Fact]
         public void bind_with_eight_parts()
         {
 

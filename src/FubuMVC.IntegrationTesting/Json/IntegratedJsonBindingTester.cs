@@ -7,16 +7,16 @@ using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Json;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Json
 {
-    [TestFixture]
+    
     public class IntegratedJsonBindingTester
     {
-        [Test]
+        [Fact]
         public void deserializes_the_json_and_uses_the_property_binders()
         {
             var recorder = new Recorder();

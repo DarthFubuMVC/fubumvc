@@ -1,16 +1,15 @@
 ﻿using System.Linq;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
-    [TestFixture]
+    
     public class RespondWithMessageContinuationTester
     {
-        [SetUp]
-        public void SetUp()
+        public RespondWithMessageContinuationTester()
         {
             _envelope = ObjectMother.Envelope();
             _message = new object();
@@ -23,7 +22,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         private object _message;
         private TestEnvelopeContext _context;
 
-        [Test]
+        [Fact]
         public void should_send_the_message()
         {
             var message = _context.RecordedOutgoing.Outgoing.Single();

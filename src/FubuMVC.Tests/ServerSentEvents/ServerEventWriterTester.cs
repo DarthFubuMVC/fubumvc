@@ -6,17 +6,17 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServerSentEvents;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Tests.ServerSentEvents
 {
-    [TestFixture]
+    
     public class ServerEventWriterTester : InteractionContext<ServerEventWriter>
     {
-        [Test]
+        [Fact]
         public void should_write_the_content_type_on_the_first_call_to_write_data()
         {
             ClassUnderTest.WriteData("something");
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServerSentEvents
             MockFor<IOutputWriter>().AssertWasCalled(x => x.ContentType(MimeType.EventStream));
         }
 
-        [Test]
+        [Fact]
         public void should_flush_after_each_write()
         {
             ClassUnderTest.WriteData("something");
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.ServerSentEvents
 
         }
 
-        [Test]
+        [Fact]
         public void only_writes_the_mimetype_once()
         {
             ClassUnderTest.WriteData("something");
@@ -50,20 +50,20 @@ namespace FubuMVC.Tests.ServerSentEvents
             MockFor<IOutputWriter>().AssertWasCalled(x => x.ContentType(MimeType.EventStream), x => x.Repeat.Once());
         }
 
-        [Test]
+        [Fact]
         public void returns_true_on_successful_write()
         {
             ClassUnderTest.WriteData("something").ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void returns_false_when_an_HttpException_occurs_on_flush()
         {
             MockFor<IOutputWriter>().Stub(x => x.Flush()).Throw(new HttpException());
             ClassUnderTest.WriteData("something").ShouldBeFalse();
         }
 
-		[Test]
+		[Fact]
 		public void returns_false_when_an_AccessViolationException_occurs_on_flush()
 		{
 			MockFor<IOutputWriter>().Stub(x => x.Flush()).Throw(new AccessViolationException());
@@ -71,34 +71,33 @@ namespace FubuMVC.Tests.ServerSentEvents
 		}
     }
 
-    [TestFixture]
+    
     public class ServerEventWriter_output_Tester
     {
         private RecordingOutputWriter output;
         private ServerEventWriter writer;
 
-        [SetUp]
-        public void SetUp()
+        public ServerEventWriter_output_Tester()
         {
             output = new RecordingOutputWriter();
             writer = new ServerEventWriter(output);
         }
 
-        [Test]
+        [Fact]
         public void write_only_data_and_id()
         {
             writer.Write(new ServerEvent("the id", "the data"));
             output.Text.ShouldBe("id: the id\ndata: the data\n\n");
         }
 
-        [Test]
+        [Fact]
         public void write_with_id_data_and_event()
         {
             writer.Write(new ServerEvent("the id", "the data"){Event = "something"});
             output.Text.ShouldBe("id: the id/something\ndata: the data\n\n");  
         }
 
-        [Test]
+        [Fact]
         public void write_with_id_data_and_event_and_retry()
         {
             writer.Write(new ServerEvent("the id", "the data") { Event = "something", Retry = 1000});

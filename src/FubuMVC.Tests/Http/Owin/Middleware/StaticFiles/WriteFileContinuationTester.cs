@@ -4,19 +4,18 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
 {
-    [TestFixture]
+    
     public class when_writing_a_file
     {
         private IHttpResponse theResponse;
         private FubuFile theFile;
 
-        [SetUp]
-        public void SetUp()
+        public when_writing_a_file()
         {
             theResponse = MockRepository.GenerateMock<IHttpResponse>();
 
@@ -34,20 +33,20 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         }
 
 
-        [Test]
+        [Fact]
         public void should_write_ok_as_the_status_code()
         {
             theResponse.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.OK));
         }
 
-        [Test]
+        [Fact]
         public void should_append_the_normal_file_headers()
         {
             // I'm saying this is enough to prove it's delegating
             assertHeaderValueWasWritten(HttpResponseHeaders.ETag, theFile.Etag().Quoted());
         }
 
-        [Test]
+        [Fact]
         public void should_write_The_file_itself()
         {
             theResponse.AssertWasCalled(x => x.WriteFile(theFile.Path));

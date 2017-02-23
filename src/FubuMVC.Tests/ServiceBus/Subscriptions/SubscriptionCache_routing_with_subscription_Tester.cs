@@ -5,21 +5,20 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    [TestFixture]
-    public class SubscriptionCache_routing_with_subscription_Tester
+    
+    public class SubscriptionCache_routing_with_subscription_Tester : IDisposable
     {
         public readonly SubscriptionSettings theSettings = InMemoryTransport.ToInMemory<SubscriptionSettings>();
         private FubuRuntime _runtime;
         private SubscriptionCache theCache;
 
-        [SetUp]
-        public void SetUp()
+        public SubscriptionCache_routing_with_subscription_Tester()
         {
             var container = new Container(x => {
                 x.For<SubscriptionSettings>().Use(theSettings);
@@ -33,13 +32,12 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             theCache = _runtime.Get<ISubscriptionCache>().As<SubscriptionCache>();
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             _runtime.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void route_without_any_subscriptions()
         {
             theCache.FindSubscribingChannelsFor(typeof(Message1)).Select(x => x.Uri)
@@ -52,7 +50,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .ShouldHaveTheSameElementsAs(theSettings.Q2);
         }
 
-        [Test]
+        [Fact]
         public void route_with_a_single_matching_subscription()
         {
             theCache.LoadSubscriptions(new Subscription[]
@@ -69,7 +67,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .ShouldHaveTheSameElementsAs(theSettings.Q5);
         }
 
-        [Test]
+        [Fact]
         public void with_mixed_subscription_and_static_matching_nodes()
         {
             theCache.LoadSubscriptions(new Subscription[]
@@ -82,7 +80,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 .ShouldHaveTheSameElementsAs(theSettings.Q1, theSettings.Q4, theSettings.Q5);
         }
 
-        [Test]
+        [Fact]
         public void overwrite_subscriptions()
         {
             theCache.LoadSubscriptions(new Subscription[]

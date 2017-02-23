@@ -8,14 +8,14 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Http
 {
-    [TestFixture]
+    
     public class partial_invocations
     {
-        [Test]
+        [Fact]
         public void add_their_cookies_to_the_parent_request()
         {
             TestHost.Scenario(_ =>
@@ -25,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.Http
             });
         }
 
-        [Test]
+        [Fact]
         public void fast_invocation()
         {
             TestHost.Scenario(_ =>

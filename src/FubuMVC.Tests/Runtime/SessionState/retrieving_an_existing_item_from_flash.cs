@@ -4,12 +4,12 @@ using FubuMVC.Core.Runtime.SessionState;
 using FubuMVC.Tests.Http.Cookies;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.SessionState
 {
-    [TestFixture]
+    
     public class retrieving_an_existing_item_from_flash : InteractionContext<CookieFlashProvider>
     {
         private string theCookieValue;
@@ -32,13 +32,13 @@ namespace FubuMVC.Tests.SessionState
 
         private Cookie theCookie { get { return theOutputWriter.LastCookie; } }
 
-        [Test]
+        [Fact]
         public void parses_the_json()
         {
             theTarget.ShouldBe(new FlashTarget {Name = "Joel"});
         }
 
-        [Test]
+        [Fact]
         public void removes_the_cookie()
         {
             theCookie.Matches(CookieFlashProvider.FlashKey).ShouldBeTrue();

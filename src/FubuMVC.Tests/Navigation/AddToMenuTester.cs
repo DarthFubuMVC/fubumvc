@@ -1,14 +1,14 @@
 using FubuCore;
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class AddToMenuTester
     {
-        [Test]
+        [Fact]
         public void format_description()
         {
             var key = new NavigationKey("something");
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBe("Add '{0}' to menu 'parent'".ToFormat(key.ToLocalizationKey()));
         }
 
-        [Test]
+        [Fact]
         public void apply()
         {
             var dependency = new MenuChain("something");

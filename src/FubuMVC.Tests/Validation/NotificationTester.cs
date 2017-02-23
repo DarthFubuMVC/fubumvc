@@ -6,15 +6,15 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class NotificationTester
     {
-        [Test]
+        [Fact]
         public void should_ignore_duplicates()
         {
             var notification = new Notification();
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Validation
                 .ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void valid_should_return_valid_notification()
         {
             var notification = new Notification();
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Validation
                 .ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void should_be_invalid_if_any_messages_are_registered()
         {
             var notification = new Notification();
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Validation
                 .ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void should_return_registered_messages()
         {
             var notification = new Notification();
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Validation
                 .ShouldHaveCount(3);
         }
 
-        [Test]
+        [Fact]
         public void to_validation_error_simple()
         {
             var notification = new Notification();
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Validation
 
         }
 
-        [Test]
+        [Fact]
         public void to_validation_error_when_an_error_is_registered_without_an_accessor()
         {
             var notification = new Notification();
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Validation
             error.field.ShouldBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void to_validation_error_with_localization()
         {
             LocalizationManager.Stub();
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.Validation
             errors.First().label.ShouldBe("en-US_Something");
         }
 
-        [Test]
+        [Fact]
         public void to_validation_error_if_multiple_accessors_match_a_message()
         {
             var notification = new Notification();
@@ -121,7 +121,7 @@ namespace FubuMVC.Tests.Validation
             errors.Last().field.ShouldBe("Else");
         }
 
-        [Test]
+        [Fact]
         public void add_child()
         {
             var child = new Notification();
@@ -137,7 +137,7 @@ namespace FubuMVC.Tests.Validation
             notification.MessagesFor<CompositeModel>(x => x.Contact.LastName).Single().StringToken.ShouldBe(ValidationKeys.Required);
         }
 
-        [Test]
+        [Fact]
         public void registering_a_message_adds_the_default_field_template_value()
         {
             var accessor = ReflectionHelper.GetAccessor<EntityToValidate>(x => x.Something);
@@ -148,7 +148,7 @@ namespace FubuMVC.Tests.Validation
             message.GetMessage().ShouldBe(LocalizationManager.GetText(accessor.InnerProperty));
         }
 
-        [Test]
+        [Fact]
         public void registering_a_message_with_a_lambda_adds_the_message_to_the_notification()
         {
             Expression<Func<EntityToValidate, object>> somethingGetter = x => x.Something;

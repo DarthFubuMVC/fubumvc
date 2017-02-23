@@ -5,15 +5,15 @@ using FubuMVC.Core;
 using FubuMVC.Core.View;
 using Shouldly;
 using HtmlTags;
-using NUnit.Framework;
+using Xunit;
 using StructureMap;
 
 namespace FubuMVC.Tests.View
 {
-    [TestFixture]
+    
     public class CommonViewNamespaces_is_registered
     {
-        [Test]
+        [Fact]
         public void is_registered()
         {
             var registry = new FubuRegistry();

@@ -9,29 +9,29 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    [TestFixture]
+    
     public class ChannelGraphTester
     {
-        [Test]
+        [Fact]
         public void the_default_content_type_should_be_xml_serialization()
         {
             new ChannelGraph().DefaultContentType.ShouldBe(new XmlMessageSerializer().ContentType);
         }
 
-        [Test]
+        [Fact]
         public void to_key_by_expression()
         {
             ChannelGraph.ToKey<ChannelSettings>(x => x.Outbound)
                         .ShouldBe("Channel:Outbound");
         }
 
-        [Test]
+        [Fact]
         public void channel_for_by_accessor()
         {
             var graph = new ChannelGraph();
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
         }
 
-        [Test]
+        [Fact]
         public void reading_settings()
         {
             var channel = new ChannelSettings
@@ -82,31 +82,6 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .Uri.ShouldBe(bus.Downstream);
         }
 
-        [Test, Explicit("Too flaky, too slow. Replace w/ ST tests?")]
-        public void start_receiving()
-        {
-            using (var graph = new ChannelGraph())
-            {
-                var node1 = graph.ChannelFor<ChannelSettings>(x => x.Upstream);
-                var node2 = graph.ChannelFor<ChannelSettings>(x => x.Downstream);
-                var node3 = graph.ChannelFor<BusSettings>(x => x.Upstream);
-                var node4 = graph.ChannelFor<BusSettings>(x => x.Downstream);
-
-                node1.Incoming = true;
-                node2.Incoming = false;
-                node3.Incoming = true;
-                node4.Incoming = false;
-
-                graph.Each(x => x.Channel = new FakeChannel());
-
-                graph.StartReceiving(MockRepository.GenerateMock<IHandlerPipeline>(), new RecordingLogger());
-
-                node1.Channel.As<FakeChannel>().ReceivedCount.ShouldBeGreaterThan(0);
-                node2.Channel.As<FakeChannel>().ReceivedCount.ShouldBe(0);
-                node3.Channel.As<FakeChannel>().ReceivedCount.ShouldBeGreaterThan(0);
-                node4.Channel.As<FakeChannel>().ReceivedCount.ShouldBe(0);
-            }
-        }
 
         public class FakeChannel : IChannel
         {

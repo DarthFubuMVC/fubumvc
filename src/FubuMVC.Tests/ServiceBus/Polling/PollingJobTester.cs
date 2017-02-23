@@ -4,7 +4,7 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         }
     }
 
-    [TestFixture]
+    
     public class PollingJobTester : InteractionContext<PollingJob<APollingJob, PollingJobSettings>>
     {
         protected override void beforeEach()
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             Services.Inject(definition);
         }
 
-        [Test]
+        [Fact]
         public void run_now_successfully()
         {
             ClassUnderTest.RunNow();
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             MockFor<IServiceBus>().AssertWasCalled(x => x.Consume(new JobRequest<APollingJob>()), x => x.IgnoreArguments());
         }
 
-        [Test]
+        [Fact]
         public void run_now_with_a_failure()
         {
             var ex = new NotImplementedException();
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             MockFor<IPollingJobLogger>().AssertWasCalled(x => x.FailedToSchedule(typeof(APollingJob), ex));
         }
 
-        [Test]
+        [Fact]
         public void smoke_test_describe()
         {
             var description = Description.For(ClassUnderTest);

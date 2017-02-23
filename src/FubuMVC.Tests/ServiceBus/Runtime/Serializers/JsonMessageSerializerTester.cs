@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
-    [TestFixture]
+    
     public class JsonMessageSerializerTester
     {
         private readonly JsonMessageSerializer _serializer;
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             _serializer = new JsonMessageSerializer(new TransportSettings());
         }
 
-        [Test]
+        [Fact]
         public void can_round_trip()
         {
             var employee1 = new Employee()
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             employee1.ShouldBe(employee2);
         }
 
-        [Test]
+        [Fact]
         public void can_round_trip_circular_dependencies()
         {
             var employee = new Employee

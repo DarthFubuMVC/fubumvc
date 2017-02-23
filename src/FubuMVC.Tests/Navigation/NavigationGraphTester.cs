@@ -1,14 +1,14 @@
 using System.Linq;
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class NavigationGraphTester
     {
-        [Test]
+        [Fact]
         public void add_node_and_parent_does_not_exist()
         {
             var graph = new NavigationGraph();
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldBeTheSameAs(node);
         }
 
-        [Test]
+        [Fact]
         public void add_node_to_another_node()
         {
             var graph = new NavigationGraph();
@@ -43,13 +43,12 @@ namespace FubuMVC.Tests.Navigation
 
     }
 
-    [TestFixture]
+    
     public class NavigationRegistryAndGraphTester
     {
         private NavigationGraph graph;
 
-        [SetUp]
-        public void SetUp()
+        public NavigationRegistryAndGraphTester()
         {
             graph = new NavigationGraph(x =>
             {
@@ -75,7 +74,7 @@ namespace FubuMVC.Tests.Navigation
             graph.Compile();
         }
 
-        [Test]
+        [Fact]
         public void has_all_the_menu_chain_keys()
         {
             graph.AllMenus().Select(x => x.Key)
@@ -83,7 +82,7 @@ namespace FubuMVC.Tests.Navigation
                 
         }
 
-        [Test]
+        [Fact]
         public void has_all_the_nodes()
         {
             graph.MenuFor(FakeKeys.Key1).Select(x => x.Key).ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key3, FakeKeys.Key4);
@@ -94,7 +93,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key1, FakeKeys.Key2, FakeKeys.Key8, FakeKeys.Key9, FakeKeys.Key10, FakeKeys.Key3, FakeKeys.Key4, FakeKeys.Key5, FakeKeys.Key6, FakeKeys.Key7);
         }
 
-        [Test]
+        [Fact]
         public void find_node()
         {
             graph.FindNode(FakeKeys.Key10).Key.ShouldBe(FakeKeys.Key10);

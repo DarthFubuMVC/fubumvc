@@ -3,17 +3,17 @@ using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.Tests.Http.AspNet
 {
-    [TestFixture]
+    
     public class AspNetModelBindingTester
     {
         private IValueConverterRegistry registry;
 
-        [TestFixtureSetUp]
-        public void SetUp()
+
+        public AspNetModelBindingTester()
         {
             using (var runtime = FubuRuntime.Basic())
             {
@@ -21,21 +21,21 @@ namespace FubuMVC.Tests.Http.AspNet
             }
         }
 
-        [Test]
+        [Fact]
         public void can_find_a_converter_for_a_system_property()
         {
             var property = ReflectionHelper.GetProperty<ModelWithHttpPostedFileBase>(x => x.AcceptTypes);
             registry.FindConverter(property).ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void can_find_a_converter_for_HttpPostedFileBase()
         {
             var property = ReflectionHelper.GetProperty<ModelWithHttpPostedFileBase>(x => x.File);
             registry.FindConverter(property).ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void can_find_a_converter_for_HttpCookie()
         {
             var property = ReflectionHelper.GetProperty<ModelWithHttpPostedFileBase>(x => x.MyCookie);

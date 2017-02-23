@@ -5,13 +5,13 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
+    
     public class when_building_a_MenuItemToken_for_a_single_node : InteractionContext<NavigationService>
     {
         private MenuNode theNode;
@@ -55,56 +55,56 @@ namespace FubuMVC.Tests.Navigation
 
 		private MenuItemToken theToken { get { return ClassUnderTest.BuildToken(theNode); } }
 
-        [Test]
+        [Fact]
         public void will_resolve_the_asset_url_for_the_icon_if_it_exists()
         {
             theToken.IconUrl.ShouldBe(theIconUrl);
         }
 
-        [Test]
+        [Fact]
         public void has_state_from_the_state_service()
         {
             theToken.MenuItemState.ShouldBe(MenuItemState.Available);
         }
 
-        [Test]
+        [Fact]
         public void has_the_key()
         {
             theToken.Key.ShouldBe(theNode.Key.Key);
         }
 
-        [Test]
+        [Fact]
         public void has_the_text_from_the_StringTOken_on_the_node()
         {
             theToken.Text.ShouldBe(theNode.Key.ToString());
         }
 
-        [Test]
+        [Fact]
         public void has_the_url()
         {
             theToken.Url.ShouldBe("the full url");
         }
 
-        [Test]
+        [Fact]
         public void has_children()
         {
             theToken.Children.ShouldHaveCount(3);
         }
 
-		[Test]
+		[Fact]
 		public void no_category()
 		{
 			theToken.Category.ShouldBeNull();
 		}
 
-		[Test]
+		[Fact]
 		public void sets_the_category()
 		{
 			theNode.Category = "test";
 			theToken.Category.ShouldEndWith(theNode.Category);
 		}
 
-		[Test]
+		[Fact]
 		public void sets_the_data()
 		{
 			theNode["k1"] = "value1";
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.Navigation
 		}
     }
 
-    [TestFixture]
+    
     public class when_building_a_MenuItemToken_for_a_single_node_without_an_icon : InteractionContext<NavigationService>
     {
         private MenuNode theNode;
@@ -156,37 +156,37 @@ namespace FubuMVC.Tests.Navigation
             theToken = ClassUnderTest.BuildToken(theNode);
         }
 
-        [Test]
+        [Fact]
         public void icon_url_is_null()
         {
             theToken.IconUrl.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void has_state_from_the_state_service()
         {
             theToken.MenuItemState.ShouldBe(MenuItemState.Available);
         }
 
-        [Test]
+        [Fact]
         public void has_the_key()
         {
             theToken.Key.ShouldBe(theNode.Key.Key);
         }
 
-        [Test]
+        [Fact]
         public void has_the_text_from_the_StringTOken_on_the_node()
         {
             theToken.Text.ShouldBe(theNode.Key.ToString());
         }
 
-        [Test]
+        [Fact]
         public void has_the_url()
         {
             theToken.Url.ShouldBe("the full url");
         }
 
-        [Test]
+        [Fact]
         public void has_children()
         {
             theToken.Children.ShouldHaveCount(3);

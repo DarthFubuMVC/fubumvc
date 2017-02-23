@@ -1,12 +1,12 @@
 ﻿using FubuMVC.Core.Urls;
-using NUnit.Framework;
+using Xunit;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
-    [TestFixture]
+    
     public class Owin_url_resolution_tester
     {
-        [Test]
+        [Fact]
         public void no_longer_puts_localhost_in_the_resolved_url()
         {
             TestHost.Scenario(_ =>

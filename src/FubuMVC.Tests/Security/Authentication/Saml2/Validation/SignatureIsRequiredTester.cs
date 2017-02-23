@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using FubuMVC.Core.Security.Authentication.Saml2;
 using FubuMVC.Core.Security.Authentication.Saml2.Validation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
 {
-    [TestFixture]
+    
     public class SignatureIsRequiredTester
     {
-        [Test]
+        [Fact]
         public void no_errors_if_response_is_signed()
         {
             var response = new SamlResponse
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
             response.Errors.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void error_if_signature_is_missing()
         {
             var response = new SamlResponse
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2.Validation
                     .ShouldBe(new SamlError(SignatureStatus.NotSigned));
         }
 
-        [Test]
+        [Fact]
         public void error_if_signature_is_invalid()
         {
             var response = new SamlResponse

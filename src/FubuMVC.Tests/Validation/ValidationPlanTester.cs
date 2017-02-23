@@ -7,13 +7,13 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Tests.Validation.Models;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.Validation
 {
-    [TestFixture]
+    
     public class ValidationPlanTester
     {
         private ValidationPlan thePlan;
@@ -30,8 +30,7 @@ namespace FubuMVC.Tests.Validation
         private object theModel;
         private ValidationContext theContext;
 
-        [SetUp]
-        public void SetUp()
+        public ValidationPlanTester()
         {
             theModel = new ContactModel();
             theType = theModel.GetType();
@@ -52,7 +51,7 @@ namespace FubuMVC.Tests.Validation
             thePlan = ValidationPlan.For(theType, theGraph);
         }
 
-        [Test]
+        [Fact]
         public void creates_a_step_for_each_rule()
         {
             Debug.WriteLine(thePlan.ToDescriptionText());
@@ -60,7 +59,7 @@ namespace FubuMVC.Tests.Validation
             theStep.Rules.ShouldHaveTheSameElementsAs(r1, r2);
         }
 
-        [Test]
+        [Fact]
         public void executes_each_step()
         {
             thePlan.Execute(theContext);
@@ -69,13 +68,13 @@ namespace FubuMVC.Tests.Validation
             r2.AssertWasCalled(x => x.Validate(theContext));
         }
 
-        [Test]
+        [Fact]
         public void builds_up_the_field_rules()
         {
             thePlan.FieldRules.HasRule<RequiredFieldRule>(ReflectionHelper.GetAccessor<ContactModel>(x => x.FirstName)).ShouldBeTrue();
         }
 
-		[Test]
+		[Fact]
 		public void finds_the_rules_from_all_steps()
 		{
 			var r1 = new StubRule();
@@ -94,15 +93,14 @@ namespace FubuMVC.Tests.Validation
 		}
     }
 
-    [TestFixture]
+    
     public class when_building_the_description_for_the_validation_plan
     {
         private ValidationPlan thePlan;
         private Description theDescription;
         private BulletList theStepList;
 
-        [SetUp]
-        public void SetUp()
+        public when_building_the_description_for_the_validation_plan()
         {
             thePlan = new ValidationPlan(typeof(string), new ValidationStep[0]);
 
@@ -110,20 +108,20 @@ namespace FubuMVC.Tests.Validation
             theStepList = theDescription.BulletLists.Single();
         }
 
-        [Test]
+        [Fact]
         public void the_short_description_of_the_plan()
         {
             theDescription.ShortDescription.ShouldBe("Validate {0}".ToFormat(typeof (string).Name));
         }
 
-        [Test]
+        [Fact]
         public void the_name_and_the_label_of_the_validation_step_list()
         {
             theStepList.Name.ShouldBe("ValidationSteps");
             theStepList.Label.ShouldBe("Validation Steps");
         }
 
-        [Test]
+        [Fact]
         public void the_validation_step_list_must_be_marked_as_order_dependent()
         {
             theStepList.IsOrderDependent.ShouldBeTrue();

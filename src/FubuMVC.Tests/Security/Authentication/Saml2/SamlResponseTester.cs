@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Security.Authentication.Saml2;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication.Saml2
 {
-    [TestFixture]
+    
     public class SamlResponseTester
     {
-        [Test]
+        [Fact]
         public void add_a_single_key_attribute()
         {
             var response = new SamlResponse();
@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
             response.Attributes.Get("a").ShouldBe("1");
         }
 
-        [Test]
+        [Fact]
         public void add_multiple_values_for_the_same_key()
         {
             var response = new SamlResponse();

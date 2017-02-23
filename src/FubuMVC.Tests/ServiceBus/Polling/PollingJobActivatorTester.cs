@@ -4,12 +4,12 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.ServiceBus.ScheduledJobs;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.ServiceBus.Polling
 {
-    [TestFixture]
+    
     public class PollingJobActivatorTester : InteractionContext<PollingJobActivator>
     {
         private IPollingJob[] theJobs;
@@ -38,13 +38,13 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             ClassUnderTest.Activate(theLog, null);
         }
 
-        [Test]
+        [Fact]
         public void should_start_all_the_jobs()
         {
             theJobs.Each(x => x.AssertWasCalled(job => job.Start()));
         }
 
-        [Test]
+        [Fact]
         public void should_log_failures_for_both_of_the_failing_jobs()
         {
             theLog.AssertWasCalled(x => x.MarkFailure(ex1));
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         }
     }
 
-    [TestFixture]
+    
     public class PollingJobDeactivatorTester : InteractionContext<PollingJobDeactivator>
     {
         private IPollingJob[] theJobs;
@@ -76,13 +76,13 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             ClassUnderTest.Deactivate(theLog);
         }
 
-        [Test]
+        [Fact]
         public void should_stop_all_the_jobs()
         {
             theJobs.Each(x => x.AssertWasCalled(job => job.Dispose()));
         }
 
-        [Test]
+        [Fact]
         public void should_log_failures_for_both_of_the_failing_jobs()
         {
             theLog.AssertWasCalled(x => x.MarkFailure(ex1));

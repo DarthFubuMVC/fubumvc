@@ -3,15 +3,15 @@ using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Registration;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Registration
 {
-    [TestFixture]
+    
     public class HandlerSourceTester
     {
-        [Test]
+        [Fact]
         public void apply_to_single_assembly_looking_for_Handler()
         {
             var source = new HandlerSource();
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.ServiceBus.Registration
 "MyOtherConsumer.M4(M4 input) : void");
         }
 
-        [Test]
+        [Fact]
         public void uses_the_containing_assembly_by_default()
         {
             var source = new HandlerSource();
@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.ServiceBus.Registration
 "MyOtherConsumer.M4(M4 input) : void");
         }
 
-        [Test]
+        [Fact]
         public void custom_type_filter_on_excludes()
         {
             var source = new HandlerSource();
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.ServiceBus.Registration
                     "MyConsumer.M3(M3 input) : void");
         }
 
-        [Test]
+        [Fact]
         public void custom_type_filter_on_includeds()
         {
             var source = new HandlerSource();
@@ -85,7 +85,7 @@ namespace FubuMVC.Tests.ServiceBus.Registration
                     "MyConsumer.M3(M3 input) : void");
         }
 
-        [Test]
+        [Fact]
         public void custom_method_inclusion()
         {
             var source = new HandlerSource();
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.ServiceBus.Registration
 "MyOtherConsumer.M2(M2 input) : void");
         }
 
-        [Test]
+        [Fact]
         public void custom_method_exclusion()
         {
             var source = new HandlerSource();

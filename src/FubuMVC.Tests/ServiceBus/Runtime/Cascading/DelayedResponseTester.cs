@@ -1,16 +1,16 @@
 ﻿using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Cascading
 {
-    [TestFixture]
+    
     public class DelayedResponseTester
     {
-        [Test]
+        [Fact]
         public void create_and_send_with_timespan_delayed()
         {
             var message = new Message1();

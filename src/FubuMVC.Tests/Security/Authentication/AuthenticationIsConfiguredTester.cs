@@ -3,15 +3,15 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using NUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
-    [TestFixture]
+    
     public class AuthenticationIsConfiguredTester : InteractionContext<AuthenticationIsConfigured>
     {
-        [Test]
+        [Fact]
         public void everything_is_wonderful_if_there_is_at_least_one_strategy()
         {
             Services.CreateMockArrayFor<IAuthenticationStrategy>(3);
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Security.Authentication
             packageLog.AssertWasNotCalled(x => x.MarkFailure("text"), x => x.IgnoreArguments());
         }
 
-        [Test]
+        [Fact]
         public void logs_an_error_if_there_are_no_IAuthenticationStrategys_registered()
         {
             Services.CreateMockArrayFor<IAuthenticationStrategy>(0);

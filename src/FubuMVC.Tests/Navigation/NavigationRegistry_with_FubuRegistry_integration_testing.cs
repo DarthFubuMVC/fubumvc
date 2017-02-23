@@ -1,28 +1,27 @@
+using System;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Navigation;
-using NUnit.Framework;
+using Xunit;
 using Shouldly;
 
 namespace FubuMVC.Tests.Navigation
 {
-    [TestFixture]
-    public class NavigationRegistry_with_FubuRegistry_integration_testing
+    
+    public class NavigationRegistry_with_FubuRegistry_integration_testing : IDisposable
     {
         private FubuRegistry registry;
         private FubuRuntime runtime;
 
-        [SetUp]
-        public void SetUp()
+        public NavigationRegistry_with_FubuRegistry_integration_testing()
         {
             registry = new FubuRegistry();
             runtime = null;
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
-            if (runtime != null) runtime.Dispose();
+            runtime?.Dispose();
         }
 
         private IMenuResolver resolver
@@ -38,7 +37,7 @@ namespace FubuMVC.Tests.Navigation
             }
         }
 
-        [Test]
+        [Fact]
         public void navigation_method_on_fubu_registry_works()
         {
             registry.Import<NavigationRegistryExtension>();
@@ -53,7 +52,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key3);
         }
 
-        [Test]
+        [Fact]
         public void import_navigation_from_child_registry()
         {
             registry.Import<NavigationRegistryExtension>();
@@ -74,7 +73,7 @@ namespace FubuMVC.Tests.Navigation
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key7, FakeKeys.Key8);
         }
 
-        [Test]
+        [Fact]
         public void import_with_strings_instead_of_StringToken()
         {
             registry.Import<NavigationRegistryExtension>();
