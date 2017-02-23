@@ -15,14 +15,10 @@ namespace Serenity
             return _remoteSubSystems[name];
         }
 
-        public IEnumerable<RemoteSubSystem> RemoteSubSystems
-        {
-            get { return _remoteSubSystems; }
-        }
+        public IEnumerable<RemoteSubSystem> RemoteSubSystems => _remoteSubSystems;
 
         public void AddRemoteSubSystem(string name, Action<RemoteDomainExpression> configuration)
         {
-
             var system = new RemoteSubSystem(() => new RemoteServiceRunner(x =>
             {
                 x.Properties["Mode"] = "testing";

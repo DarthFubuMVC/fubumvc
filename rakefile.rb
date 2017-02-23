@@ -108,29 +108,19 @@ end
 
 
 
-# 'https://www.myget.org/F/fubumvc-edge/'
-# TODO -- need to add a set of tasks to test JasperService
-
 desc "Run the storyteller specifications"
 task :storyteller => [:compile] do
-	sh "packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm --build #{COMPILE_TARGET}"
-end
-
-desc "Run the storyteller specifications for health monitoring"
-task :servicebus => [:compile] do
-	sh "packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm --build #{COMPILE_TARGET} -w ServiceBus"
+	Dir.chdir("src/Specifications") do
+	  system "dotnet storyteller run --framework net46 --retries 3 --results-path artifacts/stresults.htm"
+	end
 end
 
 desc "Run the storyteller specifications"
 task :open_st => [:compile] do
-	sh "packages/Storyteller/tools/st.exe open src/FubuMVC.IntegrationTesting"
+	Dir.chdir("src/Specifications") do
+	  system "dotnet storyteller open --framework net46"
+	end
 end
-
-desc "Outputs the command line usage"
-task :dump_usages => [:compile] do
-  sh "src/Fubu/bin/#{COMPILE_TARGET}/fubu.exe dump-usages fubu src/Fubu.Docs/fubu.cli.xml"
-end
-
 
 desc "Launches VS to the FubuMVC solution file"
 task :sln do

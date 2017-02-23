@@ -1,7 +1,10 @@
 {
   "version": "1.0.0-*",
   "buildOptions": {
-    "debugType": "portable"
+    "debugType": "portable",
+    "embed": {
+      "include": [ "x86/lmdb.dll", "x64/lmdb.dll" ]
+    }
   },
   "dependencies": {
     "FubuMVC.Core": { "target": "project" },

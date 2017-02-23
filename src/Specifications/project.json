@@ -1,0 +1,22 @@
+﻿{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "tools": {
+    "dotnet-storyteller": {
+      "version": "1.0.0"
+    }
+  },
+
+  "dependencies": {
+    "FubuMVC.IntegrationTesting": { "target": "project" },
+    "FubuMVC.Core": {"target":  "project" }, 
+    "Storyteller": "4.1.0-alpha-491"
+  },
+
+  "frameworks": {
+    "net46": {}
+  }
+}
