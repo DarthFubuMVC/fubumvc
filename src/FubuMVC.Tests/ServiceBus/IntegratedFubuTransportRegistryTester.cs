@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Routing;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
@@ -191,7 +192,7 @@ namespace FubuMVC.Tests.ServiceBus
 
         public Uri Outbound { get; set; }
         public Uri Downstream { get; set; }
-        public Uri Upstream { get; set; }
+        public Uri Upstream { get; set; } = "memory://1".ToUri();
         public int DownstreamCount { get; private set; }
     }
 

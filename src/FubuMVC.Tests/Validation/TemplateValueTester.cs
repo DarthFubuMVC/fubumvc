@@ -114,6 +114,11 @@ namespace FubuMVC.Tests.Validation
     
     public class TemplateTester
     {
+        public TemplateTester()
+        {
+            LocalizationManager.Stub("en-US");
+        }
+
         [Fact]
         public void renders_the_template()
         {

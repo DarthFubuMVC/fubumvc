@@ -166,7 +166,7 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
-                .ShouldBe(PublicFolder);
+                .ShouldEndWith("public");
         }
 
         [Fact]
@@ -181,7 +181,7 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
-                .ShouldBe(PublicFolder.ToFullPath());
+                .ShouldEndWith("public");
         }
 
         [Fact]
@@ -201,7 +201,7 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
-                .ShouldBe(expectedPath);
+                .Replace("\\", "/").ShouldEndWith("public/1.0.1");
         }
 
         [Fact]
@@ -327,8 +327,7 @@ namespace FubuMVC.Tests.Assets
 
             var manifest = settings.CreateFileWatcherManifest(FubuApplicationFiles.ForDefault());
 
-            manifest.PublicAssetFolder.ShouldBe(
-                AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().AppendPath("public").Replace('\\', '/'));
+            manifest.PublicAssetFolder.ShouldEndWith("public");
         }
 
         [Fact]

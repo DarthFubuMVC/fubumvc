@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using Xunit;
@@ -9,6 +10,11 @@ namespace FubuMVC.Tests.Validation.Fields
     
     public class CollectionLengthRuleTester
     {
+        public CollectionLengthRuleTester()
+        {
+            LocalizationManager.Stub("en-US");
+        }
+
         [Fact]
         public void do_not_log_any_messages_when_the_collection_is_valid()
         {

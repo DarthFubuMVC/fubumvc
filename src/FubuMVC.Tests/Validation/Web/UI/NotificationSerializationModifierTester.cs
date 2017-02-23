@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Validation.Web.UI
             x.Policies.Local.Add<ValidationPolicy>();
         });
 
-        private NotificationSerializationModifier theModifier;
+        private NotificationSerializationModifier theModifier = new NotificationSerializationModifier();
         private Notification theNotification;
         private IFubuRequest theRequest;
 

@@ -25,6 +25,9 @@ namespace FubuMVC.Core.Diagnostics.Assets
 
         public DiagnosticAssetsCache(BehaviorGraph graph)
         {
+            var file = new EmbeddedFile(GetType().Assembly, "FubuMVC.Core.root.js");
+            _files.Add(file);
+
             AddAssembly(Assembly.GetExecutingAssembly());
             graph.PackageAssemblies.Each(AddAssembly);
 

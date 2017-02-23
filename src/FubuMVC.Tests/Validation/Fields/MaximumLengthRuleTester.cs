@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using FubuMVC.Tests.Validation.Models;
@@ -10,6 +11,11 @@ namespace FubuMVC.Tests.Validation.Fields
     
     public class MaximumLengthRuleTester
     {
+        public MaximumLengthRuleTester()
+        {
+            LocalizationManager.Stub("en-US");
+        }
+
         private AddressModel theModel = new AddressModel();
 
         private Notification theNotification

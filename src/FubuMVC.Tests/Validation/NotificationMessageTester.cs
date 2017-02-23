@@ -11,6 +11,11 @@ namespace FubuMVC.Tests.Validation
     
     public class NotificationMessageTester
     {
+        public NotificationMessageTester()
+        {
+            LocalizationManager.Stub("en-US");
+        }
+
         [Fact]
         public void create_by_string()
         {

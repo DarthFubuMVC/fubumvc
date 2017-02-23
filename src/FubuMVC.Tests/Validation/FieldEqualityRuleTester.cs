@@ -30,7 +30,8 @@ namespace FubuMVC.Tests.Validation
 	    {
 			theTarget = new FieldEqualityTarget();
 			theRule = FieldEqualityRule.For<FieldEqualityTarget>(t => t.Value1, t => t.Value2);
-		}
+            LocalizationManager.Stub("en-US");
+        }
 
 		private Notification theNotification
 		{

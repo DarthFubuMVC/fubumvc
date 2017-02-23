@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using Xunit;
@@ -11,7 +12,12 @@ namespace FubuMVC.Tests.Validation.Fields
 	{
 		private RegExTarget theTarget = new RegExTarget();
 
-		private Notification theNotification
+	    public RegularExpressionFieldRuleTester()
+	    {
+            LocalizationManager.Stub("en-US");
+        }
+
+	    private Notification theNotification
 		{
 			get
 			{

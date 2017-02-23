@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using Xunit;
@@ -9,6 +10,11 @@ namespace FubuMVC.Tests.Validation.Fields
     
     public class MaxValueFieldRuleTester
     {
+        public MaxValueFieldRuleTester()
+        {
+            LocalizationManager.Stub("en-US");
+        }
+
         private MaxValueTarget theTarget = new MaxValueTarget();
 
         private Notification theNotification

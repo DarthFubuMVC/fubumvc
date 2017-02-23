@@ -7,6 +7,11 @@ namespace FubuMVC.Tests.Localization
     
     public class StringTokenStronglyTypedTester
     {
+        public StringTokenStronglyTypedTester()
+        {
+            LocalizationManager.Stub("en-US");
+        }
+
         [Fact]
         public void simple_localization()
         {

@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuMVC.Core.Localization;
 using FubuMVC.Core.Validation;
 using FubuMVC.Core.Validation.Fields;
 using Xunit;
@@ -10,6 +11,11 @@ namespace FubuMVC.Tests.Validation.Fields
     public class RangeLengthFieldRuleTester
     {
         private RangeLengthTarget theTarget = new RangeLengthTarget();
+
+        public RangeLengthFieldRuleTester()
+        {
+            LocalizationManager.Stub("en-US");
+        }
 
         private Notification theNotification
         {

@@ -87,16 +87,11 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
         public class ConfiguredSettings
         {
-            private static int count = 0;
 
             public ConfiguredSettings()
             {
                 UpstreamCount = 7;
                 OutboundCount = 5;
-
-                count++;
-
-                if (count > 1) throw new Exception("Where is this getting built?");
 
             }
 
