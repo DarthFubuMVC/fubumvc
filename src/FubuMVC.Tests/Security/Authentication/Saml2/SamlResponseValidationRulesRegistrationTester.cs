@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Localization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Saml2;
@@ -15,6 +16,11 @@ namespace FubuMVC.Tests.Security.Authentication.Saml2
     
     public class SamlResponseValidationRulesRegistrationTester
     {
+        public SamlResponseValidationRulesRegistrationTester()
+        {
+            LocalizationManager.Stub();
+        }
+
         [Fact]
         public void require_signatures_is_true()
         {

@@ -1513,7 +1513,9 @@
   "projectFileDependencyGroups": {
     "": [
       "FubuMVC.LightningQueues",
-      "FubuMVC.Tests"
+      "FubuMVC.Tests",
+      "dotnet-test-xunit >= 2.2.0-preview2-build1029",
+      "xunit >= 2.2.0-beta3-build3402"
     ],
     ".NETFramework,Version=v4.6": []
   },

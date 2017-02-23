@@ -76,7 +76,7 @@ end
 
 desc 'Run the integration tests'
 task :integration_test => [:compile] do
-	sh "dotnet test src/FubuMVC.LightningQueues"
+	sh "dotnet test src/FubuMVC.LightningQueues.Testing"
 	sh "dotnet test src/FubuMVC.IntegrationTesting"
 end
 

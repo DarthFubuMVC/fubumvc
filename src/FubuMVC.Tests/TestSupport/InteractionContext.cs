@@ -2,6 +2,7 @@ using System;
 using FubuCore;
 using FubuCore.Dates;
 using FubuCore.Logging;
+using FubuMVC.Core.Localization;
 using Xunit;
 using Rhino.Mocks;
 using StructureMap;
@@ -20,6 +21,8 @@ namespace FubuMVC.Tests.TestSupport
 
         public InteractionContext()
         {
+            LocalizationManager.Stub();
+
             _clock = new SettableClock();
 
             Services = new RhinoAutoMocker<T>();
