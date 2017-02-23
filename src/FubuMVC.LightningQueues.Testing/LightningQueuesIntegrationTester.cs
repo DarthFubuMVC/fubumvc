@@ -57,7 +57,6 @@ namespace FubuMVC.LightningQueues.Testing
         [Fact]
         public void reply_uri_is_machine_specific_when_dns_address_is_used()
         {
-            queues.Dispose();
             SetupTransport("lq.tcp://www.foo.com:2032/upstream", ChannelMode.DeliveryGuaranteed);
 
             var uri = graph.ReplyChannelFor(LightningUri.Protocol);

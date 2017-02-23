@@ -1,13 +1,14 @@
 {
+  "testRunner": "xunit",
   "version": "1.0.0-*",
   "buildOptions": {
     "debugType": "portable"
   },
   "dependencies": {
-    "FubuMVC.LightningQueues": {"target": "project"},
-    "FubuMVC.Tests": {"target": "project"}
+    "FubuMVC.LightningQueues": { "target": "project" },
+    "FubuMVC.Tests": { "target": "project" }
   },
   "frameworks": {
-    "net46": {} 
+    "net46": {}
   }
 }
