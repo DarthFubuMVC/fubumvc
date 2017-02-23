@@ -1,13 +1,18 @@
 {
   "version": "1.0.0-*",
+  "testRunner": "xunit",
   "buildOptions": {
-    "debugType": "portable"
+    "debugType": "portable",
+    "copyToOutput": [ "FubuTestApplication.application.config", "*.txt", "*.js", "*.map" ]
   },
   "dependencies": {
     "FubuMVC.Tests": { "target": "project" },
     "FubuMVC.LightningQueues": { "target": "project" },
     "ServiceNode": { "target": "project" },
-    "Serenity": { "target": "project" }
+    "Serenity": { "target": "project" },
+    "Microsoft.Owin.Hosting": "3.0.1",
+    "Microsoft.Owin.Host.HttpListener": "3.0.1",
+    "OwinBottle": {"target": "project" } 
   },
   "frameworks": {
     "net46": {} 

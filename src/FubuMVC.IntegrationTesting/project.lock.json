@@ -217,6 +217,40 @@
           "lib/netstandard1.0/_._": {}
         }
       },
+      "Microsoft.Owin/3.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.dll": {}
+        }
+      },
+      "Microsoft.Owin.Host.HttpListener/3.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.Owin.Host.HttpListener.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Host.HttpListener.dll": {}
+        }
+      },
+      "Microsoft.Owin.Hosting/3.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Owin": "3.0.1",
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Hosting.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Hosting.dll": {}
+        }
+      },
       "Newtonsoft.Json/9.0.1": {
         "type": "package",
         "compile": {
@@ -320,6 +354,15 @@
         },
         "runtime": {
           "lib/net45/NuGet.Versioning.dll": {}
+        }
+      },
+      "Owin/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Owin.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Owin.dll": {}
         }
       },
       "RhinoMocks/3.6.1": {
@@ -706,6 +749,19 @@
           "net46/FubuMVC.Tests.dll": {}
         }
       },
+      "OwinBottle/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "FubuMVC.Core": "1.0.0"
+        },
+        "compile": {
+          "net46/OwinBottle.dll": {}
+        },
+        "runtime": {
+          "net46/OwinBottle.dll": {}
+        }
+      },
       "SampleService/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
@@ -949,6 +1005,39 @@
         "runtime.json"
       ]
     },
+    "Microsoft.Owin/3.0.1": {
+      "sha512": "64yZsGN9uRnXNVAyAT4F6KWmdDUJ6yX4uqzxKTdGANKH1oMt0IKZ7THRRa3mXIOo8iSu4tq/DCBUycUY9pXZzw==",
+      "type": "package",
+      "path": "Microsoft.Owin/3.0.1",
+      "files": [
+        "Microsoft.Owin.3.0.1.nupkg.sha512",
+        "Microsoft.Owin.nuspec",
+        "lib/net45/Microsoft.Owin.XML",
+        "lib/net45/Microsoft.Owin.dll"
+      ]
+    },
+    "Microsoft.Owin.Host.HttpListener/3.0.1": {
+      "sha512": "2aYSE/QQVpybHP9mDz4yMgzvxdfEgGjbtetU1aPWHrKqv7mSXlNeXIBcWSrF4MvW/ghwEk8bZghYefNupjeAEg==",
+      "type": "package",
+      "path": "Microsoft.Owin.Host.HttpListener/3.0.1",
+      "files": [
+        "Microsoft.Owin.Host.HttpListener.3.0.1.nupkg.sha512",
+        "Microsoft.Owin.Host.HttpListener.nuspec",
+        "lib/net45/Microsoft.Owin.Host.HttpListener.dll",
+        "lib/net45/Microsoft.Owin.Host.HttpListener.xml"
+      ]
+    },
+    "Microsoft.Owin.Hosting/3.0.1": {
+      "sha512": "OJ8teZPtI50xeeLzJN/6p3N2/qkkcJjz5dXwRnO0VtDbFZT5uzQLAa/s4Q+6WeWI9nEoVdUGi6J1KQ1zjTtaaA==",
+      "type": "package",
+      "path": "Microsoft.Owin.Hosting/3.0.1",
+      "files": [
+        "Microsoft.Owin.Hosting.3.0.1.nupkg.sha512",
+        "Microsoft.Owin.Hosting.nuspec",
+        "lib/net45/Microsoft.Owin.Hosting.XML",
+        "lib/net45/Microsoft.Owin.Hosting.dll"
+      ]
+    },
     "Newtonsoft.Json/9.0.1": {
       "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
       "type": "package",
@@ -1064,6 +1153,16 @@
         "lib/net45/NuGet.Versioning.xml",
         "lib/netstandard1.0/NuGet.Versioning.dll",
         "lib/netstandard1.0/NuGet.Versioning.xml"
+      ]
+    },
+    "Owin/1.0.0": {
+      "sha512": "OseTFniKmyp76mEzOBwIKGBRS5eMoYNkMKaMXOpxx9jv88+b6mh1rSaw43vjBOItNhaLFG3d0a20PfHyibH5sw==",
+      "type": "package",
+      "path": "Owin/1.0.0",
+      "files": [
+        "Owin.1.0.0.nupkg.sha512",
+        "Owin.nuspec",
+        "lib/net40/Owin.dll"
       ]
     },
     "RhinoMocks/3.6.1": {
@@ -1757,6 +1856,11 @@
       "path": "../FubuMVC.Tests/project.json",
       "msbuildProject": "../FubuMVC.Tests/FubuMVC.Tests.xproj"
     },
+    "OwinBottle/1.0.0": {
+      "type": "project",
+      "path": "../OwinBottle/project.json",
+      "msbuildProject": "../OwinBottle/OwinBottle.xproj"
+    },
     "SampleService/1.0.0": {
       "type": "project",
       "path": "../SampleService/project.json",
@@ -1787,6 +1891,9 @@
     "": [
       "FubuMVC.LightningQueues",
       "FubuMVC.Tests",
+      "Microsoft.Owin.Host.HttpListener >= 3.0.1",
+      "Microsoft.Owin.Hosting >= 3.0.1",
+      "OwinBottle",
       "Serenity",
       "ServiceNode"
     ],

@@ -301,20 +301,13 @@ namespace FubuMVC.Core
 
         private static string determineApplicationPathFromAppDomain()
         {
+
             var basePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
-            if (basePath.EndsWith("bin"))
+            while (basePath.Replace("\\", "/").ToLower().Contains("/bin"))
             {
-                basePath = basePath.Substring(0, basePath.Length - 3).TrimEnd(Path.DirectorySeparatorChar);
+                basePath = basePath.ParentDirectory();
             }
 
-            var segments = basePath.Split(Path.DirectorySeparatorChar);
-            if (segments.Length > 2)
-            {
-                if (segments[segments.Length - 2].EqualsIgnoreCase("bin"))
-                {
-                    return basePath.ParentDirectory().ParentDirectory();
-                }
-            }
 
             return basePath;
         }

@@ -1,7 +1,10 @@
 {
   "version": "1.0.0-*",
   "buildOptions": {
-    "debugType": "portable"
+    "debugType": "portable",
+    "embed": {
+      "include": [ "*.js" ]
+    }
   },
   "dependencies": {
     "FubuMVC.Core": { "target": "project" },
