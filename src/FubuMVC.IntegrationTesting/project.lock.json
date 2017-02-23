@@ -681,7 +681,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0"
+          "FubuMVC.Core": "(, )"
         },
         "compile": {
           "net46/AssemblyPackage.dll": {}
@@ -716,7 +716,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0",
+          "FubuMVC.Core": "(, )",
           "LightningQueues": "0.2.12",
           "LightningQueues.Storage.LMDB": "0.2.10"
         },
@@ -731,14 +731,14 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "AssemblyPackage": "1.0.0",
-          "FubuMVC.Core": "1.0.0",
+          "AssemblyPackage": "(, )",
+          "FubuMVC.Core": "(, )",
           "RhinoMocks": "3.6.1",
-          "SampleService": "1.0.0",
+          "SampleService": "(, )",
           "Shouldly": "2.8.2",
           "System.Runtime": "4.3.0",
-          "TestMessages": "1.0.0",
-          "TestPackage1": "1.0.0",
+          "TestMessages": "(, )",
+          "TestPackage1": "(, )",
           "dotnet-test-xunit": "2.2.0-preview2-build1029",
           "xunit": "2.2.0-beta3-build3402"
         },
@@ -753,7 +753,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0"
+          "FubuMVC.Core": "(, )"
         },
         "compile": {
           "net46/OwinBottle.dll": {}
@@ -766,7 +766,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0"
+          "FubuMVC.Core": "(, )"
         },
         "compile": {
           "net46/SampleService.dll": {}
@@ -779,7 +779,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0",
+          "FubuMVC.Core": "(, )",
           "Selenium.Support": "3.1.0",
           "Selenium.WebDriver": "3.1.0",
           "Storyteller": "4.1.0-alpha-491"
@@ -795,7 +795,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0"
+          "FubuMVC.Core": "(, )"
         },
         "compile": {
           "net46/ServiceNode.dll": {}
@@ -808,7 +808,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0",
+          "FubuMVC.Core": "(, )",
           "Shouldly": "2.8.2"
         },
         "compile": {
@@ -822,7 +822,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0"
+          "FubuMVC.Core": "(, )"
         },
         "compile": {
           "net46/TestPackage1.dll": {}

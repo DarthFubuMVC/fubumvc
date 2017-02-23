@@ -433,7 +433,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0"
+          "FubuMVC.Core": "(, )"
         },
         "compile": {
           "net46/AssemblyPackage.dll": {}
@@ -468,7 +468,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0"
+          "FubuMVC.Core": "(, )"
         },
         "compile": {
           "net46/SampleService.dll": {}
@@ -481,7 +481,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0",
+          "FubuMVC.Core": "(, )",
           "Shouldly": "2.8.2"
         },
         "compile": {
@@ -495,7 +495,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0"
+          "FubuMVC.Core": "(, )"
         },
         "compile": {
           "net46/TestPackage1.dll": {}

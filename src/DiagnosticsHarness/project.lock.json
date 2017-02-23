@@ -964,7 +964,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0",
+          "FubuMVC.Core": "(, )",
           "LightningQueues": "0.2.12",
           "LightningQueues.Storage.LMDB": "0.2.10"
         },
@@ -979,7 +979,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "FubuMVC.Core": "1.0.0",
+          "FubuMVC.Core": "(, )",
           "Marten": "1.4.0"
         },
         "compile": {

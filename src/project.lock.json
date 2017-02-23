@@ -1,0 +1,16 @@
+{
+  "locked": false,
+  "version": 2,
+  "targets": {
+    ".NETFramework,Version=v4.6": {}
+  },
+  "libraries": {},
+  "projectFileDependencyGroups": {
+    "": [
+      "FubuMVC.Core"
+    ],
+    ".NETFramework,Version=v4.6": []
+  },
+  "tools": {},
+  "projectFileToolGroups": {}
+}

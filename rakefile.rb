@@ -1,6 +1,6 @@
 COMPILE_TARGET = ENV['config'].nil? ? "debug" : ENV['config']
 RESULTS_DIR = "results"
-BUILD_VERSION = '3.0.1'
+BUILD_VERSION = '3.0.2'
 
 NUGET_KEY = ENV['api_key']
 
@@ -12,7 +12,7 @@ build_revision = tc_build_number || Time.new.strftime('5%H%M')
 build_number = "#{BUILD_VERSION}.#{build_revision}"
 BUILD_NUMBER = build_number 
 
-task :ci => [:default, :integration_test, :publish]
+task :ci => [:default, :integration_test]
 
 task :default => [:test]
 
@@ -65,51 +65,29 @@ end
 
 desc 'Compile the code'
 task :compile => [:npm, :clean, :version] do
-	sh "paket.exe restore"
-	
-	msbuild = '"C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe"'
-	sh "#{msbuild} src/FubuMVC.sln   /property:Configuration=#{COMPILE_TARGET} /v:m /t:rebuild /nr:False /maxcpucount:2"
+	sh "dotnet restore src"
+	sh "dotnet build src/FubuMVC.IntegrationTesting"
 end
 
 desc 'Run the unit tests'
 task :test => [:compile] do
-	sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.Tests/bin/#{COMPILE_TARGET}/FubuMVC.Tests.dll --NUnitXml results/TestResult.xml"
+	sh "dotnet test src/FubuMVC.Tests"
 end
 
 desc 'Run the integration tests'
 task :integration_test => [:compile] do
-    sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.IntegrationTesting/bin/#{COMPILE_TARGET}/FubuMVC.IntegrationTesting.dll --NUnitXml results/IntegrationTestResult.xml"
-    sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.RavenDb.Tests/bin/#{COMPILE_TARGET}/FubuMVC.RavenDb.Tests.dll --NUnitXml results/RavenDbTestResult.xml"
-    sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.LightningQueues.Testing/bin/#{COMPILE_TARGET}/FubuMVC.LightningQueues.Testing.dll --NUnitXml results/LQTestResult.xml"
+	sh "dotnet test src/FubuMVC.LightningQueues"
+	sh "dotnet test src/FubuMVC.IntegrationTesting"
 end
 
 desc 'Build Nuspec packages'
 task :pack => [:compile] do
-	sh "nuget.exe pack packaging/nuget/fubumvc.aspnet.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.core.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.lightningqueues.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.ravendb.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.razor.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.spark.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/fubumvc.marten.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/serenity.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	sh "nuget.exe pack packaging/nuget/jasperservice.nuspec -VERSION #{build_number} -OutputDirectory artifacts"
-	
-
+	sh "dotnet pack ./src/FubuMVC.Core -o artifacts --configuration Release"
+	sh "dotnet pack ./src/FubuMVC.Marten -o artifacts --configuration Release"
+	sh "dotnet pack ./src/FubuMVC.LightningQueues -o artifacts --configuration Release"
+	sh "dotnet pack ./src/Serenity -o artifacts --configuration Release"
 
 	
-end
-
-task :publish => [:pack] do
-	sh "nuget.exe push artifacts/FubuMVC.Core.#{build_number}.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/FubuMVC.AspNet.#{build_number}.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/FubuMVC.LightningQueues.#{build_number}.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/FubuMVC.RavenDb.#{build_number}.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/FubuMVC.Razor.#{build_number}.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/FubuMVC.Spark.#{build_number}.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/FubuMVC.Marten.#{build_number}.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/Serenity.#{build_number}.nupkg #{NUGET_KEY} "
-	sh "nuget.exe push artifacts/JasperService.#{build_number}.nupkg #{NUGET_KEY} "
 end
 
 desc "Launches the diagnostics harness for client side development"
@@ -128,19 +106,6 @@ task :npm do
 	sh 'npm run build'
 end
 
-
-desc "Replaces the existing installed gem with the new version for local testing"
-task :local_gem => [:create_gem] do
-	sh 'gem uninstall fubu -a -x'
-	Dir.chdir 'pkg' do
-	    sh 'gem install fubu'
-    end
-end
-
-desc "Moves the gem to the archive folder"
-task :archive_gem => [:create_gem] do
-	copyOutputFiles "pkg", "*.gem", "artifacts"
-end
 
 
 # 'https://www.myget.org/F/fubumvc-edge/'
@@ -166,52 +131,6 @@ task :dump_usages => [:compile] do
   sh "src/Fubu/bin/#{COMPILE_TARGET}/fubu.exe dump-usages fubu src/Fubu.Docs/fubu.cli.xml"
 end
 
-desc "Creates the gem for fubu.exe"
-task :create_gem => [:compile] do
-    require "rubygems/package"
-	cleanDirectory 'bin';	
-	cleanDirectory 'pkg'
-	
-	Dir.mkdir 'artifacts' unless Dir.exists?('artifacts')
-	Dir.mkdir 'bin' unless Dir.exists?('bin')
-	Dir.mkdir 'pkg' unless Dir.exists?('pkg')
-	
-	copyOutputFiles "src/Fubu/bin/#{COMPILE_TARGET}", '*.dll', 'bin'
-	copyOutputFiles "src/Fubu/bin/#{COMPILE_TARGET}", 'Fubu.exe', 'bin'
-	copyOutputFiles "src/Fubu/bin/#{COMPILE_TARGET}", 'chromedriver.exe', 'bin'
-	FileUtils.cp_r 'templates', 'bin'
-	
-	FileUtils.copy 'fubu', 'bin'
-
-
-	spec = Gem::Specification.new do |s|
-	  s.platform    = Gem::Platform::RUBY
-	  s.name        = 'fubu'
-	  s.version     = @solution.options[:build_number] + '.alpha'
-	  s.files = Dir['bin/**/*']
-	  s.bindir = 'bin'
-	  s.executables << 'fubu'
-	  
-	  s.summary     = 'Command line tools for FubuMVC development'
-	  s.description = 'Command line tools for FubuMVC development'
-	  
-	  s.add_runtime_dependency "rake",["~>10.0"]
-	  s.add_runtime_dependency "bundler",[">=1.3.5"]
-	  
-	  s.authors           = ['Jeremy D. Miller', 'Josh Arnold', 'Chad Myers', 'Joshua Flanagan']
-	  s.email             = 'fubumvc-devel@googlegroups.com'
-	  s.homepage          = 'http://fubu-project.org'
-	  s.rubyforge_project = 'fubu'
-	end   
-    puts "ON THE FLY SPEC FILES"
-    puts spec.files
-    puts "=========="
-
-    Gem::Package::build spec, true
-	
-	FileUtils.mv "fubu-#{build_number}.alpha.gem", "pkg/fubu-#{build_number}.alpha.gem"
-	
-end
 
 desc "Launches VS to the FubuMVC solution file"
 task :sln do
