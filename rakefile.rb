@@ -111,7 +111,7 @@ end
 desc "Run the storyteller specifications"
 task :storyteller => [:compile] do
 	Dir.chdir("src/Specifications") do
-	  system "dotnet storyteller run --framework net46 --retries 3 --results-path artifacts/stresults.htm"
+	  system "dotnet storyteller run --framework net46 --retries 3 --results-path artifacts/stresults.htm --teamcity"
 	end
 end
 

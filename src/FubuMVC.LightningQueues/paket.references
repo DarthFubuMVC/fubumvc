@@ -1,9 +1,0 @@
-FubuCore
-HtmlTags
-LightningQueues
-NLog
-Owin
-structuremap
-LightningQueues.Storage.LMDB
-System.Reactive
-System.Net.Sockets

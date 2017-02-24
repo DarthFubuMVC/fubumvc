@@ -55,6 +55,7 @@ namespace Specifications
             using (var runner = StorytellerRunner.For<TestSystem>())
             {
                 runner.Run("Content Negotiation / Default Conneg Rules");
+                //runner.RunAll(20.Minutes());
             }
         }
 

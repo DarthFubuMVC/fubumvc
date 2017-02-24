@@ -7,7 +7,7 @@ namespace Serenity
     {
         public const string Process = "firefox";
 
-        public override string BrowserName { get { return "FireFox"; } }
+        public override string BrowserName => "FireFox";
 
         protected override IWebDriver buildDriver()
         {

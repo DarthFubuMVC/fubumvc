@@ -24,19 +24,26 @@ namespace FubuMVC.LightningQueues
                     var folder = Environment.Is64BitProcess ? "x64" : "x86";
                     var assembly = Assembly.GetExecutingAssembly();
                     byte[] resourceAssemblyBytes;
-
+                    Console.WriteLine(1);
                     string resourceName = $"FubuMVC.LightningQueues.{folder}.{StaticLibraryName}";
 
                     var stream = assembly.GetManifestResourceStream(resourceName);
+
+                    Console.WriteLine(2 + ": " + stream != null);
                     using (var memoryStream = new MemoryStream())
                     {
                         stream.CopyTo(memoryStream);
                         resourceAssemblyBytes = memoryStream.GetBuffer();
                     }
 
+                    Console.WriteLine(3);
+
                     //var path = Path.GetDirectoryName(typeof(LightningQueuesTransport).Assembly.CodeBase).AppendPath(StaticLibraryName).Replace(@"file:\", string.Empty);
                     var path = Path.GetDirectoryName(new Uri(typeof(LightningQueuesTransport).Assembly.CodeBase).LocalPath)
                         .AppendPath(StaticLibraryName);
+
+                    Console.WriteLine(4);
+
                     Console.WriteLine($"Checking to see if {path} exists");
                     if (File.Exists(path))
                     {
@@ -48,6 +55,8 @@ namespace FubuMVC.LightningQueues
                         File.WriteAllBytes(path, resourceAssemblyBytes);
                         Console.WriteLine($"Successfully wrote resource {resourceName} to {path}");
                     }
+
+                    Console.WriteLine(5);
                 }
                 catch (Exception e)
                 {
