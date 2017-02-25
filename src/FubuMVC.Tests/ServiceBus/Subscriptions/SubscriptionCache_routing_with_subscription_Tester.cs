@@ -51,6 +51,29 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         }
 
         [Fact]
+        public void accepted_content_types_should_inherit_from_graph_when_no_subscription()
+        {
+            theCache.FindSubscribingChannelsFor(typeof(Message1))
+                .First()
+                .AcceptedContentTypes
+                .ShouldHaveTheSameElementsAs("application/json");
+        }
+
+        [Fact]
+        public void accepted_content_types_should_be_set_from_subscription()
+        {
+            theCache.LoadSubscriptions(new Subscription[]
+            {
+                Subscription.For<Message6>().ReceivedBy(theSettings.Q4).WithAcceptedContentTypes("binary/octet-stream")
+            });
+
+            theCache.FindSubscribingChannelsFor(typeof(Message6))
+                .First()
+                .AcceptedContentTypes
+                .ShouldHaveTheSameElementsAs("binary/octet-stream");
+        }
+
+        [Fact]
         public void route_with_a_single_matching_subscription()
         {
             theCache.LoadSubscriptions(new Subscription[]
@@ -105,6 +128,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             public SubscriptionRegistry()
             {
                 ServiceBus.EnableInMemoryTransport();
+                ServiceBus.AcceptedContentTypes("application/json");
 
                 Channel(x => x.Q1)
                     .AcceptsMessage<Message1>()

@@ -9,7 +9,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Serializers
 {
     public interface IEnvelopeSerializer
     {
-        object Deserialize(Envelope envelope);
+        object Deserialize(Envelope envelope, ChannelNode node);
         void Serialize(Envelope envelope, ChannelNode node);
     }
 
@@ -24,14 +24,12 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Serializers
             _serializers = serializers;
         }
 
-        // TODO -- take in ChannelNode here!
-        public object Deserialize(Envelope envelope)
+        public object Deserialize(Envelope envelope, ChannelNode node)
         {
             if (envelope.Data == null) throw new EnvelopeDeserializationException("No data on this envelope to deserialize");
 
+            var serializer = SelectSerializer(envelope, node);
 
-            var serializer = SelectSerializer(envelope, null);
-            
             using (var stream = new MemoryStream(envelope.Data))
             {
                 try
@@ -45,12 +43,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Serializers
             }
         }
 
-        private IMessageSerializer findSerializer(string contentType)
+        private IMessageSerializer findSerializer(string contentType, bool throws = true)
         {
             var serializer = _serializers.FirstOrDefault(x => x.ContentType.EqualsIgnoreCase(contentType));
 
-
-            if (serializer == null)
+            if (throws && serializer == null)
             {
                 throw new EnvelopeDeserializationException("Unknown content-type '{0}'".ToFormat(contentType));
             }
@@ -58,23 +55,54 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Serializers
             return serializer;
         }
 
+        private IMessageSerializer findSerializerForContentTypes(IEnumerable<string> acceptedContentTypes, Envelope envelope, bool throws = true)
+        {
+            var validSerializers = acceptedContentTypes
+                   .Select(type => findSerializer(type, false))
+                   .Where(x => x != null)
+                   .ToList();
+
+            if (throws && !validSerializers.Any())
+                throw new EnvelopeDeserializationException(
+                    "No acceptable serializers registered for message {0} with the accepted content types {1}."
+                    .ToFormat(envelope.Message.GetType().Name, string.Join(",", acceptedContentTypes)));
+
+            //TODO: This could be smarter.
+            return validSerializers.FirstOrDefault();
+        }
+
+        //TODO: Consider memoizing this.
         public IMessageSerializer SelectSerializer(Envelope envelope, ChannelNode node)
         {
+            //Envelope
             if (envelope.ContentType.IsNotEmpty())
             {
                 return findSerializer(envelope.ContentType);
             }
+            if (envelope.AcceptedContentTypes.Any())
+            {
+                return findSerializerForContentTypes(envelope.AcceptedContentTypes, envelope, false);
+            }
 
+            //Channel
             if (node.DefaultSerializer != null)
             {
                 return node.DefaultSerializer;
             }
-
             if (node.DefaultContentType.IsNotEmpty())
             {
                 return findSerializer(node.DefaultContentType);
             }
+             if (node.AcceptedContentTypes != null && node.AcceptedContentTypes.Any())
+            {
+                return findSerializerForContentTypes(node.AcceptedContentTypes, envelope, false);
+            }
 
+            //Graph
+            if ( _graph.AcceptedContentTypes.Any())
+            {
+                return findSerializerForContentTypes(_graph.AcceptedContentTypes, envelope);
+            }
             return findSerializer(_graph.DefaultContentType);
         }
 

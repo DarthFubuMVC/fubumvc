@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Linq;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.ServerSentEvents;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Core.Validation.Web;
@@ -82,7 +82,7 @@ namespace FubuMVC.Core.Registration.DSL
             {
                 return new Feature<ValidationSettings, bool>(_parent, (x, enabled) => x.Enabled = enabled);
             }
-        } 
+        }
 
     }
 
@@ -124,7 +124,16 @@ namespace FubuMVC.Core.Registration.DSL
             _parent.AlterSettings<ChannelGraph>(graph => graph.DefaultContentType = contentType);
         }
 
+        public void AcceptedContentTypes(params IMessageSerializer[] serializers)
+        {
+            _parent.AlterSettings<ChannelGraph>(graph => graph.AcceptedContentTypes
+                .AddRange(serializers.Select(x => x.ContentType)));
+        }
 
+        public void AcceptedContentTypes(params string[] contentTypes)
+        {
+            _parent.AlterSettings<ChannelGraph>(graph => graph.AcceptedContentTypes.AddRange(contentTypes));
+        }
 
         public HealthMonitoringExpression HealthMonitoring
         {

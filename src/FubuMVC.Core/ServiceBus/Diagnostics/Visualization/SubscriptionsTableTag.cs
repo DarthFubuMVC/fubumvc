@@ -43,6 +43,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
                 row.Header("Message Type");
                 row.Header("Node Name");
                 row.Header("Role");
+                row.Header("Accepted Content Types");
             });
 
             subscriptions.OrderBy(x => x.MessageType).ThenBy(x => x.Receiver.ToString()).Each(addSubscription);
@@ -57,6 +58,9 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
                 row.Cell(s.MessageType);
                 row.Cell(s.NodeName);
                 row.Cell(s.Role.ToString());
+                row.Cell().AppendHtml(s.AcceptedContentTypes != null && s.AcceptedContentTypes.Any()
+                    ? s.AcceptedContentTypes.Join("<br/>")
+                    : string.Empty);
             });
         }
     }

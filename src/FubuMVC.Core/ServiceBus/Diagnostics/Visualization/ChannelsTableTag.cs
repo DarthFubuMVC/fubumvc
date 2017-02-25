@@ -19,6 +19,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
                 row.Header("Incoming Scheduler");
                 row.Header("Routing Rules");
                 row.Header("Serialization Default");
+                row.Header("Accepted Content Types");
                 row.Header("Modifiers");
             });
 
@@ -36,6 +37,8 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
             addRoutingRules(row, channel);
 
             addSerialization(row, channel);
+
+            addAcceptedContentTypes(row, channel);
 
             addModifiers(row, channel);
         }
@@ -68,6 +71,20 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
             {
                 cell.Text("None");
             }
+        }
+
+        private void addAcceptedContentTypes(TableRowTag row, ChannelNode channel)
+        {
+            var cell = row.Cell();
+            if (channel.AcceptedContentTypes != null && channel.AcceptedContentTypes.Any())
+            {
+                cell.AppendHtml(channel.AcceptedContentTypes.Join("<br/>"));
+            }
+            else
+            {
+                cell.Text("None");
+            }
+
         }
 
         private static void addRoutingRules(TableRowTag row, ChannelNode channel)

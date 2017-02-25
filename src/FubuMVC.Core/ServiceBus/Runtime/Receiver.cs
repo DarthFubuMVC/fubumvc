@@ -32,8 +32,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             };
 
             envelope.ContentType = envelope.ContentType ?? _node.DefaultContentType ?? _graph.DefaultContentType;
-            
-            _pipeline.Receive(envelope);
+
+            _pipeline.Receive(envelope, _node);
         }
 
         protected bool Equals(Receiver other)

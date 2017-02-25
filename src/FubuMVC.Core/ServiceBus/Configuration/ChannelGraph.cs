@@ -42,9 +42,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 {
                     throw new ArgumentOutOfRangeException($"No known channels for protocol '{name}'");
                 }
-
-
-                
             };
         }
 
@@ -79,6 +76,8 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         /// </summary>
         public string DefaultContentType { get; set; }
 
+        public List<string> AcceptedContentTypes { get; set; } = new List<string>();
+
         public bool HasChannels => _channels.Any();
 
         public ChannelNode ControlChannel { get; set; }
@@ -98,6 +97,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             var key = ToKey(accessor);
             var channel = _channels[key];
             channel.SettingAddress = accessor;
+            channel.AcceptedContentTypes = AcceptedContentTypes;
 
             return channel;
         }
@@ -105,7 +105,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         public IEnumerable<Uri> ReplyUriList()
         {
             return _replyChannels;
-        } 
+        }
 
         public Uri ReplyChannelFor(string protocol)
         {

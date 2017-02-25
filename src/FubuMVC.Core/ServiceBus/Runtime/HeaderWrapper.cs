@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 using FubuCore;
@@ -57,6 +58,12 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             set { Headers[Envelope.ReceivedAtKey] = value == null ? null : value.ToString(); }
         }
 
+        public string[] AcceptedContentTypes
+        {
+            get { return Headers[Envelope.AcceptedContentTypesKey]?.Split(',') ?? new string[0]; }
+            set { Headers[Envelope.AcceptedContentTypesKey] = value?.Join(","); }
+        }
+
         public IHeaders Headers { get; set; }
 
         public string CorrelationId
@@ -106,7 +113,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
                 {
                     Headers[Envelope.ExecutionTimeKey] = value.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.InvariantCulture);
                 }
-                
+
             }
         }
 

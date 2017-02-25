@@ -106,7 +106,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             MockFor<IEnvelopeLifecycle>().Stub(x => x.StartNew(ClassUnderTest, theEnvelope))
                 .Return(theContext);
 
-            ClassUnderTest.Receive(theEnvelope);
+            ClassUnderTest.Receive(theEnvelope, null);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         {
             var theExpectedMessage = new object();
 
-            MockFor<IEnvelopeSerializer>().Stub(x => x.Deserialize(theEnvelope))
+            MockFor<IEnvelopeSerializer>().Stub(x => x.Deserialize(theEnvelope, null))
                                           .Return(theExpectedMessage);
 
             theEnvelope.Message.ShouldBeTheSameAs(theExpectedMessage);

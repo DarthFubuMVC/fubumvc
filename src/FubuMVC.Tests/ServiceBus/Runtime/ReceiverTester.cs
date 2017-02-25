@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
     {
         public IList<Envelope> Invoked = new List<Envelope>();
 
-        public IList<object> Responses = new List<object>(); 
+        public IList<object> Responses = new List<object>();
 
 
         public void Invoke(Envelope envelope, IEnvelopeContext context)
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
             Invoked.Add(envelope);
         }
 
-        public void Receive(Envelope envelope)
+        public void Receive(Envelope envelope, ChannelNode node)
         {
             Invoke(envelope, null);
         }
@@ -190,7 +190,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
         [Fact]
         public void should_call_through_to_the_pipeline()
         {
-            MockFor<IHandlerPipeline>().AssertWasCalled(x => x.Receive(new Envelope(theData, theHeaders, theCallback)));
+            MockFor<IHandlerPipeline>().AssertWasCalled(x => x.Receive(new Envelope(theData, theHeaders, theCallback), theNode));
         }
 
     }

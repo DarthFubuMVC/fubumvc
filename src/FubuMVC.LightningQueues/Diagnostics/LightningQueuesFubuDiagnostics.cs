@@ -92,7 +92,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
             {
                 object payload;
                 var envelope = message.ToEnvelope();
-                envelope.UseSerializer(_serializer);
+                envelope.UseSerializer(_serializer, null);
                 if (input.QueueName == "errors")
                 {
                     var errorReport = ErrorReport.Deserialize(message.Data);
@@ -104,7 +104,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
                         Queue = input.QueueName,
                     };
                     envelope = message.ToEnvelope();
-                    var originalMessage = _serializer.Deserialize(envelope);
+                    var originalMessage = _serializer.Deserialize(envelope, null);
                     var errorSummary = new ErrorSummary
                     {
                         exceptiontype = errorReport.ExceptionType,

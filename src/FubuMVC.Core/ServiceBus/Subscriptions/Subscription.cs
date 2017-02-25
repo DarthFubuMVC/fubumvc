@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 
 namespace FubuMVC.Core.ServiceBus.Subscriptions
 {
+    [Serializable]
     public class Subscription
     {
         public static Subscription For<T>()
@@ -25,6 +28,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
         public string MessageType { get; set; }
         public string NodeName { get; set; }
         public SubscriptionRole Role { get; set; }
+        public List<string> AcceptedContentTypes { get; set; }
 
 
         public Subscription Clone()
@@ -44,6 +48,12 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
         public Subscription ReceivedBy(Uri uri)
         {
             Receiver = uri;
+            return this;
+        }
+
+        public Subscription WithAcceptedContentTypes(params string[] contentTypes)
+        {
+            AcceptedContentTypes = contentTypes.ToList();
             return this;
         }
 
