@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Threading;
+using FubuMVC.Core;
+using FubuMVC.Core.Http;
 using Marten;
 
 namespace FubuMVC.Marten
@@ -9,14 +13,15 @@ namespace FubuMVC.Marten
     {
         private readonly IDocumentStore _store;
         private readonly IMartenSessionLogger _logger;
+        private readonly ICurrentChain _chain;
         private readonly object _lock = new object();
         private IDocumentSession _session;
 
-        public SessionBoundary(IDocumentStore store, IMartenSessionLogger logger)
+        public SessionBoundary(IDocumentStore store, IMartenSessionLogger logger, ICurrentChain chain)
         {
             _store = store;
             _logger = logger;
-
+            _chain = chain;
         }
 
         public void Dispose()
@@ -32,7 +37,10 @@ namespace FubuMVC.Marten
                 {
                     if (_session == null)
                     {
-                        _session = _store.OpenSession();
+                        var node = _chain.OriginatingChain.OfType<TransactionNode>().FirstOrDefault();
+                        var isolation = node?.IsolationLevel ?? IsolationLevel.ReadCommitted;
+
+                        _session = _store.OpenSession(isolationLevel:isolation);
                         _session.Logger = _logger;
                     }
                 }

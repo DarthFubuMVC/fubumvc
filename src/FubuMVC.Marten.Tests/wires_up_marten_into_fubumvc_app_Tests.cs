@@ -232,6 +232,7 @@ namespace FubuMVC.Marten.Tests
             return _home.Index();
         }
 
+        [SerializedTransaction]
         public string put_user(User user)
         {
             _session.Store(user);

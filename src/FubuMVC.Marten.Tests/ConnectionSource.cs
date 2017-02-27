@@ -6,7 +6,7 @@ namespace FubuMVC.Marten.Tests
 {
     public class ConnectionSource
     {
-        public static readonly string EnvironmentKey = "fubumvc.marten.tests";
+        public static readonly string EnvironmentKey = "marten-testing-database";
 
         public static void SetConnectionString(string connectionString)
         {

@@ -9,7 +9,7 @@ namespace FubuMVC.Marten
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Routes.Commands.Each(x => x.InsertFirst(Wrapper.For<TransactionalBehavior>()));
+            graph.Routes.Commands.Where(x => !x.OfType<TransactionNode>().Any()).Each(x => x.InsertFirst(new TransactionNode()));
         }
     }
 }
