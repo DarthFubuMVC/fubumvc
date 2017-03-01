@@ -24,11 +24,11 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
             });
 
             graph.OrderBy(x => x.Key).Each(channel => {
-                AddBodyRow(row => addRow(row, channel));
+                AddBodyRow(row => addRow(row, channel, graph));
             });
         }
 
-        private void addRow(TableRowTag row, ChannelNode channel)
+        private void addRow(TableRowTag row, ChannelNode channel, ChannelGraph graph)
         {
             addDescriptionCell(row, channel);
 
@@ -38,7 +38,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
 
             addSerialization(row, channel);
 
-            addAcceptedContentTypes(row, channel);
+            addAcceptedContentTypes(row, channel, graph);
 
             addModifiers(row, channel);
         }
@@ -73,12 +73,13 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
             }
         }
 
-        private void addAcceptedContentTypes(TableRowTag row, ChannelNode channel)
+        private void addAcceptedContentTypes(TableRowTag row, ChannelNode channel, ChannelGraph graph)
         {
             var cell = row.Cell();
-            if (channel.AcceptedContentTypes != null && channel.AcceptedContentTypes.Any())
+            var acceptedContentTypes = graph.GetAcceptedContentTypesForChannel(channel.Uri);
+            if (acceptedContentTypes.Any())
             {
-                cell.AppendHtml(channel.AcceptedContentTypes.Join("<br/>"));
+                cell.AppendHtml(acceptedContentTypes.Join("<br/>"));
             }
             else
             {

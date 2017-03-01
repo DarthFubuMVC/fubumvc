@@ -11,7 +11,7 @@ using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
-    
+
     public class SubscriptionCache_routing_with_subscription_Tester : IDisposable
     {
         public readonly SubscriptionSettings theSettings = InMemoryTransport.ToInMemory<SubscriptionSettings>();
@@ -51,26 +51,18 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         }
 
         [Fact]
-        public void accepted_content_types_should_inherit_from_graph_when_no_subscription()
-        {
-            theCache.FindSubscribingChannelsFor(typeof(Message1))
-                .First()
-                .AcceptedContentTypes
-                .ShouldHaveTheSameElementsAs("application/json");
-        }
-
-        [Fact]
         public void accepted_content_types_should_be_set_from_subscription()
         {
             theCache.LoadSubscriptions(new Subscription[]
             {
-                Subscription.For<Message6>().ReceivedBy(theSettings.Q4).WithAcceptedContentTypes("binary/octet-stream")
+                Subscription.For<Message6>().ReceivedBy(theSettings.Q4)
+                    .WithAcceptedContentTypes("binary/octet-stream")
             });
 
             theCache.FindSubscribingChannelsFor(typeof(Message6))
                 .First()
                 .AcceptedContentTypes
-                .ShouldHaveTheSameElementsAs("binary/octet-stream");
+                .ShouldContain("binary/octet-stream");
         }
 
         [Fact]
