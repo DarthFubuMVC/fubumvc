@@ -11,7 +11,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
     {
         private readonly Accessor _source;
         private readonly Accessor _receiver;
-        private readonly IList<Type> _messageTypes = new List<Type>(); 
+        private readonly IList<Type> _messageTypes = new List<Type>();
 
         public GroupSubscriptionRequirement(Expression<Func<T, Uri>> sourceProperty, Expression<Func<T, Uri>> receiverProperty)
         {
@@ -33,11 +33,10 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
                 {
                     NodeName = graph.Name,
                     Receiver = receiver,
-                    Source = source
+                    Source = source,
+                    AcceptedContentTypes = graph.GetAcceptedContentTypesForChannel(receiver)
                 };
             }
-
-
         }
 
         public void AddType(Type type)

@@ -97,7 +97,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             var key = ToKey(accessor);
             var channel = _channels[key];
             channel.SettingAddress = accessor;
-            channel.AcceptedContentTypes = AcceptedContentTypes;
 
             return channel;
         }
@@ -110,6 +109,20 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         public Uri ReplyChannelFor(string protocol)
         {
             return _replyChannels[protocol];
+        }
+
+        public List<string> GetAcceptedContentTypesForChannel(Uri channelUri)
+        {
+            var acceptedContentTypes = new List<string>();
+            var node = this.FirstOrDefault(x => x.Channel.Address == channelUri) ?? this.FirstOrDefault(x => x.Uri == channelUri);
+
+            acceptedContentTypes.AddRange(node?.AcceptedContentTypes ?? Enumerable.Empty<string>());
+            acceptedContentTypes.Add(node?.DefaultContentType);
+            acceptedContentTypes.Add(node?.DefaultSerializer?.ContentType);
+            acceptedContentTypes.AddRange(AcceptedContentTypes);
+            acceptedContentTypes.Add(DefaultContentType);
+
+            return acceptedContentTypes.Where(x => x != null).Distinct().ToList();
         }
 
         public void AddReplyChannel(string protocol, Uri uri)

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
-using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
-using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using Xunit;
-using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    
+
     public class ChannelGraphTester
     {
         [Fact]
@@ -80,6 +78,25 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .Uri.ShouldBe(bus.Downstream);
         }
 
+        [Fact]
+        public void build_accepted_content_types_for_channel()
+        {
+            var channel = new ChannelSettings
+            {
+                Outbound = new Uri("channel://outbound")
+            };
+
+            var graph = new ChannelGraph();
+            graph.DefaultContentType = "graphDefault";
+            graph.AcceptedContentTypes = new List<string> { "graphAC" };
+            var node = graph.ChannelFor<ChannelSettings>(x => x.Outbound);
+            node.DefaultContentType = "channelDefault";
+            node.AcceptedContentTypes.Add("channelAC");
+            node.Channel = new InMemoryChannel(channel.Outbound);
+
+            graph.GetAcceptedContentTypesForChannel(channel.Outbound)
+                .ShouldHaveTheSameElementsAs("channelAC","channelDefault", "graphAC", "graphDefault");
+        }
 
         public class FakeChannel : IChannel
         {

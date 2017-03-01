@@ -93,3 +93,6 @@ src/ServiceNode/fubutransportationqueues.*
 src/FubuMVC.IntegrationTesting/fubutransportationqueues.*
 .idea*
 fubutransportationqueues.99*
+*.lock.json
+*.nuget.props
+*.nuget.targets

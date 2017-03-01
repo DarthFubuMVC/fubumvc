@@ -81,7 +81,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Serializers
             }
             if (envelope.AcceptedContentTypes.Any())
             {
-                return findSerializerForContentTypes(envelope.AcceptedContentTypes, envelope, false);
+                var serializer = findSerializerForContentTypes(envelope.AcceptedContentTypes, envelope, false);
+                if(serializer != null) return serializer;
             }
 
             //Channel
@@ -95,7 +96,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Serializers
             }
              if (node.AcceptedContentTypes != null && node.AcceptedContentTypes.Any())
             {
-                return findSerializerForContentTypes(node.AcceptedContentTypes, envelope, false);
+                var serializer = findSerializerForContentTypes(node.AcceptedContentTypes, envelope, false);
+                if(serializer != null) return serializer;
             }
 
             //Graph

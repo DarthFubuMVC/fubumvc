@@ -31,7 +31,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
                     NodeName = graph.Name,
                     Receiver = receiver,
                     Source = source,
-                    AcceptedContentTypes = graph.AcceptedContentTypes
+                    AcceptedContentTypes = graph.GetAcceptedContentTypesForChannel(receiver)
                 };
             }
         }
