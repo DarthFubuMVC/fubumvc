@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Xml;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
@@ -58,9 +59,9 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             set { Headers[Envelope.ReceivedAtKey] = value == null ? null : value.ToString(); }
         }
 
-        public string[] AcceptedContentTypes
+        public IEnumerable<string> AcceptedContentTypes
         {
-            get { return Headers[Envelope.AcceptedContentTypesKey]?.Split(',') ?? new string[0]; }
+            get { return Headers[Envelope.AcceptedContentTypesKey]?.Split(',') ?? Enumerable.Empty<string>(); }
             set { Headers[Envelope.AcceptedContentTypesKey] = value?.Join(","); }
         }
 

@@ -147,6 +147,9 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             clone.Headers[Envelope.DestinationKey] = Uri.ToString();
             clone.Headers[Envelope.ChannelKey] = Key;
 
+            if (AcceptedContentTypes.Any())
+                clone.AcceptedContentTypes = AcceptedContentTypes;
+
             if (replyUri != null)
             {
                 clone.Headers[Envelope.ReplyUriKey] = replyUri.ToString();
@@ -181,7 +184,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             }
         }
 
-        public List<string> AcceptedContentTypes { get; set; } = new List<string>();
+        public IEnumerable<string> AcceptedContentTypes { get; set; } = Enumerable.Empty<string>();
 
         public ChannelMode Mode { get; set; } = ChannelMode.DeliveryGuaranteed;
     }

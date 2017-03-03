@@ -10,7 +10,7 @@ using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
-    
+
     public class EnvelopeSerializerTester : InteractionContext<EnvelopeSerializer>
     {
         private IMessageSerializer[] serializers;
@@ -118,7 +118,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
         [Fact]
         public void select_the_graph_accepted_content_type()
         {
-            theGraph.AcceptedContentTypes.Add(serializers[3].ContentType);
+            theGraph.AcceptedContentTypes = new[] {serializers[3].ContentType};
             theGraph.DefaultContentType = serializers[4].ContentType;
             ClassUnderTest.SelectSerializer(theEnvelope, new ChannelNode())
                 .ShouldBeTheSameAs(serializers[3]);
@@ -139,7 +139,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             theGraph.DefaultContentType = serializers[4].ContentType;
             var node = new ChannelNode
             {
-                AcceptedContentTypes = {serializers[1].ContentType}
+                AcceptedContentTypes = new[] {serializers[1].ContentType}
             };
 
             ClassUnderTest.SelectSerializer(theEnvelope, node)
