@@ -108,7 +108,6 @@ namespace FubuMVC.Core.Registration.DSL
             });
         }
 
-
         public void SagaStorage<T>() where T : ISagaStorage, new()
         {
             Configure(x => x.SagaStorageProviders.Add(new T()));
@@ -126,13 +125,15 @@ namespace FubuMVC.Core.Registration.DSL
 
         public void AcceptedContentTypes(params IMessageSerializer[] serializers)
         {
-            _parent.AlterSettings<ChannelGraph>(graph => graph.AcceptedContentTypes
-                .AddRange(serializers.Select(x => x.ContentType)));
+            _parent.AlterSettings<ChannelGraph>(graph =>
+                graph.AcceptedContentTypes = graph.AcceptedContentTypes
+                    .Concat(serializers.Select(x => x.ContentType)));
         }
 
         public void AcceptedContentTypes(params string[] contentTypes)
         {
-            _parent.AlterSettings<ChannelGraph>(graph => graph.AcceptedContentTypes.AddRange(contentTypes));
+            _parent.AlterSettings<ChannelGraph>(graph =>
+                graph.AcceptedContentTypes = graph.AcceptedContentTypes.Concat(contentTypes));
         }
 
         public HealthMonitoringExpression HealthMonitoring

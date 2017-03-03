@@ -157,7 +157,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 
             public ChannelExpression AcceptedContentTypes(params string[] contentTypes)
             {
-                alter = node => node.AcceptedContentTypes.AddRange(contentTypes);
+                alter = node => node.AcceptedContentTypes = node.AcceptedContentTypes.Concat(contentTypes);
                 return this;
             }
 

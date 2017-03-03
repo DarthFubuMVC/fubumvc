@@ -121,11 +121,9 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
             var dynamicNodes = subscriptions.Select(x =>
             {
                 var node = findDestination(x.Receiver);
-                if (x.AcceptedContentTypes != null)
+                if (x.AcceptedContentTypes != null && x.AcceptedContentTypes.Any())
                 {
-                    node.AcceptedContentTypes =
-                        x.AcceptedContentTypes.Concat(node.AcceptedContentTypes)
-                        .Distinct().ToList();
+                    node.AcceptedContentTypes = x.AcceptedContentTypes;
                 }
                 return node;
             });

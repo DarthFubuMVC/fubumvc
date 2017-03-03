@@ -76,7 +76,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         /// </summary>
         public string DefaultContentType { get; set; }
 
-        public List<string> AcceptedContentTypes { get; set; } = new List<string>();
+        public IEnumerable<string> AcceptedContentTypes { get; set; } = Enumerable.Empty<string>();
 
         public bool HasChannels => _channels.Any();
 
@@ -111,18 +111,26 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             return _replyChannels[protocol];
         }
 
-        public List<string> GetAcceptedContentTypesForChannel(Uri channelUri)
+        public IEnumerable<string> GetAcceptedContentTypesForChannel(Uri channelUri)
         {
-            var acceptedContentTypes = new List<string>();
             var node = this.FirstOrDefault(x => x.Channel.Address == channelUri) ?? this.FirstOrDefault(x => x.Uri == channelUri);
 
-            acceptedContentTypes.AddRange(node?.AcceptedContentTypes ?? Enumerable.Empty<string>());
-            acceptedContentTypes.Add(node?.DefaultContentType);
-            acceptedContentTypes.Add(node?.DefaultSerializer?.ContentType);
-            acceptedContentTypes.AddRange(AcceptedContentTypes);
-            acceptedContentTypes.Add(DefaultContentType);
-
-            return acceptedContentTypes.Where(x => x != null).Distinct().ToList();
+            if (node != null)
+            {
+                foreach (var acceptedContentType in node.AcceptedContentTypes)
+                {
+                    yield return acceptedContentType;
+                }
+                if(node.DefaultContentType != null)
+                    yield return node.DefaultContentType;
+                if (node.DefaultSerializer != null)
+                    yield return node.DefaultSerializer.ContentType;
+            }
+            foreach (var acceptedContentType in AcceptedContentTypes)
+            {
+                yield return acceptedContentType;
+            }
+            yield return DefaultContentType;
         }
 
         public void AddReplyChannel(string protocol, Uri uri)

@@ -18,7 +18,7 @@ using Is = Rhino.Mocks.Constraints.Is;
 
 namespace FubuMVC.Tests.ServiceBus.Configuration
 {
-    
+
     public class ChannelNodeTester
     {
         [Fact]
@@ -104,7 +104,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 throw new Exception("Jeremy needs to fix the structure so that this is possible");
             }
 
-            
+
 
 //            var invoker = MockRepository.GenerateMock<IHandlerPipeline>();
 //
@@ -119,7 +119,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 //
 //            var startingVisitor = new StartingChannelNodeVisitor(new Receiver(invoker, graph, node));
 //            startingVisitor.Visit(node);
-//            
+//
 //
 //
 //            node.Channel.AssertWasCalled(x => x.Receive(new Receiver(invoker, graph, node)));
@@ -216,7 +216,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
     {
         public void Dispose()
         {
-            
+
         }
 
         public void Start(Action action)
@@ -225,7 +225,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         }
     }
 
-    
+
     public class when_sending_an_envelope
     {
         private Envelope theEnvelope;
@@ -238,7 +238,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             theEnvelope = new Envelope()
             {
                 Data = new byte[]{1,2,3,4},
-                
+
             };
 
             theSerializer = MockRepository.GenerateMock<IEnvelopeSerializer>();
@@ -254,7 +254,8 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             {
                 Channel = theChannel,
                 Key = "Foo",
-                Uri = "foo://bar".ToUri()
+                Uri = "foo://bar".ToUri(),
+                AcceptedContentTypes = new[] {"application/json"}
             };
 
             theNode.Modifiers.Add(new HeaderSetter("D", "4"));
@@ -302,7 +303,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             sentHeaders["E"].ShouldBe("5");
         }
 
- 
+
         [Fact]
         public void should_have_sent_a_copy_of_the_headers()
         {
@@ -326,6 +327,13 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         {
             var sentHeaders = theChannel.Sent.Single().Headers;
             sentHeaders[Envelope.DestinationKey].ToUri().ShouldBe(theNode.Uri);
+        }
+
+        [Fact]
+        public void sends_the_accepted_content_types_as_a_header()
+        {
+            var sentHeaders = theChannel.Sent.Single().Headers;
+            sentHeaders[Envelope.AcceptedContentTypesKey].ShouldBe(theNode.AcceptedContentTypes.First());
         }
     }
 

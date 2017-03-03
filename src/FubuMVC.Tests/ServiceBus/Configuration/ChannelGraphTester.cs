@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             graph.AcceptedContentTypes = new List<string> { "graphAC" };
             var node = graph.ChannelFor<ChannelSettings>(x => x.Outbound);
             node.DefaultContentType = "channelDefault";
-            node.AcceptedContentTypes.Add("channelAC");
+            node.AcceptedContentTypes = new[] {"channelAC"};
             node.Channel = new InMemoryChannel(channel.Outbound);
 
             graph.GetAcceptedContentTypesForChannel(channel.Outbound)

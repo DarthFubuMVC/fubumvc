@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
             theGraph = new ChannelGraph
             {
                 Name = "FooNode",
-                AcceptedContentTypes = new List<string> {"application/json","application/xml"}
+                AcceptedContentTypes = new List<string> {"application/json"}
             };
 
             var requirement = new LocalSubscriptionRequirement<BusSettings>(x => x.Upstream);
