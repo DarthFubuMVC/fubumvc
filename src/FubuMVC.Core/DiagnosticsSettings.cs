@@ -60,23 +60,23 @@ namespace FubuMVC.Core
             {
                 registry.Services.ReplaceService<IBindingLogger, RecordingBindingLogger>();
                 registry.Services.ReplaceService<IBindingHistory, BindingHistory>();
-                registry.Services.ForSingletonOf<IExecutionLogger>().Use<VerboseExecutionLogger>();
+                registry.Services.ForSingletonOf<IExecutionLogger>().UseIfNone<VerboseExecutionLogger>();
                 registry.Services.AddService<ILogListener, ChainExecutionListener>();
 
                 registry.Services.ReplaceService<IPartialFactory, DiagnosticPartialFactory>();
 
-                registry.Services.For<IEnvelopeLifecycle>().Use<EnvelopeLifecycle<VerboseDiagnosticEnvelopeContext>>();
+                registry.Services.For<IEnvelopeLifecycle>().UseIfNone<EnvelopeLifecycle<VerboseDiagnosticEnvelopeContext>>();
             }
             else if (TraceLevel == TraceLevel.Production)
             {
                 registry.Services.IncludeRegistry<ProductionDiagnosticsServices>();
                 registry.Services.For<IEnvelopeLifecycle>()
-                    .Use<EnvelopeLifecycle<ProductionDiagnosticEnvelopeContext>>();
+                    .UseIfNone<EnvelopeLifecycle<ProductionDiagnosticEnvelopeContext>>();
             }
             else
             {
-                registry.Services.ForSingletonOf<IExecutionLogger>().Use<NulloExecutionLogger>();
-                registry.Services.For<IEnvelopeLifecycle>().Use<EnvelopeLifecycle<EnvelopeContext>>();
+                registry.Services.ForSingletonOf<IExecutionLogger>().UseIfNone<NulloExecutionLogger>();
+                registry.Services.For<IEnvelopeLifecycle>().UseIfNone<EnvelopeLifecycle<EnvelopeContext>>();
             }
         }
 
@@ -128,7 +128,7 @@ namespace FubuMVC.Core
         public ProductionDiagnosticsServices()
         {
             AddService<ILogListener, ProductionModeTraceListener>();
-            ForSingletonOf<IExecutionLogger>().Use<ProductionExecutionLogger>();
+            ForSingletonOf<IExecutionLogger>().UseIfNone<ProductionExecutionLogger>();
         }
     }
 
