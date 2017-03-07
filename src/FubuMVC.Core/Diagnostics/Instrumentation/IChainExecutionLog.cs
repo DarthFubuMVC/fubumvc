@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
-    public interface IChainExecutionLog
+    public interface IChainExecutionLog : IRequestLog
     {
         void StartSubject(ISubject subject);
         void FinishSubject();
@@ -71,11 +71,12 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             // nothing
         }
 
-        public Guid Id
-        {
-            get { return Guid.Empty; }
-        }
+        public Guid Id => Guid.Empty;
 
         public BehaviorChain RootChain { get; set; }
+
+        public double ExecutionTime => 0.0;
+
+        public bool HadException => false;
     }
 }
