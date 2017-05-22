@@ -6,14 +6,15 @@
 
   "tools": {
     "dotnet-storyteller": {
-      "version": "1.0.0"
+      "version": "1.1.2"
     }
   },
 
   "dependencies": {
     "FubuMVC.IntegrationTesting": { "target": "project" },
-    "FubuMVC.Core": {"target":  "project" }, 
-    "Storyteller": "4.1.0-alpha-491"
+    "FubuMVC.Core": {"target":  "project" },
+    "Storyteller": "4.2",
+    "NOWIN": "0.26.0" 
   },
 
   "frameworks": {

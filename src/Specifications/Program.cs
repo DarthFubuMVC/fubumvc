@@ -8,5 +8,13 @@ namespace Specifications
         {
             StorytellerAgent.Run(args, new TestSystem());
         }
+
+        public static void FixProblems()
+        {
+//            using (var runner = new StorytellerRunner(new TestSystem()))
+//            {
+//                runner
+//            }
+        }
     }
 }

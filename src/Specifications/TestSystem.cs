@@ -31,7 +31,7 @@ namespace Specifications
                 _.Enabled = true;
             });
 
-            HostWith<Katana>(5555);
+            HostWith<NOWIN>(5555);
 
             Configure(
                 graph =>
