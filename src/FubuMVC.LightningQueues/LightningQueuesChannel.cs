@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
-using LightningQueues;
+using FubuMVC.LightningQueues.Queues;
 
 namespace FubuMVC.LightningQueues
 {

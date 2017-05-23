@@ -5,7 +5,7 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.Services;
-using LightningQueues;
+using FubuMVC.LightningQueues.Queues;
 
 namespace FubuMVC.LightningQueues.Diagnostics
 {

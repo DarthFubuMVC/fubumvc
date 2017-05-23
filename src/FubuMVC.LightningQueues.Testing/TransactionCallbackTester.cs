@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
 using FubuMVC.Core.ServiceBus.Runtime;
-using LightningQueues;
+using FubuMVC.LightningQueues.Queues;
 using Xunit;
 using Rhino.Mocks;
 using Shouldly;

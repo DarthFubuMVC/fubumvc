@@ -1,8 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests;
-using LightningQueues;
 using Xunit;
 using StructureMap;
 

@@ -7,10 +7,10 @@ using System.Reactive.Concurrency;
 using System.Runtime.Serialization;
 using FubuCore.Util;
 using LightningDB;
-using LightningQueues;
 using FubuCore.Logging;
-using LightningQueues.Storage;
-using LightningQueues.Storage.LMDB;
+using FubuMVC.LightningQueues.Queues;
+using FubuMVC.LightningQueues.Queues.Persistence;
+using FubuMVC.LightningQueues.Queues.Storage;
 
 namespace FubuMVC.LightningQueues
 {

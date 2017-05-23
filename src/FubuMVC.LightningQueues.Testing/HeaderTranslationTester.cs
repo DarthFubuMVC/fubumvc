@@ -1,5 +1,5 @@
 ﻿using System;
-using LightningQueues;
+using FubuMVC.LightningQueues.Queues;
 using Xunit;
 using Shouldly;
 

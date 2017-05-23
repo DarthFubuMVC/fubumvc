@@ -1,0 +1,27 @@
+{
+  "testRunner": "xunit",
+  "dependencies": {
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "System.Reactive": "3.0.0",
+    "Microsoft.Reactive.Testing": "3.0.0",
+    "NSubstitute": "2.0.0-rc",
+    "Shouldly": "2.8.0", 
+    "LightningQueues": {"target": "project"}
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      }
+    },
+    "net46": {
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1"
+      }
+    }
+  }
+}

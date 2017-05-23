@@ -4,12 +4,14 @@
   "buildOptions": {
     "debugType": "portable"
   },
-  "dependencies": {
-    "xunit": "2.2.0-beta3-build3402",
-    "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "FubuMVC.LightningQueues": { "target": "project" },
-    "FubuMVC.Tests": { "target": "project" }
-  },
+    "dependencies": {
+        "xunit": "2.2.0-beta3-build3402",
+        "dotnet-test-xunit": "2.2.0-preview2-build1029",
+        "FubuMVC.LightningQueues": { "target": "project" },
+        "FubuMVC.Tests": { "target": "project" },
+        "NSubstitute": "2.0.2",
+        "Microsoft.Reactive.Testing": "3.1.1" 
+    },
   "frameworks": {
     "net46": {}
   }

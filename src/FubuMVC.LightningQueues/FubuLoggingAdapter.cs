@@ -3,7 +3,7 @@ using FubuCore.Logging;
 
 namespace FubuMVC.LightningQueues
 {
-    public class FubuLoggingAdapter : global::LightningQueues.Logging.ILogger
+    public class FubuLoggingAdapter : global::FubuMVC.LightningQueues.Queues.Logging.ILogger
     {
         private readonly ILogger _logger;
 

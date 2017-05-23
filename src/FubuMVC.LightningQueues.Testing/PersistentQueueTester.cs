@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using FubuCore.Logging;
-using LightningQueues.Storage;
+using FubuMVC.LightningQueues.Queues.Storage;
 using Xunit;
 using Shouldly;
 

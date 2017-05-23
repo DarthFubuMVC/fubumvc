@@ -6,11 +6,11 @@
       "include": [ "x86/lmdb.dll", "x64/lmdb.dll" ]
     }
   },
-  "dependencies": {
-    "FubuMVC.Core": { "target": "project" },
-    "LightningQueues": {"target": "project" },
-    "LightningQueues.Storage.LMDB": { "target": "project" }
-  },
+    "dependencies": {
+        "FubuMVC.Core": { "target": "project" },
+        "System.Reactive": "3.0.0",
+        "LightningDB": "0.9.7"
+    },
   "frameworks": {
     "net46": {} 
   }
