@@ -4,7 +4,7 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuCore.Logging;
 using FubuMVC.LightningQueues.Queues.Serialization;
 using FubuMVC.LightningQueues.Queues.Storage;
 
@@ -35,11 +35,11 @@ namespace FubuMVC.LightningQueues.Queues.Net.Protocol.V1
 
         private IObservable<Message> receiveStream(IObservable<Stream> streams, string remoteEndpoint)
         {
-            return from stream in streams.Do(x => _logger.DebugFormat("Starting to read stream from {0}", remoteEndpoint))
-                   from length in LengthChunk(stream).Do(x => _logger.DebugFormat("Reading in {0} messages from {1}", x, remoteEndpoint))
-                   from messages in MessagesChunk(stream, length).DoAsync(x => StoreMessages(stream, x)).Do(x => _logger.DebugFormat("Stored messages from {0}", remoteEndpoint))
-                   from _r in SendReceived(stream).Do(x => _logger.DebugFormat("Sending received bytes to {0}", remoteEndpoint))
-                   from _a in ReceiveAcknowledgement(stream, messages).Do(x => _logger.DebugFormat("Received acknowledgement from {0}", remoteEndpoint))
+            return from stream in streams.Do(x => _logger.Debug($"Starting to read stream from {remoteEndpoint}"))
+                   from length in LengthChunk(stream).Do(x => _logger.Debug($"Reading in {x} messages from {remoteEndpoint}"))
+                   from messages in MessagesChunk(stream, length).DoAsync(x => StoreMessages(stream, x)).Do(x => _logger.Debug($"Stored messages from {remoteEndpoint}"))
+                   from _r in SendReceived(stream).Do(x => _logger.Debug($"Sending received bytes to {remoteEndpoint}"))
+                   from _a in ReceiveAcknowledgement(stream, messages).Do(x => _logger.Debug($"Received acknowledgement from {remoteEndpoint}"))
                    from message in messages
                    select message; 
         }
@@ -49,7 +49,7 @@ namespace FubuMVC.LightningQueues.Queues.Net.Protocol.V1
             return Observable.FromAsync(() => stream.ReadBytesAsync(sizeof(int)))
                 .Select(x => BitConverter.ToInt32(x, 0))
                 .Catch((Exception ex) => sendSerializationError<int>(stream, ex))
-                .Do(x => _logger.DebugFormat("Read in length value of {0}", x))
+                .Do(x => _logger.Debug($"Read in length value of {x}"))
                 .Where(x => x > 0);
         }
 

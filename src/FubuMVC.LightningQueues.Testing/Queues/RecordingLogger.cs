@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuCore;
+using FubuCore.Logging;
 
 namespace FubuMVC.LightningQueues.Testing.Queues
 {
@@ -68,10 +69,55 @@ namespace FubuMVC.LightningQueues.Testing.Queues
             _info.Add(string.Format(message, arg1));
         }
 
+        public void Debug(string message, params object[] parameters)
+        {
+            _debug.Add(message.ToFormat(parameters));
+        }
+
+        public void Info(string message, params object[] parameters)
+        {
+            _info.Add(message.ToFormat(parameters));
+        }
+
         public void Error(string message, Exception exception)
         {
             _outputHook(message + exception);
             _error.Add(message);
+        }
+
+        public void Error(object correlationId, string message, Exception ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Debug(Func<string> message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Info(Func<string> message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DebugMessage(LogTopic message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InfoMessage(LogTopic message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DebugMessage<T>(Func<T> message) where T : class, LogTopic
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InfoMessage<T>(Func<T> message) where T : class, LogTopic
+        {
+            throw new NotImplementedException();
         }
     }
 }

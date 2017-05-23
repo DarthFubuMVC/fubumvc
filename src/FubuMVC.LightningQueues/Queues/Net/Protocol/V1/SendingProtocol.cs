@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuCore.Logging;
 using FubuMVC.LightningQueues.Queues.Serialization;
 using FubuMVC.LightningQueues.Queues.Storage;
 
@@ -25,10 +25,10 @@ namespace FubuMVC.LightningQueues.Queues.Net.Protocol.V1
             return from outgoing in Observable.Return(batch)
                    let messageBytes = outgoing.Messages.Serialize()
                    let stream = outgoing.Stream
-                   from _l in WriteLength(stream, messageBytes.Length).Do(x => _logger.DebugFormat("Writing {0} message length to {1}", messageBytes.Length, outgoing.Destination))
-                   from _m in WriteMessages(stream, messageBytes).Do(x => _logger.DebugFormat("Wrote messages to destination {0}", outgoing.Destination))
-                   from _r in ReadReceived(stream).Do(x => _logger.DebugFormat("Read received bytes from {0}", outgoing.Destination))
-                   from _a in WriteAcknowledgement(stream).Do(_ => _store.SuccessfullySent(outgoing.Messages.ToArray())).Do(x => _logger.DebugFormat("Wrote acknowledgement to {0}", outgoing.Destination))
+                   from _l in WriteLength(stream, messageBytes.Length).Do(x => _logger.Debug($"Writing {messageBytes.Length} message length to {outgoing.Destination}"))
+                   from _m in WriteMessages(stream, messageBytes).Do(x => _logger.Debug($"Wrote messages to destination {outgoing.Destination}"))
+                   from _r in ReadReceived(stream).Do(x => _logger.Debug($"Read received bytes from {outgoing.Destination}"))
+                   from _a in WriteAcknowledgement(stream).Do(_ => _store.SuccessfullySent(outgoing.Messages.ToArray())).Do(x => _logger.Debug($"Wrote acknowledgement to {outgoing.Destination}"))
                    from message in outgoing.Messages
                    select message;
         }

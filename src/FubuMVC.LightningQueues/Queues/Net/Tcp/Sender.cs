@@ -6,7 +6,7 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuCore.Logging;
 
 namespace FubuMVC.LightningQueues.Queues.Net.Tcp
 {
@@ -48,7 +48,7 @@ namespace FubuMVC.LightningQueues.Queues.Net.Tcp
             return AllOutgoingMessagesBatchedByEndpoint()
                 .SelectMany(batch =>
                 {
-                    _logger.DebugFormat("Preparing to send {0} messages to {1}", batch.Messages.Count, batch.Destination);
+                    _logger.Debug($"Preparing to send {batch.Messages.Count} messages to {batch.Destination}");
                     return Observable.FromAsync(batch.ConnectAsync, TaskPoolScheduler.Default)
                         .Timeout(TimeSpan.FromSeconds(5))
                         .Catch<Unit, Exception>(ex => HandleException<Unit>(ex, batch))

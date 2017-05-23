@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuMVC.LightningQueues.Queues;
 using FubuMVC.LightningQueues.Queues.Net.Protocol.V1;
 using FubuMVC.LightningQueues.Queues.Persistence;
 using FubuMVC.LightningQueues.Queues.Storage;

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Reactive.Concurrency;
 using System.Text;
+using FubuCore.Logging;
 using FubuMVC.LightningQueues.Queues;
-using FubuMVC.LightningQueues.Queues.Logging;
 using FubuMVC.LightningQueues.Queues.Persistence;
 using FubuMVC.LightningQueues.Queues.Storage;
 

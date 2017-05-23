@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Reactive.Concurrency;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuCore.Logging;
 using FubuMVC.LightningQueues.Queues.Net;
 using FubuMVC.LightningQueues.Queues.Net.Protocol.V1;
 using FubuMVC.LightningQueues.Queues.Net.Tcp;

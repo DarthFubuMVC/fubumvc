@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuCore.Logging;
 using FubuMVC.LightningQueues.Queues.Storage;
 
 namespace FubuMVC.LightningQueues.Queues.Net
@@ -35,9 +35,9 @@ namespace FubuMVC.LightningQueues.Queues.Net
         public bool ShouldRetry(OutgoingMessage message)
         {
             var totalAttempts = message.MaxAttempts ?? 100;
-            _logger.DebugFormat("Failed to send should retry with AttemptCount: {0}, TotalAttempts {1}", message.SentAttempts, totalAttempts);
+            _logger.Debug($"Failed to send should retry with AttemptCount: {message.SentAttempts}, TotalAttempts {totalAttempts}");
             if(message.DeliverBy.HasValue)
-                _logger.DebugFormat("Failed to send should retry with DeliverBy: {0}, CurrentTime {1}", message.DeliverBy, DateTime.Now);
+                _logger.Debug($"Failed to send should retry with DeliverBy: {message.DeliverBy}, CurrentTime {DateTime.Now}");
             return (message.SentAttempts < totalAttempts)
                 &&
                 (!message.DeliverBy.HasValue || DateTime.Now < message.DeliverBy);

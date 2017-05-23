@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Reactive.Linq;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuCore.Logging;
 
 namespace FubuMVC.LightningQueues.Queues.Net.Tcp
 {
@@ -39,14 +39,14 @@ namespace FubuMVC.LightningQueues.Queues.Net.Tcp
 
                 _listener.Start();
 
-                _logger.DebugFormat("TcpListener started listening on port: {0}", Endpoint.Port);
+                _logger.Debug($"TcpListener started listening on port: {Endpoint.Port}");
                 _stream = Observable.While(IsNotDisposed, ContinueAcceptingNewClients())
                     .Using(x => _protocol.ReceiveStream(Observable.Return(new NetworkStream(x, true)), x.RemoteEndPoint.ToString())
                     .Catch((Exception ex) => catchAll(ex)))
                     .Catch((Exception ex) => catchAll(ex))
                     .Publish()
                     .RefCount()
-                    .Finally(() => _logger.InfoFormat("TcpListener at {0} has stopped", Endpoint.Port))
+                    .Finally(() => _logger.Info($"TcpListener at {Endpoint.Port} has stopped"))
                     .Catch((Exception ex) => catchAll(ex));
             }
             return _stream;
@@ -66,7 +66,7 @@ namespace FubuMVC.LightningQueues.Queues.Net.Tcp
         private IObservable<Socket> ContinueAcceptingNewClients()
         {
             return Observable.FromAsync(() => _listener.AcceptSocketAsync())
-                .Do(x => _logger.DebugFormat("Client at {0} connection established.", x.RemoteEndPoint))
+                .Do(x => _logger.Debug($"Client at {x.RemoteEndPoint} connection established."))
                 .Repeat();
         }
 
@@ -74,7 +74,7 @@ namespace FubuMVC.LightningQueues.Queues.Net.Tcp
         {
             if (!_disposed)
             {
-                _logger.InfoFormat("Disposing TcpListener at {0}", Endpoint.Port);
+                _logger.Info($"Disposing TcpListener at {Endpoint.Port}");
                 _disposed = true;
                 _listener.Stop();
             }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FubuMVC.LightningQueues.Queues;
-using FubuMVC.LightningQueues.Queues.Logging;
 using FubuMVC.LightningQueues.Queues.Storage;
 using Xunit;
 

@@ -46,7 +46,7 @@ namespace FubuMVC.LightningQueues
             var queueConfiguration = new QueueConfiguration()
                 .ReceiveMessagesAt(new IPEndPoint(IPAddress.Any, port))
                 .ScheduleQueueWith(TaskPoolScheduler.Default)
-                .LogWith(new FubuLoggingAdapter(_logger));
+                .LogWith(_logger);
 
             if (persist)
             {

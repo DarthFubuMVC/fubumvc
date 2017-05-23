@@ -4,7 +4,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using FubuMVC.LightningQueues.Queues.Logging;
+using FubuCore.Logging;
 using FubuMVC.LightningQueues.Queues.Net;
 using FubuMVC.LightningQueues.Queues.Net.Tcp;
 using FubuMVC.LightningQueues.Queues.Storage;
@@ -62,7 +62,7 @@ namespace FubuMVC.LightningQueues.Queues
 
         public IObservable<MessageContext> Receive(string queueName)
         {
-            _logger.DebugFormat("Starting to receive for queue {0}", queueName);
+            _logger.Debug($"Starting to receive for queue {queueName}");
             return _messageStore.PersistedMessages(queueName)
                 .Concat(_receiver.StartReceiving())
                 .Merge(_receiveSubject)
@@ -72,7 +72,7 @@ namespace FubuMVC.LightningQueues.Queues
 
         public void MoveToQueue(string queueName, Message message)
         {
-            _logger.DebugFormat("Moving message {0} to {1}", message.Id.MessageIdentifier, queueName);
+            _logger.Debug($"Moving message {message.Id.MessageIdentifier} to {queueName}");
             var tx = _messageStore.BeginTransaction();
             _messageStore.MoveToQueue(tx, queueName, message);
             tx.Commit();
@@ -82,14 +82,14 @@ namespace FubuMVC.LightningQueues.Queues
 
         public void Enqueue(Message message)
         {
-            _logger.DebugFormat("Enqueueing message {0} to queue {1}", message.Id.MessageIdentifier, message.Queue);
+            _logger.Debug($"Enqueueing message {message.Id.MessageIdentifier} to queue {message.Queue}");
             _messageStore.StoreIncomingMessages(message);
             _receiveSubject.OnNext(message);
         }
 
         public void ReceiveLater(Message message, TimeSpan timeSpan)
         {
-            _logger.DebugFormat("Delaying message {0} until {1}", message.Id.MessageIdentifier, timeSpan);
+            _logger.Debug($"Delaying message {message.Id.MessageIdentifier} until {timeSpan}");
             _scheduler.Schedule(message, timeSpan, (sch, msg) =>
             {
                 _receiveSubject.OnNext(msg);
@@ -99,7 +99,7 @@ namespace FubuMVC.LightningQueues.Queues
 
         public void Send(params OutgoingMessage[] messages)
         {
-            _logger.DebugFormat("Sending {0} messages", messages.Length);
+            _logger.Debug($"Sending {messages.Length} messages");
             var tx = _messageStore.BeginTransaction();
             foreach (var message in messages)
             {
@@ -119,7 +119,7 @@ namespace FubuMVC.LightningQueues.Queues
 
         public void ReceiveLater(Message message, DateTimeOffset time)
         {
-            _logger.DebugFormat("Delaying message {0} until {1}", message.Id.MessageIdentifier, time);
+            _logger.Debug($"Delaying message {message.Id.MessageIdentifier} until {time}");
             _scheduler.Schedule(message, time, (sch, msg) =>
             {
                 _receiveSubject.OnNext(msg);
