@@ -1,15 +1,13 @@
 {
   "version": "1.0.0-*",
   "buildOptions": {
-    "debugType": "portable",
-    "embed": {
-      "include": [ "x86/lmdb.dll", "x64/lmdb.dll" ]
-    }
+    "debugType": "portable"
   },
     "dependencies": {
         "FubuMVC.Core": { "target": "project" },
         "System.Reactive": "3.0.0",
-        "LightningDB": "0.9.7"
+        "LightningDB": "0.9.7",
+        "lmdb.v141": "0.9.18"
     },
   "frameworks": {
     "net46": {} 
