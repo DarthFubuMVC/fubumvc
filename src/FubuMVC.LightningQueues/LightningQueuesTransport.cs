@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 
@@ -11,65 +8,6 @@ namespace FubuMVC.LightningQueues
 {
     public class LightningQueuesTransport : TransportBase, ITransport
     {
-        private const string StaticLibraryName = "lmdb.dll";
-        private static readonly bool _exported = false;
-
-        static LightningQueuesTransport()
-        {
-            if (!_exported)
-            {
-                try
-                {
-                    var shouldWrite = true;
-                    var folder = Environment.Is64BitProcess ? "x64" : "x86";
-                    var assembly = Assembly.GetExecutingAssembly();
-                    byte[] resourceAssemblyBytes;
-                    Console.WriteLine(1);
-                    string resourceName = $"FubuMVC.LightningQueues.{folder}.{StaticLibraryName}";
-
-                    var stream = assembly.GetManifestResourceStream(resourceName);
-
-                    Console.WriteLine(2 + ": " + stream != null);
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        stream.CopyTo(memoryStream);
-                        resourceAssemblyBytes = memoryStream.GetBuffer();
-                    }
-
-                    Console.WriteLine(3);
-
-                    //var path = Path.GetDirectoryName(typeof(LightningQueuesTransport).Assembly.CodeBase).AppendPath(StaticLibraryName).Replace(@"file:\", string.Empty);
-                    var path = Path.GetDirectoryName(new Uri(typeof(LightningQueuesTransport).Assembly.CodeBase).LocalPath)
-                        .AppendPath(StaticLibraryName);
-
-                    Console.WriteLine(4);
-
-                    Console.WriteLine($"Checking to see if {path} exists");
-                    if (File.Exists(path))
-                    {
-                        var existingBytes = File.ReadAllBytes(path);
-                        shouldWrite = !resourceAssemblyBytes.SequenceEqual(existingBytes);
-                    }
-                    if (shouldWrite)
-                    {
-                        File.WriteAllBytes(path, resourceAssemblyBytes);
-                        Console.WriteLine($"Successfully wrote resource {resourceName} to {path}");
-                    }
-
-                    Console.WriteLine(5);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Unable to write the lmdb.dll file-->\n\n" + e);
-                }
-                finally
-                {
-                    _exported = true;
-                }
-            }
-        }
-
-
         public static readonly string ErrorQueueName = "errors";
 
         private readonly IPersistentQueues _queues;
