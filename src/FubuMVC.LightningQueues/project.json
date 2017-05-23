@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "FubuMVC.Core": { "target": "project" },
-    "LightningQueues": "0.2.12",
-    "LightningQueues.Storage.LMDB": "0.2.10"
+    "LightningQueues": {"target": "project" },
+    "LightningQueues.Storage.LMDB": { "target": "project" }
   },
   "frameworks": {
     "net46": {} 
