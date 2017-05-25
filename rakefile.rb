@@ -86,7 +86,6 @@ task :pack => [:compile] do
 	sh "dotnet pack ./src/FubuMVC.Marten -o artifacts --configuration Release"
 	sh "dotnet pack ./src/FubuMVC.LightningQueues -o artifacts --configuration Release"
 	sh "dotnet pack ./src/Serenity -o artifacts --configuration Release"
-	sh "dotnet pack ./src/LightningQueues -o artifacts --configuration Release"
 
 	
 end
