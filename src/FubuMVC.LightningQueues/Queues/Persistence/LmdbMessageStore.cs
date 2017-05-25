@@ -303,22 +303,44 @@ namespace FubuMVC.LightningQueues.Queues.Persistence
 
         public void CreateQueue(string queueName)
         {
-            using (var tx = _environment.BeginTransaction())
+            if (!_databaseCache.ContainsKey(queueName))
             {
-                var db = tx.OpenDatabase(queueName, new DatabaseConfiguration {Flags = DatabaseOpenFlags.Create});
-                _databaseCache[queueName] = db;
-                tx.Commit();
+                lock (_locker)
+                {
+                    if (!_databaseCache.ContainsKey(queueName))
+                    {
+                        using (var tx = _environment.BeginTransaction())
+                        {
+                            var db = tx.OpenDatabase(queueName, new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
+                            _databaseCache[queueName] = db;
+                            tx.Commit();
+                        }
+                    }
+                }
             }
         }
 
+        private readonly object _locker = new object();
+
         private readonly ConcurrentDictionary<string, LightningDatabase> _databaseCache = new ConcurrentDictionary<string, LightningDatabase>();
+        private bool _disposed;
+
         private LightningDatabase OpenDatabase(LightningTransaction transaction, string database)
         {
             if (_databaseCache.ContainsKey(database))
                 return _databaseCache[database];
-            var db = transaction.OpenDatabase(database);
-            _databaseCache[database] = db;
-            return db;
+
+            lock (_locker)
+            {
+                if (_databaseCache.ContainsKey(database))
+                {
+                    return _databaseCache[database];
+                }
+
+                var db = transaction.OpenDatabase(database);
+                _databaseCache[database] = db;
+                return db;
+            }
         }
 
         public void Dispose()
@@ -328,7 +350,7 @@ namespace FubuMVC.LightningQueues.Queues.Persistence
 
         ~LmdbMessageStore()
         {
-            Dispose(false);
+            Dispose(!_disposed);
         }
 
         private void Dispose(bool disposing)
@@ -340,8 +362,11 @@ namespace FubuMVC.LightningQueues.Queues.Persistence
                     database.Value.Dispose();
                 }
                 GC.SuppressFinalize(this);
+
+                
             }
             _environment.Dispose();
+            _disposed = true;
         }
     }
 }
