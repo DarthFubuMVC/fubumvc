@@ -1,15 +1,14 @@
-﻿using FubuMVC.Core;
-using FubuMVC.Core.ServiceBus.Configuration;
+﻿using System;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.RavenDb.ServiceBus;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.ServiceBus
 {
-    [TestFixture]
-    public class RavenDbSchedulePersistenceTester
+    public class RavenDbSchedulePersistenceTester : IDisposable
     {
         private FubuRuntime runtime;
         private RavenDbSchedulePersistence thePersistence;
@@ -20,8 +19,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
         private JobStatusDTO bar1;
         private JobStatusDTO bar2;
 
-        [SetUp]
-        public void SetUp()
+        public RavenDbSchedulePersistenceTester()
         {
             runtime = FubuRuntime.BasicBus();
             runtime.Get<IContainer>().UseInMemoryDatastore();
@@ -37,14 +35,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
             thePersistence.Persist(new[] {foo1, foo2, foo3, bar1, bar2});
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            runtime.Dispose();
-        }
-
-
-        [Test]
+        [Fact]
         public void store_history()
         {
             var record1 = new JobExecutionRecord();
@@ -61,7 +52,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
             thePersistence.FindHistory("foo", "2").ShouldHaveTheSameElementsAs(record3, record4);
         }
 
-        [Test]
+        [Fact]
         public void find_all_for_node()
         {
             thePersistence.FindAll("foo")
@@ -71,7 +62,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
                 .ShouldHaveTheSameElementsAs(bar1, bar2);
         }
 
-        [Test]
+        [Fact]
         public void find_all_active_for_node()
         {
             foo1.Status = foo2.Status = bar1.Status = JobExecutionStatus.Scheduled;
@@ -86,7 +77,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
                 .ShouldHaveTheSameElementsAs(bar1);
         }
 
-        [Test]
+        [Fact]
         public void persist_job_status()
         {
             foo1.Status = foo2.Status = foo3.Status = bar1.Status = bar2.Status = JobExecutionStatus.Inactive;
@@ -102,11 +93,16 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
             thePersistence.Find("foo", "1").Status.ShouldBe(change.Status);
         }
 
-        [Test]
+        [Fact]
         public void find_a_single_status()
         {
             thePersistence.Find("foo", "1")
                 .Id.ShouldBe("foo/1");
+        }
+
+        public void Dispose()
+        {
+            runtime?.Dispose();
         }
     }
 }

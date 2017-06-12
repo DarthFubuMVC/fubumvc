@@ -1,21 +1,19 @@
 ﻿using System;
 using FubuMVC.RavenDb.RavenDb;
 using FubuMVC.RavenDb.RavenDb.Multiple;
-using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
 {
-    [TestFixture]
-    public class MultipleDatabaseConstructionTester
+    public class MultipleDatabaseConstructionTester : IDisposable
     {
         private Container theContainer;
 
-        [SetUp]
-        public void SetUp()
+        public MultipleDatabaseConstructionTester()
         {
             theContainer = new Container(x => {
                 x.ConnectToRavenDb<SecondDbSettings>(store => {
@@ -32,13 +30,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             });
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            theContainer.Dispose();
-        }
-
-        [Test]
+        [Fact]
         public void can_create_database_store_per_type()
         {
             theContainer.GetInstance<IDocumentStore<SecondDbSettings>>()
@@ -48,7 +40,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
                         .ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void respects_the_configuration_per_store_setting_type()
         {
             theContainer.GetInstance<IDocumentStore<SecondDbSettings>>()
@@ -60,7 +52,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
                         .ShouldBe(ConsistencyOptions.AlwaysWaitForNonStaleResultsAsOfLastWrite);
         }
 
-        [Test]
+        [Fact]
         public void document_store_is_singleton()
         {
             theContainer.GetInstance<IDocumentStore<SecondDbSettings>>()
@@ -70,7 +62,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
                         .ShouldBeTheSameAs(theContainer.GetInstance<IDocumentStore<ThirdDbSettings>>());
         }
 
-        [Test]
+        [Fact]
         public void can_build_document_session_per_type()
         {
             theContainer.GetInstance<IDocumentSession<SecondDbSettings>>()
@@ -80,14 +72,14 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
                         .ShouldBeOfType<DocumentSession<ThirdDbSettings>>();
         }
 
-        [Test]
+        [Fact]
         public void default_raven_store_is_identified_as_Default()
         {
             theContainer.GetInstance<IDocumentStore>()
                         .Identifier.ShouldBe("Default");
         }
 
-        [Test]
+        [Fact]
         public void other_raven_stores_are_identified_as_the_type()
         {
             theContainer.GetInstance<IDocumentStore<SecondDbSettings>>()
@@ -98,7 +90,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
         }
 
 
-        [Test]
+        [Fact]
         public void session_boundary_respects_transaction_boundaries()
         {
             var foo1 = new Foo {Id = Guid.NewGuid(), Name = "Jeremy"};
@@ -127,16 +119,21 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
                 session.Load<Foo>(foo1.Id).Name.ShouldBe("Josh");
             });
         }
+
+        public void Dispose()
+        {
+            theContainer?.Dispose();
+        }
     }
 
     public class SecondDbSettings : RavenDbSettings
     {
-        
+
     }
 
     public class ThirdDbSettings : RavenDbSettings
     {
-        
+
     }
 
 

@@ -5,20 +5,18 @@ using System.Linq;
 using FubuMVC.RavenDb.InMemory;
 using FubuMVC.RavenDb.MultiTenancy;
 using FubuMVC.RavenDb.Storage;
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.MultiTenancy
 {
-    [TestFixture]
     public class ByTenantEntityStorageTester
     {
         private EntityStorage<TrackedEntity> inner;
         private SimpleTenantContext theContext;
         private ByTenantEntityStorage<TrackedEntity> theStorage;
 
-        [SetUp]
-        public void SetUp()
+        public ByTenantEntityStorageTester()
         {
             inner = new EntityStorage<TrackedEntity>(new InMemoryPersistor());
             theContext = new SimpleTenantContext
@@ -29,7 +27,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             theStorage = new ByTenantEntityStorage<TrackedEntity>(inner, theContext);
         }
 
-        [Test]
+        [Fact]
         public void find_throws_exception_if_there_is_no_tenant()
         {
             theContext.CurrentTenant = Guid.Empty;
@@ -39,7 +37,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             });
         }
 
-        [Test]
+        [Fact]
         public void find_when_the_tenant_id_matches()
         {
             var entity = new TrackedEntity
@@ -53,7 +51,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             theStorage.Find(entity.Id).ShouldBeTheSameAs(entity);
         }
 
-        [Test]
+        [Fact]
         public void find_when_the_entity_does_not_match_the_tenant()
         {
             var entity = new TrackedEntity
@@ -67,7 +65,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             theStorage.Find(entity.Id).ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void update_will_throw_an_exception_if_there_is_no_tenant()
         {
             theContext.CurrentTenant = Guid.Empty;
@@ -78,7 +76,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             });
         }
 
-        [Test]
+        [Fact]
         public void update_should_set_the_tenant_id_before_updating_to_the_inner()
         {
             var entity = new TrackedEntity
@@ -93,7 +91,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             inner.Find(entity.Id).ShouldBeTheSameAs(entity);
         }
 
-        [Test]
+        [Fact]
         public void update_will_throw_an_exception_if_you_try_to_update_an_entity_that_is_not_owned_by_the_current_tenant()
         {
             var original = new TrackedEntity
@@ -114,7 +112,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             });
         }
 
-        [Test]
+        [Fact]
         public void remove_throws_exception_if_no_tenant_is_detected()
         {
             theContext.CurrentTenant = Guid.Empty;
@@ -125,7 +123,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             });
         }
 
-        [Test]
+        [Fact]
         public void remove_throws_exception_if_the_entity_is_owned_by_a_different_tenant()
         {
             var original = new TrackedEntity
@@ -147,7 +145,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             });
         }
 
-        [Test]
+        [Fact]
         public void remove_happy_path()
         {
             var original = new TrackedEntity
@@ -168,7 +166,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             inner.All().Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void all_will_throw_exceptions_if_no_tenant_is_detected()
         {
             theContext.CurrentTenant = Guid.Empty;
@@ -178,7 +176,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             });
         }
 
-        [Test]
+        [Fact]
         public void all_only_returns_values_where_the_tenant_id_matches()
         {
             var e1 = new TrackedEntity {TenantId = theContext.CurrentTenant};
@@ -200,7 +198,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             theStorage.All().ShouldHaveTheSameElementsAs(e1, e2, e4, e5, e7);
         }
 
-        [Test]
+        [Fact]
         public void find_single_throws_exception_if_no_tenant()
         {
             theContext.CurrentTenant = Guid.Empty;
@@ -210,7 +208,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             });
         }
 
-        [Test]
+        [Fact]
         public void find_single_happy_path()
         {
             var original = new TrackedEntity
@@ -231,7 +229,7 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             theStorage.FindSingle(x => x.Name == "Jeremy").ShouldBeTheSameAs(original);
         }
 
-        [Test]
+        [Fact]
         public void find_single_does_not_find_anything_from_the_same_tenant()
         {
             var original = new TrackedEntity

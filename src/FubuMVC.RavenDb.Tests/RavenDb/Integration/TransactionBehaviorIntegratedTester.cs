@@ -1,24 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Http.Hosting;
-using FubuMVC.RavenDb.InMemory;
 using FubuMVC.RavenDb.MultiTenancy;
 using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Raven.Client;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
 {
-    [TestFixture]
     public class TransactionBehaviorIntegratedTester
     {
-        [Test]
+        [Fact]
         public void posts_are_committed()
         {
             var container = new Container(new RavenDbRegistry());
@@ -47,15 +44,11 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
                     _.Post.Json(new NamedEntity { Name = "Vyrak" });
                 });
 
-
-
-
                 application.Get<ITransaction>().Execute<IDocumentSession>(session => {
                     session.Query<NamedEntity>()
                            .Customize(x => x.WaitForNonStaleResults())
                            .Each(x => Debug.WriteLine(x.Name));
                 });
-
 
                 application.Scenario(_ =>
                 {

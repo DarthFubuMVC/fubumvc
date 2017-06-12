@@ -2,20 +2,18 @@
 using System.Linq;
 using FubuMVC.RavenDb.RavenDb;
 using FubuMVC.RavenDb.Tests.MultiTenancy;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb
 {
-    [TestFixture]
-    public class RavenUnitOfWorkTester
+    public class RavenUnitOfWorkTester : IDisposable
     {
         private Container container;
         private RavenUnitOfWork theUnitOfWork;
 
-        [SetUp]
-        public void SetUp()
+        public RavenUnitOfWorkTester()
         {
             container = new Container(new RavenDbRegistry());
             container.Inject(new RavenDbSettings{RunInMemory = true});
@@ -23,13 +21,8 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             theUnitOfWork = new RavenUnitOfWork(container);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            container.Dispose();
-        }
 
-        [Test]
+        [Fact]
         public void starting_the_unit_of_work_twice_throws_an_exception()
         {
             theUnitOfWork.Start();
@@ -40,7 +33,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
         }
 
 
-        [Test]
+        [Fact]
         public void starting_the_unit_of_work_twice_throws_an_exception_2()
         {
             theUnitOfWork.Start();
@@ -51,7 +44,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             });
         }
 
-        [Test]
+        [Fact]
         public void starting_the_unit_of_work_twice_throws_an_exception_3()
         {
             theUnitOfWork.Start(Guid.NewGuid());
@@ -62,7 +55,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             });
         }
 
-        [Test]
+        [Fact]
         public void starting_the_unit_of_work_twice_throws_an_exception_4()
         {
             theUnitOfWork.Start(Guid.NewGuid());
@@ -73,7 +66,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             });
         }
 
-        [Test]
+        [Fact]
         public void commit_and_load_all()
         {
             var repo = theUnitOfWork.Start();
@@ -94,7 +87,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             repo.All<ThirdEntity>().Count().ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void reject_saves_nothing()
         {
             var repo = theUnitOfWork.Start();
@@ -115,7 +108,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             repo.All<ThirdEntity>().Count().ShouldBe(0);
         }
 
-        [Test]
+        [Fact]
         public void multi_tenancy_test_to_excercise_the_service_arguments()
         {
             var tenantA = Guid.NewGuid();
@@ -146,6 +139,11 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             theUnitOfWork.Start(tenantB)
                 .All<TrackedEntity>().ShouldHaveTheSameElementsAs(trackedB1, trackedB2, trackedB3);
             theUnitOfWork.Reject();
+        }
+
+        public void Dispose()
+        {
+            container?.Dispose();
         }
     }
 }

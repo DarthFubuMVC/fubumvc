@@ -2,10 +2,10 @@
 using System.Threading;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Raven.Client;
 using Rhino.Mocks;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
 {
@@ -13,8 +13,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
     {
         private DisposeRavenSessionMessage theMessage;
 
-        [SetUp]
-        public void SetUp()
+        public builds_a_dispose_raven_session_log_message()
         {
             var advanced = MockRepository.GenerateMock<ISyncAdvancedSessionOperation>();
             advanced.Stub(x => x.NumberOfRequests).Return(10);
@@ -33,13 +32,13 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             theMessage = DisposeRavenSessionMessage.For(session);
         }
 
-        [Test]
+        [Fact]
         public void the_username_is_correct()
         {
             theMessage.UserName.ShouldBe("bob");
         }
 
-        [Test]
+        [Fact]
         public void the_request_number_is_correct()
         {
             theMessage.Requests.ShouldBe(10);

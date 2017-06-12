@@ -2,16 +2,15 @@
 using System.Linq;
 using FubuMVC.RavenDb.Storage;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Storage
 {
-    [TestFixture]
     public class GlobalEntityStorageTester : InteractionContext<EntityStorage<User>>
     {
-        [Test]
+        [Fact]
         public void find_delegates()
         {
             var user = new User(){
@@ -24,7 +23,7 @@ namespace FubuMVC.RavenDb.Tests.Storage
             ClassUnderTest.Find(user.Id).ShouldBeTheSameAs(user);
         }
 
-        [Test]
+        [Fact]
         public void update_just_delegates()
         {
             var user = new User()
@@ -37,7 +36,7 @@ namespace FubuMVC.RavenDb.Tests.Storage
             MockFor<IPersistor>().AssertWasCalled(x => x.Persist(user));
         }
 
-        [Test]
+        [Fact]
         public void remove_just_delegates()
         {
             var user = new User()
@@ -50,7 +49,7 @@ namespace FubuMVC.RavenDb.Tests.Storage
             MockFor<IPersistor>().AssertWasCalled(x => x.Remove(user));
         }
 
-        [Test]
+        [Fact]
         public void all_just_delegates()
         {
             IQueryable<User> queryable = new User[0].AsQueryable();
@@ -60,7 +59,7 @@ namespace FubuMVC.RavenDb.Tests.Storage
             ClassUnderTest.All().ShouldBeTheSameAs(queryable);
         }
 
-        [Test]
+        [Fact]
         public void delete_all_delegates()
         {
             ClassUnderTest.DeleteAll();

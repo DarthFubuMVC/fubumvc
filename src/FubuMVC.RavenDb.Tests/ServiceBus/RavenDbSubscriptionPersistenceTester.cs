@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.RavenDb.ServiceBus;
-using FubuMVC.Tests.ServiceBus;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.ServiceBus
 {
-    [TestFixture]
-    public class RavenDbSubscriptionPersistenceTester
+    public class RavenDbSubscriptionPersistenceTester : IDisposable
     {
         private FubuRuntime runtime;
         private RavenDbSubscriptionPersistence persistence;
 
-        [SetUp]
-        public void SetUp()
+        public RavenDbSubscriptionPersistenceTester()
         {
             runtime = FubuRuntime.BasicBus();
             runtime.Get<IContainer>().UseInMemoryDatastore();
@@ -27,28 +24,22 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
             persistence = runtime.Get<RavenDbSubscriptionPersistence>();
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            runtime.Dispose();
-        }
-
-        [Test]
+        [Fact]
         public void persist_and_load_all_new_subscriptions()
         {
-            var subscriptions = new Subscription[]
+            var subscriptions = new[]
             {
-                ObjectMother.ExistingSubscription("Node1"),
-                ObjectMother.ExistingSubscription("Node1"),
-                ObjectMother.ExistingSubscription("Node1"),
-                ObjectMother.ExistingSubscription("Node1"),
-                ObjectMother.ExistingSubscription("Node1")
+                ExistingSubscription("Node1"),
+                ExistingSubscription("Node1"),
+                ExistingSubscription("Node1"),
+                ExistingSubscription("Node1"),
+                ExistingSubscription("Node1")
             };
 
-            var subscriptions2 = new Subscription[]
+            var subscriptions2 = new[]
             {
-                ObjectMother.ExistingSubscription("Node2"),
-                ObjectMother.ExistingSubscription("Node2")
+                ExistingSubscription("Node2"),
+                ExistingSubscription("Node2")
             };
 
             persistence.Persist(subscriptions);
@@ -61,7 +52,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
                 .ShouldHaveTheSameElementsAs(subscriptions2);
         }
 
-        [Test]
+        [Fact]
         public void persist_and_load_transport_nodes()
         {
             var node1 = new TransportNode
@@ -91,7 +82,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
                 .ShouldBe(node2);
         }
 
-        [Test]
+        [Fact]
         public void load_a_specific_node()
         {
             var node1 = new TransportNode
@@ -120,7 +111,7 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
                 .MachineName.ShouldBe(node1.MachineName);
         }
 
-        [Test]
+        [Fact]
         public void alter_a_node()
         {
             var node1 = new TransportNode
@@ -151,14 +142,14 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
                 .ShouldContain(subject);
         }
 
-        [Test]
+        [Fact]
         public void delete_susbscriptions()
         {
             var subscriptions = new Subscription[]
             {
-                ObjectMother.ExistingSubscription("Node1"),
-                ObjectMother.ExistingSubscription("Node2"),
-                ObjectMother.ExistingSubscription("Node2")
+                ExistingSubscription("Node1"),
+                ExistingSubscription("Node2"),
+                ExistingSubscription("Node2")
             };
 
             persistence.Persist(subscriptions);
@@ -169,6 +160,32 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
                 .ShouldHaveCount(0);
             persistence.LoadSubscriptions("Node2", SubscriptionRole.Subscribes)
                 .ShouldHaveTheSameElementsAs(subscriptions.Skip(2));
+        }
+
+        public static Subscription ExistingSubscription(string nodeName = null)
+        {
+            var subscription = new Subscription
+            {
+                MessageType = Guid.NewGuid().ToString(),
+                NodeName = nodeName ?? "TheNode",
+                Receiver = "memory://receiver".ToUri(),
+                Source = "memory://source".ToUri(),
+                Role = SubscriptionRole.Subscribes
+
+            };
+            subscription.Id = Guid.NewGuid();
+
+            if (nodeName.IsNotEmpty())
+            {
+                subscription.NodeName = nodeName;
+            }
+
+            return subscription;
+        }
+
+        public void Dispose()
+        {
+            runtime?.Dispose();
         }
     }
 }

@@ -1,20 +1,18 @@
-﻿using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System;
+using System.Linq;
 using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
 {
-    [TestFixture, Explicit]
-    public class EmbeddedDatabaseRunnerTester
+    public class EmbeddedDatabaseRunnerTester : IDisposable
     {
         private EmbeddedDatabaseRunner theRunner;
         private Container container;
 
-        [SetUp]
-        public void FixtureSetUp()
+        public EmbeddedDatabaseRunnerTester()
         {
             theRunner = new EmbeddedDatabaseRunner();
             theRunner.Start();
@@ -26,14 +24,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             });
         }
 
-        [TearDown]
-        public void FixtureTeardown()
-        {
-            theRunner.Dispose();
-            container.Dispose();
-        }
-
-        [Test]
+        [Fact(Skip="Explicit")]
         public void can_connect_remotely()
         {
             var transaction = container.GetInstance<ITransaction>();
@@ -50,7 +41,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             });
         }
 
-        [Test, Explicit("I think this design doesn't work anyway, too many requests")]
+        [Fact(Skip="I think this design doesn't work anyway, too many requests")]
         public void clear_persisted_state()
         {
             var transaction = container.GetInstance<ITransaction>();
@@ -77,6 +68,12 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
                 repo.All<Entity2>().Any().ShouldBeFalse();
                 repo.All<Entity3>().Any().ShouldBeFalse();
             });
+        }
+
+        public void Dispose()
+        {
+            theRunner?.Dispose();
+            container?.Dispose();
         }
 
         public class Entity1 : Entity

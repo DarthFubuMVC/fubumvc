@@ -4,19 +4,18 @@ using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Database.Server;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb
 {
-    [TestFixture]
     public class the_out_of_the_box_bottle_can_use_raven
     {
-        [Test]
+        [Fact]
         public void raven_is_available_out_of_the_box()
         {
             NonAdminHttp.EnsureCanListenToWhenInNonAdminContext(8080);
@@ -24,13 +23,11 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             using (var application = FubuRuntime.Basic())
             {
                 application.Behaviors.PackageAssemblies.Each(x => Debug.WriteLine(x.GetName().FullName));
-
-                
                 application.Get<IDocumentStore>().ShouldNotBeNull();
             }
         }
 
-        [Test]
+        [Fact]
         public void can_run_silverlight_from_embedded()
         {
             NonAdminHttp.EnsureCanListenToWhenInNonAdminContext(8080);

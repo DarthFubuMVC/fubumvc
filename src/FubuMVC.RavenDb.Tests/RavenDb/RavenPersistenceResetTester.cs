@@ -1,26 +1,25 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using FubuCore;
 using FubuMVC.RavenDb.RavenDb;
 using FubuMVC.RavenDb.RavenDb.Multiple;
 using FubuMVC.RavenDb.Reset;
 using FubuMVC.RavenDb.Tests.RavenDb.Integration;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using Xunit;
 using Process = System.Diagnostics.Process;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb
 {
-    [TestFixture]
-    public class RavenPersistenceResetTester
+    public class RavenPersistenceResetTester : IDisposable
     {
         private Container container;
         private RavenUnitOfWork theUnitOfWork;
         private IPersistenceReset theReset;
 
-        [SetUp]
-        public void SetUp()
+        public RavenPersistenceResetTester()
         {
             container = new Container(new RavenDbRegistry());
             container.Inject(new RavenDbSettings { RunInMemory = true });
@@ -29,13 +28,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             theUnitOfWork = new RavenUnitOfWork(container);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            container.Dispose();
-        }
-
-        [Test, Explicit("Manual only testing")]
+        [Fact(Skip ="Manual only testing")]
         public void can_access_the_new_store_by_url()
         {
             theReset.ClearPersistedState();
@@ -43,22 +36,22 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             Thread.Sleep(60000);
         }
 
-        [Test]
+        [Fact]
         public void can_find_other_setting_types()
         {
             container.Inject(new SecondDbSettings());
             container.Inject(new ThirdDbSettings());
             container.Inject(new FourthDbSettings());
-        
+
             theReset.As<RavenPersistenceReset>()
                 .FindOtherSettingTypes()
                 .OrderBy(x => x.Name)
                 .ShouldHaveTheSameElementsAs(typeof(FourthDbSettings), typeof(SecondDbSettings), typeof(ThirdDbSettings));
-        
-        
+
+
         }
 
-        [Test]
+        [Fact]
         public void reset_wipes_the_slate_clean()
         {
             var repo = theUnitOfWork.Start();
@@ -80,12 +73,16 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             repo.All<OtherEntity>().Count().ShouldBe(0);
             repo.All<ThirdEntity>().Count().ShouldBe(0);
         }
+
+        public void Dispose()
+        {
+            container?.Dispose();
+        }
     }
 
-    [TestFixture, Explicit("some cleanup problems here.")]
     public class when_clearing_persisted_state_with_multiple_settings
     {
-        [Test]
+        [Fact(Skip = "some cleanup problems here.")]
         public void ejects_the_store_for_each_and_uses_in_memory_for_each_additional_type_of_setting()
         {
             var theContainer = new Container(x =>
@@ -100,7 +97,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
 
             var store2a = theContainer.GetInstance<IDocumentStore<SecondDbSettings>>();
             var store3a = theContainer.GetInstance<IDocumentStore<ThirdDbSettings>>();
-    
+
             theContainer.GetInstance<IPersistenceReset>().ClearPersistedState();
 
             theContainer.GetInstance<IDocumentStore<SecondDbSettings>>()

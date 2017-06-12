@@ -2,14 +2,13 @@
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
 using Raven.Client;
 using Rhino.Mocks;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Membership
 {
-    [TestFixture]
     public class LoginAuditPersistorTester : InteractionContext<LoginAuditPersistor>
     {
         private IDocumentSession theSession;
@@ -23,7 +22,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             theRequest = new LoginRequest();
         }
 
-        [Test]
+        [Fact]
         public void does_not_apply_history_if_username_is_empty()
         {
             ClassUnderTest.ApplyHistory(theRequest);
@@ -32,7 +31,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             theRequest.LockedOutUntil.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void applies_history_if_username_is_not_empty()
         {
             const string userName = "foo";
@@ -45,7 +44,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             theRequest.LockedOutUntil.HasValue.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void does_not_log_failure_if_username_is_empty()
         {
             var audit = new Audit();
@@ -55,7 +54,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             theSession.AssertWasNotCalled(x => x.Store(Arg<LoginFailureHistory>.Is.Anything));
         }
 
-        [Test]
+        [Fact]
         public void logs_failure_if_username_is_not_empty()
         {
             const string userName = "foo";

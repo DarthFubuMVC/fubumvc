@@ -1,15 +1,14 @@
 ﻿using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Raven.Client.Embedded;
 using Raven.Imports.Newtonsoft.Json;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb
 {
-    [TestFixture]
     public class DocumentStoreBuilderTester
     {
-        [Test]
+        [Fact]
         public void simple_construction()
         {
             var settings = new RavenDbSettings

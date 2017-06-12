@@ -1,10 +1,10 @@
 ﻿using System.Security.Principal;
 using System.Threading;
 using FubuMVC.Core.Http.Owin;
-using NUnit.Framework;
 using Raven.Client;
 using Rhino.Mocks;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
 {
@@ -12,8 +12,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
     {
         private TransactionalBehaviorRavenSessionUsageMessage theMessage;
 
-        [SetUp]
-        public void SetUp()
+        public builds_a_transactional_behavior_raven_session_log_message()
         {
             var advanced = MockRepository.GenerateMock<ISyncAdvancedSessionOperation>();
             advanced.Stub(x => x.NumberOfRequests).Return(10);
@@ -32,25 +31,25 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             theMessage = TransactionalBehaviorRavenSessionUsageMessage.For(session, request);
         }
 
-        [Test]
+        [Fact]
         public void the_url_is_correct()
         {
             theMessage.Url.ShouldBe("http://something/somethingelse");
         }
 
-        [Test]
+        [Fact]
         public void the_username_is_correct()
         {
             theMessage.UserName.ShouldBe("bob");
         }
 
-        [Test]
+        [Fact]
         public void the_request_number_is_correct()
         {
             theMessage.Requests.ShouldBe(10);
         }
 
-        [Test]
+        [Fact]
         public void the_http_method_is_correct()
         {
             theMessage.HttpMethod.ShouldBe("GET");

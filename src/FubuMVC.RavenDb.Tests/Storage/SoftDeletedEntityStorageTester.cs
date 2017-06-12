@@ -3,12 +3,11 @@ using FubuCore.Dates;
 using FubuMVC.RavenDb.InMemory;
 using FubuMVC.RavenDb.Storage;
 using FubuMVC.Tests.TestSupport;
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Storage
 {
-    [TestFixture]
     public class SoftDeletedEntityStorageTester : InteractionContext<SoftDeletedEntityStorage<SoftDeletedEntity>>
     {
         private InMemoryPersistor thePersistor;
@@ -23,7 +22,7 @@ namespace FubuMVC.RavenDb.Tests.Storage
         }
 
 
-        [Test]
+        [Fact]
         public void can_still_find_a_soft_deleted_object()
         {
             var @case = new SoftDeletedEntity();
@@ -35,7 +34,7 @@ namespace FubuMVC.RavenDb.Tests.Storage
             ClassUnderTest.Find(@case.Id).Id.ShouldBe(@case.Id);
         }
 
-        [Test]
+        [Fact]
         public void can_still_find_where_can_find_a_soft_deleted_object()
         {
             var @case = new SoftDeletedEntity();
@@ -46,7 +45,7 @@ namespace FubuMVC.RavenDb.Tests.Storage
             ClassUnderTest.FindSingle(c => c.Id == @case.Id).Id.ShouldBe(@case.Id);
         }
 
-        [Test]
+        [Fact]
         public void soft_deleted_entities_are_not_available_from_All()
         {
             var c1 = new SoftDeletedEntity();
@@ -65,7 +64,7 @@ namespace FubuMVC.RavenDb.Tests.Storage
             ClassUnderTest.All().ShouldHaveTheSameElementsAs(c1, c3);
         }
 
-        [Test]
+        [Fact]
         public void when_deleting_an_entity_mark_the_entity_as_deleted()
         {
             var @case = new SoftDeletedEntity();

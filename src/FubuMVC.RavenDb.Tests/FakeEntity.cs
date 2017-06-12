@@ -1,3 +1,5 @@
+using FubuMVC.RavenDb;
+
 namespace FubuMVC.RavenDb.Tests
 {
     public class FakeEntity : Entity { }

@@ -2,21 +2,19 @@
 using FubuCore.Dates;
 using FubuMVC.RavenDb.InMemory;
 using FubuMVC.RavenDb.MultiTenancy;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.StructureMap
 {
-    [TestFixture]
     public class EntityRepositoryIntegrationTester
     {
         private IEntityRepository theRepository;
         private SimpleTenantContext theContext;
         private IPersistor thePersistor;
 
-        [SetUp]
-        public void SetUp()
+        public EntityRepositoryIntegrationTester()
         {
             var container = new Container(new InMemoryPersistenceRegistry());
             theContext = new SimpleTenantContext {CurrentTenant = Guid.NewGuid()};
@@ -27,14 +25,14 @@ namespace FubuMVC.RavenDb.Tests.StructureMap
             theRepository = container.GetInstance<IEntityRepository>();
         }
 
-        [Test]
+        [Fact]
         public void search_for_multi_tenanted_entities()
         {
             var e1 = new SiteEntity {Name = "Jeremy", TenantId = theContext.CurrentTenant};
             var e2 = new SiteEntity {Name = "Josh", TenantId = theContext.CurrentTenant};
             var e3 = new SiteEntity {Name = "Jeremy", TenantId = Guid.NewGuid()};
             var e4 = new SiteEntity {Name = "Josh", TenantId = Guid.NewGuid()};
-        
+
             thePersistor.Persist(e1);
             thePersistor.Persist(e2);
             thePersistor.Persist(e3);
@@ -49,14 +47,14 @@ namespace FubuMVC.RavenDb.Tests.StructureMap
             theRepository.FindWhere<SiteEntity>(x => x.Name == "Jeremy").ShouldBeTheSameAs(e3);
         }
 
-        [Test]
+        [Fact]
         public void search_for_soft_deleted_entities()
         {
             var e1 = new SoftDeletedEntity {Name = "Jeremy"};
             var e2 = new SoftDeletedEntity {Name = "Josh"};
             var e3 = new SoftDeletedEntity {Name = "Lindsey"};
             var e4 = new SoftDeletedEntity {Name = "Max"};
-        
+
             thePersistor.Persist(e1);
             thePersistor.Persist(e2);
             thePersistor.Persist(e3);
@@ -74,7 +72,7 @@ namespace FubuMVC.RavenDb.Tests.StructureMap
 
         }
 
-        [Test]
+        [Fact]
         public void search_for_the_combination_of_soft_deleted_and_multi_tenancy()
         {
             var e1 = new SoftDeletedTenanted {Name = "Jeremy", TenantId = theContext.CurrentTenant, Id = Guid.NewGuid()};
@@ -82,7 +80,7 @@ namespace FubuMVC.RavenDb.Tests.StructureMap
             var e3 = new SoftDeletedTenanted {Name = "Josh", TenantId = theContext.CurrentTenant};
             var e4 = new SoftDeletedTenanted {Name = "Lindsey", TenantId = theContext.CurrentTenant};
             var e5 = new SoftDeletedTenanted {Name = "Max", TenantId = theContext.CurrentTenant};
-        
+
             thePersistor.Persist(e1);
             thePersistor.Persist(e2);
             thePersistor.Persist(e3);
