@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Threading;
 using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Embedded;
 using Raven.Database.Extensions;
 using Shouldly;
+using Xunit;
 using Process = System.Diagnostics.Process;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb
 {
-    [TestFixture]
     public class RavenDbSettingsTester
     {
-        [Test]
+        [Fact]
         public void builds_in_memory()
         {
             var settings = new RavenDbSettings {RunInMemory = true};
@@ -24,7 +23,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             }
         }
 
-        [Test]
+        [Fact]
         public void uses_the_port_number_if_it_is_non_zero()
         {
             var settings = new RavenDbSettings { RunInMemory = true, Port = 8081};
@@ -36,7 +35,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             }
         }
 
-        [Test]
+        [Fact]
         public void uses_default_port_number_if_none()
         {
             var settings = new RavenDbSettings { RunInMemory = true };
@@ -50,7 +49,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
         }
 
 
-        [Test]
+        [Fact]
         public void build_empty_does_not_throw_but_connects_to_the_parallel_data_folder()
         {
             using( var store = new RavenDbSettings().Create())
@@ -61,7 +60,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
 
         }
 
-        [Test]
+        [Fact]
         public void in_memory_is_wait_for_it_in_memory()
         {
             var settings = RavenDbSettings.InMemory();
@@ -72,7 +71,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             store.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void build_in_memory()
         {
             var store = createStore<EmbeddableDocumentStore>(x => x.RunInMemory = true);
@@ -82,7 +81,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             store.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void build_using_embedded_http_server_in_memory()
         {
             var store = createStore<EmbeddableDocumentStore>(x =>
@@ -96,7 +95,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             store.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void build_using_embedded_http_server_with_data_directory()
         {
             var store = createStore<EmbeddableDocumentStore>(x =>
@@ -110,7 +109,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             store.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void build_with_data_directory()
         {
             var store = createStore<EmbeddableDocumentStore>(x => x.DataDirectory = "data".ToFullPath());
@@ -119,7 +118,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             store.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void build_with_url()
         {
             var store = createStore<DocumentStore>(x => x.Url = "http://somewhere:8080");
@@ -128,7 +127,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             store.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void is_empty()
         {
             new RavenDbSettings().IsEmpty().ShouldBeTrue();
@@ -159,7 +158,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             }
         }
 
-        [Test, Explicit]
+        [Fact(Skip = "Explicit")]
         public void load_a_store_with_explicit_port_see_the_hosted_url()
         {
             var settings = new RavenDbSettings {RunInMemory = true, Port = 8082, UseEmbeddedHttpServer = true};

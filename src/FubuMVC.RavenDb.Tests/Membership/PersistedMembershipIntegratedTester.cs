@@ -4,16 +4,15 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.RavenDb.InMemory;
 using FubuMVC.RavenDb.Membership;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Membership
 {
-    [TestFixture]
     public class PersistedMembershipIntegratedTester
     {
-        [Test]
+        [Fact]
         public void build_application_with_persisted_membership()
         {
             using (var runtime = FubuRuntime

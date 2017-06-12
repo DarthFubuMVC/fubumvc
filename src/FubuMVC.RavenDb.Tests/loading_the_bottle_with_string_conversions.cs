@@ -1,20 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
-using FubuCore;
-using FubuCore.Dates;
+﻿using System.Linq;
 using FubuCore.Formatting;
 using FubuMVC.Core;
 using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests
 {
-    [TestFixture]
     public class loading_the_bottle_with_string_conversions
     {
-        [Test]
+        [Fact]
         public void does_not_lose_registrations_with_custom_string_display_conversions()
         {
             // This was a crazy weird bug we found at work where the Container was re-created
@@ -28,14 +23,14 @@ namespace FubuMVC.RavenDb.Tests
                     .ShouldBeTrue();
             }
             */
-            
+
             using (var runtime = FubuRuntime.Basic(_ => _.Policies.StringConversions<OurDisplayConventions>()))
             {
                 var assembly = typeof (RavenDbRegistry).Assembly;
                 runtime.CurrentContainer.Model.PluginTypes.Any(x => x.PluginType.Assembly == assembly)
                     .ShouldBeTrue();
             }
-            
+
         }
     }
 

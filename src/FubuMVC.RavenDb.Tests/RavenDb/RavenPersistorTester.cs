@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Linq;
 using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb
 {
-    [TestFixture]
-    public class RavenPersistorTester
+    public class RavenPersistorTester : IDisposable
     {
         private Container container;
         private RavenPersistor persistor;
@@ -18,8 +17,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
         private ISessionBoundary boundary;
         private IContainer nested;
 
-        [SetUp]
-        public void SetUp()
+        public RavenPersistorTester()
         {
             container = new Container(new RavenDbRegistry());
             container.Inject(new RavenDbSettings
@@ -36,14 +34,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             boundary = nested.GetInstance<ISessionBoundary>();
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            nested.Dispose();
-            container.Dispose();
-        }
-
-        [Test]
+        [Fact]
         public void load_all()
         {
             persistor.Persist(new User());
@@ -60,7 +51,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             persistor.LoadAll<ThirdEntity>().Count().ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void persist()
         {
             var entity = new OtherEntity();
@@ -72,7 +63,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             persistor.LoadAll<OtherEntity>().Single().ShouldBeTheSameAs(entity);
         }
 
-        [Test]
+        [Fact]
         public void delete_all()
         {
             persistor.Persist(new User());
@@ -93,7 +84,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             persistor.LoadAll<ThirdEntity>().Count().ShouldBe(0);
         }
 
-        [Test]
+        [Fact]
         public void remove()
         {
             persistor.Persist(new User{Id = Guid.NewGuid()});
@@ -121,7 +112,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
                 });
         }
 
-        [Test]
+        [Fact]
         public void find_by()
         {
             persistor.Persist(new User());
@@ -136,7 +127,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             persistor.FindSingle<User>(x => x.FirstName == "Jeremy").FirstName.ShouldBe("Jeremy");
         }
 
-        [Test]
+        [Fact]
         public void find_by_gets_the_latest_changes()
         {
             var user1 = new User
@@ -148,6 +139,12 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             user1.LastName = "Miller";
 
             boundary.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            container?.Dispose();
+            nested?.Dispose();
         }
     }
 }

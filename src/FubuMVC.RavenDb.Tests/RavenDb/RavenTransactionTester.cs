@@ -2,42 +2,29 @@
 using System.Linq;
 using FubuMVC.RavenDb.RavenDb;
 using FubuMVC.RavenDb.Tests.MultiTenancy;
-using NUnit.Framework;
 using Raven.Client;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb
 {
-    [TestFixture]
-    public class RavenTransactionTester
+    public class RavenTransactionTester : IDisposable
     {
         private Container container;
         private ITransaction transaction;
 
-        [TestFixtureSetUp]
-        public void FixtureSetUp()
+        public RavenTransactionTester()
         {
             container = new Container(new RavenDbRegistry());
             container.Inject(new RavenDbSettings
             {
                 RunInMemory = true
             });
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
             transaction = container.GetInstance<ITransaction>();
         }
 
-        [TestFixtureTearDown]
-        public void TearDown()
-        {
-            container.Dispose();
-        }
-
-        [Test]
+        [Fact]
         public void load_all()
         {
             transaction.WithRepository(repo => {
@@ -67,7 +54,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
 
         }
 
-        [Test]
+        [Fact]
         public void persist()
         {
             var entity = new OtherEntity();
@@ -85,7 +72,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             wasCalled.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void multi_tenancy_test_to_excercise_the_service_arguments()
         {
             var tenantA = Guid.NewGuid();
@@ -128,6 +115,9 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             wasCalled.ShouldBeTrue();
         }
 
-
+        public void Dispose()
+        {
+            container?.Dispose();
+        }
     }
 }

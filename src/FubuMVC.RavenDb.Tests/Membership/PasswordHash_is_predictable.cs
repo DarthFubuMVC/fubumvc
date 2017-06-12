@@ -1,14 +1,13 @@
 ﻿using System.Diagnostics;
 using FubuMVC.Core.Security.Authentication;
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Membership
 {
-    [TestFixture]
     public class PasswordHash_is_predictable
     {
-        [Test]
+        [Fact]
         public void see_it_in_action()
         {
             var hash = new PasswordHash();
@@ -23,7 +22,6 @@ namespace FubuMVC.RavenDb.Tests.Membership
             hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
             hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
             hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
-
             hash.CreateHash(password).ShouldNotBe(password);
         }
     }

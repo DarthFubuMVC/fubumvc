@@ -2,16 +2,15 @@
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.RavenDb.InMemory;
 using FubuMVC.RavenDb.Membership;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Membership
 {
-    [TestFixture]
     public class is_registering_the_persisted_login_auditor
     {
-        [Test]
+        [Fact]
         public void PersistedLoginAuditor_is_registered()
         {
             var container = new Container(new InMemoryPersistenceRegistry());

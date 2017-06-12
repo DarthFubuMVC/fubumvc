@@ -5,21 +5,18 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Raven.Client;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Membership
 {
-    [TestFixture]
-    public class PersistedLoginAuditorIntegratedTester
+    public class PersistedLoginAuditorIntegratedTester : IDisposable
     {
         private SettableClock theTime;
         private Container theContainer;
-
-        [SetUp]
-        public void SetUp()
+        public PersistedLoginAuditorIntegratedTester()
         {
             theTime = new SettableClock();
             theTime.LocalNow(LocalTime.AtMachineTime("1200")); // doesn't matter what, only needs to be constant
@@ -40,13 +37,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             });
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            theContainer.Dispose();
-        }
-
-        [Test]
+        [Fact]
         public void write_audit_message()
         {
             var auditor = theContainer.GetInstance<PersistedLoginAuditor>();
@@ -59,7 +50,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             theAudit.Username.ShouldBe("the something");
         }
 
-        [Test]
+        [Fact]
         public void write_login_success()
         {
             var request = new LoginRequest
@@ -79,7 +70,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             theAudit.Username.ShouldBe("somebody");
         }
 
-        [Test]
+        [Fact]
         public void write_login_failure()
         {
             var request = new LoginRequest
@@ -100,7 +91,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
         }
 
 
-        [Test]
+        [Fact]
         public void when_logging_success_wipe_clean_the_login_failure_history()
         {
             var history = new LoginFailureHistory
@@ -122,7 +113,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             auditor.Audit(request);
         }
 
-        [Test]
+        [Fact]
         public void when_logging_failure_for_a_user_that_has_no_prior_failure_history()
         {
             var request = new LoginRequest
@@ -145,7 +136,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             history.LockedOutTime.ShouldBeNull();
         }
 
-        [Test]
+        [Fact]
         public void when_logging_failure_for_a_user_that_is_locked_out()
         {
             var request = new LoginRequest
@@ -167,7 +158,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             history.LockedOutTime.ShouldBe(request.LockedOutUntil);
         }
 
-        [Test]
+        [Fact]
         public void update_an_existing_history()
         {
             var history = new LoginFailureHistory
@@ -198,7 +189,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             history2.LockedOutTime.ShouldBe(request.LockedOutUntil);
         }
 
-        [Test]
+        [Fact]
         public void apply_history_when_there_is_no_history()
         {
             var request = new LoginRequest
@@ -214,7 +205,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             request.NumberOfTries.ShouldBe(5); // Nothing gets replaced
         }
 
-        [Test]
+        [Fact]
         public void apply_history_when_there_is_prior_history()
         {
             var history = new LoginFailureHistory
@@ -236,6 +227,11 @@ namespace FubuMVC.RavenDb.Tests.Membership
 
             request.NumberOfTries.ShouldBe(history.Attempts);
             request.LockedOutUntil.ShouldBe(history.LockedOutTime.Value);
+        }
+
+        public void Dispose()
+        {
+            theContainer?.Dispose();
         }
     }
 

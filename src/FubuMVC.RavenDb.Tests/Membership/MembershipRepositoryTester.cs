@@ -1,19 +1,17 @@
 ﻿using FubuMVC.Core.Security.Authentication;
 using FubuMVC.RavenDb.Membership;
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Membership
 {
-    [TestFixture]
     public class MembershipRepositoryTester
     {
         private EntityRepository theRepository;
         private PasswordHash theHash;
         private MembershipRepository<FubuMVC.RavenDb.Membership.User> theMembership;
 
-        [SetUp]
-        public void SetUp()
+        public MembershipRepositoryTester()
         {
             theRepository = EntityRepository.InMemory();
             theHash = new PasswordHash();
@@ -21,7 +19,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             theMembership = new MembershipRepository<FubuMVC.RavenDb.Membership.User>(theRepository, theHash);
         }
 
-        [Test]
+        [Fact]
         public void matches_credentials_postive()
         {
             var user1 = new FubuMVC.RavenDb.Membership.User
@@ -59,7 +57,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             }).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void matches_credentials_negative()
         {
             var user1 = new FubuMVC.RavenDb.Membership.User
@@ -91,7 +89,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             }).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void find_by_name()
         {
             var user1 = new FubuMVC.RavenDb.Membership.User

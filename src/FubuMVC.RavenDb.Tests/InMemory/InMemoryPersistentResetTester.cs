@@ -1,14 +1,13 @@
 ﻿using System.Linq;
 using FubuMVC.RavenDb.InMemory;
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.InMemory
 {
-    [TestFixture]
     public class InMemoryPersistentResetTester
     {
-        [Test]
+        [Fact]
         public void clear_all_state()
         {
             var persister = new InMemoryPersistor();

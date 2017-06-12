@@ -2,20 +2,17 @@
 using FubuMVC.RavenDb.InMemory;
 using FubuMVC.RavenDb.Reset;
 using FubuMVC.RavenDb.Storage;
-using NUnit.Framework;
 using Shouldly;
 using StructureMap;
-using StructureMap.Configuration.DSL;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.StructureMap
 {
-    [TestFixture]
     public class InMemoryPersistenceRegistry_integration_tester
     {
         private IContainer theContainer;
 
-        [SetUp]
-        public void SetUp()
+        public InMemoryPersistenceRegistry_integration_tester()
         {
             theContainer = new Container(x => x.AddRegistry<TestRegistry>());
         }
@@ -26,7 +23,7 @@ namespace FubuMVC.RavenDb.Tests.StructureMap
         }
 
 
-        [Test]
+        [Fact]
         public void can_persist_and_retrieve_an_entities()
         {
             var entity = new FakeEntity {Id = Guid.NewGuid()};
@@ -36,7 +33,7 @@ namespace FubuMVC.RavenDb.Tests.StructureMap
             theRepository.Find<FakeEntity>(entity.Id).ShouldBeTheSameAs(entity);
         }
 
-        [Test]
+        [Fact]
         public void persistor_is_a_singleton()
         {
             var p1 = theContainer.GetInstance<IPersistor>().ShouldBeOfType<InMemoryPersistor>();
@@ -44,31 +41,31 @@ namespace FubuMVC.RavenDb.Tests.StructureMap
             p1.ShouldBeTheSameAs(theContainer.GetInstance<IPersistor>());
         }
 
-        [Test]
+        [Fact]
         public void transaction_is_registered()
         {
             theContainer.GetInstance<ITransaction>().ShouldBeOfType<InMemoryTransaction>();
         }
 
-        [Test]
+        [Fact]
         public void entity_registry_is_registered_and_can_be_built()
         {
             theContainer.GetInstance<IEntityRepository>().ShouldBeOfType<EntityRepository>();
         }
 
-        [Test]
+        [Fact]
         public void persistence_reset_is_registered()
         {
             theContainer.GetInstance<IPersistenceReset>().ShouldBeOfType<InMemoryPersistenceReset>();
         }
 
-        [Test]
+        [Fact]
         public void storage_registry_is_registered()
         {
             theContainer.GetInstance<IStorageFactory>().ShouldBeOfType<StorageFactory>();
         }
 
-        [Test]
+        [Fact]
         public void can_build_out_complete_reset()
         {
             theContainer.GetInstance<ICompleteReset>().ShouldNotBeNull();

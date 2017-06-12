@@ -1,17 +1,15 @@
 ﻿using FubuMVC.RavenDb.RavenDb;
-using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;
 using Shouldly;
 using StructureMap;
-using StructureMap.Configuration.DSL;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb
 {
-    [TestFixture]
     public class LambdaDocumentStoreConfigurationTester
     {
-        [Test]
+        [Fact]
         public void registers_and_uses_a_lambda_configuration_action()
         {
             var registry = new Registry();
@@ -31,7 +29,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             container.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void registers_and_uses_a_lambda_configuration_action_2()
         {
             var registry = new Registry();

@@ -1,23 +1,21 @@
 ﻿using System.Collections.Generic;
 using FubuCore.Logging;
 using FubuMVC.RavenDb.Reset;
-using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.Reset
 {
-    [TestFixture]
     public class CompleteResetTester
     {
         private CompleteReset theCompleteReset;
 
-        [SetUp]
-        public void SetUp()
+        public CompleteResetTester()
         {
             Tracer.Messages.Clear();
 
-            theCompleteReset = new CompleteReset(MockRepository.GenerateMock<ILogger>(), new FakeInitialState(), 
+            theCompleteReset = new CompleteReset(MockRepository.GenerateMock<ILogger>(), new FakeInitialState(),
                                                  new FakePersistenceReset(),
                                                  new IServiceReset[]
                                                  {
@@ -26,14 +24,14 @@ namespace FubuMVC.RavenDb.Tests.Reset
                                                  });
         }
 
-        [Test]
+        [Fact]
         public void clearing_state_order()
         {
             theCompleteReset.ResetState();
             Tracer.Messages.ShouldHaveTheSameElementsAs("Service:Stop:A", "Service:Stop:B", "Service:Stop:C", "PersistenceReset:ClearPersistedState", "IInitialState:Load", "Service:Start:A", "Service:Start:B", "Service:Start:C");
         }
 
-        [Test]
+        [Fact]
         public void committing_the_changes()
         {
             theCompleteReset.CommitChanges();

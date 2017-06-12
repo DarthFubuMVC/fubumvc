@@ -1,20 +1,18 @@
 ﻿using System;
 using FubuMVC.RavenDb.RavenDb;
 using FubuMVC.RavenDb.RavenDb.Multiple;
-using NUnit.Framework;
 using Raven.Client.Document;
 using Shouldly;
 using StructureMap;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
 {
-    [TestFixture]
-    public class plugging_in_a_custom_interface_for_an_additional_database
+    public class plugging_in_a_custom_interface_for_an_additional_database : IDisposable
     {
         private Container theContainer;
 
-        [SetUp]
-        public void SetUp()
+        public plugging_in_a_custom_interface_for_an_additional_database()
         {
             theContainer = new Container(x =>
             {
@@ -30,13 +28,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             });
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            theContainer.Dispose();
-        }
-
-        [Test]
+        [Fact]
         public void session_boundary_respects_transaction_boundaries()
         {
             var foo1 = new Foo { Id = Guid.NewGuid(), Name = "Jeremy" };
@@ -55,6 +47,11 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             });
 
 
+        }
+
+        public void Dispose()
+        {
+            theContainer?.Dispose();
         }
     }
 

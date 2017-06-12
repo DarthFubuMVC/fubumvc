@@ -2,19 +2,17 @@
 using FubuMVC.RavenDb.InMemory;
 using FubuMVC.RavenDb.MultiTenancy;
 using FubuMVC.RavenDb.Storage;
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.MultiTenancy
 {
-    [TestFixture]
-    public class ByTenantStoragePolicyTester
+    public class bytenantstoragepolicytester
     {
         private SimpleTenantContext theContext;
         private ByTenantStoragePolicy thePolicy;
 
-        [SetUp]
-        public void SetUp()
+        public bytenantstoragepolicytester()
         {
             theContext = new SimpleTenantContext
             {
@@ -24,19 +22,19 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
             thePolicy = new ByTenantStoragePolicy(theContext);
         }
 
-        [Test]
+        [Fact]
         public void matches_negative()
         {
             thePolicy.Matches<GlobalEntity>().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void matches_positive()
         {
             thePolicy.Matches<MyTenantedEntity>().ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void wrap()
         {
             var inner = new EntityStorage<MyTenantedEntity>(new InMemoryPersistor());
@@ -48,11 +46,11 @@ namespace FubuMVC.RavenDb.Tests.MultiTenancy
 
     public class MyTenantedEntity : TenantedEntity
     {
-        
+
     }
 
     public class GlobalEntity : Entity
     {
-        
+
     }
 }

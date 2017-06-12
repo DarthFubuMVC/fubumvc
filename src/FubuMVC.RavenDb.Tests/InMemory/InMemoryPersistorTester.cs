@@ -1,14 +1,13 @@
 using System.Linq;
 using FubuMVC.RavenDb.InMemory;
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace FubuMVC.RavenDb.Tests.InMemory
 {
-    [TestFixture]
     public class InMemoryPersistorTester
     {
-        [Test]
+        [Fact]
         public void load_all()
         {
             var persistor = new InMemoryPersistor();
@@ -25,7 +24,7 @@ namespace FubuMVC.RavenDb.Tests.InMemory
             persistor.LoadAll<ThirdEntity>().Count().ShouldBe(1);
         }
 
-        [Test]
+        [Fact]
         public void persist()
         {
             var entity = new OtherEntity();
@@ -36,7 +35,7 @@ namespace FubuMVC.RavenDb.Tests.InMemory
             persistor.LoadAll<OtherEntity>().Single().ShouldBeTheSameAs(entity);
         }
 
-        [Test]
+        [Fact]
         public void delete_all()
         {
             var persistor = new InMemoryPersistor();
@@ -55,7 +54,7 @@ namespace FubuMVC.RavenDb.Tests.InMemory
             persistor.LoadAll<ThirdEntity>().Count().ShouldBe(0);
         }
 
-        [Test]
+        [Fact]
         public void remove()
         {
             var persistor = new InMemoryPersistor();
@@ -71,7 +70,7 @@ namespace FubuMVC.RavenDb.Tests.InMemory
             persistor.LoadAll<User>().ShouldNotContain(user1);
         }
 
-        [Test]
+        [Fact]
         public void find_by()
         {
             var persistor = new InMemoryPersistor();
