@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
@@ -50,6 +51,18 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
 
             persistence.LoadSubscriptions("Node2", SubscriptionRole.Subscribes)
                 .ShouldHaveTheSameElementsAs(subscriptions2);
+        }
+
+        [Fact]
+        public void persists_and_loads_large_number_of_subscriptions()
+        {
+            var subscriptions = new List<Subscription>();
+            Enumerable.Range(0, 2000).Each(_ => subscriptions.Add(ExistingSubscription("Node1")));
+
+            persistence.Persist(subscriptions);
+
+            var loaded = persistence.LoadSubscriptions("Node1", SubscriptionRole.Subscribes);
+            loaded.ShouldHaveTheSameElementsAs(subscriptions);
         }
 
         [Fact]
