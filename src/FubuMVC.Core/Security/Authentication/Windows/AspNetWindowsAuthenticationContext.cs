@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Security.Authentication.Windows
 
         public WindowsPrincipal Current()
         {
-            var identity = _context.User.Identity as WindowsIdentity;
+            var identity = _context.User?.Identity as WindowsIdentity;
             if (identity == null)
             {
                 throw new InvalidOperationException("User identity must be a WindowsIdentity");
