@@ -107,11 +107,13 @@ namespace FubuMVC.Core
 
 
         public int Port = PortFinder.FindPort(5500);
+        public bool HostWithHttps;
         public IHost Host;
 
-        public void HostWith<T>(int port = 0) where T : IHost, new()
+        public void HostWith<T>(int port = 0, bool useHttps = false) where T : IHost, new()
         {
             Host = new T();
+            HostWithHttps = useHttps;
             if (port > 0) Port = port;
         }
 

@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Http.Hosting
             var parameters = build("Microsoft.Owin.Hosting.StartOptions, Microsoft.Owin.Hosting");
             parameters.SetProperty("Port", port);
 
-            parameters.GetProperty("Urls").Call("Add", "http://*:" + port);
+            parameters.GetProperty("Urls").Call("Add", "https://*:" + port);
 
             var context = build("Microsoft.Owin.Hosting.Engine.StartContext, Microsoft.Owin.Hosting", parameters);
             context.SetProperty("App", func);
