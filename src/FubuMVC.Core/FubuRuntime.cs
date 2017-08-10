@@ -43,7 +43,6 @@ namespace FubuMVC.Core
         private readonly PerfTimer _perfTimer;
         private readonly Lazy<AppFunc> _appFunc;
         private IDisposable _server;
-        private string _baseAddress = "http://memory"; // leave this here
         private readonly FubuRegistry _registry;
 
 
@@ -156,9 +155,9 @@ namespace FubuMVC.Core
         private void startHosting()
         {
             var protocol = _registry.HostWithHttps ? "https" : "http";
-            _baseAddress = $"{protocol}://localhost:" + Port;
+            BaseAddress = $"{protocol}://localhost:" + Port;
 
-            _perfTimer.Record("Starting up the embedded host at " + _baseAddress, () =>
+            _perfTimer.Record("Starting up the embedded host at " + BaseAddress, () =>
             {
                 var settings = Get<OwinSettings>();
                 settings.EnvironmentData[OwinConstants.AppMode] = Mode == null ? string.Empty : Mode.ToLower();
@@ -169,7 +168,7 @@ namespace FubuMVC.Core
             });
         }
 
-        public string BaseAddress => _baseAddress;
+        public string BaseAddress { get; set; } = "http://memory";
 
         public IHost Host => _registry.Host;
 
