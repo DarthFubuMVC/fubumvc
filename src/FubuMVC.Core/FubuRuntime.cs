@@ -155,7 +155,8 @@ namespace FubuMVC.Core
 
         private void startHosting()
         {
-            _baseAddress = "http://localhost:" + Port;
+            var protocol = _registry.HostWithHttps ? "https" : "http";
+            _baseAddress = $"{protocol}://localhost:" + Port;
 
             _perfTimer.Record("Starting up the embedded host at " + _baseAddress, () =>
             {
