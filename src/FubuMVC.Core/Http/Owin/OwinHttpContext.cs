@@ -13,7 +13,10 @@ namespace FubuMVC.Core.Http.Owin
         public OwinHttpContext(IDictionary<string, object> environment)
         {
             _request = new AspNetHttpRequestAdapter(environment);
-            _listenerContext = environment["System.Net.HttpListenerContext"] as HttpListenerContext;
+            if (environment.ContainsKey("System.Net.HttpListenerContext"))
+            {
+                _listenerContext = environment["System.Net.HttpListenerContext"] as HttpListenerContext;
+            }
         }
 
         public override HttpRequestBase Request

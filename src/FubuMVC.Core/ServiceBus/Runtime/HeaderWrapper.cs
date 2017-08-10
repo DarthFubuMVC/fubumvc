@@ -11,6 +11,15 @@ namespace FubuMVC.Core.ServiceBus.Runtime
     [Serializable]
     public class HeaderWrapper
     {
+        public string MessageType
+        {
+            get { return Headers[Envelope.MessageTypeKey]; }
+            set
+            {
+                Headers[Envelope.MessageTypeKey] = value;
+            }
+        }
+
         public Uri Source
         {
             get { return Headers[Envelope.SourceKey].ToUri(); }
@@ -123,6 +132,48 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             if (!Headers.Has(Envelope.ExecutionTimeKey)) return false;
 
             return ExecutionTime.Value > utcNow;
+        }
+    }
+
+    internal static class DictionaryExtensions
+    {
+        public static Dictionary<string, string> Clone(this IDictionary<string, string> dict)
+        {
+            return new Dictionary<string, string>(dict);
+        }
+
+        public static string Get(this IDictionary<string, string> dict, string key)
+        {
+            return dict.ContainsKey(key) ? dict[key] : null;
+        }
+
+        public static void Set(this IDictionary<string, string> dict, string key, object value)
+        {
+            if (dict.ContainsKey(key))
+            {
+                if (value == null)
+                {
+                    dict.Remove(key);
+                }
+                else
+                {
+                    dict[key] = value.ToString();
+                }
+            }
+            else
+            {
+                dict.Add(key, value?.ToString());
+            }
+        }
+
+        public static Uri GetUri(this IDictionary<string, string> dict, string key)
+        {
+            return dict.ContainsKey(key) ? dict[key].ToUri() : null;
+        }
+
+        public static int GetInt(this IDictionary<string, string> dict, string key)
+        {
+            return dict.ContainsKey(key) ? int.Parse(dict[key]) : 0;
         }
     }
 }
