@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.Services;
@@ -15,7 +16,9 @@ namespace FubuMVC.LightningQueues.Diagnostics
         private readonly IQueueMessageRetrieval _queueMessageRetrieval;
         private readonly IEnvelopeSerializer _serializer;
 
-        public LightningQueuesFubuDiagnostics(IPersistentQueues queues, IQueueMessageRetrieval queueMessageRetrieval,
+        public LightningQueuesFubuDiagnostics(
+            IPersistentQueues queues, 
+            IQueueMessageRetrieval queueMessageRetrieval,
             IEnvelopeSerializer serializer)
         {
             _queues = queues;
@@ -92,7 +95,8 @@ namespace FubuMVC.LightningQueues.Diagnostics
             {
                 object payload;
                 var envelope = message.ToEnvelope();
-                envelope.UseSerializer(_serializer, null);
+                var channel = new ChannelNode();
+                envelope.UseSerializer(_serializer, channel);
                 if (input.QueueName == "errors")
                 {
                     var errorReport = ErrorReport.Deserialize(message.Data);
@@ -104,7 +108,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
                         Queue = input.QueueName,
                     };
                     envelope = message.ToEnvelope();
-                    var originalMessage = _serializer.Deserialize(envelope, null);
+                    var originalMessage = _serializer.Deserialize(envelope, channel);
                     var errorSummary = new ErrorSummary
                     {
                         exceptiontype = errorReport.ExceptionType,
