@@ -9,12 +9,13 @@ namespace FubuMVC.Core.Http.Hosting
     public class Katana : IHost
     {
         public IDisposable Start(int port, Func<IDictionary<string, object>, Task> func,
-            IDictionary<string, object> properties)
+            IDictionary<string, object> properties, bool hostWithHttps = false)
         {
             var parameters = build("Microsoft.Owin.Hosting.StartOptions, Microsoft.Owin.Hosting");
             parameters.SetProperty("Port", port);
 
-            parameters.GetProperty("Urls").Call("Add", "https://*:" + port);
+            var protocol = hostWithHttps ? "https" : "http";
+            parameters.GetProperty("Urls").Call("Add", $"{protocol}://*:{port}");
 
             var context = build("Microsoft.Owin.Hosting.Engine.StartContext, Microsoft.Owin.Hosting", parameters);
             context.SetProperty("App", func);
@@ -46,7 +47,7 @@ namespace FubuMVC.Core.Http.Hosting
             }
             catch (TargetInvocationException e)
             {
-                throw new HostingFailedException(e.InnerException, port);
+                throw new HostingFailedException(e.InnerException, port, protocol);
             }
         }
 

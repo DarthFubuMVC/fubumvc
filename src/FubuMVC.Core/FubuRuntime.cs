@@ -139,7 +139,7 @@ namespace FubuMVC.Core
 
             _routes = routeTask.Result();
 
-            
+
 
             if (registry.Host != null)
             {
@@ -164,7 +164,7 @@ namespace FubuMVC.Core
                 var options = settings.EnvironmentData.ToDictionary();
 
 
-                _server = Host.Start(Port, _appFunc.Value, options);
+                _server = Host.Start(Port, _appFunc.Value, options, _registry.HostWithHttps);
             });
         }
 
@@ -205,7 +205,7 @@ namespace FubuMVC.Core
 
         public T Get<T>()
         {
-            // This is important, do it from IServiceFactory so 
+            // This is important, do it from IServiceFactory so
             // that it's using the current "scope" in Serenity
             // testing
             return _factory.Get<T>();

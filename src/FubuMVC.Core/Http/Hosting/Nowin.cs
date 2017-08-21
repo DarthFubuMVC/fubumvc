@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Http.Hosting
 {
     public class NOWIN : IHost
     {
-        public IDisposable Start(int port, Func<IDictionary<string, object>, Task> func, IDictionary<string, object> properties)
+        public IDisposable Start(int port, Func<IDictionary<string, object>, Task> func, IDictionary<string, object> properties, bool hostWithHttps = false)
         {
             var list = new List<IDictionary<string, object>>(){new Dictionary<string, object>()};
             list[0].Add("port", port.ToString());
