@@ -5,13 +5,16 @@ using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Http.Hosting
 {
-    
+
     public class KatanaTester
     {
         [Fact]
         public void failing_to_host()
         {
-            Exception<HostingFailedException>.ShouldBeThrownBy(() => FubuRuntime.For<BadKatanaRegistry>()).Message.ShouldContain("65536");
+            var exception = Exception<HostingFailedException>.ShouldBeThrownBy(() => FubuRuntime.For<BadKatanaRegistry>()).Message;
+            exception.ShouldContain("65536");
+            exception.ShouldContain("http");
+            exception.ShouldNotContain("https");
         }
     }
 

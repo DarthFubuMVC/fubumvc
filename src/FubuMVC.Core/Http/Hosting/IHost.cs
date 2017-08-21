@@ -7,9 +7,10 @@ namespace FubuMVC.Core.Http.Hosting
     public interface IHost
     {
         IDisposable Start(
-            int port, 
-            Func<IDictionary<string, object>, Task> func, 
-            IDictionary<string, object> properties
+            int port,
+            Func<IDictionary<string, object>, Task> func,
+            IDictionary<string, object> properties,
+            bool hostWithHttps = false
         );
     }
 }
