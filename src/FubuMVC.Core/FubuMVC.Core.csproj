@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>FubuMVC 3, the .Net web and service bus framework that gets out of your way</Description>
+    <VersionPrefix>3.0.4</VersionPrefix>
+    <Authors>Jeremy D. Miller;Corey Kaylor;Josh Arnonld</Authors>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyName>FubuMVC.Core</AssemblyName>
+    <PackageId>FubuMVC.Core</PackageId>
+    <PackageIconUrl>https://fubumvc.github.io/content/images/logo.jpg</PackageIconUrl>
+    <PackageProjectUrl>http://fubumvc.github.io/</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/DarthFubuMVC/fubumvc/blob/master/LICENSE.txt</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+<!--    <Compile Include="..\CommonAssemblyInfo.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />-->
+    <EmbeddedResource Include="..\DiagnosticsHarness\fubu-diagnostics\root.js" Link="fubu-diagnostics\root.js" />
+    <EmbeddedResource Include="fubu-diagnostics\bootstrap.min.css" />
+    <EmbeddedResource Include="fubu-diagnostics\bootstrap.overrides.css" />
+    <EmbeddedResource Include="fubu-diagnostics\FubuDiagnostics.js" />
+    <EmbeddedResource Include="fubu-diagnostics\fubumvc.png" />
+    <EmbeddedResource Include="fubu-diagnostics\jquery.min.js" />
+    <EmbeddedResource Include="fubu-diagnostics\master.css" />
+    <EmbeddedResource Include="fubu-diagnostics\typeahead.bundle.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="fubu-diagnostics\bootstrap.min.css" />
+    <None Remove="fubu-diagnostics\bootstrap.overrides.css" />
+    <None Remove="fubu-diagnostics\FubuDiagnostics.js" />
+    <None Remove="fubu-diagnostics\fubumvc.png" />
+    <None Remove="fubu-diagnostics\jquery.min.js" />
+    <None Remove="fubu-diagnostics\master.css" />
+    <None Remove="fubu-diagnostics\typeahead.bundle.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="StructureMap" Version="4.4.3" />
+    <PackageReference Include="HtmlTags" Version="2.1.0.183" />
+    <PackageReference Include="FubuCore" Version="2.0.1.321" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Security" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

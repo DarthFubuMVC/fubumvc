@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Diagnostics.Assets
 
         public DiagnosticAssetsCache(BehaviorGraph graph)
         {
-            var file = new EmbeddedFile(GetType().Assembly, "FubuMVC.Core.root.js");
+            var file = new EmbeddedFile(GetType().Assembly, "FubuMVC.Core.fubu_diagnostics.root.js");
             _files.Add(file);
 
             AddAssembly(Assembly.GetExecutingAssembly());

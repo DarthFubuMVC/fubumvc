@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>DiagnosticsHarness</AssemblyName>
+    <PackageId>DiagnosticsHarness</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj" />
+    <ProjectReference Include="..\FubuMVC.LightningQueues\FubuMVC.LightningQueues.csproj" />
+    <ProjectReference Include="..\FubuMVC.Marten\FubuMVC.Marten.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

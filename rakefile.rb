@@ -71,7 +71,7 @@ end
 
 desc 'Run the unit tests'
 task :test => [:compile] do
-	sh "dotnet test src/FubuMVC.Tests"
+	sh "cd src/FubuMVC.Tests & dotnet xunit"
 end
 
 desc 'Run the integration tests'

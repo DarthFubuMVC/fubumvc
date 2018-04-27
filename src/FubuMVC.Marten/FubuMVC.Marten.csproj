@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Integrate Marten into FubuMVC applications</Description>
+    <VersionPrefix>3.1.0</VersionPrefix>
+    <Authors>Jeremy D. Miller</Authors>
+    <TargetFramework>net46</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>FubuMVC.Marten</AssemblyName>
+    <PackageId>FubuMVC.Marten</PackageId>
+    <PackageIconUrl>https://fubumvc.github.io/content/images/logo.jpg</PackageIconUrl>
+    <PackageProjectUrl>http://fubumvc.github.io/</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/DarthFubuMVC/fubumvc/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Marten" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>
