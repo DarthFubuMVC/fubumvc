@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>DiagnosticsHarness</AssemblyName>
     <PackageId>DiagnosticsHarness</PackageId>
@@ -17,7 +17,7 @@
     <ProjectReference Include="..\FubuMVC.Marten\FubuMVC.Marten.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>

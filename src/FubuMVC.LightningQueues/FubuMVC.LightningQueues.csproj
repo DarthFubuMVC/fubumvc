@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>3.1.0</VersionPrefix>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>FubuMVC.LightningQueues</AssemblyName>
     <PackageId>FubuMVC.LightningQueues</PackageId>
@@ -21,11 +21,10 @@
 
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="3.0.0" />
-    <PackageReference Include="LightningDB" Version="0.10.0" />
-    <PackageReference Include="lmdb.v141" Version="0.9.18" />
+    <PackageReference Include="LightningDB" Version="0.11.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>

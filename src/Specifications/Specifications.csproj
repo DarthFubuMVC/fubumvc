@@ -1,32 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
-    <AssemblyName>Specifications</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <PackageId>Specifications</PackageId>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net462</TargetFramework>
+        <AssemblyName>Specifications</AssemblyName>
+        <OutputType>Exe</OutputType>
+        <PackageId>Specifications</PackageId>
+        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FubuMVC.IntegrationTesting\FubuMVC.IntegrationTesting.csproj" />
-    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\FubuMVC.IntegrationTesting\FubuMVC.IntegrationTesting.csproj"/>
+        <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Storyteller" Version="4.2" />
-    <PackageReference Include="NOWIN" Version="0.26.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Storyteller" Version="5.4.0"/>
+        <PackageReference Include="NOWIN" Version="0.26.0" />
+    </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
+        <Reference Include="System"/>
+        <Reference Include="Microsoft.CSharp"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-storyteller" Version="1.1.2" />
-  </ItemGroup>
+    <ItemGroup>
+        <DotNetCliToolReference Include="dotnet-storyteller" Version="5.4.0"/>
+    </ItemGroup>
 
 </Project>
