@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace FubuMVC.LightningQueues
 {
@@ -59,7 +60,20 @@ namespace FubuMVC.LightningQueues
 
         public static Uri ToLocalUri(this Uri uri)
         {
+            if (uri.UriContainsNonLocalIpAddress())
+                return uri;
+
             return new UriBuilder(uri) { Host = Environment.MachineName }.Uri;
+        }
+
+        /// <summary>
+        /// Detects if a Uri has a Host segment that is a non-loopback IP address.
+        /// </summary>
+        /// <param name="uri">The Uri.</param>
+        /// <returns>True when the Uri contains a Host segment as an IPv4 Address which is not loopback, otherwise False.</returns>
+        public static bool UriContainsNonLocalIpAddress(this Uri uri)
+        {
+            return (UriHostNameType.IPv4 == uri.HostNameType && !uri.Host.Equals("127.0.0.1"));
         }
     }
 }
