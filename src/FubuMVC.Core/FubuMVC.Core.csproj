@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>FubuMVC 3, the .Net web and service bus framework that gets out of your way</Description>
-    <VersionPrefix>3.0.4</VersionPrefix>
+    <VersionPrefix>3.2.0</VersionPrefix>
     <Authors>Jeremy D. Miller;Corey Kaylor;Josh Arnonld</Authors>
     <TargetFramework>net462</TargetFramework>
     <AssemblyName>FubuMVC.Core</AssemblyName>
@@ -13,7 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-<!--    <Compile Include="..\CommonAssemblyInfo.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />-->
     <EmbeddedResource Include="..\DiagnosticsHarness\fubu-diagnostics\root.js" Link="fubu-diagnostics\root.js" />
     <EmbeddedResource Include="fubu-diagnostics\bootstrap.min.css" />
     <EmbeddedResource Include="fubu-diagnostics\bootstrap.overrides.css" />
@@ -41,12 +40,9 @@
     <PackageReference Include="FubuCore" Version="2.0.1.321" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
+  <ItemGroup>
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Security" />
-    <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 

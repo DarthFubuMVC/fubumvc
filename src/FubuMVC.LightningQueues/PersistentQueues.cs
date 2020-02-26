@@ -8,9 +8,9 @@ using System.Runtime.Serialization;
 using FubuCore.Util;
 using LightningDB;
 using FubuCore.Logging;
-using FubuMVC.LightningQueues.Queues;
-using FubuMVC.LightningQueues.Queues.Persistence;
-using FubuMVC.LightningQueues.Queues.Storage;
+using LightningQueues;
+using LightningQueues.Storage;
+using LightningQueues.Storage.LMDB;
 
 namespace FubuMVC.LightningQueues
 {
@@ -46,7 +46,7 @@ namespace FubuMVC.LightningQueues
             var queueConfiguration = new QueueConfiguration()
                 .ReceiveMessagesAt(new IPEndPoint(IPAddress.Any, port))
                 .ScheduleQueueWith(TaskPoolScheduler.Default)
-                .LogWith(_logger);
+                .LogWith(new FubuLoggingAdapter(_logger));
 
             if (persist)
             {

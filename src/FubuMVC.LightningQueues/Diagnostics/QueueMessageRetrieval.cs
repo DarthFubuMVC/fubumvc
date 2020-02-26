@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using FubuMVC.LightningQueues.Queues;
+using LightningQueues;
 
 namespace FubuMVC.LightningQueues.Diagnostics
 {

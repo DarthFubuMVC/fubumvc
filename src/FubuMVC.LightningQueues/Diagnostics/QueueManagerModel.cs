@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using FubuMVC.LightningQueues.Queues;
-using FubuMVC.LightningQueues.Queues.Persistence;
+using LightningQueues;
+using LightningQueues.Storage.LMDB;
 
 namespace FubuMVC.LightningQueues.Diagnostics
 {

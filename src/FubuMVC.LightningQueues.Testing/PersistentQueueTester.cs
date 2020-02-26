@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using FubuCore.Logging;
-using FubuMVC.LightningQueues.Queues.Storage;
+using LightningQueues.Storage;
 using Xunit;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    
+
     public class PersistentQueueTester
     {
         [Fact]

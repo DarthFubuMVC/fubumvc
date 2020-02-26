@@ -1,11 +1,11 @@
 ﻿using System;
-using FubuMVC.LightningQueues.Queues;
+using LightningQueues;
 using Xunit;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    
+
     public class HeaderTranslationTester
     {
         [Fact]

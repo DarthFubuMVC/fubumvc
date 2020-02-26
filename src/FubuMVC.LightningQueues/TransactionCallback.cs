@@ -2,7 +2,7 @@ using System;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using FubuMVC.LightningQueues.Queues;
+using LightningQueues;
 
 namespace FubuMVC.LightningQueues
 {

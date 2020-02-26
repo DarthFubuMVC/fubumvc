@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Description>Drop in persistence with RavenDb for FubuMVC / StructureMap applications</Description>
-        <VersionPrefix>3.1.0</VersionPrefix>
+        <VersionPrefix>3.2.0</VersionPrefix>
         <Authors>Jeremy D. Miller</Authors>
         <TargetFramework>net462</TargetFramework>
         <DebugType>portable</DebugType>
@@ -25,11 +25,6 @@
         <PackageReference Include="RavenDB.Database" Version="2.5.2750" />
         <PackageReference Include="RavenDB.Client" Version="2.5.2750" />
         <PackageReference Include="RavenDB.Embedded" Version="2.5.2750" />
-    </ItemGroup>
-
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
-        <Reference Include="System" />
-        <Reference Include="Microsoft.CSharp" />
     </ItemGroup>
 
 </Project>

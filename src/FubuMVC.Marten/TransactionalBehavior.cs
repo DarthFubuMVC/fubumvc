@@ -25,7 +25,7 @@ namespace FubuMVC.Marten
                 action();
                 _session.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _session.Dispose();
 

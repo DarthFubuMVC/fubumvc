@@ -6,7 +6,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.Services;
-using FubuMVC.LightningQueues.Queues;
+using LightningQueues;
 
 namespace FubuMVC.LightningQueues.Diagnostics
 {
@@ -17,7 +17,7 @@ namespace FubuMVC.LightningQueues.Diagnostics
         private readonly IEnvelopeSerializer _serializer;
 
         public LightningQueuesFubuDiagnostics(
-            IPersistentQueues queues, 
+            IPersistentQueues queues,
             IQueueMessageRetrieval queueMessageRetrieval,
             IEnvelopeSerializer serializer)
         {

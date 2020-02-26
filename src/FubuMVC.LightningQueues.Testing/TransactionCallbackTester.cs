@@ -1,13 +1,13 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.LightningQueues.Queues;
+using LightningQueues;
 using Xunit;
 using Rhino.Mocks;
 using Shouldly;
 
 namespace FubuMVC.LightningQueues.Testing
 {
-    
+
     public class TransactionCallbackTester
     {
         [Fact]

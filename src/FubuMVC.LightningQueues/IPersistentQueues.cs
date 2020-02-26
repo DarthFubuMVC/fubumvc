@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuMVC.LightningQueues.Queues;
+using LightningQueues;
 
 namespace FubuMVC.LightningQueues
 {
